@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package combate2000lasecuela;
+import java.io.Serializable;
 
-/**
- *
- * @author alexg
- */
-public class Operator {
+public class Operator implements Serializable {
     
 }
