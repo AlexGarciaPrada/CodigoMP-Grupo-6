@@ -1,13 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package combate2000lasecuela;
 
-/**
- *
- * @author alexg
- */
+import java.util.HashMap;
+
 public class Usermanager {
-    
+    private HashMap<String, User> users;
+
+    public Usermanager() {
+        users = new HashMap<>();
+    }
+
+    public void addUser(User user) {
+        users.put(user.getNick(), user);
+    }
+
+    public User deleteUser(String nick) {
+        return users.remove(nick);
+    }
+
+    public User saveUser(User user) {
+
+    }
 }
