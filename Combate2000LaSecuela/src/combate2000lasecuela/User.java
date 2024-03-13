@@ -2,7 +2,7 @@ package combate2000lasecuela;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable {
+public abstract class User implements Serializable,Saveable {
 
         private String name;
         private String password;

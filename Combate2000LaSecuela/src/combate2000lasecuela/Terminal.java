@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package combate2000lasecuela;
 
-/**
- *
- * @author alexg
- */
-public interface Terminal {
-    
+import java.io.Serializable;
+
+public interface Terminal extends Serializable{
+    public abstract int read(); //y devuelve un int porque si da error devuelve -1
+
+    public abstract void show(String s);
+
 }
