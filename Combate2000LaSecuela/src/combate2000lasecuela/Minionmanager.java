@@ -1,17 +1,15 @@
 package combate2000lasecuela;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class Minionmanager extends AbstractManager<User>{
-    public Minionmanager() {
-        this.setElements((Collection<User>) new HashMap<String,User>());
+public class Minionmanager extends AbstractManager<Minion>{
+    public Minionmanager() {this.setElements((Collection<Minion>) new ArrayList<Minion>());
     }
-
-    public void addMinion(Minion minion) {
+    public Item deleteMinion (Minion minionName) {
+        return this.deleteMinion(minionName);
     }
-    public User deleteUser(String nick) {return ((HashMap<String,User>)this.elements).remove(nick);}
-
 }
     
 
