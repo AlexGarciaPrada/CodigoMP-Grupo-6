@@ -2,11 +2,12 @@ package combate2000lasecuela;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable,Saveable {
+public abstract class User implements Serializable, Saveable {
 
         private String name;
         private String password;
         private String nick;
+        private String registerNumber;
 
         public User(String name, String password, String nick) {
             this.name = name;
@@ -16,8 +17,11 @@ public abstract class User implements Serializable,Saveable {
 
         // --------------------------------------   GETTERS AND SETTERS
 
+    @Override
+    public String getId() {return this.registerNumber;}
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -25,7 +29,7 @@ public abstract class User implements Serializable,Saveable {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -33,7 +37,7 @@ public abstract class User implements Serializable,Saveable {
     }
 
     public String getNick() {
-        return nick;
+        return this.nick;
     }
 
     public void setNick(String nick) {
