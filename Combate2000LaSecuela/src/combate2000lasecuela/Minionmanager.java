@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package combate2000lasecuela;
 
-/**
- *
- * @author alexg
- */
-public class Minionmanager {
-    
+import java.util.Collection;
+import java.util.HashMap;
+
+public class Minionmanager extends AbstractManager<User>{
+    public Minionmanager() {
+        this.setElements((Collection<User>) new HashMap<String,User>());
+    }
+
+    public void addMinion(Minion minion) {
+    }
+    public User deleteUser(String nick) {return ((HashMap<String,User>)this.elements).remove(nick);}
+
 }
+    
+

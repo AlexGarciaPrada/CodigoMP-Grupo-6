@@ -8,19 +8,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
-import java.util.Iterator;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
-    private Collection<T> elements;
+    protected Collection<T> elements;
 
     public AbstractManager() {};
 
-    public void addElement(T element){elements.add(element);}
+    public void addElement(T element){
+        elements.add(element);
+    }
 
-    public void deleteElement(T element){elements.remove(element);}
-
-
-    public void saveElements(T element){
+    public void saveElement(T element){
         try {
             String route = String.format("./config/%s/", element.getClass());
             XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(route + element.getId() + ".xml")));
@@ -31,7 +29,8 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
             System.out.println("ERROR SAVING");
         }
     }
-    public T saveElements(String fileName) {
+
+    public T loadElement(String fileName) {
         try {
             String route = String.format("./config/%s/", this.getType());
             XMLDecoder decoder = new XMLDecoder(new FileInputStream(route+ fileName + ".xml"));    // Abre el archivo para lectura.
@@ -44,8 +43,17 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
             return null;
         }
     }
+
     private String getType(){
         return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+    }
+
+    // --------------------------------- GETTERS AND SETTERS
+    public Collection<T> getElements() {
+        return elements;
+    }
+    public void setElements(Collection<T> elements) {
+        this.elements = elements;
     }
 
 }
