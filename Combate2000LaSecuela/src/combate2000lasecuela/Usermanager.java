@@ -11,9 +11,7 @@ import java.io.FileOutputStream;
 public class Usermanager {
     private HashMap<String, User> users;
 
-    public Usermanager() {
-        users = new HashMap<>();
-    }
+    public Usermanager() { users = new HashMap<>(); }
 
     public void addUser(User user) {
         users.put(user.getNick(), user);
@@ -33,7 +31,6 @@ public class Usermanager {
                 System.out.println("ERROR SAVING USER");
             }
         }
-
     public static User loadUsers(String usersFileName) {
         try {
             XMLDecoder decoder = new XMLDecoder(new FileInputStream("./config/users/" + usersFileName + ".xml"));    // Abre el archivo para lectura.
@@ -42,11 +39,11 @@ public class Usermanager {
             return user;
         }
         catch (FileNotFoundException e) {
-            System.out.println("ERROR LOADING GAME");
-            e.printStackTrace();
+            System.out.println("ERROR LOADING USER");
             return null;
         }
     }
 }
+
 
 
