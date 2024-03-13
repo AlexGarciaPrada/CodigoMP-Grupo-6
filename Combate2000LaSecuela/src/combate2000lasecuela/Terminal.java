@@ -3,8 +3,9 @@ package combate2000lasecuela;
 import java.io.Serializable;
 
 public interface Terminal extends Serializable{
-    public abstract int read(); //y devuelve un int porque si da error devuelve -1
+    public abstract int read(int max); //Lee un integer que debe estar en un intervalo
 
     public abstract void show(String s);
+    public abstract void showln(String s);
 
 }
