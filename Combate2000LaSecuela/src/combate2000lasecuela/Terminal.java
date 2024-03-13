@@ -7,5 +7,6 @@ public interface Terminal extends Serializable{
 
     public abstract void show(String s);
     public abstract void showln(String s);
+    public abstract void showf(String f, String s);
 
 }

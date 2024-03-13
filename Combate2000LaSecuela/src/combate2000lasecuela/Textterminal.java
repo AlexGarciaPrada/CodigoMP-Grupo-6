@@ -11,6 +11,7 @@ public class Textterminal implements Terminal {
         sc = new Scanner(System.in);
     }
 
+
     @Override
         public int read(int max) {
             int result = 0;
@@ -37,10 +38,12 @@ public class Textterminal implements Terminal {
     public void showln(String s) {
         System.out.println(s);
     }
-
-    private void showf(String f,String s){
-        System.out.printf(f,s);
+    @Override
+    public void showf(String format,String s) {
+        System.out.printf(format,s);
     }
+
+
 
     public void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -50,29 +53,6 @@ public class Textterminal implements Terminal {
     public String readString() {
         String linea = sc.next();
         return linea;
-    }
-    private int getMaxLine(String [] content){
-        int max = 0;
-        for (String line : content) {
-            if (line.length() > max) {
-                max =line.length();
-            }
-        }
-        return max;
-    }
-    public void showContent(String[] content) {
-        int wide = getMaxLine(content) + 4;
-        int height = content.length + 2;
-        //Tapa de la caja
-        showln("|" + "-".repeat(wide - 2) + "|");
-        //Contenido de la caja
-        for (String line : content) {
-            showf("| %-" + (wide - 4) + "s |\n", "");
-            showf("| %-" + (wide - 4) + "s |\n", line);
-
-        }
-        // Tapa inferior
-        showln("|" + "-".repeat(wide - 2) + "|");
     }
 
 }

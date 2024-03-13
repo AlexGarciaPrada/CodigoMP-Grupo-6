@@ -1,13 +1,15 @@
-/*
+package combate2000lasecuela;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
+
 
 /**
  *
  * @author alexg
  */
 public class Combate2000LaSecuela {
+
 
     /**
      * @param args the command line arguments
