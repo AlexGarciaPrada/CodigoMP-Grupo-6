@@ -1,4 +1,4 @@
-package combate2000lasecuela;
+package combate2000lasecuela.screen;
 
 import java.io.Serializable;
 
