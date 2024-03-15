@@ -8,10 +8,10 @@ package combate2000lasecuela;
  *
  * @author alexg
  */
-public class Messagemanager {
+public class MessageManager {
     private Textterminal t;
 
-    public Messagemanager() {
+    public MessageManager() {
         t = new Textterminal();
     }
 

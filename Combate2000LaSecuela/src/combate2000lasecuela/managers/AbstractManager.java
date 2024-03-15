@@ -1,4 +1,6 @@
-package combate2000lasecuela;
+package combate2000lasecuela.managers;
+
+import combate2000lasecuela.Saveable;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -7,16 +9,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
+import java.util.Map;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
-    protected Collection<T> elements;
+    protected Map<String,Map<String,T>> elements;
 
     public AbstractManager() {};
-
-    public void addElement(T element){
-        elements.add(element);
-    }
 
     public void saveElement(T element){
         try {
@@ -48,11 +46,24 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
+    public void addCollection(String mapName, Map map){             //PARA AÑADIR HASHMAPS
+        this.elements.put(mapName,map);
+    }
+
+    public void addElement(String type, String mapKey, T element){      //PARA AÑADIR INSTANCIAS
+        this.elements.get(type).put(mapKey,element);
+    }
+
+    public T deleteElement(String type, String mapKey){
+        return this.elements.get(type).remove(mapKey);
+    }
+
     // --------------------------------- GETTERS AND SETTERS
-    public Collection<T> getElements() {
+
+    public Map<String, Map<String,T>> getElements() {
         return elements;
     }
-    public void setElements(Collection<T> elements) {
+    public void setElements(Map<String, Map<String,T>> elements) {
         this.elements = elements;
     }
 
