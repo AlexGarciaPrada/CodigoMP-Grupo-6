@@ -9,10 +9,15 @@ package combate2000lasecuela.screen;
  * @author alexg
  */
 public class MessageManager {
-    private Textterminal t;
+    private Terminal t;
 
     public MessageManager() {
         t = new Textterminal();
+    }
+
+    public void showInitMenu(){
+        String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3.Salir"};
+        showContent(content);
     }
 
     private int getMaxLine(String[] content) {
