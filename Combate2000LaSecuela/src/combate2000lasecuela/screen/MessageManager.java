@@ -1,6 +1,6 @@
 package combate2000lasecuela.screen;
 import combate2000lasecuela.screen.MessageManager;
-
+import combate2000lasecuela.screen.Textterminal;
 public class MessageManager {
     private Terminal t;
 
@@ -9,7 +9,7 @@ public class MessageManager {
     }
 
     public void showInitMenu(){
-        String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3.Salir"};
+        String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3. Salir"};
         showContent(content);
     }
 

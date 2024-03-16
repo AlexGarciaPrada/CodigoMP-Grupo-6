@@ -1,7 +1,6 @@
 package combate2000lasecuela.screen;
 
 import combate2000lasecuela.screen.Terminal;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -44,7 +43,6 @@ public class Textterminal implements Terminal {
     public void showf(String format,String s) {
         System.out.printf(format,s);
     }
-
 
 
     public void clearScreen() {
