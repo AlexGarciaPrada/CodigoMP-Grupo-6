@@ -46,7 +46,7 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
-    public void addCollection(String mapName, Map map){             //PARA AÑADIR HASHMAPS
+    public void addCollection(String mapName, Map map){             //añadir mapas dentro de otro manager (mapa de players y mapa de operadores)
         this.elements.put(mapName,map);
     }
 

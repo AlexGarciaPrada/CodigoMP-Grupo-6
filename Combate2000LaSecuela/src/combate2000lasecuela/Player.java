@@ -14,6 +14,7 @@ public class Player extends User  {
     }
 
     public void ChallengePlayer(){
-
+        //mensaje del messagemanager preguntando a quien quiere retar
+        
     }
 }

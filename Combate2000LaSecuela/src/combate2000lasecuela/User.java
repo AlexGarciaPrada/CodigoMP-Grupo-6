@@ -1,9 +1,9 @@
 package combate2000lasecuela;
 
 import java.io.Serializable;
+import combate2000lasecuela.Saveable;
 
-
-public abstract class User extends Saveable {
+public abstract class User implements Saveable {
         private String name;
         private String password;
         private String nick;

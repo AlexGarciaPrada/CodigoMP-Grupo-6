@@ -1,9 +1,10 @@
 package combate2000lasecuela;
 
 import java.util.Date;
+import combate2000lasecuela.Saveable;
 
 
-public class Combat extends Saveable {
+public class Combat implements Saveable {
     private Player challenger;
     private Player challenged;
     private int rounds;
