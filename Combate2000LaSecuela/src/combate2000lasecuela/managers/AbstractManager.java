@@ -16,6 +16,21 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
 
     public AbstractManager() {};
 
+    // --------------------------------- METHODS TO MANAGE MAPS
+    public void addCollection(String mapName, Map map){             //añadir mapas dentro de otro manager (mapa de players y mapa de operadores)
+        this.elements.put(mapName,map);
+    }
+
+    public void addElement(String type, String mapKey, T element){      //PARA AÑADIR INSTANCIAS
+        this.elements.get(type).put(mapKey,element);
+    }
+
+    public T deleteElement(String type, String mapKey){
+        return this.elements.get(type).remove(mapKey);
+    }
+
+
+    // --------------------------------- SERIALIZATION METHODS
     public void saveElement(T element){
         try {
             String route = String.format("./config/%s/", element.getClass());
@@ -44,18 +59,6 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
 
     private String getType(){
         return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-    }
-
-    public void addCollection(String mapName, Map map){             //añadir mapas dentro de otro manager (mapa de players y mapa de operadores)
-        this.elements.put(mapName,map);
-    }
-
-    public void addElement(String type, String mapKey, T element){      //PARA AÑADIR INSTANCIAS
-        this.elements.get(type).put(mapKey,element);
-    }
-
-    public T deleteElement(String type, String mapKey){
-        return this.elements.get(type).remove(mapKey);
     }
 
     // --------------------------------- GETTERS AND SETTERS

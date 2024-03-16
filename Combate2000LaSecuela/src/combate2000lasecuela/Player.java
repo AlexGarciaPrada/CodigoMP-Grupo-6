@@ -1,6 +1,9 @@
 package combate2000lasecuela;
 
 import java.io.Serializable;
+import java.util.UUID;
+
+import combate2000lasecuela.managers.ChallengeManager;
 public class Player extends User  {
     private String registerNumber;
     private int victories;
@@ -13,8 +16,14 @@ public class Player extends User  {
         this.blocked = blocked;
     }
 
-    public void ChallengePlayer(){
+    public Challenge ChallengePlayer(){
         //mensaje del messagemanager preguntando a quien quiere retar
-        
+        ChallengeManager cm = new ChallengeManager();
+        cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
+        return cm.loadElement(generateRandomChallengeKey());
+    }
+
+    public static String generateRandomChallengeKey() {
+        return UUID.randomUUID().toString();
     }
 }
