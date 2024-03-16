@@ -2,7 +2,7 @@ package combate2000lasecuela;
 
 import java.io.Serializable;
 
-public class Operator extends Player implements Saveable {
+public class Operator extends User {
 
     public Operator(String name, String password, String nick) {
         super(name, password, nick);

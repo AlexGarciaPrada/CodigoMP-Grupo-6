@@ -8,6 +8,8 @@ public abstract class Fighter {
     private int health;
     private int power;
     private ArrayList<Minion> minions;
+    private ArrayList<Item> items;
+    private ArrayList<Modifier> modifiers;
     
 
     

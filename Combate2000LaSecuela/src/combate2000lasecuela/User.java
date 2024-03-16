@@ -2,8 +2,8 @@ package combate2000lasecuela;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable, Saveable {
 
+public abstract class User extends Saveable {
         private String name;
         private String password;
         private String nick;
