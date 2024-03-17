@@ -2,6 +2,7 @@ package combate2000lasecuela;
 
 import java.util.UUID;
 
+import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 public class Player extends User {
@@ -14,6 +15,10 @@ public class Player extends User {
         this.registerNumber = registerNumber;
         this.victories = victories;
         this.blocked = blocked;
+    }
+
+    public static TFighter elegirTipo() {
+        return null;
     }
 
     public Challenge ChallengePlayer(){
