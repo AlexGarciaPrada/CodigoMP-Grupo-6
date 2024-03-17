@@ -22,7 +22,9 @@ public class Player extends User {
         cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
         return cm.loadElement(generateRandomChallengeKey());
     }
-
+    public void createCharacter() {
+     
+    }
     public static String generateRandomChallengeKey() {
         return UUID.randomUUID().toString();
     }
