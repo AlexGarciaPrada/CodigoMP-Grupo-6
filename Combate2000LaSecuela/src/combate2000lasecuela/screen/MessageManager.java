@@ -8,11 +8,40 @@ public class MessageManager {
         t = new Textterminal();
     }
 
-    public void showInitMenu(){
+    //Pantallas concretas con caja
+    public int showInitMenu(){
         String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3. Salir"};
+        showContent(content);
+        return (t.read(3));
+    }
+    public void showNickUsed(){
+        String [] content ={"El Nick escogido esta en uso por otro usuario"};
+        showContent(content);
+    }
+    public void showUserNotFound(){
+        String[] content = {"No existe ningun usuario con el nick introducido","Comprueba que esta bien escrito o ve a la opcion de registro"};
+        showContent(content);
+    }
+    public void showWrongPassword(){
+        String[] content = {"Password incorrecta"};
+        showContent(content);
+    }
+    public void showNotCoincidencePassword() {
+        String[] content = {"Las password no coinciden", "Vuelve a intentarlo"};
         showContent(content);
     }
 
+    //Pantallas sin caja
+    public void showLogInMenu(){
+    t.showln("Inicio de Sesion");
+    t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
+    }
+    public void showRegisterMenu(){
+        t.showln("Registro");
+        t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
+    }
+
+    //Funcionamiento interno de las pantallas
     private int getMaxLine(String[] content) {
         int max = 0;
         for (String line : content) {
@@ -35,5 +64,6 @@ public class MessageManager {
         // Tapa inferior
         t.showln("|" + "-".repeat(wide) + "|");
     }
+
 
 }

@@ -16,7 +16,7 @@ public class Textterminal implements Terminal {
     @Override
         public int read(int max) {
             int result = 0;
-            while ((result <= 0) || (result > max)) {
+            while (result <= 0) {
                 try {
                     result = sc.nextInt();
                 } catch (InputMismatchException e) {
@@ -49,7 +49,7 @@ public class Textterminal implements Terminal {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
+    @Override
     public String readString() {
         String linea = sc.next();
         return linea;
