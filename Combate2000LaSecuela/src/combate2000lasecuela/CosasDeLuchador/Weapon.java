@@ -1,4 +1,6 @@
-package combate2000lasecuela;
+package combate2000lasecuela.CosasDeLuchador;
+
+import combate2000lasecuela.CosasDeLuchador.Item;
 
 import java.io.Serializable;
 

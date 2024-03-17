@@ -1,10 +1,10 @@
 package combate2000lasecuela;
 
-import java.io.Serializable;
 import java.util.UUID;
 
+import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
-public class Player extends User  {
+public class Player extends User {
     private String registerNumber;
     private int victories;
     private boolean blocked;

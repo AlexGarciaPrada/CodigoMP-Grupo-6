@@ -1,8 +1,6 @@
 package combate2000lasecuela;
 
-import java.io.Serializable;
-import java.util.Scanner;
-
+import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;
