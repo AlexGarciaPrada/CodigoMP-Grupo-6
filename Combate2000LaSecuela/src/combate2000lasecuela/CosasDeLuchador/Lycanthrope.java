@@ -12,8 +12,8 @@ int rage;
     public Lycanthrope(int suerteA, int suerteW, int rage, int suerteM) {
         super(suerteA, suerteW, suerteM);
         this.suerteA=suerteA;
-    this.suerteM=suerteM;
-    this.suerteW=suerteW;
-    this.rage=0;
+        this.suerteM=suerteM;
+        this.suerteW=suerteW;
+        this.rage=0;
     }//a espensas del código de Laura
 }
