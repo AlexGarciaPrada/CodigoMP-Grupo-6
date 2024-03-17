@@ -18,12 +18,15 @@ public class Textterminal implements Terminal {
             int result = 0;
             while (result <= 0) {
                 try {
+                    show("Opcion: ");
                     result = sc.nextInt();
                 } catch (InputMismatchException e) {
+                    showln("ERROR: debes insertar un numero entero.");
                     sc.nextLine();
                     result = 0;
                 }
                 if (result > max) {
+                    showln("Introduce una opcion valida");
                     result=0;
                 }
             }

@@ -29,7 +29,7 @@ public class Gameflow {
                 register = true;
                 break;
             case 3:
-                System.exit(0);
+                System.exit(-1);
         }
     }
     public void finiteStateMachine() {
@@ -45,11 +45,45 @@ public class Gameflow {
     }}
     private void login(){
         messageManager.showLogInMenu();
-        login = false;
+        String nick = messageManager.showReadNick();
+        if (nick.equals("SALIR")){
+            login = false;
+        }else{
+            String password = messageManager.showReadPassword();
+            if (password.equals("SALIR")){
+                login = false;
+            }else{
+                //Aquí manejando la DataBase habría que hacer cosicas
+                login = false;
+            }
+        }
+
     }
     private void register(){
+        register =false;
         messageManager.showRegisterMenu();
-        register=false;
+        String nick = messageManager.showReadNick();
+        if (nick.equals("SALIR")){
+            return;
+        }else{
+            String password = messageManager.showReadPassword();
+            if (password.equals("SALIR")){
+                return;
+            }else{
+                String confirmpassword = messageManager.showReadConfirmPassword();
+                if (confirmpassword.equals("SALIR")){
+                    return;
+                }else{
+                    if (confirmpassword.equals(password)){
+                        //Aquí haríammos cosicas con la Database
+                        messageManager.showUserRegistered(nick);
+                    }else{
+                        messageManager.showNotCoincidencePassword();
+                    }
+
+                }
+            }
+        }
     }
 
 }

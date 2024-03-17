@@ -30,12 +30,29 @@ public class MessageManager {
         String[] content = {"Las password no coinciden", "Vuelve a intentarlo"};
         showContent(content);
     }
+    public void showUserRegistered(String user) {
+        String[] content = {"El usuario "+user+" ha sido registrado correctamente"};
+        showContent(content);
+    }
 
     //Pantallas sin caja
     public void showLogInMenu(){
     t.showln("Inicio de Sesion");
     t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
     }
+    public String showReadPassword(){
+        t.show("Password: ");
+        return t.readString();
+    }
+    public String showReadNick(){
+        t.show("Nick: ");
+        return t.readString();
+    }
+    public String showReadConfirmPassword(){
+        t.show("Confirm Password: ");
+        return t.readString();
+    }
+
     public void showRegisterMenu(){
         t.showln("Registro");
         t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
