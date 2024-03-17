@@ -2,12 +2,13 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Modifier;
 import combate2000lasecuela.managers.MinionManager;
-
+import combate2000lasecuela.managers.ItemManager;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Stack;
 
 public abstract class Fighter {
-        private final String name;
+        private String name;
         private int gold;
         private int health;
         private int power;
@@ -18,7 +19,7 @@ public abstract class Fighter {
         private int suerteM;
         private int suerteW;
         private int suerteA;
-        public Fighter(String name,Stack <Weapon> myWeapon , int health, Stack <Armor> myArmor, int power, String type, Stack<Minion> myMinions) {
+        public Fighter(int suerteA,int suerteW,int suerteM) {
             this.name = name;
             this.health = health;
             this.power = power;
@@ -35,38 +36,33 @@ public abstract class Fighter {
             Random random = new Random();
             Minion esclavo;
             int numero= random.nextInt(80)+1+suerte;
+            for (int i=0; i<=numero;i++){
             esclavo = MinionManager.minionMap.get(numero);
-            if (esclavo instanceof Demon || esclavo instanceof Ghoul){
-                this.myMinions.push (esclavo);
-            }
-            else{
-                if ("Vampire".equals(this.type)){
-                    randomMinions();
-                    return null;
-                }else{
+                if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
                     this.myMinions.push(esclavo);
                 }
             }
             return this.myMinions;
         }
-    private Stack<Weapon> randomWeapons(int suerte){
+    private Stack<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Weapon arma;
-        int numero= random.nextInt(28)+1+suerte;
-        arma = ItemManager.weaponMap.get(numero);
-            this.myWeapon.push (arma);
+        int numero = random.nextInt(28) + 1 + suerte;
+        for (int i=1; i<=numero;i++){
+            arma = ItemManager.weaponMap.get(numero);
+            this.myWeapon.push(arma);
         }
-        return this.myMinions;
+        return this.myWeapon;
     }
     private Stack<Armor> randomArmor(int suerte){
         Random random = new Random();
         Armor armadura;
         int numero= random.nextInt(28)+1+suerte;
-        armadura = ItemManager.armorMap.get(numero);
-            this.myMinions.push (armadura);
-        return this.myMinions;
+        for (int i=1; i<=numero; i++) {
+            armadura = ItemManager.armorMap.get(numero);
+            this.myArmor.push(armadura);
+        }
+        return this.myArmor;
     }
-    }
-
     
 }
