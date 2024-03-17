@@ -8,7 +8,7 @@ public class Weapon extends Item implements Serializable {
     private final boolean isOneHand;
     private final int damage;
     public Weapon (String linea){
-        String [] valores = this.linea.split(";");
+        String [] valores = linea.split(";");
         this.damage = Integer.parseInt(valores[2]);
         this.isOneHand = interpretarFichero( valores[3]);
     }

@@ -7,12 +7,10 @@ public class Minion implements Saveable {
     private String name;
     private int health;
     private String tipo;
-    private String linea;
     public Minion(String linea){
-        String [] valores = this.linea.split(";");
+        String [] valores = linea.split(";");
         this.name = valores[2];
         this.tipo = valores[3];
-
     }
     @Override
     public String getId() {

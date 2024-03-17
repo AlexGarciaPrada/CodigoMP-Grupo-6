@@ -3,28 +3,26 @@ package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Modifier;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
-
+import combate2000lasecuela.Player;
 public abstract class Fighter {
         private String name;
         private int gold;
         private int health;
         private int power;
-        private String type;
         private Stack<Minion> myMinions;
         private Stack <Armor> myArmor;
         private Stack <Weapon> myWeapon;
         private int suerteM;
         private int suerteW;
         private int suerteA;
-
+        private TFighter type;
         public Fighter(int suerteA,int suerteW,int suerteM) {
             this.name = name;
             this.health = health;
             this.power = power;
-            this.type = type;
+            this.type = Player.elegirTipo();
             this.suerteM=type.suerteM;
             this.suerteW=type.suerteW;
             this.suerteA=type.suerteA;
