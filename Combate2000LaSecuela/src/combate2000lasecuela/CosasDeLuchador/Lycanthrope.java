@@ -15,5 +15,5 @@ int rage;
         this.suerteM=suerteM;
         this.suerteW=suerteW;
         this.rage=0;
-    }//a espensas del código de Laura
+    }//a expensas del código de Laura
 }

@@ -2,6 +2,7 @@ package combate2000lasecuela;
 
 import java.util.UUID;
 
+import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 public class Player extends User {
@@ -24,6 +25,9 @@ public class Player extends User {
     }
     public void createCharacter() {
      
+    }
+    public static TFighter elegirTipo(){
+        return null;
     }
     public static String generateRandomChallengeKey() {
         return UUID.randomUUID().toString();
