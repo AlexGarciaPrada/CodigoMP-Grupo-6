@@ -1,8 +1,7 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.Player;
-import combate2000lasecuela.User;
-import combate2000lasecuela.managers.AbstractManager;
+import combate2000lasecuela.CosasDeLuchador.User;
 
 import java.util.HashMap;
 import java.util.Map;
