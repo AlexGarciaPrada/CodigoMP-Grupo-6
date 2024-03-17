@@ -11,4 +11,23 @@ public class Minion implements Saveable {
     public String getId() {
         return null;
     }
+
+
+
+    //------------------------ GETTERS & SETTERS
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 }
