@@ -19,6 +19,7 @@ public abstract class Fighter {
         private int suerteM;
         private int suerteW;
         private int suerteA;
+
         public Fighter(int suerteA,int suerteW,int suerteM) {
             this.name = name;
             this.health = health;
