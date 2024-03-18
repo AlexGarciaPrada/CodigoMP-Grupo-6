@@ -71,5 +71,10 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
     }
 
     //------------------------------------ PARA SABER SI UN ELEMENTO ESTÁ EN EL MAPA
-    public boolean isInTheMap(Map<String, Map<String,T>> elements,String key){ return elements.containsKey(key);}
+    public boolean isInTheMap(String submap, String key){
+         if (this.elements.get(submap) == null){
+             return false;
+         }
+         return this.elements.get(submap).containsKey(key);
+    }
 }
