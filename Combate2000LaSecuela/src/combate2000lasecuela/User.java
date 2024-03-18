@@ -1,4 +1,4 @@
-package combate2000lasecuela.CosasDeLuchador;
+package combate2000lasecuela;
 
 import java.io.Serializable;
 import combate2000lasecuela.Saveable;

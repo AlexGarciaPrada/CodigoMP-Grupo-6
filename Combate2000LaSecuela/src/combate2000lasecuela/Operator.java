@@ -1,6 +1,5 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;

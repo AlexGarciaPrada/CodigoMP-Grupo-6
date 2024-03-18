@@ -3,7 +3,6 @@ package combate2000lasecuela;
 import java.util.UUID;
 
 import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 public class Player extends User {
     private String registerNumber;
