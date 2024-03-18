@@ -10,7 +10,12 @@ public class MessageManager {
 
     //Pantallas concretas con caja
     public int showInitMenu(){
-        String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3. Salir"};
+        String [] content ={"Bienvenido a Combate2000","1. Iniciar Sesion","2. Registro","3. Salir"};
+        showContent(content);
+        return (t.read(3));
+    }
+    public int showUserType(){
+        String [] content ={"Introduce el tipo de usuario que deseas registrar","1. Jugador","2. Operador","3. Salir"};
         showContent(content);
         return (t.read(3));
     }
@@ -46,6 +51,10 @@ public class MessageManager {
     }
     public String showReadNick(){
         t.show("Nick: ");
+        return t.readString();
+    }
+    public String showReadName(){
+        t.show("Nombre: ");
         return t.readString();
     }
     public String showReadConfirmPassword(){
