@@ -14,4 +14,5 @@ public class UserManager extends AbstractManager<User> {
         this.addCollection("Operator",new HashMap<String,Player>());
     }
 
+
 }
