@@ -2,7 +2,7 @@ package combate2000lasecuela;
 
 import java.util.UUID;
 
-import combate2000lasecuela.CosasDeLuchador.User;
+import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.managers.ChallengeManager;
 public class Player extends User {
     private String registerNumber;
@@ -16,13 +16,19 @@ public class Player extends User {
         this.blocked = blocked;
     }
 
+    public static TFighter elegirTipo() {
+        return null;
+    }
+
     public Challenge ChallengePlayer(){
         //mensaje del messagemanager preguntando a quien quiere retar
         ChallengeManager cm = new ChallengeManager();
         cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
         return cm.loadElement(generateRandomChallengeKey());
     }
-
+    public void createCharacter() {
+     
+    }
     public static String generateRandomChallengeKey() {
         return UUID.randomUUID().toString();
     }

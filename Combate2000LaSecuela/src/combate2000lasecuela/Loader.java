@@ -2,8 +2,8 @@ package combate2000lasecuela;
 
 import java.io.*;
 
-public class Database implements Serializable {
-    private String filename;
+public class Loader implements Serializable {
+    /*private String filename;
     private String[] parts;
     private Minion[] minionsArray;
 
@@ -12,7 +12,7 @@ public class Database implements Serializable {
         this.filename = filename;
     }
 
-    /*
+
     public String loadMinions() {
         filename = "./files/Esbirros.txt";
         try {
@@ -32,12 +32,12 @@ public class Database implements Serializable {
             e.printStackTrace();
         }
     }
-*/
+
     public void setMinionsArray(Minion minion){
         minionsArray = new Minion[10];
         for (int i = 0; i < minionsArray.length; i++) {
             minionsArray[i] = minion;
         }
-    }
+    }*/
 
 }
