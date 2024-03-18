@@ -14,7 +14,7 @@ public class Database {
         usermanager.addElement("Player","Player",player);
     }
     public boolean isNickUsed(String nick){
-        if (usermanager.isInTheMap(usermanager.getElements(),nick)){
+        if (usermanager.isInTheMap("Player",nick)){
             return true;
         }
         else{
