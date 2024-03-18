@@ -83,4 +83,15 @@ public class MessageManager {
     }
 
 
+    public String challengeMenu() {
+        t.showln("Write the nick of the player you would like to challenge: ");
+        return t.readString();
+    }
+
+    public int selectGold() {
+        int max = 10000;
+        t.showln("Write the amount of the gold you would like to bet: ");
+        return t.read(max);
+    }
+
 }

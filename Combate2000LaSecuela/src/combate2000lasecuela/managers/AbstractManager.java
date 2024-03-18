@@ -70,4 +70,5 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         this.elements = elements;
     }
 
+    public Map<String, T> getCollection(String type) {return elements.get(type);}
 }
