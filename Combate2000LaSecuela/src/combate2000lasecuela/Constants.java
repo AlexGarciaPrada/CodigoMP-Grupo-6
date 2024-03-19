@@ -13,15 +13,22 @@ public class Constants {
     public static final String[] userNotFoundText = {"El nick introducido no está registrado en el sistema"};
     public static final String[] wrongPasswordText = {"Password Incorrecta"};
     public static final String[] notCoincidencePasswordText = {"Las password no coinciden", "Vuelve a intentarlo"};
+    public static final String[] playerMenuText={"1. Crear Personaje","2. Borrar Personaje","3. Administrar equipo personaje"
+            ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Cerrar Sesion","8. Borrar Usuario"};
+    public static final String [] operatorMenuText={"1. Editar personaje","2. Editar Equipo, Esbirros, Modificadores","3. Validar Desafios",
+            "4. Bloquear Usuario","5. Desbloquear Usuario","6. Cerrar Sesion","7. Borrar Usuario"};
+
+
     public static final String userRegistered1 = "El usuario ";
     public static final String userRegistered2 = " ha sido registrado correctamente";
-
     public static final String logInText ="Inicio de Sesion";
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
     public static final String registerText ="Registro";
     public static final String nameText="Nombre: ";
     public static final String passwordText="Password: ";
     public static final String nickText="Nick: ";
+    public static final String showWelcome="Bienvenido ";
     public static final String confirmPasswordText="Repetir password: ";
+
 
 }

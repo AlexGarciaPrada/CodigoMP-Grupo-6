@@ -1,6 +1,9 @@
 package combate2000lasecuela.screen;
+import combate2000lasecuela.Player;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.screen.Textterminal;
+
+import java.util.Arrays;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -35,6 +38,18 @@ public class MessageManager {
     public void showUserRegistered(String user) {
         String[] content = {userRegistered1+user+userRegistered2};
         showContent(content);
+    }
+    public int showPlayerMenu(String name){
+        t.showln("");
+        t.showln(showWelcome+name);
+        showContent(playerMenuText);
+        return t.read(8);
+    }
+    public int showOperatorMenu(String name){
+        t.showln("");
+        t.showln(showWelcome+name);
+        showContent(operatorMenuText);
+        return t.read(7);
     }
 
     //Pantallas sin caja
