@@ -12,12 +12,11 @@ public class Minion implements Saveable {
         this.name = valores[2];
         this.tipo = valores[3];
     }
+
     @Override
     public String getId() {
         return null;
     }
-
-
 
     //------------------------ GETTERS & SETTERS
     public String getName() {
@@ -35,4 +34,6 @@ public class Minion implements Saveable {
     public void setHealth(int health) {
         this.health = health;
     }
+
+
 }

@@ -1,7 +1,6 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.Saveable;
-
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
