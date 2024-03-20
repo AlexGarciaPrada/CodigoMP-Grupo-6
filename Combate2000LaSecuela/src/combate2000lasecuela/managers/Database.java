@@ -26,11 +26,6 @@ public class Database {
         //Falta un método para guardar el fichero
     }
     public void addOperator(Operator operator){
-        usermanager.addElement("Operator","Operator",operator);
-        usermanager.addElement("Player",player.getNick(),player);
-        //Falta un método para guardar el fichero
-    }
-    public void addOperator(Operator operator){
         usermanager.addElement("Operator", operator.getNick(), operator);
     }
     public boolean isNickUsed(String nick){
