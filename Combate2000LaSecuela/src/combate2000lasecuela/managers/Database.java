@@ -22,7 +22,7 @@ public class Database {
 
     public void addPlayer(Player player){
 
-        usermanager.addElement("Player","Player",player);
+        usermanager.addElement("Player", player.getNick(), player);
         //Falta un método para guardar el fichero
     }
     public void addOperator(Operator operator){
