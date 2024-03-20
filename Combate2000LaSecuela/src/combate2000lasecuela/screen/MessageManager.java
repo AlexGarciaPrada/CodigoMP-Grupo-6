@@ -103,15 +103,15 @@ public class MessageManager {
         t.showln("|" + "-".repeat(wide) + "|");
     }
 
-
+   //creo que ya no vamos a usar estos dos pero weno
     public String challengeMenu() {
-        t.showln("Write the nick of the player you would like to challenge: ");
+        t.showln("Escriba el NICK del jugador que desea retar: ");
         return t.readString();
     }
 
     public int selectGold() {
         int max = 10000;
-        t.showln("Write the amount of the gold you would like to bet: ");
+        t.showln("Indique cuanto oro le gustaria apostar: ");
         return t.read(max);
     }
 
