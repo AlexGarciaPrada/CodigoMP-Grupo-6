@@ -28,6 +28,9 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         return this.elements.get(type).remove(mapKey);
     }
 
+    public void addElementSubMap(String submap, String key, T element){
+        this.elements.get(submap).put(key, element);
+    }
 
     // --------------------------------- SERIALIZATION METHODS
     public void saveElement(T element){
