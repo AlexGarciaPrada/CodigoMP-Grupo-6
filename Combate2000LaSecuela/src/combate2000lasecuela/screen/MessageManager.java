@@ -1,6 +1,12 @@
 package combate2000lasecuela.screen;
+import combate2000lasecuela.Player;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.screen.Textterminal;
+
+import java.util.Arrays;
+
+import static combate2000lasecuela.Constants.*;
+
 public class MessageManager {
     private Terminal t;
 
@@ -10,52 +16,67 @@ public class MessageManager {
 
     //Pantallas concretas con caja
     public int showInitMenu(){
-        String [] content ={"Bienvenido a Combate2000","1.Iniciar Sesion","2. Registro","3. Salir"};
-        showContent(content);
+        showContent(initMenuText);
+        return (t.read(3));
+    }
+    public int showUserType(){
+        showContent(userTypeMenuText);
         return (t.read(3));
     }
     public void showNickUsed(){
-        String [] content ={"El Nick escogido esta en uso por otro usuario"};
-        showContent(content);
+        showContent(nickUsedText);
     }
     public void showUserNotFound(){
-        String[] content = {"No existe ningun usuario con el nick introducido","Comprueba que esta bien escrito o ve a la opcion de registro"};
-        showContent(content);
+        showContent(userNotFoundText);
     }
     public void showWrongPassword(){
-        String[] content = {"Password incorrecta"};
-        showContent(content);
+        showContent(wrongPasswordText);
     }
     public void showNotCoincidencePassword() {
-        String[] content = {"Las password no coinciden", "Vuelve a intentarlo"};
-        showContent(content);
+        showContent(notCoincidencePasswordText);
     }
     public void showUserRegistered(String user) {
-        String[] content = {"El usuario "+user+" ha sido registrado correctamente"};
+        String[] content = {userRegistered1+user+userRegistered2};
         showContent(content);
+    }
+    public int showPlayerMenu(String name){
+        t.showln("");
+        t.showln(showWelcome+name);
+        showContent(playerMenuText);
+        return t.read(8);
+    }
+    public int showOperatorMenu(String name){
+        t.showln("");
+        t.showln(showWelcome+name);
+        showContent(operatorMenuText);
+        return t.read(7);
     }
 
     //Pantallas sin caja
     public void showLogInMenu(){
-    t.showln("Inicio de Sesion");
-    t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
+    t.showln(logInText);
+    t.showln(exitAdvice);
     }
     public String showReadPassword(){
-        t.show("Password: ");
+        t.show(passwordText);
         return t.readString();
     }
     public String showReadNick(){
-        t.show("Nick: ");
+        t.show(nickText);
+        return t.readString();
+    }
+    public String showReadName(){
+        t.show(nameText);
         return t.readString();
     }
     public String showReadConfirmPassword(){
-        t.show("Confirm Password: ");
+        t.show(confirmPasswordText);
         return t.readString();
     }
 
     public void showRegisterMenu(){
-        t.showln("Registro");
-        t.showln("(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)");
+        t.showln(registerText);
+        t.showln(exitAdvice);
     }
 
     //Funcionamiento interno de las pantallas
