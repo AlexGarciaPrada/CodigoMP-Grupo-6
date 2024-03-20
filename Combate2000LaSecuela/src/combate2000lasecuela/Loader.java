@@ -10,6 +10,8 @@ import java.io.*;
 public class Loader implements Serializable {
     private String filename;
     private String[] parts;
+    private ItemManager im;
+    private MinionManager mm;
 
     public Loader(String filename) {
         this.filename = filename;
@@ -41,19 +43,18 @@ public class Loader implements Serializable {
     // ------------------------ MINIONS
     private void readMinionFile(String line) {
         parts = line.split(";");
-        MinionManager mm = new MinionManager();
         mm.addElement("Minion", parts[0], new Minion(line));
     }
 
+    // ------------------------ WEAPONS
     private void readWeaponFile(String line) {
         parts = line.split(";");
-        ItemManager im = new ItemManager();
         im.addElementSubMap("Weapon", parts[0], new Weapon(line));
     }
 
+    // ------------------------ ARMORS
     private void readArmorFile(String line) {
         parts = line.split(";");
-        ItemManager im = new ItemManager();
         im.addElementSubMap("Armor", parts[0], new Armor(line));
     }
 }
