@@ -103,5 +103,16 @@ public class MessageManager {
         t.showln("|" + "-".repeat(wide) + "|");
     }
 
+   //creo que ya no vamos a usar estos dos pero weno
+    public String challengeMenu() {
+        t.showln("Escriba el NICK del jugador que desea retar: ");
+        return t.readString();
+    }
+
+    public int selectGold() {
+        int max = 10000;
+        t.showln("Indique cuanto oro le gustaria apostar: ");
+        return t.read(max);
+    }
 
 }
