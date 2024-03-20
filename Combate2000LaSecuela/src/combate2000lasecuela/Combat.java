@@ -20,4 +20,3 @@ public class Combat implements Saveable {
 }
 
 
-

@@ -22,7 +22,7 @@ public abstract class Fighter {
             this.name = name;
             this.health = health;
             this.power = power;
-            this.type = type;
+            this.type = Player.elegirTipo();
             this.suerteM=type.suerteM;
             this.suerteW=type.suerteW;
             this.suerteA=type.suerteA;
@@ -48,8 +48,8 @@ public abstract class Fighter {
         Weapon arma;
         int numero = random.nextInt(28) + 1 + suerte;
         for (int i=1; i<=numero;i++){
-            //arma = ItemManager.weaponMap.get(numero);
-            //this.myWeapon.push(arma);
+            arma = ItemManager.weaponMap.get(numero);
+            this.myWeapon.push(arma);
         }
         return this.myWeapon;
     }
@@ -58,8 +58,8 @@ public abstract class Fighter {
         Armor armadura;
         int numero= random.nextInt(28)+1+suerte;
         for (int i=1; i<=numero; i++) {
-            //armadura = ItemManager.armorMap.get(numero);
-            //this.myArmor.push(armadura);
+            armadura = ItemManager.armorMap.get(numero);
+            this.myArmor.push(armadura);
         }
         return this.myArmor;
     }
