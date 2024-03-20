@@ -22,12 +22,19 @@ public class Database {
 
     public void addPlayer(Player player){
 
-        usermanager.addElement("Player","Player",player);
+        usermanager.addElement("Player", player.getNick(), player);
         //Falta un método para guardar el fichero
     }
     public void addOperator(Operator operator){
         usermanager.addElement("Operator", operator.getNick(), operator);
     }
+    public void erasePlayer(Player player){
+        usermanager.getElements().get("Player").remove(player.getNick());
+    }
+    public void eraseOperator(Operator operator){
+        usermanager.getElements().get("Operator").remove(operator.getNick());
+    }
+
     public boolean isNickUsed(String nick){
         if ((usermanager.isInTheMap("Player",nick)) || (usermanager.isInTheMap("Operator",nick))){
             return true;

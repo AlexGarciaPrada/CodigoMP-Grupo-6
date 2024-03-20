@@ -15,6 +15,7 @@ public class Gameflow {
     private boolean login;
     private boolean playerlogin;
     private boolean operatorlogin;
+    private boolean eraseuser;
 
 
 
@@ -25,6 +26,7 @@ public class Gameflow {
         login=false;
         playerlogin=false;
         operatorlogin=false;
+        eraseuser=false;
 
     }
 
@@ -48,10 +50,22 @@ public class Gameflow {
         } else if (register) {
             register();
         } else if (playerlogin) {
-            playerLogin((Player) user);
+            if (eraseuser){
+                eraseUser(user);
+            }else{
+                playerLogin((Player) user);
+            }
+
         } else if (operatorlogin) {
-            operatorLogin((Operator) user);
-        } else {
+            if (eraseuser){
+                eraseUser(user);
+            }else{
+                operatorLogin((Operator) user);
+            }
+        }else if (eraseuser){
+
+        }
+        else {
             startMenu();
         }
 
@@ -153,6 +167,7 @@ public class Gameflow {
                 playerlogin=false;
                 break;
             case 8: //Borrar Usuario
+                eraseuser=true;
                 break;
         }
     }
@@ -173,10 +188,23 @@ public class Gameflow {
                 operatorlogin=false;
                 break;
             case 7: //Borrar Usuario
+                eraseuser=true;
                 break;
         }
 
 
     }
+    public void eraseUser(User user){
+        int option = messageManager.showEraseUser(user.getNick());
+        eraseuser=false;
+        if (option == 1){
+            if (playerlogin){
+                database.erasePlayer((Player) user);
+                playerlogin=false;
+            }else{
+                database.eraseOperator((Operator) user);
+                operatorlogin=false;
+            }
+    }}
 
 }

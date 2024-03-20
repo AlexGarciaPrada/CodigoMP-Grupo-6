@@ -26,6 +26,7 @@ public class MessageManager {
     public void showNickUsed(){
         showContent(nickUsedText);
     }
+    public void showUserErased(){showContent(userCorrectlyErasedText);}
     public void showUserNotFound(){
         showContent(userNotFoundText);
     }
@@ -44,6 +45,12 @@ public class MessageManager {
         t.showln(showWelcome+name);
         showContent(playerMenuText);
         return t.read(8);
+    }
+    public int showEraseUser(String nick){
+        t.showln("");
+        t.showln(adviceErasetext+nick);
+        showContent(questionErasetext);
+        return t.read(2);
     }
     public int showOperatorMenu(String name){
         t.showln("");

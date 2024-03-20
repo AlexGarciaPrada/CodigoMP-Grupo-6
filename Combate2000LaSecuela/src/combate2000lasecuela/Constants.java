@@ -13,7 +13,8 @@ public class Constants {
     public static final String[] userNotFoundText = {"El nick introducido no está registrado en el sistema"};
     public static final String[] wrongPasswordText = {"Password Incorrecta"};
     public static final String[] notCoincidencePasswordText = {"Las password no coinciden", "Vuelve a intentarlo"};
-
+    public static final String [] userCorrectlyErasedText={"El usuario ha sido correctamente borrado"};
+    public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion revertible","1. Confirmar","2. Salir"};
 
     public static final String[] playerMenuText={"1. Crear Personaje","2. Borrar Personaje","3. Administrar equipo personaje"
             ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Cerrar Sesion","8. Borrar Usuario"};
@@ -31,6 +32,8 @@ public class Constants {
     public static final String nickText="Nick: ";
     public static final String confirmPasswordText="Repetir password: ";
     public static final String showWelcome="Bienvenido ";
+
+    public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
 
 
 
