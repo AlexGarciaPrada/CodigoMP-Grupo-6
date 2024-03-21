@@ -1,7 +1,6 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.Saveable;
-
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
@@ -29,6 +28,9 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         return this.elements.get(type).remove(mapKey);
     }
 
+    public void addElementSubMap(String submap, String key, T element){
+        this.elements.get(submap).put(key, element);
+    }
 
     // --------------------------------- SERIALIZATION METHODS
     public void saveElement(T element){
@@ -70,6 +72,9 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         this.elements = elements;
     }
 
+
+    public Map<String, T> getCollection(String type) {return elements.get(type);}
+
     //------------------------------------ PARA SABER SI UN ELEMENTO ESTÁ EN EL MAPA
     public boolean isInTheMap(String submap, String key){
          if (this.elements.get(submap) == null){
@@ -77,4 +82,5 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
          }
          return this.elements.get(submap).containsKey(key);
     }
+
 }

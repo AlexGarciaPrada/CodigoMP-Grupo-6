@@ -7,17 +7,18 @@ public class Minion implements Saveable {
     private String name;
     private int health;
     private String tipo;
+    private int minionId;
+
     public Minion(String linea){
         String [] valores = linea.split(";");
         this.name = valores[2];
         this.tipo = valores[3];
     }
+
     @Override
     public String getId() {
         return null;
     }
-
-
 
     //------------------------ GETTERS & SETTERS
     public String getName() {
@@ -35,4 +36,13 @@ public class Minion implements Saveable {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    public int getMinionId() {
+        return minionId;
+    }
+
+    public void setMinionId(int minionId) {
+        this.minionId = minionId;
+    }
+
 }
