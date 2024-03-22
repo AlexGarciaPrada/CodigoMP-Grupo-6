@@ -22,7 +22,7 @@ public class Constants {
             "4. Bloquear Usuario","5. Desbloquear Usuario","6. Cerrar Sesion","7. Borrar Usuario"};
 
 
-    public static final String userRegistered1 = "El usuario ";
+    public static final String theUserText = "El usuario ";
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
@@ -35,11 +35,13 @@ public class Constants {
     public static final String rankingText="Ranking de jugadores: ";
     public static final String selectUserToBlockText="Introduce el nick de usuario que deseas bloquear: ";
     public static final String blockUserText="BLOQUEO DE USUARIOS";
-    public static final String selectUserToUnblockText="Introduce el nick de usuario que deseas desbloquear:n";
+    public static final String selectUserToUnblockText="Introduce el nick de usuario que deseas desbloquear: ";
     public static final String unblockUserText="DESBLOQUEO DE USUARIOS";
     public static final String [] alreadyBlockText={"Este usuario ya esta bloqueado"};
     public static final String [] alreadyUnblockText={"Este usuario ya esta desbloqueado"};
     public static final String[] playerBlockedText={"No se puede iniciar sesion porque el usuario esta bloqueado"};
+    public static final String userBlock="ha sido bloqueado correctamente";
+    public static final String userUnblock="ha sido desbloqueado correctamente";
 
 
 
