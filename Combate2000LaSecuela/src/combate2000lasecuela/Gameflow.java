@@ -15,6 +15,10 @@ public class Gameflow {
     private boolean login;
     private boolean playerlogin;
     private boolean operatorlogin;
+    private boolean eraseuser;
+    private boolean ranking;
+    private boolean block;
+    private boolean unblock;
 
 
 
@@ -25,6 +29,10 @@ public class Gameflow {
         login=false;
         playerlogin=false;
         operatorlogin=false;
+        eraseuser=false;
+        ranking=false;
+        block=false;
+        unblock=false;
 
     }
 
@@ -48,14 +56,34 @@ public class Gameflow {
         } else if (register) {
             register();
         } else if (playerlogin) {
-            playerLogin((Player) user);
+            playerMachine((Player) user);
         } else if (operatorlogin) {
-            operatorLogin((Operator) user);
+            operatorMachine((Operator) user);
         } else {
             startMenu();
         }
 
     }}
+    private void playerMachine(Player player){
+        if (eraseuser){
+            eraseUser(user);
+        } else if (ranking) {
+            playersRanking();
+        } else{
+            playerLogin(player);
+        }
+    }
+    private void operatorMachine(Operator operator){
+        if (eraseuser){
+            eraseUser(operator);
+        } else if (block) {
+            blockUser(operator);
+        } else if (unblock) {
+            unblockUser(operator);
+        } else{
+            operatorLogin(operator);
+        }
+    }
     private void login(){
         login = false;
         messageManager.showLogInMenu();
@@ -68,11 +96,15 @@ public class Gameflow {
                 return;
             }else{
                if (database.isNickUsed(nick)){
-                   
                    if (database.isPasswordCorrect(nick,password)){
-                       user = database.getUser(nick,password);
+                       user = database.getUser(nick);
                        if (user instanceof Player){
-                           playerlogin=true;
+                           if (!((Player) user).isBlocked()){
+                               playerlogin = true;
+                           }else{
+                               messageManager.showPlayerBlocked();
+                               }
+
                        }else{
                            operatorlogin=true;
                        }
@@ -148,11 +180,13 @@ public class Gameflow {
             case 5: //Consultar registro de oro
                 break;
             case 6: //Ver Ranking
+                ranking=true;
                 break;
             case 7: //Cerrar Sesion
                 playerlogin=false;
                 break;
             case 8: //Borrar Usuario
+                eraseuser=true;
                 break;
         }
     }
@@ -166,17 +200,72 @@ public class Gameflow {
             case 3: //Validar desafios
                 break;
             case 4: //Bloquear Usuario
+                block=true;
                 break;
             case 5: //Desbloquear Usuario
+                unblock=true;
                 break;
             case 6: //Cerrar Sesion
                 operatorlogin=false;
                 break;
             case 7: //Borrar Usuario
+                eraseuser=true;
                 break;
         }
 
 
+    }
+    private void eraseUser(User user){
+        int option = messageManager.showEraseUser(user.getNick());
+        eraseuser=false;
+        if (option == 1){
+            if (playerlogin){
+                database.erasePlayer((Player) user);
+                playerlogin=false;
+            }else{
+                database.eraseOperator((Operator) user);
+                operatorlogin=false;
+            }
+    }}
+    private void playersRanking(){
+        messageManager.showRanking(database.getRanking());
+        ranking=false;
+    }
+    private void blockUser(Operator operator) {
+        block = false;
+        String nick = messageManager.showNickToBlock();
+        if (database.isNickUsed(nick)) {
+            User auxuser = database.getUser(nick);
+            if (auxuser instanceof Player) {
+                if (!((Player) auxuser).isBlocked()) {
+                    operator.blockPlayer((Player) auxuser);
+                }else{
+                    messageManager.showAlreadyBlock();
+                }
+            } else {
+                messageManager.showUserNotFound();
+            }
+        } else {
+            messageManager.showUserNotFound();
+        }
+    }
+    private void unblockUser(Operator operator) {
+        unblock = false;
+        String nick = messageManager.showNickToUnblock();
+        if (database.isNickUsed(nick)) {
+            User auxuser = database.getUser(nick);
+            if (auxuser instanceof Player) {
+                if (((Player) auxuser).isBlocked()) {
+                    operator.unblockPlayer((Player) auxuser);
+                }else{
+                    messageManager.showAlreadyUnblock();
+                }
+            } else {
+                messageManager.showUserNotFound();
+            }
+        } else {
+            messageManager.showUserNotFound();
+        }
     }
 
 }

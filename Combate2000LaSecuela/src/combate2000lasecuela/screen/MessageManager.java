@@ -3,7 +3,9 @@ import combate2000lasecuela.Player;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.screen.Textterminal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -26,6 +28,7 @@ public class MessageManager {
     public void showNickUsed(){
         showContent(nickUsedText);
     }
+    public void showUserErased(){showContent(userCorrectlyErasedText);}
     public void showUserNotFound(){
         showContent(userNotFoundText);
     }
@@ -39,11 +42,20 @@ public class MessageManager {
         String[] content = {userRegistered1+user+userRegistered2};
         showContent(content);
     }
+    public void showPlayerBlocked(){
+        showContent(playerBlockedText);
+    }
     public int showPlayerMenu(String name){
         t.showln("");
         t.showln(showWelcome+name);
         showContent(playerMenuText);
         return t.read(8);
+    }
+    public int showEraseUser(String nick){
+        t.showln("");
+        t.showln(adviceErasetext+nick);
+        showContent(questionErasetext);
+        return t.read(2);
     }
     public int showOperatorMenu(String name){
         t.showln("");
@@ -51,7 +63,17 @@ public class MessageManager {
         showContent(operatorMenuText);
         return t.read(7);
     }
+    public void showRanking (ArrayList<String> ranking){
+        t.showln(rankingText);
+        showContent(ranking.toArray(new String[ranking.size()]));
 
+    }
+    public void showAlreadyBlock(){
+        showContent(alreadyBlockText);
+    }
+    public void showAlreadyUnblock(){
+        showContent(alreadyUnblockText);
+    }
     //Pantallas sin caja
     public void showLogInMenu(){
     t.showln(logInText);
@@ -73,11 +95,22 @@ public class MessageManager {
         t.show(confirmPasswordText);
         return t.readString();
     }
+    public String showNickToBlock(){
+        t.showln(blockUserText);
+        t.show(selectUserToBlockText);
+        return t.readString();
+    }
+    public String showNickToUnblock(){
+        t.showln(unblockUserText);
+        t.show(selectUserToUnblockText);
+        return t.readString();
+    }
 
     public void showRegisterMenu(){
         t.showln(registerText);
         t.showln(exitAdvice);
     }
+
 
     //Funcionamiento interno de las pantallas
     private int getMaxLine(String[] content) {
@@ -101,18 +134,6 @@ public class MessageManager {
         }
         // Tapa inferior
         t.showln("|" + "-".repeat(wide) + "|");
-    }
-
-   //creo que ya no vamos a usar estos dos pero weno
-    public String challengeMenu() {
-        t.showln("Escriba el NICK del jugador que desea retar: ");
-        return t.readString();
-    }
-
-    public int selectGold() {
-        int max = 10000;
-        t.showln("Indique cuanto oro le gustaria apostar: ");
-        return t.read(max);
     }
 
 }

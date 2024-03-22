@@ -16,16 +16,16 @@ public class Player extends User {
     public Player(String name, String password, String nick) {
         super(name, password, nick);
         this.registerNumber = registerNumber;
-        this.victories = victories;
-        this.blocked = blocked;
-        this.fighter = fighter;
+        this.victories=0;
+        this.blocked = false;
+        this.fighter =null;
     }
 
     public int getVictories() {return victories;}
 
     public Fighter getFighter() {return fighter;}
 
-    public void setBlocked() {blocked = true;}
+    public void setBlocked(boolean state) {blocked = state;}
 
     public boolean isBlocked() {return blocked;}
 
