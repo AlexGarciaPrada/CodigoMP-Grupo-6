@@ -239,6 +239,7 @@ public class Gameflow {
             if (auxuser instanceof Player) {
                 if (!((Player) auxuser).isBlocked()) {
                     operator.blockPlayer((Player) auxuser);
+                    messageManager.showUserBlocked(auxuser.getNick());
                 }else{
                     messageManager.showAlreadyBlock();
                 }
@@ -257,6 +258,7 @@ public class Gameflow {
             if (auxuser instanceof Player) {
                 if (((Player) auxuser).isBlocked()) {
                     operator.unblockPlayer((Player) auxuser);
+                    messageManager.showUserUnblocked(auxuser.getNick());
                 }else{
                     messageManager.showAlreadyUnblock();
                 }
