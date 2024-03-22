@@ -32,6 +32,16 @@ public class Constants {
     public static final String nickText="Nick: ";
     public static final String confirmPasswordText="Repetir password: ";
     public static final String showWelcome="Bienvenido ";
+    public static final String rankingText="Ranking de jugadores: ";
+    public static final String selectUserToBlockText="Introduce el nick de usuario que deseas bloquear: ";
+    public static final String blockUserText="BLOQUEO DE USUARIOS";
+    public static final String selectUserToUnblockText="Introduce el nick de usuario que deseas desbloquear:n";
+    public static final String unblockUserText="DESBLOQUEO DE USUARIOS";
+    public static final String [] alreadyBlockText={"Este usuario ya esta bloqueado"};
+    public static final String [] alreadyUnblockText={"Este usuario ya esta desbloqueado"};
+    public static final String[] playerBlockedText={"No se puede iniciar sesion porque el usuario esta bloqueado"};
+
+
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
 

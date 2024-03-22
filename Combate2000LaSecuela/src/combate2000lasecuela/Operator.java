@@ -14,14 +14,12 @@ public class Operator extends User {
         super(name, password, nick);
     }
 
-    public Player blockPlayer(String nick){
-        //mensaje del messagemanager preguntando a quien quiere bloquear
-        return (Player) um.deleteElement("Player", nick);
+    public void blockPlayer(Player player){
+        player.setBlocked(true);
     }
 
-    public void unblockPlayer(String nick){
-        //mensaje del messagemanager enseñando los usuarios y que devuelve a quien quiere desbloquear
-        um.addElement("Player", nick, (Player) um.loadElement(nick));
+    public void unblockPlayer(Player player){
+        player.setBlocked(false);
     }
 
     public void validateChallenge(String challengeKey){
