@@ -38,6 +38,8 @@ public class Operator extends User {
         }
     }
 
+
+    //este metodo probablemente deba ir en gameFlow y cada opcion aqui debido a que se necesita messageManagr
     public void editCharacter(Player player, int option) {
         Fighter f = player.getFighter();
         switch(option) {
