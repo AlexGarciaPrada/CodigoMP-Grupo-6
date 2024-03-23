@@ -5,6 +5,7 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
@@ -51,17 +52,17 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         }
     }
 
-    public Map loadElement(String fileName) {
+    public void loadElement(String fileName) {
         try {
             String route = String.format("./config/%s.ser", fileName);
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(route));
-            Map element = (Map) ois.readObject();
+            HashMap element = (HashMap) ois.readObject();
             ois.close();
-            return element;
+            this.elements=element;
         }
         catch (IOException e) {
             System.out.println("ERROR LOADING");
-            return null;
+            return;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
