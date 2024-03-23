@@ -28,8 +28,8 @@ public class Operator extends User {
         int option = terminal.read(2);
         ChallengeManager cm = new ChallengeManager();
         if(option == 1){
-            cm.loadElement(challengeKey).setAccepted(true);
-
+            // cm.loadElement(challengeKey).setAccepted(true);
+            // LOAD ES PARA CARGAR COSAS AL INICIAR EL PROGRAMA
         }
         else if(option == 2){
             cm.deleteElement("Challenge", challengeKey);
