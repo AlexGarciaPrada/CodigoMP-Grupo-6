@@ -21,10 +21,10 @@ public abstract class User implements Saveable {
         // --------------------------------------   GETTERS AND SETTERS
 
     @Override
-    public String getId() {return registerNumber;}
+    public String getId() {return this.registerNumber;}
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public MessageManager getMessageManager() {return messageManager;}
@@ -34,7 +34,7 @@ public abstract class User implements Saveable {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -42,7 +42,7 @@ public abstract class User implements Saveable {
     }
 
     public String getNick() {
-        return nick;
+        return this.nick;
     }
 
     public void setNick(String nick) {
