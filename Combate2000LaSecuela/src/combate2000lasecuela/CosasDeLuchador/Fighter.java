@@ -63,5 +63,22 @@ public abstract class Fighter {
         }
         return this.myArmor;
     }
+
+    //no los borres Dani, son solo setters
+    public void setName(String name) {
+            this.name = name;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setHealth(int Health) {
+        this.health = Health;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
     
 }
