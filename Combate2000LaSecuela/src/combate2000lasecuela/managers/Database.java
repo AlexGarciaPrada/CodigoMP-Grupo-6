@@ -22,8 +22,12 @@ public class Database {
         this.minionmanager = new MinionManager();
     }
 
-    public void addPlayer(Player player){
+    public void loadUsers(){
+        usermanager.loadElement("User");
+    }
+    //TODO VA EN GAMEFLOW?
 
+    public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
         //Falta un método para guardar el fichero
     }
