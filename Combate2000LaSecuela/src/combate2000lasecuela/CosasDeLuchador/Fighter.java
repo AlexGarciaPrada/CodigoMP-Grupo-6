@@ -1,11 +1,16 @@
 package combate2000lasecuela.CosasDeLuchador;
 
+import combate2000lasecuela.Combat;
 import combate2000lasecuela.Modifier;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 import java.util.Random;
 import java.util.Stack;
 import combate2000lasecuela.Player;
+import combate2000lasecuela.screen.Terminal;
+import combate2000lasecuela.screen.Textterminal;
+import java.lang.Integer;
+import java.lang.String;
 public abstract class Fighter {
         private String name;
         private int gold;
@@ -17,12 +22,13 @@ public abstract class Fighter {
         private int suerteM;
         private int suerteW;
         private int suerteA;
-        private TFighter type;
+        private Fighter type;
+        private MinionManager minionManager;
         public Fighter(int suerteA,int suerteW,int suerteM) {
             this.name = name;
             this.health = health;
             this.power = power;
-            this.type = Player.elegirTipo();
+            this.type = this;
             this.suerteM=type.suerteM;
             this.suerteW=type.suerteW;
             this.suerteA=type.suerteA;
@@ -35,8 +41,9 @@ public abstract class Fighter {
             Random random = new Random();
             Minion esclavo;
             int numero= random.nextInt(80)+1+suerte;
-            for (int i=0; i<=numero;i++){
-            esclavo = MinionManager.minionMap.get(numero);
+            for (Integer i=0; i<=numero;i++){
+                String aux = i.toString();
+                esclavo = minionManager.getElements().get("MinionMap").get(aux);
                 if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
                     this.myMinions.push(esclavo);
                 }
@@ -63,5 +70,9 @@ public abstract class Fighter {
         }
         return this.myArmor;
     }
-    
+    public Combat startFighting(){
+            Textterminal terminal = new Textterminal();
+            terminal.show ("Quieres empezar un combate");
+            return null;
+    }
 }
