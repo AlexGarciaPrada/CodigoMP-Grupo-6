@@ -39,7 +39,7 @@ public class MessageManager {
         showContent(notCoincidencePasswordText);
     }
     public void showUserRegistered(String user) {
-        String[] content = {userRegistered1+user+userRegistered2};
+        String[] content = {theUserText+user+userRegistered2};
         showContent(content);
     }
     public void showPlayerBlocked(){
@@ -67,6 +67,14 @@ public class MessageManager {
         t.showln(rankingText);
         showContent(ranking.toArray(new String[ranking.size()]));
 
+    }
+    public void showUserBlocked(String nick){
+        String [] content={theUserText+nick,userBlock};
+        showContent(content);
+    }
+    public void showUserUnblocked(String nick){
+        String [] content={theUserText+nick,userUnblock};
+        showContent(content);
     }
     public void showAlreadyBlock(){
         showContent(alreadyBlockText);
@@ -109,6 +117,20 @@ public class MessageManager {
     public void showRegisterMenu(){
         t.showln(registerText);
         t.showln(exitAdvice);
+    }
+    public int showReadFighterType(){
+        showContent(fighterTypesText);
+        return t.read(3);
+    }
+    public void showAlreadyFighter(){
+        showContent(alreadyFighterText);
+    }
+    public void showNotFighter(){
+        showContent(notFighterText);
+    }
+    public int showEraseConfirmation(){
+        showContent(eraseConfirmationText);
+        return t.read(2);
     }
 
 
