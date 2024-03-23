@@ -1,6 +1,5 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.User;
 import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;
@@ -15,14 +14,12 @@ public class Operator extends User {
         super(name, password, nick);
     }
 
-    public Player blockPlayer(String nick){
-        //mensaje del messagemanager preguntando a quien quiere bloquear
-        return (Player) um.deleteElement("Player", nick);
+    public void blockPlayer(Player player){
+        player.setBlocked(true);
     }
 
-    public void unblockPlayer(String nick){
-        //mensaje del messagemanager enseñando los usuarios y que devuelve a quien quiere desbloquear
-        um.addElement("Player", nick, (Player) um.loadElement(nick));
+    public void unblockPlayer(Player player){
+        player.setBlocked(false);
     }
 
     public void validateChallenge(String challengeKey){
@@ -31,8 +28,8 @@ public class Operator extends User {
         int option = terminal.read(2);
         ChallengeManager cm = new ChallengeManager();
         if(option == 1){
-            cm.loadElement(challengeKey).setAccepted(true);
-
+            // cm.loadElement(challengeKey).setAccepted(true);
+            // LOAD ES PARA CARGAR COSAS AL INICIAR EL PROGRAMA
         }
         else if(option == 2){
             cm.deleteElement("Challenge", challengeKey);
