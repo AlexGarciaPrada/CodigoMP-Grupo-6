@@ -118,6 +118,20 @@ public class MessageManager {
         t.showln(registerText);
         t.showln(exitAdvice);
     }
+    public int showReadFighterType(){
+        showContent(fighterTypesText);
+        return t.read(3);
+    }
+    public void showAlreadyFighter(){
+        showContent(alreadyFighterText);
+    }
+    public void showNotFighter(){
+        showContent(notFighterText);
+    }
+    public int showEraseConfirmation(){
+        showContent(eraseConfirmationText);
+        return t.read(2);
+    }
 
 
     //Funcionamiento interno de las pantallas

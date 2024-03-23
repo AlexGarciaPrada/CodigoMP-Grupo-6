@@ -20,7 +20,13 @@ public class Constants {
             ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Cerrar Sesion","8. Borrar Usuario"};
     public static final String [] operatorMenuText={"1. Editar personaje","2. Editar Equipo, Esbirros, Modificadores","3. Validar Desafios",
             "4. Bloquear Usuario","5. Desbloquear Usuario","6. Cerrar Sesion","7. Borrar Usuario"};
-
+    public static final String [] alreadyBlockText={"Este usuario ya esta bloqueado"};
+    public static final String [] alreadyUnblockText={"Este usuario ya esta desbloqueado"};
+    public static final String[] playerBlockedText={"No se puede iniciar sesion porque el usuario esta bloqueado"};
+    public static final String [] fighterTypesText={"Selecciona el tipo de personaje que deseas crear","1. Vampiro","2. Licantropo","3. Cazador"};
+    public static final String [] alreadyFighterText={"Ya tienes un personaje creado","Borra el personaje actual para crear un personaje nuevo"};
+    public static final String [] notFighterText={"No tienes un personaje creado","Crea un personaje para poder realizar esta accion"};
+    public static final String [] eraseConfirmationText={"Confirma que quieres borrar tu personaje","ESTA ACCION IRREVERSIBLE","1. No","2. Si"};
 
     public static final String theUserText = "El usuario ";
     public static final String userRegistered2 = " ha sido registrado correctamente";
@@ -37,9 +43,6 @@ public class Constants {
     public static final String blockUserText="BLOQUEO DE USUARIOS";
     public static final String selectUserToUnblockText="Introduce el nick de usuario que deseas desbloquear: ";
     public static final String unblockUserText="DESBLOQUEO DE USUARIOS";
-    public static final String [] alreadyBlockText={"Este usuario ya esta bloqueado"};
-    public static final String [] alreadyUnblockText={"Este usuario ya esta desbloqueado"};
-    public static final String[] playerBlockedText={"No se puede iniciar sesion porque el usuario esta bloqueado"};
     public static final String userBlock="ha sido bloqueado correctamente";
     public static final String userUnblock="ha sido desbloqueado correctamente";
 

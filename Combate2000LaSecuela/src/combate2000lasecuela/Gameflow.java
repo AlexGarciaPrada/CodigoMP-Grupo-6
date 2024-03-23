@@ -19,6 +19,8 @@ public class Gameflow {
     private boolean ranking;
     private boolean block;
     private boolean unblock;
+    private boolean cfighter;
+    private boolean efighter;
 
 
 
@@ -33,6 +35,8 @@ public class Gameflow {
         ranking=false;
         block=false;
         unblock=false;
+        cfighter=false;
+        efighter=false;
 
     }
 
@@ -67,6 +71,10 @@ public class Gameflow {
     private void playerMachine(Player player){
         if (eraseuser){
             eraseUser(user);
+        } else if (cfighter) {
+            createFighter(player);
+        } else if (efighter) {
+            eraseFighter(player);
         } else if (ranking) {
             playersRanking();
         } else{
@@ -170,8 +178,10 @@ public class Gameflow {
         int option = messageManager.showPlayerMenu(player.getName());
         switch(option){
             case 1: //Crear personaje
+                cfighter=true;
                 break;
             case 2: //Borrar personaje
+                efighter=true;
                 break;
             case 3: //Administrar equipo personaje
                 break;
@@ -267,6 +277,36 @@ public class Gameflow {
             }
         } else {
             messageManager.showUserNotFound();
+        }
+    }
+    private void createFighter(Player player){
+        cfighter=false;
+        if (player.getFighter()!=null){
+            messageManager.showAlreadyFighter();
+        }else{
+            int option = messageManager.showReadFighterType();
+            switch(option){
+                case 1:     //Vampiro
+                    break;
+                case 2:     //Licántropo
+                    break;
+                case 3:     //Cazador
+                    break;
+            }
+        }
+
+    }
+    private void eraseFighter(Player player){
+        efighter=false;
+        if (player.getFighter() == null){
+            messageManager.showNotFighter();
+        }else{
+            int option = messageManager.showEraseConfirmation();
+            if (option == 1){
+                return;
+            }else{
+                player.deleteFighter();
+            }
         }
     }
 
