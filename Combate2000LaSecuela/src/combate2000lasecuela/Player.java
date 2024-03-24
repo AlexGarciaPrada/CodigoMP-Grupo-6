@@ -45,7 +45,7 @@ public class Player extends User {
     public Challenge ChallengePlayer(Player challenged) {
         ChallengeManager cm = new ChallengeManager();
         cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
-        return cm.loadElement(generateRandomChallengeKey());
+        return cm.getElements().get("Challenge").get(generateRandomChallengeKey());
     }
 
     public static String generateRandomChallengeKey() {
