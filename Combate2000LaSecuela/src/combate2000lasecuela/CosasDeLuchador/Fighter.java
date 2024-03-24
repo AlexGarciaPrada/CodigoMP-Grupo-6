@@ -71,11 +71,11 @@ public abstract class Fighter {
                                 terminal.show(" aunque lo han acabado recibiendo los esbirros");
                                this.minionHealth-=1;
                             }else {
-                                this.health -= 1;
+                                this.health -= 1; //considerar caso de que se maten a la vez
                                 terminal.show(this.health+ " vidas restantes");
                             }
                         }
-                        //donde recibe el desafiante
+                //donde recibe el desafiante
                 //aunque esté separado, físicamente, ocurre de manera simultánea
                     pA = potencialAtaque(this);
                     pD = potencialDefensa(desafiante);
@@ -93,7 +93,7 @@ public abstract class Fighter {
             }while((this.health>0)||(desafiante.health>0));
             return null; //a falta de especificar datos del combat
     }
-    public int potencialAtaque (Fighter f){
+    public int potencialAtaque (Fighter f){//considerar arma dos manos
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
         return verExitos(potencial);
     }
@@ -155,16 +155,16 @@ public abstract class Fighter {
             }
         }
     }
-    public void elegirArmadura (Stack<Armor> myArmor){
+    public void elegirArmadura (Stack<Armor> myArmor, Integer opcion){
         terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
         mostrarArmaduras();
         terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
-        String leido = scanner.nextLine();
+        String leido = opcion.toString();
         setArmor(buscarArmaduraLeida(leido));
         if (getArmadura()==null){
             terminal.show("Valor no valido");
-            elegirArmadura(myArmor);
-        }else{
+            elegirArmadura(myArmor,opcion);
+        }else{ //adaptar como GameFlow
             terminal.show("La armadura se ha seleccionado con exito");
         }
     }
@@ -173,7 +173,7 @@ public abstract class Fighter {
 
 
     public void mostrarArmas() {
-        do {
+        do{
             terminal.show(getMyArmor().pop().toString()); //si las variables no son locales hay que hacer copia
         } while(!getMyArmor().isEmpty());
     }
