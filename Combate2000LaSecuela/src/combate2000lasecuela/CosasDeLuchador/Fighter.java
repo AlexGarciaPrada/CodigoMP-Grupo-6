@@ -183,6 +183,26 @@ public abstract class Fighter {
     public Stack<Armor> getMyArmor(){
         return this.myArmor;
     }
+
+
+    //no los borres Dani, son solo setters
+    public void setName(String name) {
+            this.name = name;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
+    public void setHealth(int Health) {
+        this.health = Health;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+    
+
     public Weapon buscarArmaLeida (String leido){
         boolean encontrado=false;
         Weapon aux=null;
@@ -227,4 +247,5 @@ public abstract class Fighter {
         this.arma2=arma2;
         this.arma2.elegida=true;
     }
+
 }
