@@ -22,19 +22,28 @@ public class Database {
         this.minionmanager = new MinionManager();
     }
 
-    public void addPlayer(Player player){
+    public void loadUsers(){
+        usermanager.loadElement("User");
+    }
 
+    public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
-        //Falta un método para guardar el fichero
+        usermanager.saveCollection("User");
+
     }
     public void addOperator(Operator operator){
+
         usermanager.addElement("Operator", operator.getNick(), operator);
+        usermanager.saveCollection("User");
     }
     public void erasePlayer(Player player){
+
         usermanager.getElements().get("Player").remove(player.getNick());
+        usermanager.saveCollection("User");
     }
     public void eraseOperator(Operator operator){
         usermanager.getElements().get("Operator").remove(operator.getNick());
+        usermanager.saveCollection("User");
     }
 
     public boolean isNickUsed(String nick){

@@ -3,12 +3,12 @@ package combate2000lasecuela.managers;
 import combate2000lasecuela.Saveable;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.Map;
+
+import static combate2000lasecuela.Constants.serRoute;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
     protected Map<String,Map<String,T>> elements;
@@ -44,18 +44,30 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
             System.out.println("ERROR SAVING");
         }
     }
-
-    public T loadElement(String fileName) {
-        try {
-            String route = String.format("./config/%s/", this.getType());
-            XMLDecoder decoder = new XMLDecoder(new FileInputStream(route+ fileName + ".xml"));    // Abre el archivo para lectura.
-            T element = (T)decoder.readObject();  //readObject devuelve un Object, por eso hay que hacer el casting
-            decoder.close();
-            return element;
+    public void saveCollection(String className){
+        String filePath = String.format(serRoute+"%s.ser", className);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(elements);        // Serializa el HashMap llamado 'users'
+            System.out.println("Datos de usuarios serializados correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch (FileNotFoundException e) {
-            System.out.println("ERROR LOADING USER");
-            return null;
+    }
+
+    public void loadElement(String fileName) {
+        try {
+            String route = String.format(serRoute+"%s.ser", fileName);
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(route));
+            HashMap element = (HashMap) ois.readObject();
+            ois.close();
+            this.elements=element;
+        }
+        catch (IOException e) {
+            System.out.println("ERROR LOADING");
+            elements=null;
+            return;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -68,10 +80,10 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
     public Map<String, Map<String,T>> getElements() {
         return elements;
     }
+
     public void setElements(Map<String, Map<String,T>> elements) {
         this.elements = elements;
     }
-
 
     public Map<String, T> getCollection(String type) {return elements.get(type);}
 
