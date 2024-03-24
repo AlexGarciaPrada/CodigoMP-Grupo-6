@@ -16,7 +16,7 @@ public class Discipline implements Serializable {
         setCosteSangre(selection);
         return (puntosDisponibles>=selection);
     }
-
+//el motivo de hacerlo así es que las disciplinas cambian
     public void setCosteSangre(int costeSangre) {
         this.costeSangre = costeSangre;
     }

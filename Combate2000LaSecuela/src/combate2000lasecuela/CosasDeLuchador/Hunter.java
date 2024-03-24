@@ -5,20 +5,31 @@ import java.util.Stack;
 
 public class Hunter extends Fighter implements Serializable {
 int will;
-    public Hunter(String name, TFighter type,String clase,
-                  Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
-        super(name, type,clase,
-                myMinions, myArmor, myWeapon);
+Talent talent;
+    public Hunter(String name, TFighter type,String clase, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        super(name, type,clase, myMinions, myArmor, myWeapon);
         this.will=will;
+        this.talent = new Talent();
     }
 
     @Override
     public int SpecialAttack() {
-        return 0;
+        return (talent.getWillDamage()+getWill());
     }
 
     @Override
-    public int ajusteHabilidad(int pA, int pD) {
-        return 0;
+    public void ajusteHabilidad(int pA, int pD) {
+    if ((pA<pD)&&(getWill()>0)){
+        setWill(getWill()-1);
     }
+    }
+
+    public int getWill() {
+        return this.will;
+    }
+
+    public void setWill(int will) {
+        this.will = will;
+    }
+
 }

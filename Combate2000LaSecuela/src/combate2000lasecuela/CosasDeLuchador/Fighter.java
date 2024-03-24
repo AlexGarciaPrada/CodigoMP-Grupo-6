@@ -43,6 +43,8 @@ public abstract class Fighter {
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
             this.minionHealth=calcularVidaMinions();
+            this.arma1=arma1;
+            this.arma2=arma2;
         }
 
 
@@ -90,7 +92,8 @@ public abstract class Fighter {
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense();
+        int potencial=f.armadura.getDefense()+f.SpecialAttack();//sumo en ambos sitios SpecialAttack
+        //porque la implementación de ambos sería idéntica.
             return verExitos(potencial);
     }
     public int verExitos (int potencial){
@@ -118,14 +121,5 @@ public abstract class Fighter {
         }return total;
     }
     public abstract int SpecialAttack();
-    public abstract int ajusteHabilidad(int pA, int pD);
-    public boolean isVampire(){
-        return (this.clase.equals("VAMPIRO"));
-    }
-    public boolean isLycanthrope(){
-        return (this.clase.equals("LICANTROPO"));
-    }
-    public boolean isHunter(){
-        return (this.clase.equals("CAZADOR"));
-    }
+    public abstract void ajusteHabilidad(int pA, int pD);
 }

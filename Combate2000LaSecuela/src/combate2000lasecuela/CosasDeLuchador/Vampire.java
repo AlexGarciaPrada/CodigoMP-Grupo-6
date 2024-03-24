@@ -14,7 +14,7 @@ public class Vampire extends Fighter implements Serializable {
     public Vampire(String name, TFighter type,String clase, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
         super(name, type,clase, myMinions, myArmor, myWeapon);
         this.puntosSangre=0;
-        this.discipline = discipline;
+        this.discipline = new Discipline();
         this.age = random.nextInt(1500)+120;
     }
     public int aumentarSangre(){
@@ -30,10 +30,11 @@ public class Vampire extends Fighter implements Serializable {
         }
         return 0;
     }
-
     @Override
-    public int ajusteHabilidad(int pA, int pD) {
-        return 0;
+    public void ajusteHabilidad(int pA, int pD) {
+        if (pA-5>=pD){
+           setPuntosSangre(getPuntosSangre()+4);
+        }
     }
 
     public int getPuntosSangre() {
@@ -41,5 +42,9 @@ public class Vampire extends Fighter implements Serializable {
     }
     public Discipline getDiscipline(){
         return this.discipline;
+    }
+
+    public void setPuntosSangre(int puntosSangre) {
+        this.puntosSangre = puntosSangre;
     }
 }
