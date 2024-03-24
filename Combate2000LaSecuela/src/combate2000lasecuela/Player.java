@@ -62,6 +62,10 @@ public class Player extends User {
         cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
         return cm.getElements().get("Challenge").get(generateRandomChallengeKey());
     }
+    public void createFighter(Fighter  fighter){
+        this.fighter=fighter;
+    }
+
 
     public static String generateRandomChallengeKey() {
         return UUID.randomUUID().toString();
@@ -73,3 +77,4 @@ public class Player extends User {
     //    fighter.startFighting(c);
     //    }
 }
+

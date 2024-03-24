@@ -14,7 +14,7 @@ public class ItemManager extends AbstractManager<Item> {
     public ItemManager() {
         this.setElements(new HashMap<String, Map<String, Item>>());
 
-        this.addCollection("Weapon",new HashMap<String, Player>());
-        this.addCollection("Armor",new HashMap<String,Player>());
+        this.addCollection("WeaponMap",new HashMap<String,Weapon>());
+        this.addCollection("ArmorMap",new HashMap<String,Armor>());
     }
 }
