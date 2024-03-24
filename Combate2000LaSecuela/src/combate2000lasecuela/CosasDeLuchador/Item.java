@@ -8,8 +8,7 @@ public abstract class Item implements Saveable {
     private int attack;
 
     @Override
-    public abstract String getId() ;
-
-    public abstract int getDamage();
-    public abstract int getDefense ();
+    public String getId() {
+        return null;
+    }
 }

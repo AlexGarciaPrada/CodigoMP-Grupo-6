@@ -1,17 +1,11 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.Combat;
+import combate2000lasecuela.Modifier;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
-
-import java.nio.file.Watchable;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Stack;
-import combate2000lasecuela.screen.Textterminal;
-import java.lang.Integer;
-import java.lang.String;
-
+import combate2000lasecuela.Player;
 public abstract class Fighter {
         private String name;
         private int gold;
@@ -23,213 +17,51 @@ public abstract class Fighter {
         private int suerteM;
         private int suerteW;
         private int suerteA;
-        private String clase;
         private TFighter type;
-        private MinionManager minionManager;
-        private ItemManager itemManager;
-        private Random random = new Random();
-        private int minionHealth;
-        private Weapon arma1;
-        private Weapon arma2;
-        private Armor armadura;
-        Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
-    Textterminal terminal = new Textterminal();
-
-    public Fighter(String name, TFighter type,String clase,
-        Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        public Fighter(int suerteA,int suerteW,int suerteM) {
             this.name = name;
-            this.health = random.nextInt(5) + 1;
-            this.power = random.nextInt(5)+1;
-            this.clase=clase;
+            this.health = health;
+            this.power = power;
             this.type = type;
             this.suerteM=type.suerteM;
             this.suerteW=type.suerteW;
             this.suerteA=type.suerteA;
-            this.myMinions = myMinions;
-            this.myArmor= myArmor;
-            this.myWeapon = myWeapon;
-            this.minionHealth=calcularVidaMinions();
-            this.arma1=null;
-            this.arma2=null;
-            this.armadura=null;
+            this.myMinions = randomMinions(suerteM);
+            this.myArmor= randomArmor(suerteA);
+            this.myWeapon = randomWeapons(suerteW);
         }
 
-
-    public Combat startFighting (Fighter desafiante){
-            int i=0;
-            int pA=0;
-            int pD=0;
-            do {
-                i++; //donde recibe el desafiado
-                terminal.show("Ronda numero" + i + "comienza");
-                    pA = potencialAtaque(desafiante);
-                    pD = potencialDefensa(this);
-                        if (comprobarDaños(pA,pD)){
-                            ajusteHabilidad(pA,pD);
-                            terminal.show(this.name+" ha recibido un golpe");
-                            if (this.minionHealth>0){
-                                terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                               this.minionHealth-=1;
-                            }else {
-                                this.health -= 1; //considerar caso de que se maten a la vez
-                                terminal.show(this.health+ " vidas restantes");
-                            }
-                        }
-                //donde recibe el desafiante
-                //aunque esté separado, físicamente, ocurre de manera simultánea
-                    pA = potencialAtaque(this);
-                    pD = potencialDefensa(desafiante);
-                    if (comprobarDaños(pA,pD)){
-                        ajusteHabilidad(pA,pD);
-                        terminal.show(desafiante.name+" ha recibido un golpe");
-                        if (desafiante.minionHealth>0){
-                            terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                            desafiante.minionHealth-=1;
-                        }else {
-                            desafiante.health -= 1;
-                            terminal.show (desafiante.health+" vidas restantes");
-                        }
-                    }
-            }while((this.health>0)||(desafiante.health>0));
-            return null; //a falta de especificar datos del combat
-    }
-    public int potencialAtaque (Fighter f){//considerar arma dos manos
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
-        return verExitos(potencial);
-    }
-    public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+f.SpecialAttack();//sumo en ambos sitios SpecialAttack
-        //porque la implementación de ambos sería idéntica.
-            return verExitos(potencial);
-    }
-    public int verExitos (int potencial){
-        int acierto=0;
-        int aux;
-        for (int i=0; i<potencial;i++){
-         aux = random.nextInt(6)+1;
-         if (aux>=5){
-             acierto+=1;
-         }
-        }
-        return acierto;
-    }
-    private boolean comprobarDaños(int pA, int pD){
-        return (pA>pD);
-    }
-    public int calcularVidaMinions(){
-        Minion esclavo;
-        int total=0;
-        Stack<Minion> copia;
-        copia=this.myMinions;
-        while (!copia.isEmpty()){//por si acaso, pero creo que en java todas las variables son locales
-         esclavo=copia.pop();
-         total += esclavo.getHealth();
-        }return total;
-    }
-    public void elegirArma(Stack<Weapon> myWeapon){
-        terminal.show("Se te mostraran las armas de que dispones");
-        mostrarArmas();
-        terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
-        String leido = scanner.nextLine();
-        setWeapon1(buscarArmaLeida(leido));
-        if (getArma1()==null){
-            terminal.show("No has introducido un valor valido");
-            elegirArma(myWeapon);
-        }else {//si es valor valido
-            if (getArma1().isOneHand) {
-                terminal.show("Como tu arma es de una mano se te permite coger otra arma");
-                terminal.show("Quieres hacerlo?");
-                if ("SI".equals(scanner.nextLine().toUpperCase())) {
-                    terminal.show("Pon su numero al igual que antes");
-                    leido = scanner.nextLine();
-                    Weapon temporal = (buscarArmaLeida(leido));
-                    if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
-                        terminal.show("No hagas trampas!!");
-                        terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
-                    } else {
-                        setWeapon2(temporal);
-                    }
+        private Stack<Minion> randomMinions(int suerte){
+            Random random = new Random();
+            Minion esclavo;
+            int numero= random.nextInt(80)+1+suerte;
+            for (int i=0; i<=numero;i++){
+            esclavo = MinionManager.minionMap.get(numero);
+                if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
+                    this.myMinions.push(esclavo);
                 }
-            } else {
-                terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
             }
+            return this.myMinions;
         }
-    }
-    public void elegirArmadura (Stack<Armor> myArmor, Integer opcion){
-        terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
-        mostrarArmaduras();
-        terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
-        String leido = opcion.toString();
-        setArmor(buscarArmaduraLeida(leido));
-        if (getArmadura()==null){
-            terminal.show("Valor no valido");
-            elegirArmadura(myArmor,opcion);
-        }else{ //adaptar como GameFlow
-            terminal.show("La armadura se ha seleccionado con exito");
+    private Stack<Weapon> randomWeapons(int suerte) {
+        Random random = new Random();
+        Weapon arma;
+        int numero = random.nextInt(28) + 1 + suerte;
+        for (int i=1; i<=numero;i++){
+            //arma = ItemManager.weaponMap.get(numero);
+            //this.myWeapon.push(arma);
         }
-    }
-    public abstract int SpecialAttack();
-    public abstract void ajusteHabilidad(int pA, int pD);
-
-
-    public void mostrarArmas() {
-        do{
-            terminal.show(getMyArmor().pop().toString()); //si las variables no son locales hay que hacer copia
-        } while(!getMyArmor().isEmpty());
-    }
-    public void mostrarArmaduras(){
-        do {
-            terminal.show(getMyWeapon().pop().toString());
-        } while(!getMyWeapon().isEmpty());
-    }
-    public Stack<Weapon> getMyWeapon(){
         return this.myWeapon;
     }
-    public Stack<Armor> getMyArmor(){
+    private Stack<Armor> randomArmor(int suerte){
+        Random random = new Random();
+        Armor armadura;
+        int numero= random.nextInt(28)+1+suerte;
+        for (int i=1; i<=numero; i++) {
+            //armadura = ItemManager.armorMap.get(numero);
+            //this.myArmor.push(armadura);
+        }
         return this.myArmor;
     }
-    public Weapon buscarArmaLeida (String leido){
-        boolean encontrado=false;
-        Weapon aux=null;
-        Weapon aux2=null;
-        while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().pop();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public Armor buscarArmaduraLeida(String leido){
-        boolean encontrado=false;
-        Armor aux=null;
-        Armor aux2=null;
-        while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().pop();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public void setWeapon1 (Weapon arma1){
-      this.arma1=arma1;
-      this.arma1.elegida=true;
-    }
-    public Weapon getArma1(){
-        return this.arma1;
-    }
-    public Weapon getArma2(){
-        return this.arma2;
-    }
-    public Armor getArmadura(){
-        return this.armadura;
-    }
-    public void setArmor (Armor armadura){
-        this.armadura=armadura;
-    }
-    public void setWeapon2 (Weapon arma2){
-        this.arma2=arma2;
-        this.arma2.elegida=true;
-    }
+    
 }

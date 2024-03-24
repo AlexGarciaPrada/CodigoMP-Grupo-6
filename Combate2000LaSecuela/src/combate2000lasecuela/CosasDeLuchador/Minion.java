@@ -11,8 +11,8 @@ public class Minion implements Saveable {
 
     public Minion(String linea){
         String [] valores = linea.split(";");
-        this.name = valores[1];
-        this.tipo = valores[2];
+        this.name = valores[2];
+        this.tipo = valores[3];
     }
 
     @Override
