@@ -5,6 +5,14 @@ import java.io.Serializable;
 
 public class Challenge implements Saveable {
     private boolean accepted;
+    private Player player;
+
+    private int gold;
+
+    public Challenge(Player player, int gold) {
+        this.player = player;
+        this.gold = gold;
+    }
 
     @Override
     public String getId() {
