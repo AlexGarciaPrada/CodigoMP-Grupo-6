@@ -11,8 +11,8 @@ public class Vampire extends Fighter implements Serializable {
     private int age;
     private Discipline discipline;
     Random random = new Random();
-    public Vampire(String name, TFighter type,String clase, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
-        super(name, type,clase, myMinions, myArmor, myWeapon);
+    public Vampire(String name, TFighter type, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        super(name, type, myMinions, myArmor, myWeapon);
         this.puntosSangre=0;
         this.discipline = new Discipline();
         this.age = random.nextInt(1500)+120;

@@ -1,9 +1,6 @@
 package combate2000lasecuela.managers;
 
-import combate2000lasecuela.CosasDeLuchador.Armor;
-import combate2000lasecuela.CosasDeLuchador.Human;
-import combate2000lasecuela.CosasDeLuchador.Minion;
-import combate2000lasecuela.CosasDeLuchador.Weapon;
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.Operator;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.User;
@@ -88,8 +85,8 @@ public class Database {
         }
         return ranking;
     }
-   /* private Stack<Minion> randomMinions(int suerte){
-        Random random = new Random();
+   public Stack<Minion> randomMinions(int suerte){
+        /*Random random = new Random();
         Stack<Minion> myMinions=null;
         Minion esclavo;
         int numero= random.nextInt(80)+1+suerte;
@@ -98,12 +95,13 @@ public class Database {
             if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
             }
-        }
-        return myMinions;
+        }*/
+        return null;
     } //mandar todo esto a DataBase
-    */ //dejarme seguir con el combate y ahora pongo bien esto, es que hay cosillas que hay que cambiar
-    //más que nada por sacarlo del luchador, comunmente conocido como tío del hacha
-   private Stack<Weapon> randomWeapons(int suerte) {
+    public TFighter getTFighter(){
+        return null;
+    }
+   public Stack<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Stack<Weapon> myWeapon=null;
         Weapon arma;
@@ -114,7 +112,7 @@ public class Database {
         }
         return myWeapon;
     }
-    private Stack<Armor> randomArmor(int suerte){
+    public Stack<Armor> randomArmor(int suerte){
         Random random = new Random();
         Armor armadura;
         Stack<Armor> myArmor=null;
