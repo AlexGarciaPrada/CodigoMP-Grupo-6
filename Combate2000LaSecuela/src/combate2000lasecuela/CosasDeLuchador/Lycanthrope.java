@@ -5,15 +5,11 @@ import combate2000lasecuela.CosasDeLuchador.Fighter;
 import java.util.Stack;
 
 public class Lycanthrope extends Fighter {
-int suerteA;
-int suerteW;
-int suerteM;
 int rage;
-    public Lycanthrope(int suerteA, int suerteW, int rage, int suerteM) {
-        super(suerteA, suerteW, suerteM);
-        this.suerteA=suerteA;
-        this.suerteM=suerteM;
-        this.suerteW=suerteW;
+    public Lycanthrope(String name, TFighter type,String clase,
+                       Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        super(name, type,clase, myMinions, myArmor, myWeapon);
+
         this.rage=0;
-    }//a espensas del código de Laura
+    }
 }

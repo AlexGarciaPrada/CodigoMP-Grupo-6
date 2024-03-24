@@ -58,13 +58,22 @@ public abstract class Fighter {
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
-                            this.health-=1;
+                            if (this.minionHealth>0){
+                               this.minionHealth-=1;
+                            }else {
+                                this.health -= 1;
+                            }
                         }
+
                 }else{ //es par
                     pA = potencialAtaque(this);
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
-                        desafiante.health-=1;
+                        if (desafiante.minionHealth>0){
+                            desafiante.minionHealth-=1;
+                        }else {
+                            desafiante.health -= 1;
+                        }
                     }
                 }
             }while((this.health>0)||(desafiante.health>0));
@@ -82,11 +91,12 @@ public abstract class Fighter {
     }
     public int calcularVidaMinions(){
         Minion esclavo;
+        int total=0;
         Stack<Minion> copia;
         copia=this.myMinions;
         while (!copia.isEmpty()){
          esclavo=copia.pop();
-         int total = esclavo.getHealth();
-        }return 0;
+         total += esclavo.getHealth();
+        }return total;
     }
 }
