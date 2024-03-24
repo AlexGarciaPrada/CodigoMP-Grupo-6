@@ -1,6 +1,7 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
+import combate2000lasecuela.PendingChallenges;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 
@@ -27,6 +28,9 @@ public abstract class Fighter {
         private Weapon arma1;
         private Weapon arma2;
         private Armor armadura;
+
+        private PendingChallenges pendingChallenges;
+
         Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
     Textterminal terminal = new Textterminal();
 
