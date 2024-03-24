@@ -49,9 +49,9 @@ public abstract class Fighter {
                 }
             }
             return this.myMinions;
-        }
+        } //mandar todo esto a DataBase
     private Stack<Weapon> randomWeapons(int suerte) {
-        Random random = new Random();
+        Random random = new Random();   
         Weapon arma;
         int numero = random.nextInt(28) + 1 + suerte;
         for (int i=1; i<=numero;i++){
