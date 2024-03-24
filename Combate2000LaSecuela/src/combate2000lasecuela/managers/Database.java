@@ -88,7 +88,7 @@ public class Database {
         }
         return ranking;
     }
-    private Stack<Minion> randomMinions(int suerte){
+   /* private Stack<Minion> randomMinions(int suerte){
         Random random = new Random();
         Stack<Minion> myMinions=null;
         Minion esclavo;
@@ -101,7 +101,9 @@ public class Database {
         }
         return myMinions;
     } //mandar todo esto a DataBase
-    private Stack<Weapon> randomWeapons(int suerte) {
+    */ //dejarme seguir con el combate y ahora pongo bien esto, es que hay cosillas que hay que cambiar
+    //más que nada por sacarlo del luchador, comunmente conocido como tío del hacha
+   private Stack<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Stack<Weapon> myWeapon=null;
         Weapon arma;

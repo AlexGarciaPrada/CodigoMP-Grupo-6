@@ -11,4 +11,10 @@ public abstract class Item implements Saveable {
     public String getId() {
         return null;
     }
+    public int getDamage(){
+        return this.attack;
+    }
+    public int getDefense (){
+        return this.defense;
+    }
 }

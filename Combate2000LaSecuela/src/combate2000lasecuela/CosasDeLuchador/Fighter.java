@@ -28,6 +28,9 @@ public abstract class Fighter {
         private ItemManager itemManager;
         private Random random = new Random();
         private int minionHealth;
+        private Weapon arma1;
+        private Weapon arma2;
+        private Armor armadura;
 
     public Fighter(String name, TFighter type,String clase,
         Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
@@ -52,9 +55,8 @@ public abstract class Fighter {
             int pA=0;
             int pD=0;
             do {
-                i++;
+                i++; //donde recibe el desafiado
                 terminal.show("Ronda numero" + i + "comienza");
-                if ( i % 2 != 0) {//es impar
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
@@ -64,8 +66,8 @@ public abstract class Fighter {
                                 this.health -= 1;
                             }
                         }
-
-                }else{ //es par
+                        //donde recibe el desafiante
+                //aunque esté separado, físicamente, ocurre de manera simultánea
                     pA = potencialAtaque(this);
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
@@ -75,16 +77,28 @@ public abstract class Fighter {
                             desafiante.health -= 1;
                         }
                     }
-                }
+
             }while((this.health>0)||(desafiante.health>0));
             return null;
     }
-    private int potencialAtaque (Fighter f){
-
-            return 0;
+    public int potencialAtaque (Fighter f){
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage();
+            return verExitos(potencial);
     }
-    private int potencialDefensa (Fighter f){
-            return 0;
+    public int potencialDefensa (Fighter f){
+        int potencial=f.armadura.getDefense();
+            return verExitos(potencial);
+    }
+    public int verExitos (int potencial){
+        int acierto=0;
+        int aux;
+        for (int i=0; i<potencial;i++){
+         aux = random.nextInt(6)+1;
+         if (aux>=5){
+             acierto+=1;
+         }
+        }
+        return acierto;
     }
     private boolean comprobarDaños(int pA, int pD){
         return (pA>pD);

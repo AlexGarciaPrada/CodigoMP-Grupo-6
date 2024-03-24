@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Weapon extends Item implements Serializable {
     private final boolean isOneHand;
-    private final int damage;
+    private int damage;
     public Weapon (String linea){
         String [] valores = linea.split(";");
         this.damage = Integer.parseInt(valores[2]);
@@ -14,5 +14,8 @@ public class Weapon extends Item implements Serializable {
     }
     public boolean interpretarFichero(String a){
         return (a.equals("1"));
+    }
+    public int getDamage(){
+        return this.damage;
     }
 }
