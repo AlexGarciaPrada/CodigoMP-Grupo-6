@@ -47,8 +47,8 @@ public class Player extends User {
         char letter2 = (char) ('A' + r.nextInt(26));
         char letter3 = (char) ('A' + r.nextInt(26));
 
-        int num1 = r.nextInt(99) + 1;
-        int num2 = r.nextInt(99) + 1;
+        int num1 = r.nextInt(8) + 1;
+        int num2 = r.nextInt(8) + 1;
 
         return String.format("%c%d%d%c%c", letter1, num1, num2, letter2, letter3);
     }
