@@ -5,7 +5,10 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.Map;
+
+import static combate2000lasecuela.Constants.serRoute;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
     protected Map<String,Map<String,T>> elements;
@@ -41,27 +44,28 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
             System.out.println("ERROR SAVING");
         }
     }
-    public void saveCollection(String className, Map<String,Map<String,T>> bigMap){
-        String filePath = String.format("./config/%s.ser", className);
+    public void saveCollection(String className){
+        String filePath = String.format(serRoute+"%s.ser", className);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            oos.writeObject(bigMap);        // Serializa el HashMap llamado 'users'
+            oos.writeObject(elements);        // Serializa el HashMap llamado 'users'
             System.out.println("Datos de usuarios serializados correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Map loadElement(String fileName) {
+    public void loadElement(String fileName) {
         try {
-            String route = String.format("./config/%s.ser", fileName);
+            String route = String.format(serRoute+"%s.ser", fileName);
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(route));
-            Map element = (Map) ois.readObject();
+            HashMap element = (HashMap) ois.readObject();
             ois.close();
-            return element;
+            this.elements=element;
         }
         catch (IOException e) {
             System.out.println("ERROR LOADING");
-            return null;
+            elements=null;
+            return;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

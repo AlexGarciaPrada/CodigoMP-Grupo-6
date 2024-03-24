@@ -1,9 +1,11 @@
 package combate2000lasecuela;
 
 public class Constants {
-    public static final String minionsFile = "./files/Esbirros.txt";
-    public static final String weaponsFile = "./files/Armas.txt";
-    public static final String armorsFile = "./files/Armaduras.txt";
+    public static final String minionsFile = "./files/txtfiles/Esbirros.txt";
+    public static final String weaponsFile = "./files/txtfiles/Armas.txt";
+    public static final String armorsFile = "./files/txtfiles/Armaduras.txt";
+
+    public static final String serRoute="./files/serfiles/";
 
     //Contantes para los Strings del Messagemanager
 
