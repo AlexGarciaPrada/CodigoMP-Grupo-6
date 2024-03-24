@@ -107,7 +107,7 @@ public class Database {
         Weapon arma;
         int numero = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=numero;i++){
-            arma = itemManager.getElements().get("WeaponMap").get(i.toString());
+            arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
             myWeapon.push(arma);
         }
         return myWeapon;
@@ -118,7 +118,7 @@ public class Database {
         Stack<Armor> myArmor=null;
         int numero= random.nextInt(28)+1+suerte;
         for (Integer i=1; i<=numero; i++) {
-            armadura = itemManager.getElements().get("ArmorMap").get(i.toString());
+            armadura = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
             myArmor.push(armadura);
         }
         return myArmor;
