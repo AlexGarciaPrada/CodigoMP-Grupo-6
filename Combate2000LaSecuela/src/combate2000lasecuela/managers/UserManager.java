@@ -8,10 +8,12 @@ import java.util.Map;
 
 public class UserManager extends AbstractManager<User> {
     public UserManager() {
-        this.setElements(new HashMap<String, Map<String,User>>());
-
-        this.addCollection("Player",new HashMap<String, Player>());
-        this.addCollection("Operator",new HashMap<String,Player>());
+        this.loadElement("User");
+        if (this.getElements()==null) {
+            this.setElements(new HashMap<String, Map<String, User>>());
+            this.addCollection("Player", new HashMap<String, Player>());
+            this.addCollection("Operator", new HashMap<String, Player>());
+        }
     }
 
 
