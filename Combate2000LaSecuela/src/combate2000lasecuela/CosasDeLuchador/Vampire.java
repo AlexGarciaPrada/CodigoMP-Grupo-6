@@ -23,12 +23,17 @@ public class Vampire extends Fighter implements Serializable {
     public int disminuirSangre(int cantidad){
         return (this.puntosSangre-cantidad);
     }
-    public int specialAttack(){
+    public int SpecialAttack(){
         if (getDiscipline().usarDisciplina(getPuntosSangre())){
             disminuirSangre(discipline.getCosteSangre());
            return discipline.getDisciplineDamage();
         }
-        return 0; 
+        return 0;
+    }
+
+    @Override
+    public int ajusteHabilidad(int pA, int pD) {
+        return 0;
     }
 
     public int getPuntosSangre() {

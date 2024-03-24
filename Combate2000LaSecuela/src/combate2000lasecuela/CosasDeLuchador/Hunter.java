@@ -11,4 +11,14 @@ int will;
                 myMinions, myArmor, myWeapon);
         this.will=will;
     }
+
+    @Override
+    public int SpecialAttack() {
+        return 0;
+    }
+
+    @Override
+    public int ajusteHabilidad(int pA, int pD) {
+        return 0;
+    }
 }

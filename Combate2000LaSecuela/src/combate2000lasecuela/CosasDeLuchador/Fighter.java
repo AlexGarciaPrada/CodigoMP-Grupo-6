@@ -1,13 +1,10 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
-import combate2000lasecuela.Modifier;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 import java.util.Random;
 import java.util.Stack;
-import combate2000lasecuela.Player;
-import combate2000lasecuela.screen.Terminal;
 import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
@@ -60,6 +57,7 @@ public abstract class Fighter {
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
+                            ajusteHabilidad(pA,pD);
                             terminal.show(this.name+" ha recibido un golpe");
                             if (this.minionHealth>0){
                                 terminal.show(" aunque lo han acabado recibiendo los esbirros");
@@ -74,6 +72,7 @@ public abstract class Fighter {
                     pA = potencialAtaque(this);
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
+                        ajusteHabilidad(pA,pD);
                         terminal.show(desafiante.name+" ha recibido un golpe");
                         if (desafiante.minionHealth>0){
                             terminal.show(" aunque lo han acabado recibiendo los esbirros");
@@ -87,7 +86,7 @@ public abstract class Fighter {
             return null;
     }
     public int potencialAtaque (Fighter f){
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage();
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
@@ -117,5 +116,16 @@ public abstract class Fighter {
          esclavo=copia.pop();
          total += esclavo.getHealth();
         }return total;
+    }
+    public abstract int SpecialAttack();
+    public abstract int ajusteHabilidad(int pA, int pD);
+    public boolean isVampire(){
+        return (this.clase.equals("VAMPIRO"));
+    }
+    public boolean isLycanthrope(){
+        return (this.clase.equals("LICANTROPO"));
+    }
+    public boolean isHunter(){
+        return (this.clase.equals("CAZADOR"));
     }
 }
