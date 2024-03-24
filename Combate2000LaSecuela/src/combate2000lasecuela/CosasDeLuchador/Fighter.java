@@ -3,11 +3,15 @@ package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
+
+import java.nio.file.Watchable;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Stack;
 import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
+
 public abstract class Fighter {
         private String name;
         private int gold;
@@ -28,6 +32,8 @@ public abstract class Fighter {
         private Weapon arma1;
         private Weapon arma2;
         private Armor armadura;
+        Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
+    Textterminal terminal = new Textterminal();
 
     public Fighter(String name, TFighter type,String clase,
         Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
@@ -43,13 +49,13 @@ public abstract class Fighter {
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
             this.minionHealth=calcularVidaMinions();
-            this.arma1=arma1;
-            this.arma2=arma2;
+            this.arma1=null;
+            this.arma2=null;
+            this.armadura=null;
         }
 
 
     public Combat startFighting (Fighter desafiante){
-            Textterminal terminal = new Textterminal();
             int i=0;
             int pA=0;
             int pD=0;
@@ -85,7 +91,7 @@ public abstract class Fighter {
                         }
                     }
             }while((this.health>0)||(desafiante.health>0));
-            return null;
+            return null; //a falta de especificar datos del combat
     }
     public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
@@ -115,11 +121,115 @@ public abstract class Fighter {
         int total=0;
         Stack<Minion> copia;
         copia=this.myMinions;
-        while (!copia.isEmpty()){
+        while (!copia.isEmpty()){//por si acaso, pero creo que en java todas las variables son locales
          esclavo=copia.pop();
          total += esclavo.getHealth();
         }return total;
     }
+    public void elegirArma(Stack<Weapon> myWeapon){
+        terminal.show("Se te mostraran las armas de que dispones");
+        mostrarArmas();
+        terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
+        String leido = scanner.nextLine();
+        setWeapon1(buscarArmaLeida(leido));
+        if (getArma1()==null){
+            terminal.show("No has introducido un valor valido");
+            elegirArma(myWeapon);
+        }else {//si es valor valido
+            if (getArma1().isOneHand) {
+                terminal.show("Como tu arma es de una mano se te permite coger otra arma");
+                terminal.show("Quieres hacerlo?");
+                if ("SI".equals(scanner.nextLine().toUpperCase())) {
+                    terminal.show("Pon su numero al igual que antes");
+                    leido = scanner.nextLine();
+                    Weapon temporal = (buscarArmaLeida(leido));
+                    if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
+                        terminal.show("No hagas trampas!!");
+                        terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
+                    } else {
+                        setWeapon2(temporal);
+                    }
+                }
+            } else {
+                terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
+            }
+        }
+    }
+    public void elegirArmadura (Stack<Armor> myArmor){
+        terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
+        mostrarArmaduras();
+        terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
+        String leido = scanner.nextLine();
+        setArmor(buscarArmaduraLeida(leido));
+        if (getArmadura()==null){
+            terminal.show("Valor no valido");
+            elegirArmadura(myArmor);
+        }else{
+            terminal.show("La armadura se ha seleccionado con exito");
+        }
+    }
     public abstract int SpecialAttack();
     public abstract void ajusteHabilidad(int pA, int pD);
+
+
+    public void mostrarArmas() {
+        do {
+            terminal.show(getMyArmor().pop().toString()); //si las variables no son locales hay que hacer copia
+        } while(!getMyArmor().isEmpty());
+    }
+    public void mostrarArmaduras(){
+        do {
+            terminal.show(getMyWeapon().pop().toString());
+        } while(!getMyWeapon().isEmpty());
+    }
+    public Stack<Weapon> getMyWeapon(){
+        return this.myWeapon;
+    }
+    public Stack<Armor> getMyArmor(){
+        return this.myArmor;
+    }
+    public Weapon buscarArmaLeida (String leido){
+        boolean encontrado=false;
+        Weapon aux=null;
+        Weapon aux2=null;
+        while ((!getMyWeapon().isEmpty())||(encontrado)) {
+            aux=getMyWeapon().pop();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
+    }
+    public Armor buscarArmaduraLeida(String leido){
+        boolean encontrado=false;
+        Armor aux=null;
+        Armor aux2=null;
+        while ((!getMyArmor().isEmpty())||(encontrado)) {
+            aux=getMyArmor().pop();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
+    }
+    public void setWeapon1 (Weapon arma1){
+      this.arma1=arma1;
+      this.arma1.elegida=true;
+    }
+    public Weapon getArma1(){
+        return this.arma1;
+    }
+    public Weapon getArma2(){
+        return this.arma2;
+    }
+    public Armor getArmadura(){
+        return this.armadura;
+    }
+    public void setArmor (Armor armadura){
+        this.armadura=armadura;
+    }
+    public void setWeapon2 (Weapon arma2){
+        this.arma2=arma2;
+        this.arma2.elegida=true;
+    }
 }
