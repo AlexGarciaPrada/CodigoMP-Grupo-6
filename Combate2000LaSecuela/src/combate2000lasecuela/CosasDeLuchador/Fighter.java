@@ -60,10 +60,13 @@ public abstract class Fighter {
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
+                            terminal.show(this.name+" ha recibido un golpe");
                             if (this.minionHealth>0){
+                                terminal.show(" aunque lo han acabado recibiendo los esbirros");
                                this.minionHealth-=1;
                             }else {
                                 this.health -= 1;
+                                terminal.show(this.health+ " vidas restantes");
                             }
                         }
                         //donde recibe el desafiante
@@ -71,19 +74,21 @@ public abstract class Fighter {
                     pA = potencialAtaque(this);
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
+                        terminal.show(desafiante.name+" ha recibido un golpe");
                         if (desafiante.minionHealth>0){
+                            terminal.show(" aunque lo han acabado recibiendo los esbirros");
                             desafiante.minionHealth-=1;
                         }else {
                             desafiante.health -= 1;
+                            terminal.show (desafiante.health+" vidas restantes");
                         }
                     }
-
             }while((this.health>0)||(desafiante.health>0));
             return null;
     }
     public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage();
-            return verExitos(potencial);
+        return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
         int potencial=f.armadura.getDefense();
