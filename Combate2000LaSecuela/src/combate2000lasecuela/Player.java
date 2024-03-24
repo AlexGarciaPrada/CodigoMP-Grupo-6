@@ -1,6 +1,7 @@
 package combate2000lasecuela;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import combate2000lasecuela.CosasDeLuchador.Fighter;
@@ -17,7 +18,7 @@ public class Player extends User {
 
     public Player(String name, String password, String nick) {
         super(name, password, nick);
-        this.registerNumber = registerNumber;
+        this.registerNumber = generateRegisterNum();
         this.victories=0;
         this.blocked = false;
         this.fighter =null;
@@ -35,8 +36,22 @@ public class Player extends User {
     public boolean isBlocked() {return blocked;}
 
 
-    //public void registerFighter(Fighter f) {
-    //this.fighter = f;}
+    public void registerFighter(Fighter f) {
+        this.fighter = f;
+    }
+
+    private String generateRegisterNum() {
+        Random r = new Random();
+
+        char letter1 = (char) ('A' + r.nextInt(26));
+        char letter2 = (char) ('A' + r.nextInt(26));
+        char letter3 = (char) ('A' + r.nextInt(26));
+
+        int num1 = r.nextInt(99) + 1;
+        int num2 = r.nextInt(99) + 1;
+
+        return String.format("%c%d%d%c%c", letter1, num1, num2, letter2, letter3);
+    }
 
 
 
