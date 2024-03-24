@@ -26,11 +26,14 @@ public abstract class Fighter {
         private TFighter type;
         private MinionManager minionManager;
         private ItemManager itemManager;
-        public Fighter(String name, TFighter type,String clase,
+        private Random random = new Random();
+        private int minionHealth;
+
+    public Fighter(String name, TFighter type,String clase,
         Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
             this.name = name;
-            this.health = health;
-            this.power = power;
+            this.health = random.nextInt(5) + 1;
+            this.power = random.nextInt(5)+1;
             this.clase=clase;
             this.type = type;
             this.suerteM=type.suerteM;
@@ -39,24 +42,51 @@ public abstract class Fighter {
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
+            this.minionHealth=calcularVidaMinions();
         }
 
 
-    public Combat startFighting(Fighter desafiante){
+    public Combat startFighting (Fighter desafiante){
             Textterminal terminal = new Textterminal();
             int i=0;
+            int pA=0;
+            int pD=0;
             do {
                 i++;
                 terminal.show("Ronda numero" + i + "comienza");
-                int pA=potencialAtaque();
-                int pD= potencialDefensa();
+                if ( i % 2 != 0) {//es impar
+                    pA = potencialAtaque(desafiante);
+                    pD = potencialDefensa(this);
+                        if (comprobarDaños(pA,pD)){
+                            this.health-=1;
+                        }
+                }else{ //es par
+                    pA = potencialAtaque(this);
+                    pD = potencialDefensa(desafiante);
+                    if (comprobarDaños(pA,pD)){
+                        desafiante.health-=1;
+                    }
+                }
             }while((this.health>0)||(desafiante.health>0));
             return null;
     }
-    private int potencialAtaque (){
+    private int potencialAtaque (Fighter f){
+
             return 0;
     }
-    private int potencialDefensa (){
+    private int potencialDefensa (Fighter f){
             return 0;
+    }
+    private boolean comprobarDaños(int pA, int pD){
+        return (pA>pD);
+    }
+    public int calcularVidaMinions(){
+        Minion esclavo;
+        Stack<Minion> copia;
+        copia=this.myMinions;
+        while (!copia.isEmpty()){
+         esclavo=copia.pop();
+         int total = esclavo.getHealth();
+        }return 0;
     }
 }
