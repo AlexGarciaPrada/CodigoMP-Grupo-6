@@ -1,5 +1,9 @@
 package combate2000lasecuela;
 
+import combate2000lasecuela.CosasDeLuchador.Hunter;
+import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
+import combate2000lasecuela.CosasDeLuchador.TFighter;
+import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
 
@@ -21,6 +25,8 @@ public class Gameflow {
     private boolean unblock;
     private boolean cfighter;
     private boolean efighter;
+    private boolean eadmin;
+    private boolean challengep;
 
 
 
@@ -37,6 +43,8 @@ public class Gameflow {
         unblock=false;
         cfighter=false;
         efighter=false;
+        eadmin= false;
+        challengep=false;
 
     }
 
@@ -75,6 +83,8 @@ public class Gameflow {
             createFighter(player);
         } else if (efighter) {
             eraseFighter(player);
+        } else if (eadmin) {
+            adminEquipment(player);
         } else if (ranking) {
             playersRanking();
         } else{
@@ -184,8 +194,10 @@ public class Gameflow {
                 efighter=true;
                 break;
             case 3: //Administrar equipo personaje
+                eadmin=true;
                 break;
             case 4: //Desafiar a otro jugador
+                challengep=true;
                 break;
             case 5: //Consultar registro de oro
                 break;
@@ -285,12 +297,18 @@ public class Gameflow {
             messageManager.showAlreadyFighter();
         }else{
             int option = messageManager.showReadFighterType();
+            String name =messageManager.showReadName();
+            // Mostrar los TFighter
+            TFighter type = database.getTFighter();
             switch(option){
                 case 1:     //Vampiro
+                    player.createFighter(new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
+                    player.createFighter(new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
+                    player.createFighter(new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
@@ -308,6 +326,15 @@ public class Gameflow {
                 player.deleteFighter();
             }
         }
+    }
+    private void adminEquipment(Player player){
+        eadmin=false;
+        if (player.getFighter()==null){
+            messageManager.showNotFighter();
+            return;
+        }
+        int option = messageManager.showWeaponStack(player.getFighter().generateWeaponsText());
+        ///Aquí habría que hacer cosas
     }
 
 }

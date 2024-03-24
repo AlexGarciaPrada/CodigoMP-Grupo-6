@@ -10,6 +10,14 @@ public abstract class Item implements Saveable {
     @Override
     public abstract String getId() ;
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
     public abstract int getDamage();
     public abstract int getDefense ();
 }

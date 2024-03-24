@@ -12,8 +12,8 @@ int altura;
 int peso;
 Random random= new Random();
 private Gift don;
-    public Lycanthrope(String name, TFighter type,String clase, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
-        super(name, type,clase, myMinions, myArmor, myWeapon);
+    public Lycanthrope(String name, TFighter type, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        super(name, type, myMinions, myArmor, myWeapon);
         this.peso= random.nextInt(20)+90;
         this.rage=0;
         this.altura=random.nextInt(100)+50;//en centímetros

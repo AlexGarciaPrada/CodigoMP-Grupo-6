@@ -6,8 +6,8 @@ import java.util.Stack;
 public class Hunter extends Fighter implements Serializable {
 int will;
 Talent talent;
-    public Hunter(String name, TFighter type,String clase, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
-        super(name, type,clase, myMinions, myArmor, myWeapon);
+    public Hunter(String name, TFighter type, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        super(name, type, myMinions, myArmor, myWeapon);
         this.will=3;
         this.talent = new Talent();
     }

@@ -76,6 +76,10 @@ public class MessageManager {
         String [] content={theUserText+nick,userUnblock};
         showContent(content);
     }
+    public int showWeaponStack(String [] content){
+        showContent(content);
+       return t.read(content.length);
+    }
     public void showAlreadyBlock(){
         showContent(alreadyBlockText);
     }

@@ -5,6 +5,7 @@ import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 
 import java.nio.file.Watchable;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
@@ -20,14 +21,8 @@ public abstract class Fighter {
         private Stack<Minion> myMinions;
         private Stack <Armor> myArmor;
         private Stack <Weapon> myWeapon;
-        private int suerteM;
-        private int suerteW;
-        private int suerteA;
-        private String clase;
         private TFighter type;
-        private MinionManager minionManager;
-        private ItemManager itemManager;
-        private Random random = new Random();
+        private Random random = new Random(); //Esto es un atributo
         private int minionHealth;
         private Weapon arma1;
         private Weapon arma2;
@@ -35,16 +30,12 @@ public abstract class Fighter {
         Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
     Textterminal terminal = new Textterminal();
 
-    public Fighter(String name, TFighter type,String clase,
+    public Fighter(String name, TFighter type,
         Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
             this.name = name;
             this.health = random.nextInt(5) + 1;
             this.power = random.nextInt(5)+1;
-            this.clase=clase;
             this.type = type;
-            this.suerteM=type.suerteM;
-            this.suerteW=type.suerteW;
-            this.suerteA=type.suerteA;
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
@@ -128,7 +119,7 @@ public abstract class Fighter {
     }
     public void elegirArma(Stack<Weapon> myWeapon){
         terminal.show("Se te mostraran las armas de que dispones");
-        mostrarArmas();
+        //mostrarArmas();
         terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
         String leido = scanner.nextLine();
         setWeapon1(buscarArmaLeida(leido));
@@ -172,10 +163,14 @@ public abstract class Fighter {
     public abstract void ajusteHabilidad(int pA, int pD);
 
 
-    public void mostrarArmas() {
-        do{
-            terminal.show(getMyArmor().pop().toString()); //si las variables no son locales hay que hacer copia
-        } while(!getMyArmor().isEmpty());
+    public String [] generateWeaponsText() {
+        ArrayList<String> weapontext=new ArrayList<>();
+        int i =1;
+        for (Weapon element: myWeapon){
+            weapontext.add(Integer.toString(i) +". "+element.getName()+"Ataque: "+Integer.toString(element.getAttack()));
+            i++;
+        }
+        return weapontext.toArray(new String[weapontext.size()]);
     }
     public void mostrarArmaduras(){
         do {
