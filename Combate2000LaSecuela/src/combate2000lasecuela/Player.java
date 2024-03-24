@@ -13,6 +13,8 @@ public class Player extends User {
     private boolean blocked;
     private Fighter fighter;
 
+    private static int registerCount;
+
 
 
     public Player(String name, String password, String nick) {
@@ -45,7 +47,7 @@ public class Player extends User {
         char letter3 = (char) ('A' + r.nextInt(26));
 
         int num1 = r.nextInt(8) + 1;
-        int num2 = r.nextInt(8) + 1;
+        int num2 = registerCount++;
 
         return String.format("%c%d%d%c%c", letter1, num1, num2, letter2, letter3);
     }
