@@ -1,8 +1,10 @@
 package combate2000lasecuela.CosasDeLuchador;
 
+import combate2000lasecuela.Saveable;
+
 import java.io.Serializable;
 
-public class TFighter implements Serializable {
+public class TFighter implements Saveable {
     private int suerteA;
     private int suerteW;
     private int suerteM;
@@ -23,5 +25,10 @@ public class TFighter implements Serializable {
 
     public int getSuerteM() {
         return suerteM;
+    }
+
+    @Override
+    public String getId() {
+        return null;
     }
 }
