@@ -30,6 +30,7 @@ public class Gameflow {
     private boolean eadmin;
     private boolean challengep;
     private boolean challengemode;
+    private boolean fighterstate;
 
     
     public Gameflow() {
@@ -48,6 +49,7 @@ public class Gameflow {
         eadmin= false;
         challengep=false;
         challengemode=false;
+        fighterstate=false;
     }
 
     public void startMenu() {
@@ -85,6 +87,8 @@ public class Gameflow {
             eraseUser(user);
         } else if (challengemode) {
             challengeMode(player);
+        } else if (fighterstate) {
+            fighterState(player);
         } else if (cfighter) {
             createFighter(player);
         } else if (challengep) {
@@ -212,10 +216,13 @@ public class Gameflow {
             case 6: //Ver Ranking
                 ranking=true;
                 break;
-            case 7: //Cerrar Sesion
+            case 7: //Ver el estado del Fighter
+                fighterstate=true;
+                break;
+            case 8: //Cerrar Sesion
                 playerlogin=false;
                 break;
-            case 8: //Borrar Usuario
+            case 9: //Borrar Usuario
                 eraseuser=true;
                 break;
         }
@@ -251,8 +258,12 @@ public class Gameflow {
         if (option ==1){ //Desafio aceptado
             player.fight(challenge.getChallenger());
         }else{ //Desafio rechazado
+            challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);
+
         }
+        player.deletePendingChallenge();
+        database.updateUsers();
         if (!(player.hasPendingChallenges())) {
             challengemode = false;
         }
@@ -332,13 +343,13 @@ public class Gameflow {
             TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
-                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Vampire(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
@@ -374,12 +385,30 @@ public class Gameflow {
         }
         messageManager.showChallengeInstructions();
         String user = messageManager.showReadNick();
-        if ((database.isAPlayer(user)) ){//Falta poner que el desafiado tenga fighter
-            int gold = messageManager.showReadGold(player.getFighter().getGold());
-            player.challengePlayer((Player) database.getUser(user),gold);
+        if ((database.isAPlayer(user))){
+            Player challenged = (Player) database.getUser(user);
+            if (challenged.getFighter()!=null){
+                int gold = messageManager.showReadGold(player.getFighter().getGold());
+                Challenge challenge = player.challengePlayer((Player) database.getUser(user),gold);
+                database.addPendingChallenge(challenged,challenge);
+                ;
+            }
+            else{
+                messageManager.showNotfighterChallenged();
+            }
+
         }else{
             messageManager.showUserNotFound();
         }
+    }
+    private void fighterState(Player player){
+        fighterstate=false;
+        if (player.getFighter()==null){
+            messageManager.showNotFighter();
+            return;
+        }
+        String [] fighterState= player.getFighter().generateFighterState();
+        messageManager.showFighterState(fighterState);
     }
 
 }

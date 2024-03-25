@@ -15,6 +15,7 @@ public abstract class Minion implements Saveable {
         this.id=Integer.parseInt(valores[0]);
         this.name = valores[1];
         this.tipo = valores[2];
+        System.out.println(valores[0]+valores[1]+valores[2]);
     }
 
     @Override
