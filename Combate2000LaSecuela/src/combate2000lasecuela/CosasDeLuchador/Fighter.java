@@ -31,9 +31,6 @@ public abstract class Fighter implements Serializable {
         private Armor armadura;
 
         private PendingChallenges pendingChallenges;
-
-        Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
-        Textterminal terminal = new Textterminal();
         Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
@@ -60,18 +57,18 @@ public abstract class Fighter implements Serializable {
             int pD=0;
             do {
                 i++; //donde recibe el desafiado
-                terminal.show("Ronda numero" + i + "comienza");
+                //terminal.show("Ronda numero" + i + "comienza");
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
                             ajusteHabilidad(pA,pD);
-                            terminal.show(this.name+" ha recibido un golpe");
+                           // terminal.show(this.name+" ha recibido un golpe");
                             if (this.minionHealth>0){
-                                terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                              //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
                                this.minionHealth-=1;
                             }else {
                                 this.health -= 1; //considerar caso de que se maten a la vez
-                                terminal.show(this.health+ " vidas restantes");
+                               // terminal.show(this.health+ " vidas restantes");
                             }
                         }
                 //donde recibe el desafiante
@@ -80,13 +77,13 @@ public abstract class Fighter implements Serializable {
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
-                        terminal.show(desafiante.name+" ha recibido un golpe");
+                      //  terminal.show(desafiante.name+" ha recibido un golpe");
                         if (desafiante.minionHealth>0){
-                            terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                           // terminal.show(" aunque lo han acabado recibiendo los esbirros");
                             desafiante.minionHealth-=1;
                         }else {
                             desafiante.health -= 1;
-                            terminal.show (desafiante.health+" vidas restantes");
+                          //  terminal.show (desafiante.health+" vidas restantes");
                         }
                     }
             }while((this.health>0)||(desafiante.health>0));
@@ -129,46 +126,45 @@ public abstract class Fighter implements Serializable {
         }
         return total;
     }
-    public void elegirArma(LinkedList<Weapon> myWeapon){
-        terminal.show("Se te mostraran las armas de que dispones");
+    public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
+       // terminal.show("Se te mostraran las armas de que dispones");
         //mostrarArmas();
-        terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
-        String leido = scanner.nextLine();
+        //terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
         setWeapon1(buscarArmaLeida(leido));
         if (getArma1()==null){
-            terminal.show("No has introducido un valor valido");
-            elegirArma(myWeapon);
+          //  terminal.show("No has introducido un valor valido");
+            elegirArma(myWeapon,leido);
         }else {//si es valor valido
             if (getArma1().isOneHand) {
-                terminal.show("Como tu arma es de una mano se te permite coger otra arma");
-                terminal.show("Quieres hacerlo?");
-                if ("SI".equals(scanner.nextLine().toUpperCase())) {
-                    terminal.show("Pon su numero al igual que antes");
-                    leido = scanner.nextLine();
+                //terminal.show("Como tu arma es de una mano se te permite coger otra arma");
+                //terminal.show("Quieres hacerlo?");
+                if ("SI".equals(leido)){
+                    //terminal.show("Pon su numero al igual que antes");
+                    leido = "scanner.nextLine()";
                     Weapon temporal = (buscarArmaLeida(leido));
                     if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
-                        terminal.show("No hagas trampas!!");
-                        terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
+                       // terminal.show("No hagas trampas!!");
+                        //terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
                     } else {
                         setWeapon2(temporal);
                     }
                 }
             } else {
-                terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
+               // terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
             }
         }
     }
     public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
-        terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
+        //terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
         mostrarArmaduras();
-        terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
+      //  terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
         String leido = opcion.toString();
         setArmor(buscarArmaduraLeida(leido));
         if (getArmadura()==null){
-            terminal.show("Valor no valido");
+            //terminal.show("Valor no valido");
             elegirArmadura(myArmor,opcion);
         }else{ //adaptar como GameFlow
-            terminal.show("La armadura se ha seleccionado con exito");
+           // terminal.show("La armadura se ha seleccionado con exito");
         }
     }
     public abstract void ajusteHabilidad(int pA, int pD);
@@ -185,7 +181,7 @@ public abstract class Fighter implements Serializable {
     }
     public void mostrarArmaduras(){
         do {
-            terminal.show(getMyWeapon().remove().toString());
+            //terminal.show(getMyWeapon().remove().toString());
         } while(!getMyWeapon().isEmpty());
     }
     public LinkedList<Weapon> getMyWeapon(){
