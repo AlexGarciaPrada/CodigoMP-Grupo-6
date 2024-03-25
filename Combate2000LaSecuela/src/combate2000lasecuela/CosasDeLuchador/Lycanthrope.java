@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 
-public class Lycanthrope extends Fighter implements Serializable {
+public class Lycanthrope extends Fighter{
 int rage;
 int altura;
 int peso;

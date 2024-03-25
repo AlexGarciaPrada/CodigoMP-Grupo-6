@@ -2,15 +2,19 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
+
+import combate2000lasecuela.Saveable;
 import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.LinkedList;
-public abstract class Fighter {
+public abstract class Fighter implements Serializable {
 
     private String name;
         private int gold;
@@ -43,6 +47,7 @@ public abstract class Fighter {
             this.arma1=null;
             this.arma2=null;
             this.armadura=null;
+            this.pendingChallenges=new PendingChallenges();
         }
 
 
@@ -259,4 +264,6 @@ public abstract class Fighter {
     public PendingChallenges getPendingChallenges() {
         return pendingChallenges;
     }
+
+
 }
