@@ -14,7 +14,7 @@ Talent talent;
 
     @Override
     public int SpecialAttack() {
-        return (talent.getWillDamage()+getWill());
+        return (talent.getDamage()+getWill());
     }
 
     @Override

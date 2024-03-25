@@ -1,7 +1,5 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.CosasDeLuchador.Fighter;
-
 import java.io.Serializable;
 import java.util.Random;
 import java.util.Stack;
@@ -23,7 +21,7 @@ private Gift don;
     @Override
     public int SpecialAttack() {
         if (getRage()>=this.don.getRageCost()){
-            return don.getGiftDamage();
+            return don.getDamage();
         }
         return 0;
     }

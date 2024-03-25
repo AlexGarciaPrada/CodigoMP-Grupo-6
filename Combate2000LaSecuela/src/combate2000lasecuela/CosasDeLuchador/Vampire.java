@@ -1,7 +1,5 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.CosasDeLuchador.Fighter;
-
 import java.io.Serializable;
 import java.util.Random;
 import java.util.Stack;
@@ -26,7 +24,7 @@ public class Vampire extends Fighter implements Serializable {
     public int SpecialAttack(){
         if (getDiscipline().usarDisciplina(getPuntosSangre())){
             disminuirSangre(discipline.getCosteSangre());
-           return discipline.getDisciplineDamage();
+           return discipline.getDamage();
         }
         return 0;
     }

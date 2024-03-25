@@ -32,7 +32,8 @@ public abstract class Fighter {
         private PendingChallenges pendingChallenges;
 
         Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
-    Textterminal terminal = new Textterminal();
+        Textterminal terminal = new Textterminal();
+        Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
         Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
@@ -89,11 +90,11 @@ public abstract class Fighter {
             return null; //a falta de especificar datos del combat
     }
     public int potencialAtaque (Fighter f){//considerar arma dos manos
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage();
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+f.SpecialAttack();//sumo en ambos sitios SpecialAttack
+        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage();//sumo en ambos sitios SpecialAttack
         //porque la implementación de ambos sería idéntica.
             return verExitos(potencial);
     }
@@ -163,7 +164,6 @@ public abstract class Fighter {
             terminal.show("La armadura se ha seleccionado con exito");
         }
     }
-    public abstract int SpecialAttack();
     public abstract void ajusteHabilidad(int pA, int pD);
 
 
@@ -251,5 +251,7 @@ public abstract class Fighter {
         this.arma2=arma2;
         this.arma2.elegida=true;
     }
-
+    public void changeSpecialSkill(Specialskill nuevo){
+        this.specialskill=nuevo;
+    }
 }
