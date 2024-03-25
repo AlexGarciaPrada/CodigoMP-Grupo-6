@@ -2,10 +2,6 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
-import combate2000lasecuela.managers.MinionManager;
-import combate2000lasecuela.managers.ItemManager;
-
-import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -36,7 +32,8 @@ public abstract class Fighter {
         Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,LinkedList<Armor> myArmor,LinkedList<Weapon> myWeapon) {
+                   Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+                   LinkedList<Weapon> myWeapon) {
             this.name = name;
             this.health = random.nextInt(5) + 1;
             this.power = random.nextInt(5)+1;
@@ -90,11 +87,11 @@ public abstract class Fighter {
             return null; //a falta de especificar datos del combat
     }
     public int potencialAtaque (Fighter f){//considerar arma dos manos
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage();
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage();//sumo en ambos sitios SpecialAttack
+        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
             return verExitos(potencial);
     }
@@ -117,7 +114,7 @@ public abstract class Fighter {
         int total=0;
         Stack<Minion> copia;
         copia=this.myMinions;
-        while (!copia.isEmpty()){//por si acaso, pero creo que en java todas las variables son locales
+        while (!copia.isEmpty()){
          esclavo=copia.pop();
          total += esclavo.getHealth();
         }return total;
@@ -165,7 +162,7 @@ public abstract class Fighter {
         }
     }
     public abstract void ajusteHabilidad(int pA, int pD);
-
+    public abstract int SpecialAttack();
 
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
@@ -178,7 +175,7 @@ public abstract class Fighter {
     }
     public void mostrarArmaduras(){
         do {
-            terminal.show(getMyWeapon().pop().toString());
+            terminal.show(getMyWeapon().remove().toString());
         } while(!getMyWeapon().isEmpty());
     }
     public LinkedList<Weapon> getMyWeapon(){
@@ -212,7 +209,7 @@ public abstract class Fighter {
         Weapon aux=null;
         Weapon aux2=null;
         while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().pop();
+            aux=getMyWeapon().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;

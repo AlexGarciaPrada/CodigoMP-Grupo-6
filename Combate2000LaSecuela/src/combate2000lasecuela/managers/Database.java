@@ -82,42 +82,42 @@ public class Database {
         }
         return ranking;
     }
-   public Stack<Minion> randomMinions(int suerte){
-        /*Random random = new Random();
+   public Stack<Minion> randomMinions(int suerte, boolean esVampiro){
+        Random random = new Random();
         Stack<Minion> myMinions=null;
         Minion esclavo;
         int numero= random.nextInt(80)+1+suerte;
         for (Integer i=0; i<=numero;i++){
             esclavo = minionManager.getElements().get("MinionMap").get(i.toString());
-            if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
+            if (!(esVampiro) || !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
             }
-        }*/
-        return null;
+        }
+        return myMinions;
    } //mandar esto a DataBase
    public TFighter getTFighter(){
         return null;
    }
    public LinkedList<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
-        Stack<Weapon> myWeapon=null;
+        LinkedList<Weapon> myWeapon=null;
         Weapon arma;
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=number;i++){
             arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
-            myWeapon.push(arma);
+            myWeapon.add(arma);
         }
-        return null;
+        return myWeapon;
     }
    public LinkedList<Armor> randomArmor(int suerte){
        Random random = new Random();
        Armor armor;
-       Stack<Armor> myArmor=null;
+       LinkedList<Armor> myArmor=null;
        int numero= random.nextInt(28)+1+suerte;
            for (Integer i=1; i<=numero; i++) {
                 armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
-                myArmor.push(armor);
+                myArmor.add(armor);
            }
-       return null;
+       return myArmor;
    }
 }
