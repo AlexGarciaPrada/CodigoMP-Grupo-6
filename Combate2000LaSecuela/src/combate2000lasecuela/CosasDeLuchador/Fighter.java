@@ -15,7 +15,8 @@ import java.lang.Integer;
 import java.lang.String;
 
 public abstract class Fighter {
-        private String name;
+
+    private String name;
         private int gold;
         private int health;
         private int power;
@@ -205,7 +206,10 @@ public abstract class Fighter {
     public void setPower(int power) {
         this.power = power;
     }
-    
+
+    public int getHealth() {return health;}
+
+    public int getGold() {return gold;}
 
     public Weapon buscarArmaLeida (String leido){
         boolean encontrado=false;

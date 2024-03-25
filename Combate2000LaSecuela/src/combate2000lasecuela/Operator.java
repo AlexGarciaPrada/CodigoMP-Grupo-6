@@ -1,8 +1,13 @@
 package combate2000lasecuela;
 
+import combate2000lasecuela.CosasDeLuchador.Armor;
+import combate2000lasecuela.CosasDeLuchador.Minion;
+import combate2000lasecuela.CosasDeLuchador.Weapon;
 import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;
+
+import java.util.Stack;
 
 
 public class Operator extends User {
@@ -17,25 +22,35 @@ public class Operator extends User {
         player.getFighter().setName(newName);
     }
 
-    /* en estos metodos dudo porque aun no se que parametros me dara Alex
+    /* a espera de que Dani haga linkedlist
 
     public void changeSpecialSkill(Player player, String skill) {
         player.getFighter().setSpecialSkill(skill);
     }
 
-    public void changeWeaponStack();
 
-    public void changeArmorStack();
+    //para añadir arma a la pila (no al fichero), Alex me pasa la pila y la arma (elegida del fichero) que quiere añadirse
+    public void addWeapon(Stack<Weapon> MyWeapons, Weapon weapon) {
+        MyWeapons.push(weapon);
+    };
 
-    public void changeMinionsStack();
-     */
+    //para añadir armadura a la pila (no al fichero), Alex me pasa la pila y la armadura (elegida del fichero) que quiere añadirse
+    public void addArmor(Stack<Armor> MyArmor, Armor armor) {
+        MyArmor.push(armor);
+    };
+
+    //para añadir minion a la pila (no al fichero), Alex me pasa la pila y el minion (elegido del fichero) que quiere añadirse
+    public void addMinion(Stack<Minion> MyMinions, Minion minion) {
+        MyMinions.push(minion);
+    };
+
 
     /* en estos falta ver con Dani como ajustamos parametros
 
     public void changeActiveWeapon(Player player, int option) {
         player.getFighter().setWeapon1(option);
     }
-    Hay dos armas activas pero el metodo puede ser el mismo
+
 
 
     public void changeActiveArmor(Player player, int option) {
@@ -75,19 +90,6 @@ public class Operator extends User {
     }
 
 
-   /* public void validateChallenge(String challengeKey){
-        // mensaje del messagemanager enseñando los retos
-        // mensaje del messagemanager preguntando a reto quiere validar y si quiere validar o no
-        int option = terminal.read(2);
-        ChallengeManager cm = new ChallengeManager();
-        if(option == 1){
-            // cm.loadElement(challengeKey).setAccepted(true);
-            // LOAD ES PARA CARGAR COSAS AL INICIAR EL PROGRAMA
-        }
-        else if(option == 2){
-            cm.deleteElement("Challenge", challengeKey);
-        }
-    }*/
 
 
     @Override
