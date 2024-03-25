@@ -28,8 +28,7 @@ public class Gameflow {
     private boolean eadmin;
     private boolean challengep;
 
-
-
+    
     public Gameflow() {
         messageManager = new MessageManager();
         database = new Database();
@@ -45,7 +44,6 @@ public class Gameflow {
         efighter=false;
         eadmin= false;
         challengep=false;
-
     }
 
     public void startMenu() {
@@ -62,20 +60,22 @@ public class Gameflow {
         }
     }
     public void finiteStateMachine() {
-    while (true){
-        if (login) {
-            login();
-        } else if (register) {
-            register();
-        } else if (playerlogin) {
-            playerMachine((Player) user);
-        } else if (operatorlogin) {
-            operatorMachine((Operator) user);
-        } else {
-            startMenu();
+        while (true){
+            if (login) {
+                login();
+            } else if (register) {
+                register();
+            } else if (playerlogin) {
+                playerMachine((Player) user);
+            } else if (operatorlogin) {
+                operatorMachine((Operator) user);
+            } else {
+                startMenu();
+            }
         }
+    }
 
-    }}
+    // ------------------------ MACHINES
     private void playerMachine(Player player){
         if (eraseuser){
             eraseUser(user);
@@ -102,88 +102,85 @@ public class Gameflow {
             operatorLogin(operator);
         }
     }
+    // ------------------------ LOGIN
     private void login(){
         login = false;
         messageManager.showLogInMenu();
         String nick = messageManager.showReadNick();
-        if (nick.equals("SALIR")){
-            return;
-        }else{
-            String password = messageManager.showReadPassword();
-            if (password.equals("SALIR")){
+            if (nick.equals("SALIR")){
                 return;
             }else{
-               if (database.isNickUsed(nick)){
-                   if (database.isPasswordCorrect(nick,password)){
-                       user = database.getUser(nick);
-                       if (user instanceof Player){
-                           if (!((Player) user).isBlocked()){
-                               playerlogin = true;
-                           }else{
-                               messageManager.showPlayerBlocked();
+                String password = messageManager.showReadPassword();
+                    if (password.equals("SALIR")){
+                        return;
+                    }else{
+                       if (database.isNickUsed(nick)){
+                           if (database.isPasswordCorrect(nick,password)){
+                               user = database.getUser(nick);
+                               if (user instanceof Player){
+                                   if (!((Player) user).isBlocked()){
+                                       playerlogin = true;
+                                   }else{
+                                       messageManager.showPlayerBlocked();
+                                   }
+                               }else{
+                                   operatorlogin=true;
                                }
+                           }else{
+                               messageManager.showWrongPassword();
+                           }
 
                        }else{
-                           operatorlogin=true;
+                           messageManager.showUserNotFound();
                        }
-                   }else{
-                       messageManager.showWrongPassword();
-                   }
-                   
-               }else{
-                   messageManager.showUserNotFound();
-               }
+                    }
             }
-        }
-
     }
+    // ------------------------ REGISTER
     private void register(){
         register =false;
         int type = messageManager.showUserType();
-        if (type == 3){
-            return;
-        }
-
+            if (type == 3){
+                return;
+            }
         messageManager.showRegisterMenu();
         String name = messageManager.showReadName();
-
-        if (name.equals("SALIR")){
-            return;
-        }
-        String nick = messageManager.showReadNick();
-        if (nick.equals("SALIR")){
-            return;
-        }
-        else if (database.isNickUsed(nick)){
-            messageManager.showNickUsed();
-            return;
-        }
-        else{
-            String password = messageManager.showReadPassword();
-            if (password.equals("SALIR")){
+            if (name.equals("SALIR")){
                 return;
-            }else{
-                String confirmpassword = messageManager.showReadConfirmPassword();
-                if (confirmpassword.equals("SALIR")){
+            }
+        String nick = messageManager.showReadNick();
+            if (nick.equals("SALIR")){
+                return;
+            }
+            else if (database.isNickUsed(nick)){
+                messageManager.showNickUsed();
+                return;
+            }
+            else{
+                String password = messageManager.showReadPassword();
+                if (password.equals("SALIR")){
                     return;
                 }else{
-                    if (confirmpassword.equals(password)){
-                        if (type == 1){
-                            database.addPlayer(new Player(name,password,nick));
+                    String confirmpassword = messageManager.showReadConfirmPassword();
+                        if (confirmpassword.equals("SALIR")){
+                            return;
                         }else{
-                            database.addOperator(new Operator(name,password,nick));
+                            if (confirmpassword.equals(password)){
+                                if (type == 1){
+                                    database.addPlayer(new Player(name,password,nick));
+                                }else{
+                                    database.addOperator(new Operator(name,password,nick));
+                                }
+                            messageManager.showUserRegistered(nick);
+                            }else{
+                            messageManager.showNotCoincidencePassword();
+                            }
                         }
-
-
-                        messageManager.showUserRegistered(nick);
-                    }else{
-                        messageManager.showNotCoincidencePassword();
-                    }
-
                 }
             }
-        }
     }
+
+    // ------------------------ LOGIN TYPES
     private void playerLogin(Player player){
         int option = messageManager.showPlayerMenu(player.getName());
         switch(option){
@@ -234,9 +231,8 @@ public class Gameflow {
                 eraseuser=true;
                 break;
         }
-
-
     }
+
     private void eraseUser(User user){
         int option = messageManager.showEraseUser(user.getNick());
         eraseuser=false;
@@ -248,11 +244,16 @@ public class Gameflow {
                 database.eraseOperator((Operator) user);
                 operatorlogin=false;
             }
-    }}
+        }
+    }
+
+    // ------------------------ RANKING
     private void playersRanking(){
         messageManager.showRanking(database.getRanking());
         ranking=false;
     }
+
+    // ------------------------ BLOCK AND UNBLOCK USER
     private void blockUser(Operator operator) {
         block = false;
         String nick = messageManager.showNickToBlock();
@@ -291,6 +292,8 @@ public class Gameflow {
             messageManager.showUserNotFound();
         }
     }
+
+    // ------------------------ CREATE AND ERASE FIGHTER
     private void createFighter(Player player){
         cfighter=false;
         if (player.getFighter()!=null){
@@ -312,7 +315,6 @@ public class Gameflow {
                     break;
             }
         }
-
     }
     private void eraseFighter(Player player){
         efighter=false;
@@ -327,6 +329,8 @@ public class Gameflow {
             }
         }
     }
+
+    // ------------------------ ADMIN EQUIPMENT
     private void adminEquipment(Player player){
         eadmin=false;
         if (player.getFighter()==null){

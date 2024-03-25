@@ -30,15 +30,12 @@ public class Database {
     public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
         usermanager.saveCollection("User");
-
     }
     public void addOperator(Operator operator){
-
         usermanager.addElement("Operator", operator.getNick(), operator);
         usermanager.saveCollection("User");
     }
     public void erasePlayer(Player player){
-
         usermanager.getElements().get("Player").remove(player.getNick());
         usermanager.saveCollection("User");
     }
@@ -48,7 +45,7 @@ public class Database {
     }
 
     public boolean isNickUsed(String nick){
-        if ((usermanager.isInTheMap("Player",nick)) || (usermanager.isInTheMap("Operator",nick))){
+        if ((usermanager.inMap("Player",nick)) || (usermanager.inMap("Operator",nick))){
             return true;
         }
         else{
@@ -56,14 +53,14 @@ public class Database {
         }
     }
     public boolean isPasswordCorrect(String nick,String password){
-        if ((usermanager.isInTheMap("Player",nick))){
+        if ((usermanager.inMap("Player",nick))){
             return (usermanager.getElements().get("Player").get(nick).getPassword().equals(password));
         }else{
             return (usermanager.getElements().get("Operator").get(nick).getPassword().equals(password));
         }
     }
     public User getUser(String nick){
-        if ((usermanager.isInTheMap("Player",nick))){
+        if ((usermanager.inMap("Player",nick))){
             return usermanager.getElements().get("Player").get(nick);
         }else{
             return usermanager.getElements().get("Operator").get(nick);
@@ -97,30 +94,30 @@ public class Database {
             }
         }*/
         return null;
-    } //mandar todo esto a DataBase
-    public TFighter getTFighter(){
+   } //mandar esto a DataBase
+   public TFighter getTFighter(){
         return null;
-    }
+   }
    public Stack<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Stack<Weapon> myWeapon=null;
         Weapon arma;
-        int numero = random.nextInt(28) + 1 + suerte;
-        for (Integer i=1; i<=numero;i++){
+        int number = random.nextInt(28) + 1 + suerte;
+        for (Integer i=1; i<=number;i++){
             arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
             myWeapon.push(arma);
         }
         return myWeapon;
     }
-    public Stack<Armor> randomArmor(int suerte){
-        Random random = new Random();
-        Armor armadura;
-        Stack<Armor> myArmor=null;
-        int numero= random.nextInt(28)+1+suerte;
-        for (Integer i=1; i<=numero; i++) {
-            armadura = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
-            myArmor.push(armadura);
-        }
-        return myArmor;
-    }
+   public Stack<Armor> randomArmor(int suerte){
+       Random random = new Random();
+       Armor armor;
+       Stack<Armor> myArmor=null;
+       int numero= random.nextInt(28)+1+suerte;
+           for (Integer i=1; i<=numero; i++) {
+                armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
+                myArmor.push(armor);
+           }
+       return myArmor;
+   }
 }

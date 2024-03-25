@@ -1,22 +1,52 @@
 package combate2000lasecuela;
 
 import java.util.Date;
+
+
+import combate2000lasecuela.CosasDeLuchador.Fighter;
 import combate2000lasecuela.Saveable;
 
 
 public class Combat implements Saveable {
-    private Player challenger;
-    private Player challenged;
+    private Fighter challenger;
+    private Fighter challenged;
     private int rounds;
     private Date date;
-    private boolean isFinished;
-    private Player winner;
+    private Fighter winner;
     private int goldGained;
 
+
+    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained) {
+        this.challenger = challenger;
+        this.challenged = challenged;
+        this.rounds = rounds;
+        this.date = new Date();
+        this.winner = whoWin(challenger, challenged);
+        this.goldGained = goldGained;
+
+    }
+
+    public Fighter whoWin(Fighter challenger, Fighter challenged) {
+        if (challenger.getHealth() < challenged.getHealth()) {
+            return challenged;
+        } else if (challenger.getHealth() > challenged.getHealth()) {
+            return challenger;
+        } else return null;
+    }
+
+    public Fighter getWinner () {return this.winner;}
+
+    public int getGoldGained() {return goldGained;}
+
+    public Fighter getChallenger() {return challenger;}
+
+    public Fighter getChallenged() {return challenged;}
     @Override
     public String getId() {
         return null;
     }
+
+
 }
 
 
