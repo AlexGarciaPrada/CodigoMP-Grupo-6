@@ -20,5 +20,7 @@ public class PendingChallenges implements Serializable {
         return pendingChallenges.poll();
     }
 
+    public boolean Empty() {return pendingChallenges.isEmpty();}
+
     
 }

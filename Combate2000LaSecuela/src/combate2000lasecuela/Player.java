@@ -13,18 +13,13 @@ public class Player extends User {
     private boolean blocked;
     private Fighter fighter;
 
-    private static int registerCount;
-
-
 
     public Player(String name, String password, String nick) {
         super(name, password, nick);
-        this.registerNumber = generateRegisterNum();
+        //this.registerNumber = generateRegisterNum(num);
         this.victories=0;
         this.blocked = false;
         this.fighter =null;
-
-
     }
 
     public int getVictories() {return victories;}
@@ -39,7 +34,7 @@ public class Player extends User {
         this.fighter=fighter;
     }
 
-    private String generateRegisterNum() {
+    private String generateRegisterNum(int num) {
         Random r = new Random();
 
         char letter1 = (char) ('A' + r.nextInt(26));
@@ -47,7 +42,7 @@ public class Player extends User {
         char letter3 = (char) ('A' + r.nextInt(26));
 
         int num1 = r.nextInt(8) + 1;
-        int num2 = registerCount++;
+        int num2 = num;
 
         return String.format("%c%d%d%c%c", letter1, num1, num2, letter2, letter3);
     }
@@ -56,20 +51,21 @@ public class Player extends User {
 
 
     public Challenge challengePlayer(Player challenged, int gold) {
-        return new Challenge(challenged, gold);
+        if (this.fighter != null && challenged.getFighter() != null) {
+            return new Challenge(challenged, gold);
+        } else return null;
     }
 
-    //esto tal vez deba hacerlo Alex con el challenge que devuelve el metodo anterior
-
-    /*public Challenge ChallengePlayer(Player challenged) {
-        ChallengeManager cm = new ChallengeManager();
-        cm.addElement("Challenge", generateRandomChallengeKey(), new Challenge());
-        return cm.getElements().get("Challenge").get(generateRandomChallengeKey());
+    public void updateAfterCombat(Combat c) {
+        if (c.getChallenger() == c.getWinner()) {
+            int actualGold = c.getChallenger().getGold();
+             actualGold += c.getGoldGained();
+        } else if (c.getChallenged() == c.getWinner()) {
+            int actualGold = c.getChallenged().getGold();
+            actualGold += c.getGoldGained();
+        }
     }
 
-    public static String generateRandomChallengeKey() {
-        return UUID.randomUUID().toString();
-    }*/
 
     public void fight(Player challenged) {
         fighter.startFighting(challenged.getFighter());
