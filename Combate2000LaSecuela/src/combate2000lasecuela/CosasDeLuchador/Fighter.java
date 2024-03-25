@@ -1,16 +1,11 @@
 package combate2000lasecuela.CosasDeLuchador;
-
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Stack;
-
-import combate2000lasecuela.Saveable;
-import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.LinkedList;
@@ -43,11 +38,12 @@ public abstract class Fighter implements Serializable {
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
-            this.minionHealth= 0;//calcularVidaMinions();///No funciona
+            this.minionHealth= calcularVidaMinions();
+            this.pendingChallenges = new PendingChallenges();
             this.arma1=null;
             this.arma2=null;
             this.armadura=null;
-            this.pendingChallenges=new PendingChallenges();
+            this.gold=100;
         }
 
 
@@ -55,6 +51,7 @@ public abstract class Fighter implements Serializable {
             int i=0;
             int pA=0;
             int pD=0;
+            boolean esEmpate=false;//preparativo para meterselo al combat
             do {
                 i++; //donde recibe el desafiado
                 //terminal.show("Ronda numero" + i + "comienza");
@@ -87,10 +84,16 @@ public abstract class Fighter implements Serializable {
                         }
                     }
             }while((this.health>0)||(desafiante.health>0));
+            if ((this.health==0)&& (desafiante.health==0)){
+                esEmpate=true;
+            }
             return null; //a falta de especificar datos del combat
     }
-    public int potencialAtaque (Fighter f){//considerar arma dos manos
+    public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
+        if (f.arma2!=null){
+            potencial+=f.arma2.getDamage();
+        }
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
@@ -113,18 +116,21 @@ public abstract class Fighter implements Serializable {
         return (pA>pD);
     }
     public int calcularVidaMinions(){
-        if (myMinions == null){
+        if (getMyMinion() == null){
             return 0;
+        }else {
+            Minion esclavo;
+            int total = 0;
+
+            while (!this.myMinions.isEmpty()) {
+                esclavo = this.myMinions.pop();
+                total += esclavo.getHealth();
+            }
+            return total;
         }
-        Minion esclavo;
-        int total=0;
-        Stack<Minion> copia;
-        copia=this.myMinions;
-        while (!copia.isEmpty()){
-         esclavo=copia.pop();
-         total += esclavo.getHealth();
-        }
-        return total;
+    }
+    public Stack<Minion> getMyMinion(){
+        return this.myMinions;
     }
     public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
        // terminal.show("Se te mostraran las armas de que dispones");
@@ -138,7 +144,7 @@ public abstract class Fighter implements Serializable {
             if (getArma1().isOneHand) {
                 //terminal.show("Como tu arma es de una mano se te permite coger otra arma");
                 //terminal.show("Quieres hacerlo?");
-                if ("SI".equals(leido)){
+                if ("SI".equals(leido.toUpperCase())){
                     //terminal.show("Pon su numero al igual que antes");
                     leido = "scanner.nextLine()";
                     Weapon temporal = (buscarArmaLeida(leido));
@@ -163,7 +169,7 @@ public abstract class Fighter implements Serializable {
         if (getArmadura()==null){
             //terminal.show("Valor no valido");
             elegirArmadura(myArmor,opcion);
-        }else{ //adaptar como GameFlow
+        }else{
            // terminal.show("La armadura se ha seleccionado con exito");
         }
     }
@@ -192,7 +198,6 @@ public abstract class Fighter implements Serializable {
     }
 
 
-    //no los borres Dani, son solo setters
     public void setName(String name) {
             this.name = name;
     }
@@ -209,13 +214,17 @@ public abstract class Fighter implements Serializable {
         this.power = power;
     }
 
-    public int getHealth() {return health;}
+    public int getHealth() {
+        return health;
+    }
 
-    public int getGold() {return gold;}
+    public int getGold() {
+        return gold;
+    }
 
     public Weapon buscarArmaLeida (String leido){
         boolean encontrado=false;
-        Weapon aux=null;
+        Weapon aux;
         Weapon aux2=null;
         while ((!getMyWeapon().isEmpty())||(encontrado)) {
             aux=getMyWeapon().remove();
@@ -264,6 +273,4 @@ public abstract class Fighter implements Serializable {
     public PendingChallenges getPendingChallenges() {
         return pendingChallenges;
     }
-
-
 }

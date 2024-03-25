@@ -94,7 +94,7 @@ public class Database {
         }
         return ranking;
     }
-    public Stack<Minion> randomMinions(int suerte, boolean esVampiro){
+    public Stack<Minion> randomMinions(int suerte, boolean esVampiro,int tope){
         Random random = new Random();
         Stack<Minion> myMinions=new Stack<>();
         Minion esclavo;
@@ -103,10 +103,20 @@ public class Database {
             esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
             if (!(esVampiro) || !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
+                if ((esclavo instanceof Demon)&&(tope<=3)){ //que no se meta en bucle continuo, capo a los demonios
+                    tope+=1;
+                    randomMinionDemon(tope);
+                }
             }
         }
         return myMinions;
-    } //mandar esto a DataBase
+    } //no estoy muy seguro de que esto este bien, pero no veo problemas de primeras
+    public Stack<Minion> randomMinionDemon(int tope){
+      if (tope<=3){
+         return randomMinions(0,false,tope+1);
+      }
+      return null;
+    }
     public TFighter getTFighter(){
         return null;
     }
