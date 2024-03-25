@@ -1,12 +1,9 @@
 package combate2000lasecuela.CosasDeLuchador;
-
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Stack;
-import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.LinkedList;
@@ -50,6 +47,7 @@ public abstract class Fighter {
             int i=0;
             int pA=0;
             int pD=0;
+            boolean esEmpate=false;//preparativo para meterselo al combat
             do {
                 i++; //donde recibe el desafiado
                 //terminal.show("Ronda numero" + i + "comienza");
@@ -82,10 +80,16 @@ public abstract class Fighter {
                         }
                     }
             }while((this.health>0)||(desafiante.health>0));
+            if ((this.health==0)&& (desafiante.health==0)){
+                esEmpate=true;
+            }
             return null; //a falta de especificar datos del combat
     }
-    public int potencialAtaque (Fighter f){//considerar arma dos manos
+    public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
+        if (f.arma2!=null){
+            potencial+=f.arma2.getDamage();
+        }
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
@@ -136,7 +140,7 @@ public abstract class Fighter {
             if (getArma1().isOneHand) {
                 //terminal.show("Como tu arma es de una mano se te permite coger otra arma");
                 //terminal.show("Quieres hacerlo?");
-                if ("SI".equals(leido)){
+                if ("SI".equals(leido.toUpperCase())){
                     //terminal.show("Pon su numero al igual que antes");
                     leido = "scanner.nextLine()";
                     Weapon temporal = (buscarArmaLeida(leido));
@@ -161,7 +165,7 @@ public abstract class Fighter {
         if (getArmadura()==null){
             //terminal.show("Valor no valido");
             elegirArmadura(myArmor,opcion);
-        }else{ //adaptar como GameFlow
+        }else{
            // terminal.show("La armadura se ha seleccionado con exito");
         }
     }
