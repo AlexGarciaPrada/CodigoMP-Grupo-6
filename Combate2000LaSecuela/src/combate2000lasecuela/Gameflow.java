@@ -87,6 +87,8 @@ public class Gameflow {
             challengeMode(player);
         } else if (cfighter) {
             createFighter(player);
+        } else if (challengep) {
+            challengePlayer(player);
         } else if (efighter) {
             eraseFighter(player);
         } else if (eadmin) {
@@ -366,10 +368,15 @@ public class Gameflow {
         ///Aquí habría que hacer cosas
     }
     private void challengePlayer(Player player){
+        challengep=false;
+        if (player.getFighter()==null){
+            return;
+        }
         messageManager.showChallengeInstructions();
         String user = messageManager.showReadNick();
-        if (database.isAPlayer(user)){
+        if ((database.isAPlayer(user)) ){//Falta poner que el desafiado tenga fighter
             int gold = messageManager.showReadGold(player.getFighter().getGold());
+            player.challengePlayer((Player) database.getUser(user),gold);
         }else{
             messageManager.showUserNotFound();
         }
