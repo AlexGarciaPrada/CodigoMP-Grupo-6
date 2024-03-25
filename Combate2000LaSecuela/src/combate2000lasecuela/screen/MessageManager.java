@@ -72,6 +72,12 @@ public class MessageManager {
         String [] content={theUserText+nick,userBlock};
         showContent(content);
     }
+    public void showNotfighterChallenged(){
+        showContent(notFighterChallenged);
+    }
+    public void showFighterState(String [] content){
+        showContent(content);
+    }
     public void showUserUnblocked(String nick){
         String [] content={theUserText+nick,userUnblock};
         showContent(content);
@@ -86,7 +92,7 @@ public class MessageManager {
     }
     public int showTFighter(String [] content){
         showContent(content);
-        return t.read(content.length);
+        return (t.read(content.length+1)-1);
     }
     public void showChallengeInstructions(){
         showContent(challengeInstructionText);

@@ -20,7 +20,7 @@ public class Constants {
     public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion revertible","1. Confirmar","2. Salir"};
 
     public static final String[] playerMenuText={"1. Crear Personaje","2. Borrar Personaje","3. Administrar equipo personaje"
-            ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Cerrar Sesion","8. Borrar Usuario"};
+            ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Ver Estado del Luchador","8. Cerrar Sesion","9. Borrar Usuario"};
     public static final String [] operatorMenuText={"1. Editar personaje","2. Editar Equipo, Esbirros, Modificadores","3. Validar Desafios",
             "4. Bloquear Usuario","5. Desbloquear Usuario","6. Cerrar Sesion","7. Borrar Usuario"};
     public static final String [] alreadyBlockText={"Este usuario ya esta bloqueado"};
@@ -31,6 +31,7 @@ public class Constants {
     public static final String [] notFighterText={"No tienes un personaje creado","Crea un personaje para poder realizar esta accion"};
     public static final String [] eraseConfirmationText={"Confirma que quieres borrar tu personaje","ESTA ACCION IRREVERSIBLE","1. No","2. Si"};
     public static final String[] challengeInstructionText={"Desafiar a otro jugador: ","Primero debes introducir el nick del jugador que vas a retar","Por ultimo debes introducir la cantidad de oro que va a apostar (debes tener esa cantidad de oro)"};
+    public static final String [] notFighterChallenged={"El jugador desafiado no tiene un luchador creado"};
     public static final String theUserText = "El usuario ";
     public static final String gold = "Oro a apostar: ";
     public static final String userRegistered2 = " ha sido registrado correctamente";

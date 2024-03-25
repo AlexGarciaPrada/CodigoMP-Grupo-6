@@ -119,12 +119,13 @@ public abstract class Fighter implements Serializable {
         if (getMyMinion() == null){
             return 0;
         }else {
-            Minion esclavo;
             int total = 0;
 
             while (!this.myMinions.isEmpty()) {
-                esclavo = this.myMinions.pop();
-                total += esclavo.getHealth();
+                Minion esclavo = this.myMinions.pop();
+                if (esclavo != null) {
+                    total += esclavo.getHealth();
+                }
             }
             return total;
         }
@@ -272,5 +273,23 @@ public abstract class Fighter implements Serializable {
 
     public PendingChallenges getPendingChallenges() {
         return pendingChallenges;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String [] generateFighterState(){
+        String hija =null;
+        if (this instanceof Vampire){
+            hija="Vampiro";
+        } else if (this instanceof Lycanthrope) {
+            hija="Licantropo";
+        } else if (this instanceof Hunter) {
+            hija = "Hunter";
+        }
+        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+hija
+        ,"Tipo: "+type.getName()};
+        return text;
     }
 }
