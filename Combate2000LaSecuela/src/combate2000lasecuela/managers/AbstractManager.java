@@ -1,7 +1,7 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.Saveable;
-import java.beans.XMLDecoder;
+
 import java.beans.XMLEncoder;
 import java.io.*;
 import java.lang.reflect.ParameterizedType;
@@ -75,6 +75,14 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
+    //------------------------------------ CHECK IF AN ELEMENT IS IN THE MAP
+    public boolean inMap(String submap, String key){
+        if (this.elements.get(submap) == null){
+            return false;
+        }
+        return this.elements.get(submap).containsKey(key);
+    }
+
     // --------------------------------- GETTERS AND SETTERS
 
     public Map<String, Map<String,T>> getElements() {
@@ -87,12 +95,5 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
 
     public Map<String, T> getCollection(String type) {return elements.get(type);}
 
-    //------------------------------------ PARA SABER SI UN ELEMENTO ESTÁ EN EL MAPA
-    public boolean isInTheMap(String submap, String key){
-         if (this.elements.get(submap) == null){
-             return false;
-         }
-         return this.elements.get(submap).containsKey(key);
-    }
 
 }
