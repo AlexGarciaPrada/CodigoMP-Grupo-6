@@ -365,5 +365,14 @@ public class Gameflow {
         int option = messageManager.showWeaponStack(player.getFighter().generateWeaponsText());
         ///Aquí habría que hacer cosas
     }
+    private void challengePlayer(Player player){
+        messageManager.showChallengeInstructions();
+        String user = messageManager.showReadNick();
+        if (database.isAPlayer(user)){
+            int gold = messageManager.showReadGold(player.getFighter().getGold());
+        }else{
+            messageManager.showUserNotFound();
+        }
+    }
 
 }

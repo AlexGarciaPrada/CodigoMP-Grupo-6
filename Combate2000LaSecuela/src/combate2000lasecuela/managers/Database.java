@@ -40,6 +40,9 @@ public class Database {
         usermanager.addElement("Player", player.getNick(), player);
         usermanager.saveCollection("User");
     }
+    public boolean isAPlayer(String nick){
+        return usermanager.inMap("Player",nick);
+    }
     public void addOperator(Operator operator){
         usermanager.addElement("Operator", operator.getNick(), operator);
         usermanager.saveCollection("User");
