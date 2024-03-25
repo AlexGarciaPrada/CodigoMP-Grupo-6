@@ -96,9 +96,15 @@ public class Database {
         }*/
         return null;
    } //mandar esto a DataBase
-   public TFighter getTFighter(){
-        return null;
-   }
+    public String [] getTFighterText(){
+        ArrayList<String> text;
+        TFighterManager tFighterManager=loader.getTfm();
+        int i=1;
+        for(tFighterManager: TFighter tfighter){
+            text.add
+            i++;
+        }
+    }
    public Stack<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Stack<Weapon> myWeapon=null;
