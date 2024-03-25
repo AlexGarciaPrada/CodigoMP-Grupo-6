@@ -2,11 +2,13 @@ package combate2000lasecuela;
 
 import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Minion;
+import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 
@@ -22,21 +24,19 @@ public class Operator extends User {
         player.getFighter().setName(newName);
     }
 
-    /* a espera de que Dani haga linkedlist
-
-    public void changeSpecialSkill(Player player, String skill) {
-        player.getFighter().setSpecialSkill(skill);
+    public void changeSpecialSkill(Player player, Specialskill skill) {
+        player.getFighter().changeSpecialSkill(skill);
     }
 
 
-    //para añadir arma a la pila (no al fichero), Alex me pasa la pila y la arma (elegida del fichero) que quiere añadirse
-    public void addWeapon(Stack<Weapon> MyWeapons, Weapon weapon) {
-        MyWeapons.push(weapon);
+    //para añadir arma a la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere añadirse
+    public void addWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
+        MyWeapons.add(weapon);
     };
 
-    //para añadir armadura a la pila (no al fichero), Alex me pasa la pila y la armadura (elegida del fichero) que quiere añadirse
-    public void addArmor(Stack<Armor> MyArmor, Armor armor) {
-        MyArmor.push(armor);
+    //para añadir armadura a la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere añadirse
+    public void addArmor(LinkedList<Armor> MyArmor, Armor armor) {
+        MyArmor.add(armor);
     };
 
     //para añadir minion a la pila (no al fichero), Alex me pasa la pila y el minion (elegido del fichero) que quiere añadirse
@@ -44,19 +44,20 @@ public class Operator extends User {
         MyMinions.push(minion);
     };
 
+    //para eliminar arma de la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere eliminarse
+    public void deleteWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
+        MyWeapons.remove(weapon);
+    };
 
-    /* en estos falta ver con Dani como ajustamos parametros
+    //para eliminar armadura de la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere eliminarse
+    public void deleteArmor(LinkedList<Armor> MyArmor, Armor armor) {
+        MyArmor.remove(armor);
+    };
 
-    public void changeActiveWeapon(Player player, int option) {
-        player.getFighter().setWeapon1(option);
-    }
-
-
-
-    public void changeActiveArmor(Player player, int option) {
-        player.getFighter().setArmor(option);
-    }
-    */
+    //para eliminar minion de la pila (no al fichero), Alex me pasa la pila y se elimina la cima
+    public void deleteMinion(Stack<Minion> MyMinions, Minion minion) {
+        MyMinions.pop();
+    };
 
 
     //aun no estan definidas las fortalezas y debilidades
@@ -89,7 +90,13 @@ public class Operator extends User {
         return validate = state;
     }
 
+    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
+        super.changeActiveWeapon(player, MyWeapons, weapon);
+    }
 
+    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
+        super.changeActiveArmor(player, MyArmor, option);
+    }
 
 
     @Override
@@ -97,3 +104,4 @@ public class Operator extends User {
         return null;
     }
 }
+
