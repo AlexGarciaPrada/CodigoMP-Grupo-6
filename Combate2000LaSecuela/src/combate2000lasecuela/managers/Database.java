@@ -21,6 +21,16 @@ public class Database {
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatResgister();
     }
+    public void addFighter(Player player,Fighter fighter){
+        player.createFighter(fighter);
+        usermanager.saveCollection("User");
+
+    }
+    public void eraseFighter(Player player){
+        player.deleteFighter();;
+        usermanager.saveCollection("User");
+
+    }
 
     public void loadUsers(){
         usermanager.loadElement("User");
