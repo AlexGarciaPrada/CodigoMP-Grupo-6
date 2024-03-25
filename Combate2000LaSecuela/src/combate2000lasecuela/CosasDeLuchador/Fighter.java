@@ -13,15 +13,15 @@ import java.util.Stack;
 import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
-
+import java.util.LinkedList;
 public abstract class Fighter {
         private String name;
         private int gold;
         private int health;
         private int power;
         private Stack<Minion> myMinions;
-        private Stack <Armor> myArmor;
-        private Stack <Weapon> myWeapon;
+        private LinkedList <Armor> myArmor;
+        private LinkedList<Weapon> myWeapon;
         private TFighter type;
         private Random random = new Random(); //Esto es un atributo
         private int minionHealth;
@@ -36,7 +36,7 @@ public abstract class Fighter {
         Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+        Stack<Minion> myMinions,LinkedList<Armor> myArmor,LinkedList<Weapon> myWeapon) {
             this.name = name;
             this.health = random.nextInt(5) + 1;
             this.power = random.nextInt(5)+1;
@@ -122,7 +122,7 @@ public abstract class Fighter {
          total += esclavo.getHealth();
         }return total;
     }
-    public void elegirArma(Stack<Weapon> myWeapon){
+    public void elegirArma(LinkedList<Weapon> myWeapon){
         terminal.show("Se te mostraran las armas de que dispones");
         //mostrarArmas();
         terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
@@ -151,7 +151,7 @@ public abstract class Fighter {
             }
         }
     }
-    public void elegirArmadura (Stack<Armor> myArmor, Integer opcion){
+    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
         terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
         mostrarArmaduras();
         terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
@@ -181,10 +181,10 @@ public abstract class Fighter {
             terminal.show(getMyWeapon().pop().toString());
         } while(!getMyWeapon().isEmpty());
     }
-    public Stack<Weapon> getMyWeapon(){
+    public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }
-    public Stack<Armor> getMyArmor(){
+    public LinkedList<Armor> getMyArmor(){
         return this.myArmor;
     }
 
@@ -224,7 +224,7 @@ public abstract class Fighter {
         Armor aux=null;
         Armor aux2=null;
         while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().pop();
+            aux=getMyArmor().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;
