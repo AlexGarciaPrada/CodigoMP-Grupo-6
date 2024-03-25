@@ -1,6 +1,7 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 
@@ -9,7 +10,7 @@ public class Vampire extends Fighter implements Serializable {
     private int age;
     private Discipline discipline;
     Random random = new Random();
-    public Vampire(String name, TFighter type, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+    public Vampire(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.puntosSangre=0;
         this.discipline = new Discipline();

@@ -98,7 +98,7 @@ public class Database {
    public TFighter getTFighter(){
         return null;
    }
-   public Stack<Weapon> randomWeapons(int suerte) {
+   public LinkedList<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         Stack<Weapon> myWeapon=null;
         Weapon arma;
@@ -107,9 +107,9 @@ public class Database {
             arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
             myWeapon.push(arma);
         }
-        return myWeapon;
+        return null;
     }
-   public Stack<Armor> randomArmor(int suerte){
+   public LinkedList<Armor> randomArmor(int suerte){
        Random random = new Random();
        Armor armor;
        Stack<Armor> myArmor=null;
@@ -118,6 +118,6 @@ public class Database {
                 armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
                 myArmor.push(armor);
            }
-       return myArmor;
+       return null;
    }
 }
