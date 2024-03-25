@@ -1,6 +1,7 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.CosasDeLuchador.*;
+import combate2000lasecuela.Loader;
 import combate2000lasecuela.Operator;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.User;
@@ -9,18 +10,26 @@ import java.util.*;
 
 public class Database {
     private UserManager usermanager;
-    private ItemManager itemManager;
+    private Loader loader;
     private ChallengeManager challengeManager;
     private CombatResgister combatregister;
-    private MinionManager minionManager;
 
 
     public Database() {
         this.usermanager = new UserManager();
-        this.itemManager = new ItemManager();
+        this.loader=new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatResgister();
-        this.minionManager = new MinionManager();
+    }
+    public void addFighter(Player player,Fighter fighter){
+        player.createFighter(fighter);
+        usermanager.saveCollection("User");
+
+    }
+    public void eraseFighter(Player player){
+        player.deleteFighter();;
+        usermanager.saveCollection("User");
+
     }
 
     public void loadUsers(){
@@ -30,6 +39,9 @@ public class Database {
     public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
         usermanager.saveCollection("User");
+    }
+    public boolean isAPlayer(String nick){
+        return usermanager.inMap("Player",nick);
     }
     public void addOperator(Operator operator){
         usermanager.addElement("Operator", operator.getNick(), operator);
@@ -82,42 +94,72 @@ public class Database {
         }
         return ranking;
     }
-   public Stack<Minion> randomMinions(int suerte){
-        /*Random random = new Random();
-        Stack<Minion> myMinions=null;
+    public Stack<Minion> randomMinions(int suerte, boolean esVampiro,int tope){
+        Random random = new Random();
+        Stack<Minion> myMinions=new Stack<>();
         Minion esclavo;
         int numero= random.nextInt(80)+1+suerte;
         for (Integer i=0; i<=numero;i++){
-            esclavo = minionManager.getElements().get("MinionMap").get(i.toString());
-            if (!("Vampire".equals(this.type)) || !(esclavo instanceof Human)){
+            esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
+            if (!(esVampiro) || !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
+                if ((esclavo instanceof Demon)&&(tope<=3)){ //que no se meta en bucle continuo, capo a los demonios
+                    tope+=1;
+                    randomMinionDemon(tope);
+                }
             }
-        }*/
+        }
+        return myMinions;
+    } //no estoy muy seguro de que esto este bien, pero no veo problemas de primeras
+    public Stack<Minion> randomMinionDemon(int tope){
+      if (tope<=3){
+         return randomMinions(0,false,tope+1);
+      }
+      return null;
+    }
+    public TFighter getTFighter(){
         return null;
-   } //mandar esto a DataBase
-   public TFighter getTFighter(){
-        return null;
-   }
-   public Stack<Weapon> randomWeapons(int suerte) {
+    }
+    public LinkedList<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
-        Stack<Weapon> myWeapon=null;
+        LinkedList<Weapon> myWeapon=new LinkedList<>();
         Weapon arma;
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=number;i++){
-            arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
-            myWeapon.push(arma);
+            arma = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
+            myWeapon.add(arma);
         }
         return myWeapon;
     }
-   public Stack<Armor> randomArmor(int suerte){
-       Random random = new Random();
-       Armor armor;
-       Stack<Armor> myArmor=null;
-       int numero= random.nextInt(28)+1+suerte;
-           for (Integer i=1; i<=numero; i++) {
-                armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
-                myArmor.push(armor);
-           }
-       return myArmor;
-   }
+    public LinkedList<Armor> randomArmor(int suerte){
+        Random random = new Random();
+        Armor armor;
+        LinkedList<Armor> myArmor=new LinkedList<>();
+        int numero= random.nextInt(28)+1+suerte;
+        for (Integer i=1; i<=numero; i++) {
+            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(i.toString());
+            myArmor.add(armor);
+        }
+        return myArmor;
+    }
+    public String[] getTFighterText(ArrayList<TFighter> tFightersList) {
+        ArrayList<String> text = new ArrayList<>();
+        text.add("Elige el tipo de personaje que deseas crear: ");
+        int i = 1;
+        for (TFighter tfighter : tFightersList) {
+            text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getSuerteM() + " Armaduras: +" + tfighter.getSuerteA() + " Armas: +" + tfighter.getSuerteW());
+            i++;
+        }
+        // Convertir ArrayList a Array de Strings
+        return text.toArray(new String[text.size()]);
+    }
+    public ArrayList<TFighter>  managerToListTFighter(){
+        ArrayList <TFighter> result = new ArrayList<>();
+        Map <String,TFighter> tFighterManager= loader.getTfm().getElements().get("TFighterMap");
+        for(TFighter tFighter: tFighterManager.values()){
+            result.add(tFighter);
+        }
+        return result;
+    }
+
 }

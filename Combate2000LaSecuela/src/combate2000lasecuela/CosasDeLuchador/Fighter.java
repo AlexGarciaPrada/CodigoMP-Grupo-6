@@ -1,28 +1,23 @@
 package combate2000lasecuela.CosasDeLuchador;
-
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
-import combate2000lasecuela.managers.MinionManager;
-import combate2000lasecuela.managers.ItemManager;
 
-import java.nio.file.Watchable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Stack;
-import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
-
-public abstract class Fighter {
+import java.util.LinkedList;
+public abstract class Fighter implements Serializable {
 
     private String name;
         private int gold;
         private int health;
         private int power;
         private Stack<Minion> myMinions;
-        private Stack <Armor> myArmor;
-        private Stack <Weapon> myWeapon;
+        private LinkedList <Armor> myArmor;
+        private LinkedList<Weapon> myWeapon;
         private TFighter type;
         private Random random = new Random(); //Esto es un atributo
         private int minionHealth;
@@ -31,12 +26,11 @@ public abstract class Fighter {
         private Armor armadura;
 
         private PendingChallenges pendingChallenges;
-
-        Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
-    Textterminal terminal = new Textterminal();
+        Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+                   Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+                   LinkedList<Weapon> myWeapon) {
             this.name = name;
             this.health = random.nextInt(5) + 1;
             this.power = random.nextInt(5)+1;
@@ -44,10 +38,12 @@ public abstract class Fighter {
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
-            this.minionHealth=calcularVidaMinions();
+            this.minionHealth= calcularVidaMinions();
+            this.pendingChallenges = new PendingChallenges();
             this.arma1=null;
             this.arma2=null;
             this.armadura=null;
+            this.gold=100;
         }
 
 
@@ -55,20 +51,21 @@ public abstract class Fighter {
             int i=0;
             int pA=0;
             int pD=0;
+            boolean esEmpate=false;//preparativo para meterselo al combat
             do {
                 i++; //donde recibe el desafiado
-                terminal.show("Ronda numero" + i + "comienza");
+                //terminal.show("Ronda numero" + i + "comienza");
                     pA = potencialAtaque(desafiante);
                     pD = potencialDefensa(this);
                         if (comprobarDaños(pA,pD)){
                             ajusteHabilidad(pA,pD);
-                            terminal.show(this.name+" ha recibido un golpe");
+                           // terminal.show(this.name+" ha recibido un golpe");
                             if (this.minionHealth>0){
-                                terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                              //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
                                this.minionHealth-=1;
                             }else {
                                 this.health -= 1; //considerar caso de que se maten a la vez
-                                terminal.show(this.health+ " vidas restantes");
+                               // terminal.show(this.health+ " vidas restantes");
                             }
                         }
                 //donde recibe el desafiante
@@ -77,24 +74,30 @@ public abstract class Fighter {
                     pD = potencialDefensa(desafiante);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
-                        terminal.show(desafiante.name+" ha recibido un golpe");
+                      //  terminal.show(desafiante.name+" ha recibido un golpe");
                         if (desafiante.minionHealth>0){
-                            terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                           // terminal.show(" aunque lo han acabado recibiendo los esbirros");
                             desafiante.minionHealth-=1;
                         }else {
                             desafiante.health -= 1;
-                            terminal.show (desafiante.health+" vidas restantes");
+                          //  terminal.show (desafiante.health+" vidas restantes");
                         }
                     }
             }while((this.health>0)||(desafiante.health>0));
+            if ((this.health==0)&& (desafiante.health==0)){
+                esEmpate=true;
+            }
             return null; //a falta de especificar datos del combat
     }
-    public int potencialAtaque (Fighter f){//considerar arma dos manos
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
+    public int potencialAtaque (Fighter f){
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
+        if (f.arma2!=null){
+            potencial+=f.arma2.getDamage();
+        }
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+f.SpecialAttack();//sumo en ambos sitios SpecialAttack
+        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
             return verExitos(potencial);
     }
@@ -113,60 +116,65 @@ public abstract class Fighter {
         return (pA>pD);
     }
     public int calcularVidaMinions(){
-        Minion esclavo;
-        int total=0;
-        Stack<Minion> copia;
-        copia=this.myMinions;
-        while (!copia.isEmpty()){//por si acaso, pero creo que en java todas las variables son locales
-         esclavo=copia.pop();
-         total += esclavo.getHealth();
-        }return total;
+        if (getMyMinion() == null){
+            return 0;
+        }else {
+            Minion esclavo;
+            int total = 0;
+
+            while (!this.myMinions.isEmpty()) {
+                esclavo = this.myMinions.pop();
+                total += esclavo.getHealth();
+            }
+            return total;
+        }
     }
-    public void elegirArma(Stack<Weapon> myWeapon){
-        terminal.show("Se te mostraran las armas de que dispones");
+    public Stack<Minion> getMyMinion(){
+        return this.myMinions;
+    }
+    public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
+       // terminal.show("Se te mostraran las armas de que dispones");
         //mostrarArmas();
-        terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
-        String leido = scanner.nextLine();
+        //terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
         setWeapon1(buscarArmaLeida(leido));
         if (getArma1()==null){
-            terminal.show("No has introducido un valor valido");
-            elegirArma(myWeapon);
+          //  terminal.show("No has introducido un valor valido");
+            elegirArma(myWeapon,leido);
         }else {//si es valor valido
             if (getArma1().isOneHand) {
-                terminal.show("Como tu arma es de una mano se te permite coger otra arma");
-                terminal.show("Quieres hacerlo?");
-                if ("SI".equals(scanner.nextLine().toUpperCase())) {
-                    terminal.show("Pon su numero al igual que antes");
-                    leido = scanner.nextLine();
+                //terminal.show("Como tu arma es de una mano se te permite coger otra arma");
+                //terminal.show("Quieres hacerlo?");
+                if ("SI".equals(leido.toUpperCase())){
+                    //terminal.show("Pon su numero al igual que antes");
+                    leido = "scanner.nextLine()";
                     Weapon temporal = (buscarArmaLeida(leido));
                     if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
-                        terminal.show("No hagas trampas!!");
-                        terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
+                       // terminal.show("No hagas trampas!!");
+                        //terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
                     } else {
                         setWeapon2(temporal);
                     }
                 }
             } else {
-                terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
+               // terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
             }
         }
     }
-    public void elegirArmadura (Stack<Armor> myArmor, Integer opcion){
-        terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
+    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
+        //terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
         mostrarArmaduras();
-        terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
+      //  terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
         String leido = opcion.toString();
         setArmor(buscarArmaduraLeida(leido));
         if (getArmadura()==null){
-            terminal.show("Valor no valido");
+            //terminal.show("Valor no valido");
             elegirArmadura(myArmor,opcion);
-        }else{ //adaptar como GameFlow
-            terminal.show("La armadura se ha seleccionado con exito");
+        }else{
+           // terminal.show("La armadura se ha seleccionado con exito");
         }
     }
-    public abstract int SpecialAttack();
     public abstract void ajusteHabilidad(int pA, int pD);
-
+    public abstract int SpecialAttack();
 
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
@@ -179,18 +187,17 @@ public abstract class Fighter {
     }
     public void mostrarArmaduras(){
         do {
-            terminal.show(getMyWeapon().pop().toString());
+            //terminal.show(getMyWeapon().remove().toString());
         } while(!getMyWeapon().isEmpty());
     }
-    public Stack<Weapon> getMyWeapon(){
+    public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }
-    public Stack<Armor> getMyArmor(){
+    public LinkedList<Armor> getMyArmor(){
         return this.myArmor;
     }
 
 
-    //no los borres Dani, son solo setters
     public void setName(String name) {
             this.name = name;
     }
@@ -207,16 +214,20 @@ public abstract class Fighter {
         this.power = power;
     }
 
-    public int getHealth() {return health;}
+    public int getHealth() {
+        return health;
+    }
 
-    public int getGold() {return gold;}
+    public int getGold() {
+        return gold;
+    }
 
     public Weapon buscarArmaLeida (String leido){
         boolean encontrado=false;
-        Weapon aux=null;
+        Weapon aux;
         Weapon aux2=null;
         while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().pop();
+            aux=getMyWeapon().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;
@@ -228,7 +239,7 @@ public abstract class Fighter {
         Armor aux=null;
         Armor aux2=null;
         while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().pop();
+            aux=getMyArmor().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;
@@ -255,5 +266,11 @@ public abstract class Fighter {
         this.arma2=arma2;
         this.arma2.elegida=true;
     }
+    public void changeSpecialSkill(Specialskill nuevo){
+        this.specialskill=nuevo;
+    }
 
+    public PendingChallenges getPendingChallenges() {
+        return pendingChallenges;
+    }
 }

@@ -4,7 +4,7 @@ package combate2000lasecuela.CosasDeLuchador;
 import java.io.Serializable;
 import java.util.Random;
 
-public class Gift implements Serializable {
+public class Gift extends Specialskill implements Serializable {
 int rageCost;
 Random random = new Random();
 int giftDamage;
@@ -12,8 +12,8 @@ int giftDamage;
         this.giftDamage=2;
         this.rageCost=random.nextInt(3)+1;
     }
-
-    public int getGiftDamage() {
+@Override
+    public int getDamage() {
         return this.giftDamage;
     }
 

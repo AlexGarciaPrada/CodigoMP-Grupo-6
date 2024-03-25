@@ -7,6 +7,8 @@ import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
 
+import java.util.ArrayList;
+
 public class Gameflow {
 
     private MessageManager messageManager;
@@ -27,6 +29,7 @@ public class Gameflow {
     private boolean efighter;
     private boolean eadmin;
     private boolean challengep;
+    private boolean challengemode;
 
     
     public Gameflow() {
@@ -44,6 +47,7 @@ public class Gameflow {
         efighter=false;
         eadmin= false;
         challengep=false;
+        challengemode=false;
     }
 
     public void startMenu() {
@@ -79,8 +83,12 @@ public class Gameflow {
     private void playerMachine(Player player){
         if (eraseuser){
             eraseUser(user);
+        } else if (challengemode) {
+            challengeMode(player);
         } else if (cfighter) {
             createFighter(player);
+        } else if (challengep) {
+            challengePlayer(player);
         } else if (efighter) {
             eraseFighter(player);
         } else if (eadmin) {
@@ -120,6 +128,9 @@ public class Gameflow {
                                if (user instanceof Player){
                                    if (!((Player) user).isBlocked()){
                                        playerlogin = true;
+                                       if (((Player) user).hasPendingChallenges()){
+                                            challengemode=true;
+                                       }
                                    }else{
                                        messageManager.showPlayerBlocked();
                                    }
@@ -232,7 +243,22 @@ public class Gameflow {
                 break;
         }
     }
+    private void challengeMode(Player player){
+        Challenge challenge = player.getFighter().getPendingChallenges().getFirstChallenge();
+        int gold = challenge.getGold();
+        String [] challengeData= challenge.getChallengeData();
+        int option = messageManager.showChallenge(challengeData);
+        if (option ==1){ //Desafio aceptado
+            player.fight(challenge.getChallenger());
+        }else{ //Desafio rechazado
+            player.rejectingChallenge(gold);
+        }
+        if (!(player.hasPendingChallenges())) {
+            challengemode = false;
+        }
 
+
+    }
     private void eraseUser(User user){
         int option = messageManager.showEraseUser(user.getNick());
         eraseuser=false;
@@ -301,17 +327,18 @@ public class Gameflow {
         }else{
             int option = messageManager.showReadFighterType();
             String name =messageManager.showReadName();
-            // Mostrar los TFighter
-            TFighter type = database.getTFighter();
+            ArrayList<TFighter> TFighters = database.managerToListTFighter();
+            int opttype =messageManager.showTFighter(database.getTFighterText(TFighters));
+            TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
-                    player.createFighter(new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    player.createFighter(new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    player.createFighter(new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM()),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
@@ -325,7 +352,7 @@ public class Gameflow {
             if (option == 1){
                 return;
             }else{
-                player.deleteFighter();
+               database.eraseFighter(player);
             }
         }
     }
@@ -339,6 +366,20 @@ public class Gameflow {
         }
         int option = messageManager.showWeaponStack(player.getFighter().generateWeaponsText());
         ///Aquí habría que hacer cosas
+    }
+    private void challengePlayer(Player player){
+        challengep=false;
+        if (player.getFighter()==null){
+            return;
+        }
+        messageManager.showChallengeInstructions();
+        String user = messageManager.showReadNick();
+        if ((database.isAPlayer(user)) ){//Falta poner que el desafiado tenga fighter
+            int gold = messageManager.showReadGold(player.getFighter().getGold());
+            player.challengePlayer((Player) database.getUser(user),gold);
+        }else{
+            messageManager.showUserNotFound();
+        }
     }
 
 }

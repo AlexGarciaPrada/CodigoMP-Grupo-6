@@ -80,6 +80,17 @@ public class MessageManager {
         showContent(content);
        return t.read(content.length);
     }
+    public int showChallenge(String[] content){
+        showContent(content);
+        return t.read(2);
+    }
+    public int showTFighter(String [] content){
+        showContent(content);
+        return t.read(content.length);
+    }
+    public void showChallengeInstructions(){
+        showContent(challengeInstructionText);
+    }
     public void showAlreadyBlock(){
         showContent(alreadyBlockText);
     }
@@ -106,6 +117,10 @@ public class MessageManager {
     public String showReadConfirmPassword(){
         t.show(confirmPasswordText);
         return t.readString();
+    }
+    public int showReadGold(int max){
+        t.showln(gold);
+        return t.read(max);
     }
     public String showNickToBlock(){
         t.showln(blockUserText);

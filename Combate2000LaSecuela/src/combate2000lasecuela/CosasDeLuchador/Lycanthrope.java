@@ -1,18 +1,17 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.CosasDeLuchador.Fighter;
-
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 
-public class Lycanthrope extends Fighter implements Serializable {
+public class Lycanthrope extends Fighter{
 int rage;
 int altura;
 int peso;
 Random random= new Random();
 private Gift don;
-    public Lycanthrope(String name, TFighter type, Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+    public Lycanthrope(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.peso= random.nextInt(20)+90;
         this.rage=0;
@@ -20,10 +19,10 @@ private Gift don;
         this.don= new Gift();
     }
 
-    @Override
+//HAY QUE REPASAR ESTO, VEO QUE CON LO NUEVO NO VA A FUNCIONAR
     public int SpecialAttack() {
         if (getRage()>=this.don.getRageCost()){
-            return don.getGiftDamage();
+            return don.getDamage();
         }
         return 0;
     }

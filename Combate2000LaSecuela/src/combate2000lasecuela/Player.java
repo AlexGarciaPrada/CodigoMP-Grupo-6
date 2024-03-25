@@ -52,7 +52,7 @@ public class Player extends User {
 
     public Challenge challengePlayer(Player challenged, int gold) {
         if (this.fighter != null && challenged.getFighter() != null) {
-            return new Challenge(challenged, gold);
+            return new Challenge(this,challenged, gold);
         } else return null;
     }
 
@@ -65,7 +65,9 @@ public class Player extends User {
             actualGold += c.getGoldGained();
         }
     }
-
+    public void rejectingChallenge(int gold){
+        this.getFighter().setGold(this.getFighter().getGold()- (int) (gold*0.1));
+    }
 
     public void fight(Player challenged) {
         fighter.startFighting(challenged.getFighter());
@@ -87,5 +89,17 @@ public class Player extends User {
 
      */
 
+    public boolean hasPendingChallenges(){
+        if (this.getFighter()==null){
+            return false;
+        }else{
+            return !(this.getFighter().getPendingChallenges().isEmpty());
+        }
+
+    }
+    public void addPendingChallenge(Challenge challenge){
+        this.getFighter().getPendingChallenges().addChallenge(challenge);
+
+    }
 }
 
