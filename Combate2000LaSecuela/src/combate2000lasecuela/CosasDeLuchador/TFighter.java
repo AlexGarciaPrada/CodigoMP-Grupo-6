@@ -10,9 +10,9 @@ public class TFighter implements Saveable {
     private int suerteM;
     public TFighter(String linea){
         String [] valores = linea.split(";");
-        this.suerteM = Integer.parseInt(valores[2]);
-        this.suerteA = Integer.parseInt(valores[3]);
-        this.suerteW = Integer.parseInt(valores[4]);
+        this.suerteM = Integer.parseInt(valores[2].trim());
+        this.suerteA = Integer.parseInt(valores[3].trim());
+        this.suerteW = Integer.parseInt(valores[4].trim());
     }
 
     public int getSuerteA() {

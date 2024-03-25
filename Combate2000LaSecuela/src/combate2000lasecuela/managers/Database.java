@@ -1,6 +1,7 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.CosasDeLuchador.*;
+import combate2000lasecuela.Loader;
 import combate2000lasecuela.Operator;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.User;
@@ -9,7 +10,7 @@ import java.util.*;
 
 public class Database {
     private UserManager usermanager;
-    private ItemManager itemManager;
+    private Loader loader;
     private ChallengeManager challengeManager;
     private CombatResgister combatregister;
     private MinionManager minionManager;
@@ -17,7 +18,7 @@ public class Database {
 
     public Database() {
         this.usermanager = new UserManager();
-        this.itemManager = new ItemManager();
+        this.loader= new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatResgister();
         this.minionManager = new MinionManager();
@@ -104,7 +105,7 @@ public class Database {
         Weapon arma;
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=number;i++){
-            arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
+            arma = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
             myWeapon.push(arma);
         }
         return myWeapon;
@@ -115,7 +116,7 @@ public class Database {
        Stack<Armor> myArmor=null;
        int numero= random.nextInt(28)+1+suerte;
            for (Integer i=1; i<=numero; i++) {
-                armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
+                armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(i.toString());
                 myArmor.push(armor);
            }
        return myArmor;

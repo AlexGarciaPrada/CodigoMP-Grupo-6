@@ -9,8 +9,8 @@ public class Armor extends Item implements Serializable {
     public Armor (String linea){
         String [] valores = linea.split(";");
         this.id=valores[0];
-        this.protection = Integer.parseInt(valores[2]);
-        this.damage = Integer.parseInt( valores[3]);
+        this.protection = Integer.parseInt(valores[2].trim());
+        this.damage = Integer.parseInt( valores[3].trim());
     }
     public int getDefense (){
         return this.protection;

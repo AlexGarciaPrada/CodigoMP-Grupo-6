@@ -256,4 +256,7 @@ public abstract class Fighter {
         this.arma2.elegida=true;
     }
 
+    public PendingChallenges getPendingChallenges() {
+        return pendingChallenges;
+    }
 }

@@ -80,6 +80,10 @@ public class MessageManager {
         showContent(content);
        return t.read(content.length);
     }
+    public int showChallenge(String[] content){
+        showContent(content);
+        return t.read(2);
+    }
     public void showAlreadyBlock(){
         showContent(alreadyBlockText);
     }
