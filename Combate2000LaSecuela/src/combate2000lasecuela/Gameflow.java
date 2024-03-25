@@ -7,6 +7,8 @@ import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
 
+import java.util.ArrayList;
+
 public class Gameflow {
 
     private MessageManager messageManager;
@@ -27,6 +29,7 @@ public class Gameflow {
     private boolean efighter;
     private boolean eadmin;
     private boolean challengep;
+    private boolean challengemode;
 
     
     public Gameflow() {
@@ -44,6 +47,7 @@ public class Gameflow {
         efighter=false;
         eadmin= false;
         challengep=false;
+        challengemode=false;
     }
 
     public void startMenu() {
@@ -79,6 +83,8 @@ public class Gameflow {
     private void playerMachine(Player player){
         if (eraseuser){
             eraseUser(user);
+        } else if (challengemode) {
+            challengeMode(player);
         } else if (cfighter) {
             createFighter(player);
         } else if (efighter) {
@@ -120,6 +126,9 @@ public class Gameflow {
                                if (user instanceof Player){
                                    if (!((Player) user).isBlocked()){
                                        playerlogin = true;
+                                       if (((Player) user).hasPendingChallenges()){
+                                            challengemode=true;
+                                       }
                                    }else{
                                        messageManager.showPlayerBlocked();
                                    }
@@ -232,7 +241,22 @@ public class Gameflow {
                 break;
         }
     }
+    private void challengeMode(Player player){
+        Challenge challenge = player.getFighter().getPendingChallenges().getFirstChallenge();
+        int gold = challenge.getGold();
+        String [] challengeData= challenge.getChallengeData();
+        int option = messageManager.showChallenge(challengeData);
+        if (option ==1){ //Desafio aceptado
+            player.fight(challenge.getChallenger());
+        }else{ //Desafio rechazado
+            player.rejectingChallenge(gold);
+        }
+        if (!(player.hasPendingChallenges())) {
+            challengemode = false;
+        }
 
+
+    }
     private void eraseUser(User user){
         int option = messageManager.showEraseUser(user.getNick());
         eraseuser=false;
@@ -301,8 +325,9 @@ public class Gameflow {
         }else{
             int option = messageManager.showReadFighterType();
             String name =messageManager.showReadName();
-            // Mostrar los TFighter
-            TFighter type = database.getTFighter();
+            ArrayList<TFighter> TFighters = database.managerToListTFighter();
+            int opttype =messageManager.showTFighter(database.getTFighterText(TFighters));
+            TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
                     player.createFighter(new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),true),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
