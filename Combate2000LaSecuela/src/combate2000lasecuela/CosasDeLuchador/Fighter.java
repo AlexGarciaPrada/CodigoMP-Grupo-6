@@ -1,13 +1,15 @@
 package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.LinkedList;
-public abstract class Fighter {
+public abstract class Fighter implements Serializable {
 
     private String name;
         private int gold;

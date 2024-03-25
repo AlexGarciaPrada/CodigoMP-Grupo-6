@@ -1,9 +1,11 @@
 package combate2000lasecuela.CosasDeLuchador;
 
+import java.io.Serializable;
+
 import static java.lang.Integer.valueOf;
 
 import static java.lang.Integer.valueOf;
-public class Human extends Minion {
+public class Human extends Minion implements Serializable {
 int health;
 String lealtad;
     public Human(String linea) {
