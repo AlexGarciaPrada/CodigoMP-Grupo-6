@@ -119,7 +119,7 @@ public class MessageManager {
         return t.readString();
     }
     public int showReadGold(int max){
-        t.show(gold);
+        t.showln(gold);
         return t.read(max);
     }
     public String showNickToBlock(){

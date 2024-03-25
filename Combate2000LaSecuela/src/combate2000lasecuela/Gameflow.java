@@ -87,6 +87,8 @@ public class Gameflow {
             challengeMode(player);
         } else if (cfighter) {
             createFighter(player);
+        } else if (challengep) {
+            challengePlayer(player);
         } else if (efighter) {
             eraseFighter(player);
         } else if (eadmin) {
@@ -330,13 +332,13 @@ public class Gameflow {
             TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
-                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
@@ -366,10 +368,15 @@ public class Gameflow {
         ///Aquí habría que hacer cosas
     }
     private void challengePlayer(Player player){
+        challengep=false;
+        if (player.getFighter()==null){
+            return;
+        }
         messageManager.showChallengeInstructions();
         String user = messageManager.showReadNick();
-        if (database.isAPlayer(user)){
+        if ((database.isAPlayer(user)) ){//Falta poner que el desafiado tenga fighter
             int gold = messageManager.showReadGold(player.getFighter().getGold());
+            player.challengePlayer((Player) database.getUser(user),gold);
         }else{
             messageManager.showUserNotFound();
         }

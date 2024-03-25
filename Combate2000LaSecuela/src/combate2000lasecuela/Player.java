@@ -97,5 +97,9 @@ public class Player extends User {
         }
 
     }
+    public void addPendingChallenge(Challenge challenge){
+        this.getFighter().getPendingChallenges().addChallenge(challenge);
+
+    }
 }
 
