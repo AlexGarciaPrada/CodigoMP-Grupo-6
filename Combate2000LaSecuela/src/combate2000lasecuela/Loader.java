@@ -1,10 +1,13 @@
 package combate2000lasecuela;
 
 import combate2000lasecuela.CosasDeLuchador.Minion;
+import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
+import combate2000lasecuela.managers.TFighterManager;
+
 import java.io.*;
 
 public class Loader implements Serializable {
@@ -12,6 +15,7 @@ public class Loader implements Serializable {
     private String[] parts;
     private ItemManager im;
     private MinionManager mm;
+    private TFighterManager tfm;
 
     public Loader(String filename) {
         this.filename = filename;
@@ -39,6 +43,12 @@ public class Loader implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public void load() {
+        read(Constants.minionsFile);
+        read(Constants.weaponsFile);
+        read(Constants.armorsFile);
+    }
 
     // ------------------------ MINIONS
     private void readMinionFile(String line) {
@@ -57,4 +67,11 @@ public class Loader implements Serializable {
         parts = line.split(";");
         im.addElementSubMap("Armor", parts[0], new Armor(line));
     }
+
+    // ------------------------ TFIGHTER
+    private void readTFighterFile(String line) {
+        parts = line.split(";");
+        tfm.addElement("TFighter", parts[0], new TFighter(line));
+    }
+
 }
