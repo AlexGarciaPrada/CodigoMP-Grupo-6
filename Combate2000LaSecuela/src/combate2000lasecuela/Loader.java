@@ -1,9 +1,6 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Minion;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.Weapon;
-import combate2000lasecuela.CosasDeLuchador.Armor;
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 import combate2000lasecuela.managers.TFighterManager;
@@ -65,7 +62,18 @@ public class Loader implements Serializable {
     private void readMinionFile(String line) {
 
        String [] parts = line.split(";");
-        mm.addElement("MinionMap", parts[0], new Minion(line));
+       switch(parts[2]){
+           case "HUMANO":
+               mm.addElement("MinionMap", parts[0], new Human(line));
+               break;
+           case "DEMONIO":
+               mm.addElement("MinionMap", parts[0], new Demon (line));
+               break;
+           case "GHOUL":
+               mm.addElement("MinionMap", parts[0], new Ghoul (line));
+               break;
+
+       }
     }
 
     // ------------------------ WEAPONS

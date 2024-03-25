@@ -101,5 +101,8 @@ public class Player extends User {
         this.getFighter().getPendingChallenges().addChallenge(challenge);
 
     }
+    public void deletePendingChallenge(){
+        this.getFighter().getPendingChallenges().deleteChallenge();
+    }
 }
 

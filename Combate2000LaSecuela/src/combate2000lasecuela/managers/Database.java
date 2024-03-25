@@ -1,10 +1,7 @@
 package combate2000lasecuela.managers;
 
+import combate2000lasecuela.*;
 import combate2000lasecuela.CosasDeLuchador.*;
-import combate2000lasecuela.Loader;
-import combate2000lasecuela.Operator;
-import combate2000lasecuela.Player;
-import combate2000lasecuela.User;
 
 import java.util.*;
 
@@ -30,6 +27,13 @@ public class Database {
         player.deleteFighter();;
         usermanager.saveCollection("User");
 
+    }
+    public void updateUsers(){
+        usermanager.saveCollection("User");
+    }
+    public void addPendingChallenge(Player challenged, Challenge challenge){
+        challenged.addPendingChallenge(challenge);
+        usermanager.saveCollection("User");
     }
 
     public void loadUsers(){
