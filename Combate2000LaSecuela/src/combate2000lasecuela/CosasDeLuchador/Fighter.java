@@ -2,10 +2,6 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
-import combate2000lasecuela.managers.MinionManager;
-import combate2000lasecuela.managers.ItemManager;
-
-import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +9,7 @@ import java.util.Stack;
 import combate2000lasecuela.screen.Textterminal;
 import java.lang.Integer;
 import java.lang.String;
-
+import java.util.LinkedList;
 public abstract class Fighter {
 
     private String name;
@@ -21,8 +17,8 @@ public abstract class Fighter {
         private int health;
         private int power;
         private Stack<Minion> myMinions;
-        private Stack <Armor> myArmor;
-        private Stack <Weapon> myWeapon;
+        private LinkedList <Armor> myArmor;
+        private LinkedList<Weapon> myWeapon;
         private TFighter type;
         private Random random = new Random(); //Esto es un atributo
         private int minionHealth;
@@ -33,10 +29,12 @@ public abstract class Fighter {
         private PendingChallenges pendingChallenges;
 
         Scanner scanner = new Scanner(System.in); //TEMPORAL, HASTA QUE NO SE HAGA EN TEXTTERMINAL
-    Textterminal terminal = new Textterminal();
+        Textterminal terminal = new Textterminal();
+        Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,Stack<Armor> myArmor,Stack<Weapon> myWeapon) {
+                   Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+                   LinkedList<Weapon> myWeapon) {
             this.name = name;
             this.health = random.nextInt(5) + 1;
             this.power = random.nextInt(5)+1;
@@ -90,11 +88,11 @@ public abstract class Fighter {
             return null; //a falta de especificar datos del combat
     }
     public int potencialAtaque (Fighter f){//considerar arma dos manos
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.SpecialAttack();
+        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
         return verExitos(potencial);
     }
     public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+f.SpecialAttack();//sumo en ambos sitios SpecialAttack
+        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
             return verExitos(potencial);
     }
@@ -117,12 +115,12 @@ public abstract class Fighter {
         int total=0;
         Stack<Minion> copia;
         copia=this.myMinions;
-        while (!copia.isEmpty()){//por si acaso, pero creo que en java todas las variables son locales
+        while (!copia.isEmpty()){
          esclavo=copia.pop();
          total += esclavo.getHealth();
         }return total;
     }
-    public void elegirArma(Stack<Weapon> myWeapon){
+    public void elegirArma(LinkedList<Weapon> myWeapon){
         terminal.show("Se te mostraran las armas de que dispones");
         //mostrarArmas();
         terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
@@ -151,7 +149,7 @@ public abstract class Fighter {
             }
         }
     }
-    public void elegirArmadura (Stack<Armor> myArmor, Integer opcion){
+    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
         terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
         mostrarArmaduras();
         terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
@@ -164,9 +162,8 @@ public abstract class Fighter {
             terminal.show("La armadura se ha seleccionado con exito");
         }
     }
-    public abstract int SpecialAttack();
     public abstract void ajusteHabilidad(int pA, int pD);
-
+    public abstract int SpecialAttack();
 
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
@@ -179,13 +176,13 @@ public abstract class Fighter {
     }
     public void mostrarArmaduras(){
         do {
-            terminal.show(getMyWeapon().pop().toString());
+            terminal.show(getMyWeapon().remove().toString());
         } while(!getMyWeapon().isEmpty());
     }
-    public Stack<Weapon> getMyWeapon(){
+    public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }
-    public Stack<Armor> getMyArmor(){
+    public LinkedList<Armor> getMyArmor(){
         return this.myArmor;
     }
 
@@ -216,7 +213,7 @@ public abstract class Fighter {
         Weapon aux=null;
         Weapon aux2=null;
         while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().pop();
+            aux=getMyWeapon().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;
@@ -228,7 +225,7 @@ public abstract class Fighter {
         Armor aux=null;
         Armor aux2=null;
         while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().pop();
+            aux=getMyArmor().remove();
             if (leido.equals(aux.getId())){
                 encontrado=true;
                 aux2=aux;
@@ -255,8 +252,7 @@ public abstract class Fighter {
         this.arma2=arma2;
         this.arma2.elegida=true;
     }
-
-    public PendingChallenges getPendingChallenges() {
-        return pendingChallenges;
+    public void changeSpecialSkill(Specialskill nuevo){
+        this.specialskill=nuevo;
     }
 }
