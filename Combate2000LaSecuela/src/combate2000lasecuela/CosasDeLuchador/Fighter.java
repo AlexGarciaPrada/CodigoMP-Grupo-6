@@ -196,7 +196,6 @@ public abstract class Fighter implements Serializable {
     }
 
 
-    //no los borres Dani, son solo setters
     public void setName(String name) {
             this.name = name;
     }
@@ -213,13 +212,17 @@ public abstract class Fighter implements Serializable {
         this.power = power;
     }
 
-    public int getHealth() {return health;}
+    public int getHealth() {
+        return health;
+    }
 
-    public int getGold() {return gold;}
+    public int getGold() {
+        return gold;
+    }
 
     public Weapon buscarArmaLeida (String leido){
         boolean encontrado=false;
-        Weapon aux=null;
+        Weapon aux;
         Weapon aux2=null;
         while ((!getMyWeapon().isEmpty())||(encontrado)) {
             aux=getMyWeapon().remove();

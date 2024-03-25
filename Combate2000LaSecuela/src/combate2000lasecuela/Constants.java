@@ -30,8 +30,9 @@ public class Constants {
     public static final String [] alreadyFighterText={"Ya tienes un personaje creado","Borra el personaje actual para crear un personaje nuevo"};
     public static final String [] notFighterText={"No tienes un personaje creado","Crea un personaje para poder realizar esta accion"};
     public static final String [] eraseConfirmationText={"Confirma que quieres borrar tu personaje","ESTA ACCION IRREVERSIBLE","1. No","2. Si"};
-
+    public static final String[] challengeInstructionText={"Desafiar a otro jugador: ","Primero debes introducir el nick del jugador que vas a retar","Por ultimo debes introducir la cantidad de oro que va a apostar (debes tener esa cantidad de oro)"};
     public static final String theUserText = "El usuario ";
+    public static final String gold = "Oro a apostar";
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";

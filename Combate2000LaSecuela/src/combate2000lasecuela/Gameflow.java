@@ -330,13 +330,13 @@ public class Gameflow {
             TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
-                    player.createFighter(new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),true),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    player.createFighter(new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    player.createFighter(new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
@@ -350,7 +350,7 @@ public class Gameflow {
             if (option == 1){
                 return;
             }else{
-                player.deleteFighter();
+               database.eraseFighter(player);
             }
         }
     }
@@ -364,6 +364,15 @@ public class Gameflow {
         }
         int option = messageManager.showWeaponStack(player.getFighter().generateWeaponsText());
         ///Aquí habría que hacer cosas
+    }
+    private void challengePlayer(Player player){
+        messageManager.showChallengeInstructions();
+        String user = messageManager.showReadNick();
+        if (database.isAPlayer(user)){
+            int gold = messageManager.showReadGold(player.getFighter().getGold());
+        }else{
+            messageManager.showUserNotFound();
+        }
     }
 
 }

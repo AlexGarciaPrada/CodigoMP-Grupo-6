@@ -21,6 +21,16 @@ public class Database {
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatResgister();
     }
+    public void addFighter(Player player,Fighter fighter){
+        player.createFighter(fighter);
+        usermanager.saveCollection("User");
+
+    }
+    public void eraseFighter(Player player){
+        player.deleteFighter();;
+        usermanager.saveCollection("User");
+
+    }
 
     public void loadUsers(){
         usermanager.loadElement("User");
@@ -29,6 +39,9 @@ public class Database {
     public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
         usermanager.saveCollection("User");
+    }
+    public boolean isAPlayer(String nick){
+        return usermanager.inMap("Player",nick);
     }
     public void addOperator(Operator operator){
         usermanager.addElement("Operator", operator.getNick(), operator);
