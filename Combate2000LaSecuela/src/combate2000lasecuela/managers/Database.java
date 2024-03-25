@@ -1,6 +1,7 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.CosasDeLuchador.*;
+import combate2000lasecuela.Loader;
 import combate2000lasecuela.Operator;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.User;
@@ -9,18 +10,16 @@ import java.util.*;
 
 public class Database {
     private UserManager usermanager;
-    private ItemManager itemManager;
+    private Loader loader;
     private ChallengeManager challengeManager;
     private CombatResgister combatregister;
-    private MinionManager minionManager;
 
 
     public Database() {
         this.usermanager = new UserManager();
-        this.itemManager = new ItemManager();
+        this.loader=new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatResgister();
-        this.minionManager = new MinionManager();
     }
 
     public void loadUsers(){
@@ -84,11 +83,11 @@ public class Database {
     }
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro){
         Random random = new Random();
-        Stack<Minion> myMinions=null;
+        Stack<Minion> myMinions=new Stack<>();
         Minion esclavo;
         int numero= random.nextInt(80)+1+suerte;
         for (Integer i=0; i<=numero;i++){
-            esclavo = minionManager.getElements().get("MinionMap").get(i.toString());
+            esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
             if (!(esVampiro) || !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
             }
@@ -100,11 +99,11 @@ public class Database {
     }
     public LinkedList<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
-        LinkedList<Weapon> myWeapon=null;
+        LinkedList<Weapon> myWeapon=new LinkedList<>();
         Weapon arma;
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=number;i++){
-            arma = (Weapon) itemManager.getElements().get("WeaponMap").get(i.toString());
+            arma = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
             myWeapon.add(arma);
         }
         return myWeapon;
@@ -112,12 +111,32 @@ public class Database {
     public LinkedList<Armor> randomArmor(int suerte){
         Random random = new Random();
         Armor armor;
-        LinkedList<Armor> myArmor=null;
+        LinkedList<Armor> myArmor=new LinkedList<>();
         int numero= random.nextInt(28)+1+suerte;
         for (Integer i=1; i<=numero; i++) {
-            armor = (Armor) itemManager.getElements().get("ArmorMap").get(i.toString());
+            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(i.toString());
             myArmor.add(armor);
         }
         return myArmor;
     }
+    public String[] getTFighterText(ArrayList<TFighter> tFightersList) {
+        ArrayList<String> text = new ArrayList<>();
+        text.add("Elige el tipo de personaje que deseas crear: ");
+        int i = 1;
+        for (TFighter tfighter : tFightersList) {
+            text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getSuerteM() + " Armaduras: +" + tfighter.getSuerteA() + " Armas: +" + tfighter.getSuerteW());
+            i++;
+        }
+        // Convertir ArrayList a Array de Strings
+        return text.toArray(new String[text.size()]);
+    }
+    public ArrayList<TFighter>  managerToListTFighter(){
+        ArrayList <TFighter> result = new ArrayList<>();
+        Map <String,TFighter> tFighterManager= loader.getTfm().getElements().get("TFighterMap");
+        for(TFighter tFighter: tFighterManager.values()){
+            result.add(tFighter);
+        }
+        return result;
+    }
+
 }

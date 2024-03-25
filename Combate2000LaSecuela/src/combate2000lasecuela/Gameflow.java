@@ -7,6 +7,8 @@ import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
 
+import java.util.ArrayList;
+
 public class Gameflow {
 
     private MessageManager messageManager;
@@ -323,8 +325,9 @@ public class Gameflow {
         }else{
             int option = messageManager.showReadFighterType();
             String name =messageManager.showReadName();
-            // Mostrar los TFighter
-            TFighter type = database.getTFighter();
+            ArrayList<TFighter> TFighters = database.managerToListTFighter();
+            int opttype =messageManager.showTFighter(database.getTFighterText(TFighters));
+            TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
                     player.createFighter(new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),true),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
