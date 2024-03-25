@@ -332,13 +332,13 @@ public class Gameflow {
             TFighter type = TFighters.get(opttype);
             switch(option){
                 case 1:     //Vampiro
-                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Vampire(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,database.getTFighter(),database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
