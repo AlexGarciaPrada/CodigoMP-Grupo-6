@@ -42,7 +42,7 @@ public abstract class Fighter {
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
-            this.minionHealth= 0;//calcularVidaMinions();///No funciona
+            this.minionHealth= calcularVidaMinions();///No funciona
             this.arma1=null;
             this.arma2=null;
             this.armadura=null;
@@ -111,18 +111,21 @@ public abstract class Fighter {
         return (pA>pD);
     }
     public int calcularVidaMinions(){
-        if (myMinions == null){
+        if (getMyMinion() == null){
             return 0;
+        }else {
+            Minion esclavo;
+            int total = 0;
+
+            while (!this.myMinions.isEmpty()) {
+                esclavo = this.myMinions.pop();
+                total += esclavo.getHealth();
+            }
+            return total;
         }
-        Minion esclavo;
-        int total=0;
-        Stack<Minion> copia;
-        copia=this.myMinions;
-        while (!copia.isEmpty()){
-         esclavo=copia.pop();
-         total += esclavo.getHealth();
-        }
-        return total;
+    }
+    public Stack<Minion> getMyMinion(){
+        return this.myMinions;
     }
     public void elegirArma(LinkedList<Weapon> myWeapon){
         terminal.show("Se te mostraran las armas de que dispones");
