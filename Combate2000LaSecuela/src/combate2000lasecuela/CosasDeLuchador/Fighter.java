@@ -38,10 +38,12 @@ public abstract class Fighter implements Serializable {
             this.myMinions = myMinions;
             this.myArmor= myArmor;
             this.myWeapon = myWeapon;
-            this.minionHealth= calcularVidaMinions();///No funciona
+            this.minionHealth= calcularVidaMinions();
+            this.pendingChallenges = new PendingChallenges();
             this.arma1=null;
             this.arma2=null;
             this.armadura=null;
+            this.gold=100;
         }
 
 
