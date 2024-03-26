@@ -11,6 +11,8 @@ public class Database {
     private ChallengeManager challengeManager;
     private CombatResgister combatregister;
 
+    private ModifierManager modifierManager;
+
 
     public Database() {
         this.usermanager = new UserManager();
@@ -164,6 +166,26 @@ public class Database {
             result.add(tFighter);
         }
         return result;
+    }
+
+    public LinkedList<Strength> Strengths() {
+        Strength strength;
+        LinkedList<Strength> MyStrength = new LinkedList<>();
+        for (Integer i=1; i<=15; i++) {
+            strength = (Strength) loader.getMom().getElements().get("StrengthMap").get(i.toString());
+            MyStrength.add(strength);
+        }
+        return MyStrength;
+    }
+
+    public LinkedList<Weakness> Weaknesses() {
+        Weakness weakness;
+        LinkedList<Weakness> MyWeakness = new LinkedList<>();
+        for (Integer i=1; i<=15; i++) {
+            weakness = (Weakness) loader.getMom().getElements().get("WeaknessMap").get(i.toString());
+            MyWeakness.add(weakness);
+        }
+        return MyWeakness;
     }
 
 }
