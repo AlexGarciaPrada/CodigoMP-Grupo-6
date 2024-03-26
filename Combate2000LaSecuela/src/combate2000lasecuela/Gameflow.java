@@ -258,30 +258,29 @@ public class Gameflow {
         String [] challengeData= challenge.getChallengeData();
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
-            player.fight(challenge.getChallenger());
+            player.Fight(challenge.getChallenger(),gold);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);
-
         }
         player.deletePendingChallenge();
         database.updateUsers();
         if (!(player.hasPendingChallenges())) {
             challengemode = false;
         }
-
-
     }
+
     private void eraseUser(User user){
         int option = messageManager.showEraseUser(user.getNick());
         eraseuser=false;
         if (option == 1){
             if (playerlogin){
+                messageManager.showContent(userCorrectlyErasedText);
                 database.erasePlayer((Player) user);
                 playerlogin=false;
             }else{
                 database.eraseOperator((Operator) user);
-                messageManager.showContent(userCorrectlyErasedText);
+
                 operatorlogin=false;
             }
         }
