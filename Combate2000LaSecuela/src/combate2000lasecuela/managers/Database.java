@@ -100,21 +100,14 @@ public class Database {
         return ranking;
     }
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro,int tope){
-        System.out.println("entrando en randomMinion");
         Random random = new Random();
         Stack<Minion> myMinions=new Stack<>();
         Minion esclavo;
         int numero= random.nextInt(80)+1+suerte;
-        System.out.println(this.aux);
         for (Integer i=0; i<=numero;i++){
             esclavo = this.aux.getElements().get("MinionMap").get(i.toString());
             if (!(esVampiro) && !(esclavo instanceof Human)){
                 myMinions.push(esclavo);
-                if(esclavo!=null){
-                    System.out.println(esclavo.toString());
-                }
-                else{
-                    System.out.println("patata");}
                 if ((esclavo instanceof Demon)&&(tope<=3)){ //que no se meta en bucle continuo, capo a los demonios
                     tope+=1;
                     ((Demon) esclavo).setPilaDemoniaca(randomMinionDemon(tope));
