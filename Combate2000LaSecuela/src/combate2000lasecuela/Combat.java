@@ -14,16 +14,19 @@ public class Combat implements Saveable {
     private Date date;
     private Fighter winner;
     private int goldGained;
+    private boolean esEmpate;
+    private String empate;
 
 
-    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained) {
+    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained, boolean esEmpate) {
         this.challenger = challenger;
         this.challenged = challenged;
         this.rounds = rounds;
         this.date = new Date();
         this.winner = whoWin(challenger, challenged);
         this.goldGained = goldGained;
-
+        this.esEmpate=esEmpate;
+        this.empate=verSiEmpate();
     }
 
     public Fighter whoWin(Fighter challenger, Fighter challenged) {
@@ -46,7 +49,27 @@ public class Combat implements Saveable {
         return null;
     }
 
+    public void setEmpate(String empate) {
+        this.empate = empate;
+    }
 
+    public boolean getEsEmpate() {
+        return this.esEmpate;
+    }
+
+    public String getEmpate() {
+        return this.empate;
+    }
+
+    public String verSiEmpate(){
+        if (getEsEmpate()) {
+            setEmpate("Empate");
+            return getEmpate();
+        }else{
+            setEmpate("Hubo ganador");
+            return getEmpate();
+        }
+    }
 }
 
 
