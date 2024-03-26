@@ -6,53 +6,50 @@ import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
 import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
-import combate2000lasecuela.screen.MessageManager;
 
 import java.util.ArrayList;
 
 import static combate2000lasecuela.Constants.*;
 
-public class UserFlow extends Gameflow{
 
 
+public class UserFlow {
 
-    private boolean eraseuser = false;
-    private boolean challengemode = false;
-    private boolean fighterstate = false;
-    private boolean cfighter = false;
-    private boolean challengep = false;
-    private boolean efighter = false;
-    private boolean eadmin = false;
-    private boolean ranking = false;
+    private static boolean playerlogin=true;
+    private static boolean eraseuser = false;
+    private static boolean challengemode = false;
+    private static boolean fighterstate = false;
+    private static boolean cfighter = false;
+    private static boolean challengep = false;
+    private static boolean efighter = false;
+    private static boolean eadmin = false;
+    private static boolean ranking = false;
 
-    public UserFlow() {
-        super();
-    }
 
-    private void playerMachine(Player player){
+    public static void playerMachine(Player player,Database database,MessageManager messageManager) {
+    while (playerlogin) {
         if (challengemode) {
-            challengeMode(player);
+            challengeMode(player, database,messageManager);
         } else if (fighterstate) {
-            fighterState(player);
+            fighterState(player, database,messageManager);
         } else if (cfighter) {
-            createFighter(player);
+            createFighter(player, database,messageManager);
         } else if (challengep) {
-            challengePlayer(player);
+            challengePlayer(player, database,messageManager);
         } else if (efighter) {
-            eraseFighter(player);
+            eraseFighter(player, database,messageManager);
         } else if (eadmin) {
-            adminEquipment(player);
+            adminEquipment(player, database,messageManager);
         } else if (ranking) {
-            playersRanking();
-        } else{
-            playerLogin(player);
+            playersRanking(database,messageManager);
+        } else {
+            playerLogin(player, database, messageManager);
         }
     }
+    }
 
-private void playerLogin(Player player){
-        int option = 0;
-        while (option != 9) {
-            option = messageManager.showPlayerMenu(player.getNick());
+    private static void playerLogin(Player player, Database database, MessageManager messageManager) {
+            int option = messageManager.showPlayerMenu(player.getNick());
             switch (option) {
                 case 1:
                     challengemode = true;
@@ -72,19 +69,20 @@ private void playerLogin(Player player){
                 case 6:
                     player.setNick("");
                     break;
-                case 7:
-                    player.setNick("");
+                case 7: //Ver el estado del Fighter
+                    fighterstate=true;
                     break;
-                case 8:
-                    player.setNick("");
+                case 8: //Cerrar Sesion
+                    playerlogin=false;
                     break;
-                case 9:
+                case 9: //Borrar Usuario
+                    eraseuser=true;
                     break;
             }
-        }
+
     }
 
-    private void challengeMode(Player player){
+    private static void challengeMode(Player player, Database database, MessageManager messageManager){
         Challenge challenge = player.getFighter().getPendingChallenges().getFirstChallenge();
         int gold = challenge.getGold();
         String [] challengeData= challenge.getChallengeData();
@@ -101,23 +99,85 @@ private void playerLogin(Player player){
             challengemode = false;
         }
     }
+    private static void adminEquipment(Player player, Database database, MessageManager messageManager){
+        eadmin=false;
+        if (player.getFighter()==null){
+            messageManager.showContent(notFighterText);
+            return;
+        }
+        int option = messageManager.showReadableBox(player.getFighter().generateWeaponsText(),(player.getFighter().generateWeaponsText().length));
+        ///Aquí habría que hacer cosas
+    }
+    private static void challengePlayer(Player player, Database database, MessageManager messageManager){
+        challengep=false;
+        if (player.getFighter()==null){
+            return;
+        }
+        messageManager.showContent(challengeInstructionText);
+        String user = messageManager.showReadString(nickText);
+        if ((database.isAPlayer(user))){
+            Player challenged = (Player) database.getUser(user);
+            if (challenged.getFighter()!=null){
+                int gold = messageManager.showReadGold(player.getFighter().getGold());
+                Challenge challenge = player.challengePlayer((Player) database.getUser(user),gold);
+                database.addPendingChallenge(challenged,challenge);
+                ;
+            }
+            else{
+                messageManager.showContent(notFighterChallenged);
+            }
 
-    private void fighterState(Player player){
-        int option = 0;
-        while (option != 4) {
-            option = messageManager.showReadableBox(Constants.fighterTypesText, 4);
-            switch (option) {
-                case 1:
-                    cfighter = true;
+        }else{
+            messageManager.showContent(userNotFoundText);
+        }
+    }
+    private static void fighterState(Player player, Database database, MessageManager messageManager){
+        fighterstate=false;
+        if (player.getFighter()==null){
+            messageManager.showContent(notFighterText);
+            return;
+        }
+        String [] fighterState= player.getFighter().generateFighterState();
+        messageManager.showContent(fighterState);
+    }
+
+    private static void playersRanking(Database database, MessageManager messageManager){
+        messageManager.showRanking(database.getRanking());
+        ranking=false;
+    }
+    private static void createFighter(Player player, Database database, MessageManager messageManager){
+        cfighter=false;
+        if (player.getFighter()!=null){
+            messageManager.showContent(alreadyFighterText);
+        }else{
+            int option = messageManager.showReadableBox(fighterTypesText,3);
+            String name =messageManager.showReadString(nameText);
+            ArrayList<TFighter> TFighters = database.managerToListTFighter();
+            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length+1);
+            TFighter type = TFighters.get(opttype-1);
+            switch(option){
+                case 1:     //Vampiro
+                    database.addFighter(player,new Vampire(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
-                case 2:
-                    efighter = true;
+                case 2:     //Licántropo
+                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
-                case 3:
+                case 3:     //Cazador
+                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
-                case 4:
-                    fighterstate = false;
-                    break;
+            }
+        }
+    }
+    private static void eraseFighter(Player player, Database database, MessageManager messageManager){
+        efighter=false;
+        if (player.getFighter() == null){
+            messageManager.showContent(notFighterText);
+        }else{
+            int option = messageManager.showReadableBox(eraseConfirmationText,2);
+            if (option == 1){
+                return;
+            }else{
+                database.eraseFighter(player);
             }
         }
     }
