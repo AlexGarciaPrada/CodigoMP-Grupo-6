@@ -26,6 +26,9 @@ public class UserFlow {
 
     public static void playerMachine(Player player,Database database,MessageManager messageManager) {
     while (playerlogin) {
+        if (player.hasPendingChallenges()){
+            challengemode=true;
+        }
         if (challengemode) {
             challengeMode(player, database,messageManager);
         } else if (fighterstate) {
@@ -50,24 +53,23 @@ public class UserFlow {
     }
 
     private static void playerLogin(Player player, Database database, MessageManager messageManager) {
-        int option = messageManager.showPlayerMenu(player.getNick());
-        switch (option) {
-            case 1:
-                cfighter = true;
+        int option = messageManager.showPlayerMenu(player.getName());
+        switch(option){
+            case 1: //Crear personaje
+                cfighter=true;
                 break;
-            case 2:
-                efighter = true;
+            case 2: //Borrar personaje
+                efighter=true;
                 break;
-            case 3:
-                eadmin = true;
+            case 3: //Administrar equipo personaje
+                eadmin=true;
                 break;
-            case 4:
-                challengemode = true;
+            case 4: //Desafiar a otro jugador
+                challengep=true;
                 break;
-            case 5:
-                eadmin = true;
+            case 5: //Consultar registro de oro
                 break;
-            case 6:
+            case 6: //Ver Ranking
                 ranking=true;
                 break;
             case 7: //Ver el estado del Fighter
