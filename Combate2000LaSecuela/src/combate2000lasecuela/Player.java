@@ -24,6 +24,7 @@ public class Player extends User {
         this.blocked = false;
         this.fighter =null;
     }
+    /*
     public void Fight(Player playerDesafiado, int oroApostado){
         int opcion=0;
         if (haveFighter(this)&&(haveFighter(playerDesafiado))) {
@@ -55,6 +56,13 @@ public class Player extends User {
         return opcion;
     }
 
+     */
+
+    public void Fight(Player challenger, int gold) {
+        this.getFighter().startFighting(challenger.getFighter(), gold);
+        this.deletePendingChallenge();
+    }
+
     public int getVictories() {return victories;}
 
     public Fighter getFighter() {return fighter;}
@@ -64,7 +72,9 @@ public class Player extends User {
     public boolean isBlocked() {return blocked;}
 
     public void createFighter(Fighter  fighter){
-        this.fighter=fighter;
+        if (this.fighter == null) {
+            this.fighter = fighter;
+        }
     }
 
     private String generateRegisterNum(int num) {
@@ -81,25 +91,36 @@ public class Player extends User {
     }
 
     public void deleteFighter() {fighter = null;}
-    public boolean haveFighter(Player p){
-        return (p.fighter!=null);
-    }
+
 
     public Challenge challengePlayer(Player challenged, int gold) {
         if (this.fighter != null && challenged.getFighter() != null) {
-            return new Challenge(this,challenged, gold);
+            if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
+                return new Challenge(this,challenged, gold);
+            } else return null;
         } else return null;
     }
 
     public void updateAfterCombat(Combat c) {
         if (c.getChallenger() == c.getWinner()) {
             int actualGold = c.getChallenger().getGold();
-             actualGold += c.getGoldGained();
-        } else if (c.getChallenged() == c.getWinner()) {
+            actualGold += c.getGoldGained();
+            c.getChallenger().setGold(actualGold);
+            c.getChallenged().setGold(-c.getGoldGained());
+        }
+        else if (c.getChallenged() == c.getWinner()) {
             int actualGold = c.getChallenged().getGold();
             actualGold += c.getGoldGained();
+            c.getChallenged().setGold(actualGold);
+            c.getChallenger().setGold(-c.getGoldGained());
         }
     }
+
+    //para saber si se puede realizar un combate antes de llamar a player.fight
+    public boolean hasActiveEquipment() {
+        return this.getFighter().hasActiveEquipment();
+    }
+
     public void rejectingChallenge(int gold){
         this.getFighter().setGold(this.getFighter().getGold()- (int) (gold*0.1));
     }

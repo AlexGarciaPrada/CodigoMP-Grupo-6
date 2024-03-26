@@ -292,4 +292,8 @@ public abstract class Fighter implements Serializable {
         ,"Tipo: "+type.getName()};
         return text;
     }
+
+    public boolean hasActiveEquipment() {
+        return (this.armadura != null && this.arma1 != null);
+    }
 }
