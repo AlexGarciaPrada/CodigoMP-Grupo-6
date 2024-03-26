@@ -1,39 +1,25 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Hunter;
-import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
 
-import java.util.ArrayList;
-
 import static combate2000lasecuela.Constants.*;
 
-public class Gameflow {
+public class Gameflow  {
 
     private MessageManager messageManager;
 
     private Database database;
     private User user;
-    
 
-    //Señales para la maquina de estados
+    //Señales
     private boolean register;
     private boolean login;
     private boolean playerlogin;
     private boolean operatorlogin;
     private boolean eraseuser;
-    private boolean ranking;
-    private boolean block;
-    private boolean unblock;
-    private boolean cfighter;
-    private boolean efighter;
-    private boolean eadmin;
-    private boolean challengep;
     private boolean challengemode;
-    private boolean fighterstate;
+
 
     
     public Gameflow() {
@@ -77,7 +63,7 @@ public class Gameflow {
 
     // ------------------------ MACHINES
     private void playerMachine(Player player){
-        UserFlow.playerMachine(player,database,messageManager);
+        PlayerFlow.playerMachine(player,database,messageManager);
         playerlogin=false;
     }
     private void operatorMachine(Operator operator){
@@ -163,21 +149,6 @@ public class Gameflow {
                         }
                 }
             }
-    }
-
-    private void eraseUser(User user){
-        int option = messageManager.showEraseUser(user.getNick());
-        eraseuser=false;
-        if (option == 1){
-            if (playerlogin){
-                messageManager.showContent(userCorrectlyErasedText);
-                database.erasePlayer((Player) user);
-                playerlogin=false;
-            }else{
-                database.eraseOperator((Operator) user);
-                operatorlogin=false;
-            }
-        }
     }
 
 

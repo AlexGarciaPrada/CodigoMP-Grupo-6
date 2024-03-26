@@ -6,8 +6,8 @@ import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
 public class OperatorFlow {
-    private static boolean operatorlogin=true;
-    private static boolean eraseuser = false;
+    private static boolean operatorLogin =true;
+    private static boolean eraseUser = false;
     private static boolean block = false;
     private static boolean unblock = false;
 
@@ -16,12 +16,15 @@ public class OperatorFlow {
             blockUser(operator,database,messageManager);
         } else if (unblock) {
             unblockUser(operator,database,messageManager);
-        } else{
-            operatorLogin(operator,database,messageManager);
+        } else if (operatorLogin)
+            operatorLogin(operator,messageManager);
+        else if (eraseUser) {
+            eraseOperator(operator,database,messageManager);
         }
+
     }
 
-    public static void operatorLogin(Operator operator,Database database,MessageManager messageManager){
+    public static void operatorLogin(Operator operator,MessageManager messageManager){
         int option = messageManager.showOperatorMenu(operator.getName());
         switch(option){
             case 1: //Editar personaje
@@ -37,10 +40,10 @@ public class OperatorFlow {
                 unblock=true;
                 break;
             case 6: //Cerrar Sesion
-                operatorlogin=false;
+                operatorLogin =false;
                 break;
             case 7: //Borrar Usuario
-                eraseuser=true;
+                eraseUser =true;
                 break;
         }
     }
@@ -85,6 +88,14 @@ public class OperatorFlow {
         }
     }
 
-
+    private static void eraseOperator(User user,Database database,MessageManager messageManager){
+        int option = messageManager.showEraseUser(user.getNick());
+        eraseUser =false;
+        if (option == 1){
+            messageManager.showContent(userCorrectlyErasedText);
+            database.erasePlayer((Player) user);
+            operatorLogin =false;
+        }
+    }
 
 }
