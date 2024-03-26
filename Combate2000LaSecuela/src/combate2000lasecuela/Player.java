@@ -15,6 +15,7 @@ public class Player extends User {
     private int victories;
     private boolean blocked;
     private Fighter fighter;
+    private int apuesta;
 
 
     public Player(String name, String password, String nick) {
@@ -23,6 +24,46 @@ public class Player extends User {
         this.victories=0;
         this.blocked = false;
         this.fighter =null;
+        this.apuesta=apuesta;//temporal
+    }
+    public void Fight(Player playerDesafiado, int oroApostado){
+        int opcion=0;
+        setApuesta(oroApostado);
+        if (haveFighter(this)&&(haveFighter(playerDesafiado))) {
+            Fighter desafiante = this.getFighter();
+            Fighter desafiado = playerDesafiado.getFighter();
+            if (desafiante.getArmadura()==null) {
+                getNumero(opcion);
+                changeActiveArmor(this,desafiante.getMyArmor(),opcion);
+            }else if (desafiante.getArma1()==null){
+                changeActiveWeapon(this,desafiante.getMyWeapon(),getArma(opcion));
+            }
+
+            if (desafiado.getArmadura()==null) {
+                getNumero(opcion);
+                changeActiveArmor(playerDesafiado,desafiado.getMyArmor(),opcion);
+            }else if (desafiado.getArma1()==null){
+                changeActiveWeapon(playerDesafiado,desafiado.getMyWeapon(),getArma(opcion));
+            }
+            //comprobaciones que petarían el combater terminadas
+            Combat combate= desafiado.startFighting(desafiante,getApuesta());
+            //falta guardar en el registro de combates el resultado
+        }
+    }
+
+    public int getApuesta() {
+        return apuesta;
+    }
+    public void setApuesta(int apuesta){
+        this.apuesta=apuesta;
+    }
+
+    public String getArma(int opcion){
+        return Integer.toString(opcion);
+    }
+    public int getNumero(int opcion){
+        //desde el GameFLow tengo que recibir el scanner de la opcion
+        return opcion;
     }
 
     public int getVictories() {return victories;}
@@ -51,7 +92,9 @@ public class Player extends User {
     }
 
     public void deleteFighter() {fighter = null;}
-
+    public boolean haveFighter(Player p){
+        return (p.fighter!=null);
+    }
 
     public Challenge challengePlayer(Player challenged, int gold) {
         if (this.fighter != null && challenged.getFighter() != null) {
@@ -70,10 +113,6 @@ public class Player extends User {
     }
     public void rejectingChallenge(int gold){
         this.getFighter().setGold(this.getFighter().getGold()- (int) (gold*0.1));
-    }
-
-    public void fight(Player challenged) {
-        fighter.startFighting(challenged.getFighter());
     }
 
     public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {

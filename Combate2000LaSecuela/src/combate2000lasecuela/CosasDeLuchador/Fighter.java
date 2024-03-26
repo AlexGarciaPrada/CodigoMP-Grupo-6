@@ -47,7 +47,7 @@ public abstract class Fighter implements Serializable {
         }
 
 
-    public Combat startFighting (Fighter desafiante){
+    public Combat startFighting (Fighter desafiante, int oroApostado){
             int i=0;
             int pA=0;
             int pD=0;
@@ -87,7 +87,7 @@ public abstract class Fighter implements Serializable {
             if ((this.health==0)&& (desafiante.health==0)){
                 esEmpate=true;
             }
-            return null; //a falta de especificar datos del combat
+            return new Combat(desafiante, this, i, oroApostado, esEmpate);
     }
     public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
