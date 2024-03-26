@@ -15,7 +15,6 @@ public class Player extends User {
     private int victories;
     private boolean blocked;
     private Fighter fighter;
-    private int apuesta;
 
 
     public Player(String name, String password, String nick) {
@@ -24,11 +23,9 @@ public class Player extends User {
         this.victories=0;
         this.blocked = false;
         this.fighter =null;
-        this.apuesta=apuesta;//temporal
     }
     public void Fight(Player playerDesafiado, int oroApostado){
         int opcion=0;
-        setApuesta(oroApostado);
         if (haveFighter(this)&&(haveFighter(playerDesafiado))) {
             Fighter desafiante = this.getFighter();
             Fighter desafiado = playerDesafiado.getFighter();
@@ -46,18 +43,10 @@ public class Player extends User {
                 changeActiveWeapon(playerDesafiado,desafiado.getMyWeapon(),getArma(opcion));
             }
             //comprobaciones que petarían el combater terminadas
-            Combat combate= desafiado.startFighting(desafiante,getApuesta());
+            Combat combate= desafiado.startFighting(desafiante,oroApostado);
             //falta guardar en el registro de combates el resultado
         }
     }
-
-    public int getApuesta() {
-        return apuesta;
-    }
-    public void setApuesta(int apuesta){
-        this.apuesta=apuesta;
-    }
-
     public String getArma(int opcion){
         return Integer.toString(opcion);
     }
