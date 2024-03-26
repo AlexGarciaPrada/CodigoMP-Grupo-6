@@ -29,7 +29,7 @@ public class MessageManager {
         t.showln("");
         t.showln(showWelcome+name);
         showContent(playerMenuText);
-        return t.read(8);
+        return t.read(9);
     }
     public int showEraseUser(String nick){
         t.showln("");
