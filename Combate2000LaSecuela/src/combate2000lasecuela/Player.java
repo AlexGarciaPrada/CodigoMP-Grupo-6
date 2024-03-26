@@ -127,5 +127,14 @@ public class Player extends User {
     public void deletePendingChallenge(){
         this.getFighter().getPendingChallenges().deleteChallenge();
     }
+
+    public int whogetsGold(Combat c) {
+        if (c.getWinner() == null) {
+            return 0;
+        }
+        else if (c.getWinner().equals(this.fighter)) {
+            return c.getGoldGained();
+        } else return -c.getGoldGained();
+    }
 }
 

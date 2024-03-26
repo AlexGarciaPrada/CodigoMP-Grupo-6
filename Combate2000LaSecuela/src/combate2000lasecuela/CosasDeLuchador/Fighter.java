@@ -51,7 +51,7 @@ public abstract class Fighter implements Serializable {
             int i=0;
             int pA=0;
             int pD=0;
-            boolean esEmpate=false;//preparativo para meterselo al combat
+            String esEmpate = null;//preparativo para meterselo al combat
             do {
                 i++; //donde recibe el desafiado
                 //terminal.show("Ronda numero" + i + "comienza");
@@ -85,7 +85,7 @@ public abstract class Fighter implements Serializable {
                     }
             }while((this.health>0)||(desafiante.health>0));
             if ((this.health==0)&& (desafiante.health==0)){
-                esEmpate=true;
+                esEmpate="si";
             }
             return new Combat(desafiante, this, i, oroApostado, esEmpate);
     }
