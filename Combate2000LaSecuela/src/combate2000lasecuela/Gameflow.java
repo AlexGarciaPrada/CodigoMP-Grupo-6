@@ -1,13 +1,7 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Hunter;
-import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 import combate2000lasecuela.screen.MessageManager;
-
-import java.util.ArrayList;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -77,7 +71,7 @@ public class Gameflow {
 
     // ------------------------ MACHINES
     private void playerMachine(Player player){
-        UserFlow.playerMachine(player,database,messageManager);
+        PlayerFlow.playerMachine(player,database,messageManager);
         playerlogin=false;
     }
     private void operatorMachine(Operator operator){

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import static combate2000lasecuela.Constants.*;
 
-public class UserFlow {
+public class PlayerFlow {
 
     private static boolean playerlogin=true;
     private static boolean eraseuser = false;
