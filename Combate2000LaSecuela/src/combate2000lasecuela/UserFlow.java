@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import static combate2000lasecuela.Constants.*;
 
-
-
 public class UserFlow {
 
     private static boolean playerlogin=true;
@@ -52,37 +50,36 @@ public class UserFlow {
     }
 
     private static void playerLogin(Player player, Database database, MessageManager messageManager) {
-            int option = messageManager.showPlayerMenu(player.getNick());
-            switch (option) {
-                case 1:
-                    challengemode = true;
-                    break;
-                case 2:
-                    fighterstate = true;
-                    break;
-                case 3:
-                    ranking = true;
-                    break;
-                case 4:
-                    eraseuser = true;
-                    break;
-                case 5:
-                    eadmin = true;
-                    break;
-                case 6:
-                    ranking=true;
-                    break;
-                case 7: //Ver el estado del Fighter
-                    fighterstate=true;
-                    break;
-                case 8: //Cerrar Sesion
-                    playerlogin=false;
-                    break;
-                case 9: //Borrar Usuario
-                    eraseuser=true;
-                    break;
-            }
-
+        int option = messageManager.showPlayerMenu(player.getNick());
+        switch (option) {
+            case 1:
+                cfighter = true;
+                break;
+            case 2:
+                efighter = true;
+                break;
+            case 3:
+                eadmin = true;
+                break;
+            case 4:
+                challengemode = true;
+                break;
+            case 5:
+                eadmin = true;
+                break;
+            case 6:
+                ranking=true;
+                break;
+            case 7: //Ver el estado del Fighter
+                fighterstate=true;
+                break;
+            case 8: //Cerrar Sesion
+                playerlogin=false;
+                break;
+            case 9: //Borrar Usuario
+                eraseuser=true;
+                break;
+        }
     }
 
     private static void challengeMode(Player player, Database database, MessageManager messageManager){
