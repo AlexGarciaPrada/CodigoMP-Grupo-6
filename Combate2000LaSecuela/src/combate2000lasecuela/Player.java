@@ -1,12 +1,15 @@
 package combate2000lasecuela;
 
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Fighter;
 import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.managers.ChallengeManager;
+import combate2000lasecuela.CosasDeLuchador.Weapon;
+
 public class Player extends User {
     private String registerNumber;
     private int victories;
@@ -73,21 +76,13 @@ public class Player extends User {
         fighter.startFighting(challenged.getFighter());
     }
 
-    /* toda esta parte deberia ser asi, pero no coincide con los parametros de Dani
-
-    public void chooseWeapon1(int option) {
-        fighter.setWeapon1(option);
+    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
+        super.changeActiveWeapon(player, MyWeapons, weapon);
     }
 
-    public void chooseWeapon2(int option) {
-        fighter.setWeapon2(option);
+    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
+        super.changeActiveArmor(player, MyArmor, option);
     }
-
-    public void chooseArmor(int option) {
-        fighter.setArmor(option);
-    }
-
-     */
 
     public boolean hasPendingChallenges(){
         if (this.getFighter()==null){
@@ -96,6 +91,13 @@ public class Player extends User {
             return !(this.getFighter().getPendingChallenges().isEmpty());
         }
 
+    }
+    public void addPendingChallenge(Challenge challenge){
+        this.getFighter().getPendingChallenges().addChallenge(challenge);
+
+    }
+    public void deletePendingChallenge(){
+        this.getFighter().getPendingChallenges().deleteChallenge();
     }
 }
 

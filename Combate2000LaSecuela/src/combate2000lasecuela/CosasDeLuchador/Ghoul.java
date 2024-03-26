@@ -12,7 +12,7 @@ int lealtad;
         super(linea);
         String [] valores = linea.split(";");
         this.lealtad=Integer.parseInt(valores[3]);
-        this.health=Integer.parseInt(valores[4]);
+        this.health=Integer.parseInt(valores[4].trim());
         setHealth(health);
     }
 

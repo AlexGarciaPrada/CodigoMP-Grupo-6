@@ -22,5 +22,8 @@ public class PendingChallenges implements Serializable {
 
     public boolean isEmpty() {return pendingChallenges.isEmpty();}
 
+    public void deleteChallenge(){
+        pendingChallenges.poll();
+    }
     
 }
