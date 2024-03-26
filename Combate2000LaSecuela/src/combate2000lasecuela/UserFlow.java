@@ -42,6 +42,9 @@ public class UserFlow {
             adminEquipment(player, database,messageManager);
         } else if (ranking) {
             playersRanking(database,messageManager);
+        } else if (eraseuser) {
+            eraseUser(player,database,messageManager);
+
         } else {
             playerLogin(player, database, messageManager);
         }
@@ -67,7 +70,7 @@ public class UserFlow {
                     eadmin = true;
                     break;
                 case 6:
-                    player.setNick("");
+                    ranking=true;
                     break;
                 case 7: //Ver el estado del Fighter
                     fighterstate=true;
@@ -180,6 +183,16 @@ public class UserFlow {
                 database.eraseFighter(player);
             }
         }
+    }
+    private static void eraseUser(User user,Database database,MessageManager messageManager){
+        int option = messageManager.showEraseUser(user.getNick());
+        eraseuser=false;
+        if (option == 1){
+                messageManager.showContent(userCorrectlyErasedText);
+                database.erasePlayer((Player) user);
+                playerlogin=false;
+            }
+
     }
 
 
