@@ -17,39 +17,19 @@ public class MessageManager {
     }
 
     //Pantallas concretas con caja
-    public int showInitMenu(){
-        showContent(initMenuText);
-        return (t.read(3));
-    }
-    public int showUserType(){
-        showContent(userTypeMenuText);
-        return (t.read(3));
-    }
-    public void showNickUsed(){
-        showContent(nickUsedText);
-    }
-    public void showUserErased(){showContent(userCorrectlyErasedText);}
-    public void showUserNotFound(){
-        showContent(userNotFoundText);
-    }
-    public void showWrongPassword(){
-        showContent(wrongPasswordText);
-    }
-    public void showNotCoincidencePassword() {
-        showContent(notCoincidencePasswordText);
+    public int showReadableBox(String [] content,int max){
+        showContent(content);
+        return t.read(max);
     }
     public void showUserRegistered(String user) {
         String[] content = {theUserText+user+userRegistered2};
         showContent(content);
     }
-    public void showPlayerBlocked(){
-        showContent(playerBlockedText);
-    }
     public int showPlayerMenu(String name){
         t.showln("");
         t.showln(showWelcome+name);
         showContent(playerMenuText);
-        return t.read(8);
+        return t.read(9);
     }
     public int showEraseUser(String nick){
         t.showln("");
@@ -66,7 +46,6 @@ public class MessageManager {
     public void showRanking (ArrayList<String> ranking){
         t.showln(rankingText);
         showContent(ranking.toArray(new String[ranking.size()]));
-
     }
     public void showUserBlocked(String nick){
         String [] content={theUserText+nick,userBlock};
@@ -76,36 +55,18 @@ public class MessageManager {
         String [] content={theUserText+nick,userUnblock};
         showContent(content);
     }
-    public int showWeaponStack(String [] content){
-        showContent(content);
-       return t.read(content.length);
-    }
-    public void showAlreadyBlock(){
-        showContent(alreadyBlockText);
-    }
-    public void showAlreadyUnblock(){
-        showContent(alreadyUnblockText);
-    }
     //Pantallas sin caja
+    public String showReadString (String info){
+        t.show(info);
+        return t.readString();
+    }
     public void showLogInMenu(){
     t.showln(logInText);
     t.showln(exitAdvice);
     }
-    public String showReadPassword(){
-        t.show(passwordText);
-        return t.readString();
-    }
-    public String showReadNick(){
-        t.show(nickText);
-        return t.readString();
-    }
-    public String showReadName(){
-        t.show(nameText);
-        return t.readString();
-    }
-    public String showReadConfirmPassword(){
-        t.show(confirmPasswordText);
-        return t.readString();
+    public int showReadGold(int max){
+        t.showln(gold);
+        return t.read(max);
     }
     public String showNickToBlock(){
         t.showln(blockUserText);
@@ -122,22 +83,6 @@ public class MessageManager {
         t.showln(registerText);
         t.showln(exitAdvice);
     }
-    public int showReadFighterType(){
-        showContent(fighterTypesText);
-        return t.read(3);
-    }
-    public void showAlreadyFighter(){
-        showContent(alreadyFighterText);
-    }
-    public void showNotFighter(){
-        showContent(notFighterText);
-    }
-    public int showEraseConfirmation(){
-        showContent(eraseConfirmationText);
-        return t.read(2);
-    }
-
-
     //Funcionamiento interno de las pantallas
     private int getMaxLine(String[] content) {
         int max = 0;
@@ -149,7 +94,7 @@ public class MessageManager {
         return max + 12; // Añade 12 para tener en cuenta los espacios a cada lado
     }
 
-    private void showContent(String[] content) {
+    public void showContent(String[] content) {
         int wide = getMaxLine(content);
         //Tapa de la caja
         t.showln("|" + "-".repeat(wide) + "|");

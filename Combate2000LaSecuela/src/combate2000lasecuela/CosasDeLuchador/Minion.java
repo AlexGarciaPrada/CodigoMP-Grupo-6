@@ -3,16 +3,19 @@ package combate2000lasecuela.CosasDeLuchador;
 import java.io.Serializable;
 import combate2000lasecuela.Saveable;
 import combate2000lasecuela.managers.MinionManager;
-public class Minion implements Saveable {
+public abstract class Minion implements Saveable {
     private String name;
     private int health;
     private String tipo;
+    private int id;
     private int minionId;
 
     public Minion(String linea){
         String [] valores = linea.split(";");
+        this.id=Integer.parseInt(valores[0]);
         this.name = valores[1];
         this.tipo = valores[2];
+        System.out.println(valores[0]+valores[1]+valores[2]);
     }
 
     @Override
@@ -29,9 +32,7 @@ public class Minion implements Saveable {
         this.name = name;
     }
 
-    public int getHealth() {
-        return health;
-    }
+    public abstract int getHealth();
 
     public void setHealth(int health) {
         this.health = health;

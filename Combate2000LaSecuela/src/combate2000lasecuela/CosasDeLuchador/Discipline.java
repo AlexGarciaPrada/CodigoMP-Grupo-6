@@ -2,7 +2,7 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import java.io.Serializable;
 import java.util.Random;
-public class Discipline implements Serializable {
+public class Discipline extends Specialskill implements Serializable {
     int disciplineDamage;
     int costeSangre;
     int puntosDisponibles;
@@ -23,7 +23,8 @@ public class Discipline implements Serializable {
     public int getCosteSangre(){
         return this.costeSangre;
     }
-    public int getDisciplineDamage() {
+    @Override
+    public int getDamage() {
         return this.disciplineDamage;
     }
 }

@@ -11,8 +11,13 @@ int lealtad;
 
         super(linea);
         String [] valores = linea.split(";");
-        this.lealtad=valueOf(valores[3]);
-        this.health=valueOf(valores[4]);
+        this.lealtad=Integer.parseInt(valores[3].trim());
+        this.health=Integer.parseInt(valores[4].trim());
         setHealth(health);
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
     }
 }

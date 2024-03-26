@@ -1,24 +1,29 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Minion;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.Weapon;
-import combate2000lasecuela.CosasDeLuchador.Armor;
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
 import combate2000lasecuela.managers.TFighterManager;
 
 import java.io.*;
 
+import static combate2000lasecuela.Constants.*;
+
 public class Loader implements Serializable {
-    private String filename;
-    private String[] parts;
     private ItemManager im;
     private MinionManager mm;
     private TFighterManager tfm;
 
-    public Loader(String filename) {
-        this.filename = filename;
+    public Loader() {
+      im = new ItemManager();
+      mm= new MinionManager();
+      tfm = new TFighterManager();
+      read(minionsFile);
+      read(weaponsFile);
+      read(tfighterFile);
+      read(armorsFile);
+
+
     }
 
     private void read(String filename) {
@@ -27,14 +32,17 @@ public class Loader implements Serializable {
             String line;
             while ((line = br.readLine()) != null) {
                 switch (filename) {
-                    case Constants.minionsFile:
+                    case minionsFile:
                         readMinionFile(line);
                         break;
-                    case Constants.weaponsFile:
+                    case weaponsFile:
                         readWeaponFile(line);
                         break;
-                    case Constants.armorsFile:
+                    case armorsFile:
                         readArmorFile(line);
+                        break;
+                    case tfighterFile:
+                        readTFighterFile(line);
                         break;
                 }
             }
@@ -45,33 +53,57 @@ public class Loader implements Serializable {
     }
     
     public void load() {
-        read(Constants.minionsFile);
+        read(minionsFile);
         read(Constants.weaponsFile);
         read(Constants.armorsFile);
     }
 
     // ------------------------ MINIONS
     private void readMinionFile(String line) {
-        parts = line.split(";");
-        mm.addElement("Minion", parts[0], new Minion(line));
+
+       String [] parts = line.split(";");
+       switch(parts[2].trim()){
+           case "HUMANO":
+               mm.addElement("MinionMap", parts[0], new Human(line));
+               break;
+           case "DEMONIO":
+               mm.addElement("MinionMap", parts[0], new Demon (line));
+               break;
+           case "GHOUL":
+               mm.addElement("MinionMap", parts[0], new Ghoul (line));
+               break;
+
+       }
     }
 
     // ------------------------ WEAPONS
     private void readWeaponFile(String line) {
-        parts = line.split(";");
-        im.addElementSubMap("Weapon", parts[0], new Weapon(line));
+       String [] parts = line.split(";");
+        im.addElementSubMap("WeaponMap", parts[0], new Weapon(line));
     }
 
     // ------------------------ ARMORS
     private void readArmorFile(String line) {
-        parts = line.split(";");
-        im.addElementSubMap("Armor", parts[0], new Armor(line));
+        String [] parts = line.split(";");
+        im.addElementSubMap("ArmorMap", parts[0], new Armor(line));
     }
 
     // ------------------------ TFIGHTER
     private void readTFighterFile(String line) {
-        parts = line.split(";");
-        tfm.addElement("TFighter", parts[0], new TFighter(line));
+
+        String [] parts = line.split(";");
+        tfm.addElement("TFighterMap", parts[0], new TFighter(line));
     }
 
+    public ItemManager getIm() {
+        return im;
+    }
+
+    public MinionManager getMm() {
+        return mm;
+    }
+
+    public TFighterManager getTfm() {
+        return tfm;
+    }
 }
