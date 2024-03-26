@@ -9,6 +9,8 @@ import combate2000lasecuela.screen.MessageManager;
 
 import java.util.ArrayList;
 
+import static combate2000lasecuela.Constants.*;
+
 public class Gameflow {
 
     private MessageManager messageManager;
@@ -53,7 +55,7 @@ public class Gameflow {
     }
 
     public void startMenu() {
-        int option = messageManager.showInitMenu();
+        int option = messageManager.showReadableBox(initMenuText,3);
         switch (option) {
             case 1:
                 login = true;
@@ -118,11 +120,11 @@ public class Gameflow {
     private void login(){
         login = false;
         messageManager.showLogInMenu();
-        String nick = messageManager.showReadNick();
+        String nick = messageManager.showReadString(nickText);
             if (nick.equals("SALIR")){
                 return;
             }else{
-                String password = messageManager.showReadPassword();
+                String password = messageManager.showReadString(passwordText);
                     if (password.equals("SALIR")){
                         return;
                     }else{
@@ -136,17 +138,17 @@ public class Gameflow {
                                             challengemode=true;
                                        }
                                    }else{
-                                       messageManager.showPlayerBlocked();
+                                       messageManager.showContent(playerBlockedText);
                                    }
                                }else{
                                    operatorlogin=true;
                                }
                            }else{
-                               messageManager.showWrongPassword();
+                               messageManager.showContent(wrongPasswordText);
                            }
 
                        }else{
-                           messageManager.showUserNotFound();
+                           messageManager.showContent(userNotFoundText);
                        }
                     }
             }
@@ -154,29 +156,29 @@ public class Gameflow {
     // ------------------------ REGISTER
     private void register(){
         register =false;
-        int type = messageManager.showUserType();
+        int type = messageManager.showReadableBox(userTypeMenuText,3);
             if (type == 3){
                 return;
             }
         messageManager.showRegisterMenu();
-        String name = messageManager.showReadName();
+        String name =messageManager.showReadString(nameText);
             if (name.equals("SALIR")){
                 return;
             }
-        String nick = messageManager.showReadNick();
+        String nick = messageManager.showReadString(nickText);
             if (nick.equals("SALIR")){
                 return;
             }
             else if (database.isNickUsed(nick)){
-                messageManager.showNickUsed();
+                messageManager.showContent(nickUsedText);
                 return;
             }
             else{
-                String password = messageManager.showReadPassword();
+                String password = messageManager.showReadString(passwordText);
                 if (password.equals("SALIR")){
                     return;
                 }else{
-                    String confirmpassword = messageManager.showReadConfirmPassword();
+                    String confirmpassword =messageManager.showReadString(confirmPasswordText);
                         if (confirmpassword.equals("SALIR")){
                             return;
                         }else{
@@ -188,7 +190,7 @@ public class Gameflow {
                                 }
                             messageManager.showUserRegistered(nick);
                             }else{
-                            messageManager.showNotCoincidencePassword();
+                            messageManager.showContent(notCoincidencePasswordText);
                             }
                         }
                 }
@@ -254,31 +256,31 @@ public class Gameflow {
         Challenge challenge = player.getFighter().getPendingChallenges().getFirstChallenge();
         int gold = challenge.getGold();
         String [] challengeData= challenge.getChallengeData();
-        int option = messageManager.showChallenge(challengeData);
+        int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
-            player.fight(challenge.getChallenger());
+            player.Fight(challenge.getChallenger(),gold);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);
-
         }
         player.deletePendingChallenge();
         database.updateUsers();
         if (!(player.hasPendingChallenges())) {
             challengemode = false;
         }
-
-
     }
+
     private void eraseUser(User user){
         int option = messageManager.showEraseUser(user.getNick());
         eraseuser=false;
         if (option == 1){
             if (playerlogin){
+                messageManager.showContent(userCorrectlyErasedText);
                 database.erasePlayer((Player) user);
                 playerlogin=false;
             }else{
                 database.eraseOperator((Operator) user);
+
                 operatorlogin=false;
             }
         }
@@ -301,13 +303,13 @@ public class Gameflow {
                     operator.blockPlayer((Player) auxuser);
                     messageManager.showUserBlocked(auxuser.getNick());
                 }else{
-                    messageManager.showAlreadyBlock();
+                    messageManager.showContent(alreadyBlockText);
                 }
             } else {
-                messageManager.showUserNotFound();
+                messageManager.showContent(userNotFoundText);
             }
         } else {
-            messageManager.showUserNotFound();
+            messageManager.showContent(userNotFoundText);
         }
     }
     private void unblockUser(Operator operator) {
@@ -320,13 +322,13 @@ public class Gameflow {
                     operator.unblockPlayer((Player) auxuser);
                     messageManager.showUserUnblocked(auxuser.getNick());
                 }else{
-                    messageManager.showAlreadyUnblock();
+                    messageManager.showContent(alreadyUnblockText);
                 }
             } else {
-                messageManager.showUserNotFound();
+                messageManager.showContent(userNotFoundText);
             }
         } else {
-            messageManager.showUserNotFound();
+            messageManager.showContent(userNotFoundText);
         }
     }
 
@@ -334,13 +336,13 @@ public class Gameflow {
     private void createFighter(Player player){
         cfighter=false;
         if (player.getFighter()!=null){
-            messageManager.showAlreadyFighter();
+            messageManager.showContent(alreadyFighterText);
         }else{
-            int option = messageManager.showReadFighterType();
-            String name =messageManager.showReadName();
+            int option = messageManager.showReadableBox(fighterTypesText,3);
+            String name =messageManager.showReadString(nameText);
             ArrayList<TFighter> TFighters = database.managerToListTFighter();
-            int opttype =messageManager.showTFighter(database.getTFighterText(TFighters));
-            TFighter type = TFighters.get(opttype);
+            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length+1);
+            TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
                     database.addFighter(player,new Vampire(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
@@ -357,9 +359,9 @@ public class Gameflow {
     private void eraseFighter(Player player){
         efighter=false;
         if (player.getFighter() == null){
-            messageManager.showNotFighter();
+            messageManager.showContent(notFighterText);
         }else{
-            int option = messageManager.showEraseConfirmation();
+            int option = messageManager.showReadableBox(eraseConfirmationText,2);
             if (option == 1){
                 return;
             }else{
@@ -372,10 +374,10 @@ public class Gameflow {
     private void adminEquipment(Player player){
         eadmin=false;
         if (player.getFighter()==null){
-            messageManager.showNotFighter();
+            messageManager.showContent(notFighterText);
             return;
         }
-        int option = messageManager.showWeaponStack(player.getFighter().generateWeaponsText());
+        int option = messageManager.showReadableBox(player.getFighter().generateWeaponsText(),(player.getFighter().generateWeaponsText().length));
         ///Aquí habría que hacer cosas
     }
     private void challengePlayer(Player player){
@@ -383,8 +385,8 @@ public class Gameflow {
         if (player.getFighter()==null){
             return;
         }
-        messageManager.showChallengeInstructions();
-        String user = messageManager.showReadNick();
+        messageManager.showContent(challengeInstructionText);
+        String user = messageManager.showReadString(nickText);
         if ((database.isAPlayer(user))){
             Player challenged = (Player) database.getUser(user);
             if (challenged.getFighter()!=null){
@@ -394,21 +396,21 @@ public class Gameflow {
                 ;
             }
             else{
-                messageManager.showNotfighterChallenged();
+                messageManager.showContent(notFighterChallenged);
             }
 
         }else{
-            messageManager.showUserNotFound();
+            messageManager.showContent(userNotFoundText);
         }
     }
     private void fighterState(Player player){
         fighterstate=false;
         if (player.getFighter()==null){
-            messageManager.showNotFighter();
+            messageManager.showContent(notFighterText);
             return;
         }
         String [] fighterState= player.getFighter().generateFighterState();
-        messageManager.showFighterState(fighterState);
+        messageManager.showContent(fighterState);
     }
 
 }

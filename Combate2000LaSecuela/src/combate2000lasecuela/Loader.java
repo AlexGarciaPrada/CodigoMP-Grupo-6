@@ -62,7 +62,7 @@ public class Loader implements Serializable {
     private void readMinionFile(String line) {
 
        String [] parts = line.split(";");
-       switch(parts[2]){
+       switch(parts[2].trim()){
            case "HUMANO":
                mm.addElement("MinionMap", parts[0], new Human(line));
                break;

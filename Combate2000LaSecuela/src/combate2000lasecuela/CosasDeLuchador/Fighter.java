@@ -47,11 +47,11 @@ public abstract class Fighter implements Serializable {
         }
 
 
-    public Combat startFighting (Fighter desafiante){
+    public Combat startFighting (Fighter desafiante, int oroApostado){
             int i=0;
             int pA=0;
             int pD=0;
-            boolean esEmpate=false;//preparativo para meterselo al combat
+            String esEmpate = null;//preparativo para meterselo al combat
             do {
                 i++; //donde recibe el desafiado
                 //terminal.show("Ronda numero" + i + "comienza");
@@ -85,9 +85,9 @@ public abstract class Fighter implements Serializable {
                     }
             }while((this.health>0)||(desafiante.health>0));
             if ((this.health==0)&& (desafiante.health==0)){
-                esEmpate=true;
+                esEmpate="si";
             }
-            return null; //a falta de especificar datos del combat
+            return new Combat(desafiante, this, i, oroApostado, esEmpate);
     }
     public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
