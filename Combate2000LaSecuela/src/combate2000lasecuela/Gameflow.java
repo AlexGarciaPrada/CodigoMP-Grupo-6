@@ -17,6 +17,7 @@ public class Gameflow {
 
     private Database database;
     private User user;
+    
 
     //Señales para la maquina de estados
     private boolean register;
