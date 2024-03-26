@@ -109,7 +109,7 @@ public class Database {
                 myMinions.push(esclavo);
                 if ((esclavo instanceof Demon)&&(tope<=3)){ //que no se meta en bucle continuo, capo a los demonios
                     tope+=1;
-                    randomMinionDemon(tope);
+                    ((Demon) esclavo).setPilaDemoniaca(randomMinionDemon(tope));
                 }
             }
         }
