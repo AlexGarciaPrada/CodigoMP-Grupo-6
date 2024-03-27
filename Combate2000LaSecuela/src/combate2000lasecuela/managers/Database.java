@@ -23,20 +23,21 @@ public class Database {
     }
     public void addFighter(Player player,Fighter fighter){
         player.createFighter(fighter);
-        usermanager.saveCollection("User");
+        updateUsers();
 
     }
     public void eraseFighter(Player player){
         player.deleteFighter();;
-        usermanager.saveCollection("User");
+        updateUsers();
 
     }
     public void updateUsers(){
         usermanager.saveCollection("User");
     }
+    public void updateChallenges(){challengeManager.saveCollection("Challenge");}
     public void addPendingChallenge(Player challenged, Challenge challenge){
         challenged.addPendingChallenge(challenge);
-        usermanager.saveCollection("User");
+        updateUsers();
     }
 
     public void loadUsers(){
@@ -45,7 +46,7 @@ public class Database {
 
     public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
-        usermanager.saveCollection("User");
+        updateUsers();
     }
     public boolean isAPlayer(String nick){
         return usermanager.inMap("Player",nick);
@@ -209,6 +210,7 @@ public class Database {
     public void eraseChallenge(){
         for (Map.Entry<String, Challenge> entry : this.challengeManager.getCollection("ChallengeMap").entrySet()) {
             this.challengeManager.getCollection("ChallengeMap").remove(entry.getKey()); //Esto debería devolver el primer desafio insertado
+            updateChallenges();
             return; //Para salir en la primera iteracion
         }
 
@@ -218,6 +220,7 @@ public class Database {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = sdf.format(date);
         challengeManager.getCollection("ChallengeMap").put(formattedDate,challenge);
+        updateChallenges();
     }
     public boolean isEmptyChallengeManager(){
         return (challengeManager.getCollection("ChallengeMap").isEmpty());

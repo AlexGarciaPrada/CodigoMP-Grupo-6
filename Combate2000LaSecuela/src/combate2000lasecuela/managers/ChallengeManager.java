@@ -10,7 +10,10 @@ import java.util.Map;
 public class ChallengeManager extends AbstractManager<Challenge> {
 
     public ChallengeManager() {
+        loadElement("Challenge");
+        if (this.elements==null){
         this.setElements(new HashMap<String, Map<String, Challenge>>());
         this.addCollection("ChallengeMap", new LinkedHashMap<String,Challenge>());
+        }
     }
 }

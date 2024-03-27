@@ -30,6 +30,7 @@ public class PlayerFlow extends Gameflow {
         if (player.hasPendingChallenges()){
             challengemode =true;
         }
+
         if (challengemode) {
             challengeMode(player, database,messageManager);
         } else if (fighterstate) {
@@ -114,6 +115,7 @@ public class PlayerFlow extends Gameflow {
     private static void challengePlayer(Player player, Database database, MessageManager messageManager){
         challengeplayer =false;
         if (player.getFighter()==null){
+            messageManager.showContent(notFighterText);
             return;
         }
         messageManager.showContent(challengeInstructionText);
