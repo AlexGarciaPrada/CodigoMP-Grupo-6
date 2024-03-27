@@ -11,6 +11,6 @@ public class ChallengeManager extends AbstractManager<Challenge> {
 
     public ChallengeManager() {
         this.setElements(new HashMap<String, Map<String, Challenge>>());
-        this.addCollection("ChallengesMap", new LinkedHashMap<String,Challenge>());
+        this.addCollection("ChallengeMap", new LinkedHashMap<String,Challenge>());
     }
 }

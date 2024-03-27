@@ -3,6 +3,7 @@ package combate2000lasecuela.managers;
 import combate2000lasecuela.*;
 import combate2000lasecuela.CosasDeLuchador.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Database {
@@ -161,7 +162,7 @@ public class Database {
     }
     public ArrayList<TFighter>  managerToListTFighter(){
         ArrayList <TFighter> result = new ArrayList<>();
-        Map <String,TFighter> tFighterManager= loader.getTfm().getElements().get("TFighterMap");
+        Map <String,TFighter> tFighterManager= loader.getTfm().getCollection("TFighterMap");
         for(TFighter tFighter: tFighterManager.values()){
             result.add(tFighter);
         }
@@ -188,11 +189,28 @@ public class Database {
         return MyWeakness;
     }
 
-   /*public Challenge getChallenge(){
-        challengeManager.getCollection("")
+    //He tenido que hacer una pseudocola, es decir, una pepsi.
+   public Challenge getChallenge(){
+       for (Map.Entry<String, Challenge> entry : this.challengeManager.getCollection("ChallengeMap").entrySet()) {
+           return entry.getValue(); //Esto debería devolver el primer desafio insertado
+       }
+       return null; //Esto en principio no se usa nunca
     }
-    public Challenge eraseChallenge(Challenge){
+    public void eraseChallenge(){
+        for (Map.Entry<String, Challenge> entry : this.challengeManager.getCollection("ChallengeMap").entrySet()) {
+            this.challengeManager.getCollection("ChallengeMap").remove(entry.getKey()); //Esto debería devolver el primer desafio insertado
+            return; //Para salir en la primera iteracion
+        }
 
-    }*/
+    }
+    public void addChallenge(Challenge challenge){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(date);
+        challengeManager.getCollection("ChallengeMap").put(formattedDate,challenge);
+    }
+    public boolean isEmptyChallengeManager(){
+        return (challengeManager.getCollection("ChallengeMap").isEmpty());
+    }
 
 }

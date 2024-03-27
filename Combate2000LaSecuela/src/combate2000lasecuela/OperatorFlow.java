@@ -13,18 +13,20 @@ public class OperatorFlow {
     private static boolean vchallenge=false;
 
     public static void operatorMachine(Operator operator,Database database,MessageManager messageManager) {
+        operatorLogin=true;
         while (operatorLogin) {
             if (block) {
                 blockUser(operator, database, messageManager);
             } else if (unblock) {
                 unblockUser(operator, database, messageManager);
-            } else if (operatorLogin) {
-                operatorLogin(operator, messageManager);
             } else if (vchallenge) {
                 validateChallenge(operator, database, messageManager);
             } else if (eraseOperator) {
                 eraseOperator(operator, database, messageManager);
+            }else{
+                operatorLogin(operator,messageManager);
             }
+
         }
     }
 
@@ -103,8 +105,26 @@ public class OperatorFlow {
         }
     }
     private static void validateChallenge (Operator operator,Database database, MessageManager messageManager){
-        /*database.
-        messageManager.showReadableBox(validateChallengeText,2);*/
+        if (database.isEmptyChallengeManager()){
+            vchallenge=false;
+            messageManager.showContent(notChallengeToValidate);
+            return;
+        }
+        Challenge challenge = database.getChallenge();
+        messageManager.showContent(challenge.getChallengeData());
+        int option = messageManager.showReadableBox(validateChallengeText,3);
+        switch(option){
+            case 1:
+                database.getChallenge().getChallenged().addPendingChallenge(challenge);
+                database.eraseChallenge();
+                break;
+            case 2:
+                database.eraseChallenge();
+                break;
+            case 3:
+                break;
+        }
+        vchallenge=false;
     }
 
 }
