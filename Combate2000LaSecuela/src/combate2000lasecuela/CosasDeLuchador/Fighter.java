@@ -9,6 +9,10 @@ import java.util.Stack;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.LinkedList;
+
+import static combate2000lasecuela.Constants.armorSeparator;
+import static combate2000lasecuela.Constants.weaponSeparator;
+
 public abstract class Fighter implements Serializable {
 
     private String name;
@@ -90,9 +94,9 @@ public abstract class Fighter implements Serializable {
             return new Combat(desafiante, this, i, oroApostado, esEmpate);
     }
     public int potencialAtaque (Fighter f){
-        int potencial=f.power+f.arma1.getDamage()+f.armadura.getDamage()+ f.specialskill.getDamage()+SpecialAttack();
+        int potencial=f.power+f.arma1.getAttack()+f.armadura.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
         if (f.arma2!=null){
-            potencial+=f.arma2.getDamage();
+            potencial+=f.arma2.getAttack();
         }
         return verExitos(potencial);
     }
@@ -181,10 +185,19 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
         for (Weapon element: myWeapon){
-            weapontext.add(Integer.toString(i) +". "+element.getName()+"Ataque: "+Integer.toString(element.getAttack()));
+            weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack()));
             i++;
         }
         return weapontext.toArray(new String[weapontext.size()]);
+    }
+    public String [] generateArmorText() {
+        ArrayList<String> armortext=new ArrayList<>();
+        int i =1;
+        for (Armor element: myArmor){
+            armortext.add(Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+            i++;
+        }
+        return armortext.toArray(new String[armortext.size()]);
     }
     public void mostrarArmaduras(){
         do {
@@ -295,5 +308,19 @@ public abstract class Fighter implements Serializable {
 
     public boolean hasActiveEquipment() {
         return (this.armadura != null && this.arma1 != null);
+    }
+    public String[] generateEquipment(){
+        System.out.println(generateWeaponsText().length);
+        System.out.println(generateArmorText().length);
+        String [] equipment = new String [generateWeaponsText().length+generateWeaponsText().length+3];
+        equipment [0] = weaponSeparator;
+        for (int i=0;i<generateWeaponsText().length;i++){
+            equipment[i+1]=generateWeaponsText()[i];
+        }
+        equipment [generateWeaponsText().length+1] = armorSeparator;
+        for(int i =0 ;i< generateArmorText().length;i++){
+            equipment[generateWeaponsText().length+2+i]=generateArmorText()[i];
+        }
+        return equipment;
     }
 }

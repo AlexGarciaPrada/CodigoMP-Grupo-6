@@ -109,7 +109,7 @@ public class PlayerFlow extends Gameflow {
             messageManager.showContent(notFighterText);
             return;
         }
-        int option = messageManager.showReadableBox(player.getFighter().generateWeaponsText(),(player.getFighter().generateWeaponsText().length));
+        int option = messageManager.showReadableBox(player.getFighter().generateEquipment(),(player.getFighter().generateEquipment().length-2));
         ///Aquí habría que hacer cosas
     }
     private static void challengePlayer(Player player, Database database, MessageManager messageManager){

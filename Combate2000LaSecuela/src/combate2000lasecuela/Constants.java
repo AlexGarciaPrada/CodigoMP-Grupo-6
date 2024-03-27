@@ -47,6 +47,8 @@ public class Constants {
     public static final String nameText="Nombre: ";
     public static final String passwordText="Password: ";
     public static final String nickText="Nick: ";
+    public static final String armorSeparator="Armaduras: ";
+    public static final String  weaponSeparator="Armas: ";
     public static final String confirmPasswordText="Repetir password: ";
     public static final String showWelcome="Bienvenido ";
     public static final String rankingText="Ranking de jugadores: ";

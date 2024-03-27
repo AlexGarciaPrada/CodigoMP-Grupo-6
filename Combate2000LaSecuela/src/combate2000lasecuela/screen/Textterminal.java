@@ -20,6 +20,9 @@ public class Textterminal implements Terminal {
                 try {
                     show("Opcion: ");
                     result = sc.nextInt();
+                    if (result==0){
+                        showln("Introduce una opcion valida");
+                    }
                 } catch (InputMismatchException e) {
                     showln("ERROR: debes insertar un numero entero.");
                     sc.nextLine();
