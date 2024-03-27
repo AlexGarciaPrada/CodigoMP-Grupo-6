@@ -6,22 +6,22 @@ import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
 public class OperatorFlow {
-    private static boolean operatorLogin =true;
-    private static boolean eraseOperator = false;
+    private static boolean operatorlogin =true;
+    private static boolean eraseoperator = false;
     private static boolean block = false;
     private static boolean unblock = false;
     private static boolean vchallenge=false;
 
     public static void operatorMachine(Operator operator,Database database,MessageManager messageManager) {
-        operatorLogin=true;
-        while (operatorLogin) {
+        operatorlogin =true;
+        while (operatorlogin) {
             if (block) {
                 blockUser(operator, database, messageManager);
             } else if (unblock) {
                 unblockUser(operator, database, messageManager);
             } else if (vchallenge) {
                 validateChallenge(operator, database, messageManager);
-            } else if (eraseOperator) {
+            } else if (eraseoperator) {
                 eraseOperator(operator, database, messageManager);
             }else{
                 operatorLogin(operator,messageManager);
@@ -47,10 +47,10 @@ public class OperatorFlow {
                 unblock=true;
                 break;
             case 6: //Cerrar Sesion
-                operatorLogin =false;
+                operatorlogin =false;
                 break;
             case 7: //Borrar Usuario
-                eraseOperator =true;
+                eraseoperator =true;
                 break;
         }
     }
@@ -97,11 +97,11 @@ public class OperatorFlow {
 
     private static void eraseOperator(Operator operator,Database database,MessageManager messageManager){
         int option = messageManager.showEraseUser(operator.getNick());
-        eraseOperator =false;
+        eraseoperator =false;
         if (option == 1){
             messageManager.showContent(userCorrectlyErasedText);
             database.eraseOperator(operator);
-            operatorLogin =false;
+            operatorlogin =false;
         }
     }
     private static void validateChallenge (Operator operator,Database database, MessageManager messageManager){

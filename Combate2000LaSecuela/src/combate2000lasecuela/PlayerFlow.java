@@ -13,38 +13,39 @@ import static combate2000lasecuela.Constants.*;
 
 public class PlayerFlow extends Gameflow {
 
-    private static boolean playerLogin =true;
-    private static boolean erasePlayer = false;
-    private static boolean challengeMode = false;
-    private static boolean fighterState = false;
-    private static boolean createFighter = false;
-    private static boolean challengePlayer = false;
-    private static boolean editFighter = false;
-    private static boolean equipmAdmin = false;
+    private static boolean playerlogin =true;
+    private static boolean eraseplayer = false;
+    private static boolean challengemode = false;
+    private static boolean fighterstate = false;
+    private static boolean createfighter = false;
+    private static boolean challengeplayer = false;
+    private static boolean erasefighter = false;
+    private static boolean equipadmin = false;
     private static boolean ranking = false;
 
 
     public static void playerMachine(Player player,Database database,MessageManager messageManager) {
-        playerLogin= true;
-    while (playerLogin) {
+        playerlogin = true;
+    while (playerlogin) {
         if (player.hasPendingChallenges()){
-            challengeMode =true;
+            challengemode =true;
         }
-        if (challengeMode) {
+
+        if (challengemode) {
             challengeMode(player, database,messageManager);
-        } else if (fighterState) {
+        } else if (fighterstate) {
             fighterState(player,messageManager);
-        } else if (createFighter) {
+        } else if (createfighter) {
             createFighter(player, database,messageManager);
-        } else if (challengePlayer) {
+        } else if (challengeplayer) {
             challengePlayer(player, database,messageManager);
-        } else if (editFighter) {
+        } else if (erasefighter) {
             eraseFighter(player, database,messageManager);
-        } else if (equipmAdmin) {
+        } else if (equipadmin) {
             adminEquipment(player, messageManager);
         } else if (ranking) {
             playersRanking(database,messageManager);
-        } else if (erasePlayer) {
+        } else if (eraseplayer) {
             erasePlayer(player,database,messageManager);
 
         } else {
@@ -57,16 +58,16 @@ public class PlayerFlow extends Gameflow {
         int option = messageManager.showPlayerMenu(player.getName());
         switch(option){
             case 1: //Crear personaje
-                createFighter =true;
+                createfighter =true;
                 break;
             case 2: //Borrar personaje
-                editFighter =true;
+                erasefighter =true;
                 break;
             case 3: //Administrar equipo personaje
-                equipmAdmin =true;
+                equipadmin =true;
                 break;
             case 4: //Desafiar a otro jugador
-                challengePlayer =true;
+                challengeplayer =true;
                 break;
             case 5: //Consultar registro de oro
                 break;
@@ -74,13 +75,13 @@ public class PlayerFlow extends Gameflow {
                 ranking=true;
                 break;
             case 7: //Ver el estado del Fighter
-                fighterState =true;
+                fighterstate =true;
                 break;
             case 8: //Cerrar Sesion
-                playerLogin =false;
+                playerlogin =false;
                 break;
             case 9: //Borrar Usuario
-                erasePlayer=true;
+                eraseplayer =true;
                 break;
         }
     }
@@ -99,21 +100,22 @@ public class PlayerFlow extends Gameflow {
         player.deletePendingChallenge();
         database.updateUsers();
         if (!(player.hasPendingChallenges())) {
-            challengeMode = false;
+            challengemode = false;
         }
     }
     private static void adminEquipment(Player player, MessageManager messageManager){
-        equipmAdmin =false;
+        equipadmin =false;
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
         }
-        int option = messageManager.showReadableBox(player.getFighter().generateWeaponsText(),(player.getFighter().generateWeaponsText().length));
+        int option = messageManager.showReadableBox(player.getFighter().generateEquipment(),(player.getFighter().generateEquipment().length-2));
         ///Aquí habría que hacer cosas
     }
     private static void challengePlayer(Player player, Database database, MessageManager messageManager){
-        challengePlayer =false;
+        challengeplayer =false;
         if (player.getFighter()==null){
+            messageManager.showContent(notFighterText);
             return;
         }
         messageManager.showContent(challengeInstructionText);
@@ -134,7 +136,7 @@ public class PlayerFlow extends Gameflow {
         }
     }
     private static void fighterState(Player player, MessageManager messageManager){
-        fighterState =false;
+        fighterstate =false;
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
@@ -148,14 +150,14 @@ public class PlayerFlow extends Gameflow {
         ranking=false;
     }
     private static void createFighter(Player player, Database database, MessageManager messageManager){
-        createFighter =false;
+        createfighter =false;
         if (player.getFighter()!=null){
             messageManager.showContent(alreadyFighterText);
         }else{
             int option = messageManager.showReadableBox(fighterTypesText,3);
             String name =messageManager.showReadString(nameText);
             ArrayList<TFighter> TFighters = database.managerToListTFighter();
-            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length+1);
+            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length-1);
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
@@ -171,7 +173,7 @@ public class PlayerFlow extends Gameflow {
         }
     }
     private static void eraseFighter(Player player, Database database, MessageManager messageManager){
-        editFighter =false;
+        erasefighter =false;
         if (player.getFighter() == null){
             messageManager.showContent(notFighterText);
         }else{
@@ -185,11 +187,11 @@ public class PlayerFlow extends Gameflow {
     }
     private static void erasePlayer(Player player,Database database,MessageManager messageManager){
         int option = messageManager.showEraseUser(player.getNick());
-        erasePlayer=false;
+        eraseplayer =false;
         if (option == 1){
                 messageManager.showContent(userCorrectlyErasedText);
                 database.erasePlayer(player);
-                playerLogin =false;
+                playerlogin =false;
             }
 
     }

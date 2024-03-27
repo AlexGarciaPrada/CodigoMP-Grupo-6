@@ -94,12 +94,14 @@ public class Player extends User {
 
 
     public Challenge challengePlayer(Player challenged, int gold) {
-        if (this.fighter != null && challenged.getFighter() != null) {
-            if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
-                return new Challenge(this,challenged, gold);
+        if (!this.isBlocked() && !challenged.isBlocked()) {
+            if (this.fighter != null && challenged.getFighter() != null) {
+                if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
+                    return new Challenge(this,challenged, gold);
+                } else return null;
             } else return null;
         } else return null;
-    }
+    } 
 
     public void updateAfterCombat(Combat c) {
         if (c.getChallenger() == c.getWinner()) {

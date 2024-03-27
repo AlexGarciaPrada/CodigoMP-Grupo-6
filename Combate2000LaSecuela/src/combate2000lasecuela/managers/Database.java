@@ -23,20 +23,21 @@ public class Database {
     }
     public void addFighter(Player player,Fighter fighter){
         player.createFighter(fighter);
-        usermanager.saveCollection("User");
+        updateUsers();
 
     }
     public void eraseFighter(Player player){
         player.deleteFighter();;
-        usermanager.saveCollection("User");
+        updateUsers();
 
     }
     public void updateUsers(){
         usermanager.saveCollection("User");
     }
+    public void updateChallenges(){challengeManager.saveCollection("Challenge");}
     public void addPendingChallenge(Player challenged, Challenge challenge){
         challenged.addPendingChallenge(challenge);
-        usermanager.saveCollection("User");
+        updateUsers();
     }
 
     public void loadUsers(){
@@ -45,7 +46,7 @@ public class Database {
 
     public void addPlayer(Player player){
         usermanager.addElement("Player", player.getNick(), player);
-        usermanager.saveCollection("User");
+        updateUsers();
     }
     public boolean isAPlayer(String nick){
         return usermanager.inMap("Player",nick);
@@ -130,11 +131,14 @@ public class Database {
     public LinkedList<Weapon> randomWeapons(int suerte) {
         Random random = new Random();
         LinkedList<Weapon> myWeapon=new LinkedList<>();
-        Weapon arma;
+        Weapon weapon;
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i=1; i<=number;i++){
-            arma = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
-            myWeapon.add(arma);
+            weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
+            if (i ==1){
+                weapon.setEquipped(true);
+            }
+            myWeapon.add(weapon);
         }
         return myWeapon;
     }
@@ -142,9 +146,12 @@ public class Database {
         Random random = new Random();
         Armor armor;
         LinkedList<Armor> myArmor=new LinkedList<>();
-        int numero= random.nextInt(28)+1+suerte;
-        for (Integer i=1; i<=numero; i++) {
-            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(i.toString());
+        int numero= random.nextInt(loader.getIm().getCollection("ArmorMap").size())+1+suerte;
+        for (int i=1; i<=numero; i++) {
+            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(i));
+            if (i ==1){
+                armor.setEquipped(true);
+            }
             myArmor.add(armor);
         }
         return myArmor;
@@ -169,22 +176,32 @@ public class Database {
         return result;
     }
 
-    public LinkedList<Strength> Strengths() {
-        Strength strength;
+    public LinkedList<Strength> getStrengths() {
         LinkedList<Strength> MyStrength = new LinkedList<>();
-        for (Integer i=1; i<=15; i++) {
-            strength = (Strength) loader.getMom().getElements().get("StrengthMap").get(i.toString());
-            MyStrength.add(strength);
+        Map<String, Modifier> modifierMap =  loader.getMom().getElements().get("StrengthMap");
+
+        for (String key : modifierMap.keySet()) {
+            Modifier modifier = modifierMap.get(key);
+
+            if (modifier instanceof Strength) {
+                Strength strength = (Strength) modifier;
+                MyStrength.add(strength);
+            }
         }
         return MyStrength;
     }
 
-    public LinkedList<Weakness> Weaknesses() {
-        Weakness weakness;
+    public LinkedList<Weakness> getWeaknesses() {
         LinkedList<Weakness> MyWeakness = new LinkedList<>();
-        for (Integer i=1; i<=15; i++) {
-            weakness = (Weakness) loader.getMom().getElements().get("WeaknessMap").get(i.toString());
-            MyWeakness.add(weakness);
+        Map<String, Modifier> modifierMap =  loader.getMom().getElements().get("WeaknessMap");
+
+        for (String key : modifierMap.keySet()) {
+            Modifier modifier = modifierMap.get(key);
+
+            if (modifier instanceof Weakness) {
+                Weakness weakness = (Weakness) modifier;
+                MyWeakness.add(weakness);
+            }
         }
         return MyWeakness;
     }
@@ -199,6 +216,7 @@ public class Database {
     public void eraseChallenge(){
         for (Map.Entry<String, Challenge> entry : this.challengeManager.getCollection("ChallengeMap").entrySet()) {
             this.challengeManager.getCollection("ChallengeMap").remove(entry.getKey()); //Esto debería devolver el primer desafio insertado
+            updateChallenges();
             return; //Para salir en la primera iteracion
         }
 
@@ -208,6 +226,7 @@ public class Database {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = sdf.format(date);
         challengeManager.getCollection("ChallengeMap").put(formattedDate,challenge);
+        updateChallenges();
     }
     public boolean isEmptyChallengeManager(){
         return (challengeManager.getCollection("ChallengeMap").isEmpty());

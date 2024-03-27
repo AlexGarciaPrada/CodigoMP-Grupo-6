@@ -88,7 +88,6 @@ public class Operator extends User {
 
     public boolean validateChallenge(Challenge c , int option) { // option = 1 (aceptar desafio). opption = 2 (denegar desafio)
         Player challenged = c.getChallenged();
-        challenged.addPendingChallenge(c);
         switch (option) {
             case 1:
                 challenged.addPendingChallenge(c);
