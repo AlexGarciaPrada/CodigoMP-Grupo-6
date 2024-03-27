@@ -168,22 +168,32 @@ public class Database {
         return result;
     }
 
-    public LinkedList<Strength> Strengths() {
-        Strength strength;
+    public LinkedList<Strength> getStrengths() {
         LinkedList<Strength> MyStrength = new LinkedList<>();
-        for (Integer i=1; i<=15; i++) {
-            strength = (Strength) loader.getMom().getElements().get("StrengthMap").get(i.toString());
-            MyStrength.add(strength);
+        Map<String, Modifier> modifierMap =  loader.getMom().getElements().get("StrengthMap");
+
+        for (String key : modifierMap.keySet()) {
+            Modifier modifier = modifierMap.get(key);
+
+            if (modifier instanceof Strength) {
+                Strength strength = (Strength) modifier;
+                MyStrength.add(strength);
+            }
         }
         return MyStrength;
     }
 
-    public LinkedList<Weakness> Weaknesses() {
-        Weakness weakness;
+    public LinkedList<Weakness> getWeaknesses() {
         LinkedList<Weakness> MyWeakness = new LinkedList<>();
-        for (Integer i=1; i<=15; i++) {
-            weakness = (Weakness) loader.getMom().getElements().get("WeaknessMap").get(i.toString());
-            MyWeakness.add(weakness);
+        Map<String, Modifier> modifierMap =  loader.getMom().getElements().get("WeaknessMap");
+
+        for (String key : modifierMap.keySet()) {
+            Modifier modifier = modifierMap.get(key);
+
+            if (modifier instanceof Weakness) {
+                Weakness weakness = (Weakness) modifier;
+                MyWeakness.add(weakness);
+            }
         }
         return MyWeakness;
     }
