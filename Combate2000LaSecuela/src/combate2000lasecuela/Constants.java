@@ -21,7 +21,7 @@ public class Constants {
     public static final String[] wrongPasswordText = {"Password Incorrecta"};
     public static final String[] notCoincidencePasswordText = {"Las password no coinciden", "Vuelve a intentarlo"};
     public static final String [] userCorrectlyErasedText={"El usuario ha sido correctamente borrado"};
-    public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion revertible","1. Confirmar","2. Salir"};
+    public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion reversible","1. Confirmar","2. Salir"};
 
     public static final String [] notChallengeToValidate={"No hay ningun desafio esperando ser validado"};
     public static final String [] validateChallengeText={"Deseas validar el desafio que se ha mostrado en pantalla","1. Si","2. No","3. Salir"};

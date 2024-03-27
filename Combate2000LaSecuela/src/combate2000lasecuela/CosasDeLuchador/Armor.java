@@ -19,6 +19,7 @@ public class Armor extends Item implements Serializable {
         return this.damage;
     }
 
+
     @Override
     public String getId() {
         return this.id;

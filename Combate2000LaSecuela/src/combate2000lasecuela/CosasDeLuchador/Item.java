@@ -20,4 +20,16 @@ public abstract class Item implements Saveable {
 
     public abstract int getDamage();
     public abstract int getDefense ();
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
 }
