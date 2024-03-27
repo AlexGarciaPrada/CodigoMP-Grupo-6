@@ -188,4 +188,11 @@ public class Database {
         return MyWeakness;
     }
 
+   /*public Challenge getChallenge(){
+        challengeManager.getCollection("")
+    }
+    public Challenge eraseChallenge(Challenge){
+
+    }*/
+
 }

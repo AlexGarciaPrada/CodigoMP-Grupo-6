@@ -182,12 +182,12 @@ public class PlayerFlow extends Gameflow {
             }
         }
     }
-    private static void erasePlayer(User user,Database database,MessageManager messageManager){
-        int option = messageManager.showEraseUser(user.getNick());
+    private static void erasePlayer(Player player,Database database,MessageManager messageManager){
+        int option = messageManager.showEraseUser(player.getNick());
         erasePlayer=false;
         if (option == 1){
                 messageManager.showContent(userCorrectlyErasedText);
-                database.erasePlayer((Player) user);
+                database.erasePlayer(player);
                 playerLogin =false;
             }
 
