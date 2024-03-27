@@ -185,7 +185,12 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
         for (Weapon element: myWeapon){
-            weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack()));
+            if (element.isEquipped()){
+                weapontext.add("E "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else{
+                weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }
+
             i++;
         }
         return weapontext.toArray(new String[weapontext.size()]);
@@ -194,7 +199,12 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> armortext=new ArrayList<>();
         int i =1;
         for (Armor element: myArmor){
-            armortext.add(Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+            if (element.isEquipped()){
+                armortext.add("E "+Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+            }else{
+                armortext.add(Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+            }
+
             i++;
         }
         return armortext.toArray(new String[armortext.size()]);
@@ -310,9 +320,7 @@ public abstract class Fighter implements Serializable {
         return (this.armadura != null && this.arma1 != null);
     }
     public String[] generateEquipment(){
-        System.out.println(generateWeaponsText().length);
-        System.out.println(generateArmorText().length);
-        String [] equipment = new String [generateWeaponsText().length+generateWeaponsText().length+3];
+        String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
         equipment [0] = weaponSeparator;
         for (int i=0;i<generateWeaponsText().length;i++){
             equipment[i+1]=generateWeaponsText()[i];

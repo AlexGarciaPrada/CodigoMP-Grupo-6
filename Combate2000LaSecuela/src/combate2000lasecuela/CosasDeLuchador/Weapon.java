@@ -12,6 +12,7 @@ public class Weapon extends Item implements Serializable {
     public Weapon (String linea){
         String [] valores = linea.split(";");
         this.id=valores[0];
+        setEquipped(false);
         setName(valores[1].trim());
         setAttack(Integer.parseInt(valores[2].trim())); ;
         this.isOneHand = interpretarFichero( valores[3].trim());
@@ -24,5 +25,11 @@ public class Weapon extends Item implements Serializable {
     @Override
     public String getId() {
         return this.id;
+    }
+    public String handConverter(){
+        if (isOneHand){
+            return "Una Mano";
+        }
+        return "Dos Manos";
     }
 }
