@@ -40,6 +40,7 @@ public class Constants {
     public static final String [] notFighterChallenged={"El jugador desafiado no tiene un luchador creado"};
     public static final String theUserText = "El usuario ";
     public static final String gold = "Oro a apostar: ";
+    public static final String [] noCombatsText = {"No hay combates anteriores"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
