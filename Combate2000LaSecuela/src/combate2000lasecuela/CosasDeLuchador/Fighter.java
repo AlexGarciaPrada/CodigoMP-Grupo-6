@@ -331,4 +331,32 @@ public abstract class Fighter implements Serializable {
         }
         return equipment;
     }
+
+    public int getPower() {
+        return power;
+    }
+
+    public Stack<Minion> getMyMinions() {
+        return myMinions;
+    }
+
+    public TFighter getType() {
+        return type;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public int getMinionHealth() {
+        return minionHealth;
+    }
+
+    public Specialskill getSpecialskill() {
+        return specialskill;
+    }
+
+    public void setType(TFighter type) {
+        this.type = type;
+    }
 }
