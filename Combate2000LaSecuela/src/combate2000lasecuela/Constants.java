@@ -41,8 +41,12 @@ public class Constants {
     public static final String theUserText = "El usuario ";
     public static final String gold = "Oro a apostar: ";
     public static final String [] noCombatsText = {"No hay combates anteriores"};
+    public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Oro"};
+    public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
+    public static final String editFighterText="Elige el usuario que vas a editar (para volver atras introduce SALIR)";
+
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
     public static final String registerText ="Registro";
     public static final String nameText="Nombre: ";

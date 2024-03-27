@@ -275,4 +275,32 @@ public class Database {
     public boolean isCombatRegisterEmpty(){
         return combatregister.getCollection("CombatMap").isEmpty();
     }
+    public void changeFighterName(Player player,String name){
+        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Fighter fighter = aux.getFighter();
+        fighter.setName(name);
+        updateUsers();
+    }
+    public void changeFighterRace(Player player, int option){
+        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Fighter fighter = aux.getFighter();
+        switch (option){
+            case 1:
+                fighter = new Vampire(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                break;
+            case 2:
+                fighter = new Lycanthrope(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                break;
+            case 3:
+                fighter = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                break;
+        }
+        updateUsers();
+    }
+    public void changeFighterType(Player player, TFighter type){
+        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Fighter fighter = aux.getFighter();
+        fighter.setType(type);
+        updateUsers();
+    }
 }
