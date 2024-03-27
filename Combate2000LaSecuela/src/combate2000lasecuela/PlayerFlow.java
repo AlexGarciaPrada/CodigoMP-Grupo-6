@@ -157,7 +157,7 @@ public class PlayerFlow extends Gameflow {
             int option = messageManager.showReadableBox(fighterTypesText,3);
             String name =messageManager.showReadString(nameText);
             ArrayList<TFighter> TFighters = database.managerToListTFighter();
-            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length+1);
+            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length-1);
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
