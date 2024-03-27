@@ -22,6 +22,7 @@ public class PlayerFlow extends Gameflow {
     private static boolean erasefighter = false;
     private static boolean equipadmin = false;
     private static boolean ranking = false;
+    private static boolean goldregister=false;
 
 
     public static void playerMachine(Player player,Database database,MessageManager messageManager) {
@@ -45,6 +46,8 @@ public class PlayerFlow extends Gameflow {
             adminEquipment(player, messageManager);
         } else if (ranking) {
             playersRanking(database,messageManager);
+        } else if (goldregister) {
+            goldRegister(player,database,messageManager);
         } else if (eraseplayer) {
             erasePlayer(player,database,messageManager);
 
@@ -70,6 +73,7 @@ public class PlayerFlow extends Gameflow {
                 challengeplayer =true;
                 break;
             case 5: //Consultar registro de oro
+                goldregister=true;
                 break;
             case 6: //Ver Ranking
                 ranking=true;
@@ -194,6 +198,21 @@ public class PlayerFlow extends Gameflow {
                 playerlogin =false;
             }
 
+    }
+    private static void goldRegister(Player player, Database database,MessageManager messageManager){
+        goldregister=false;
+        if (database.isCombatRegisterEmpty()){
+            messageManager.showContent(noCombatsText);
+        }else{
+
+
+        String [] content = database.getCombatHistory(player);
+        if (content==null){
+            messageManager.showContent(noCombatsText);
+        } else{
+            messageManager.showContent(database.getCombatHistory(player));
+        }
+        }
     }
 
 
