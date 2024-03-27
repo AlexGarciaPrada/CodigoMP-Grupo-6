@@ -1,6 +1,10 @@
 package combate2000lasecuela;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+
+import combate2000lasecuela.CosasDeLuchador.Armor;
+import combate2000lasecuela.CosasDeLuchador.Weapon;
 import combate2000lasecuela.Saveable;
 import combate2000lasecuela.screen.MessageManager;
 
@@ -47,6 +51,14 @@ public abstract class User implements Saveable {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
+        player.getFighter().elegirArma(MyWeapons, weapon);
+    }
+
+    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
+        player.getFighter().elegirArmadura(MyArmor, option);
     }
 
 }
