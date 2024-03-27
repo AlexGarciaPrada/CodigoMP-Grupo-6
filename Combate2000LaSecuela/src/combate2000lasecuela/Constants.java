@@ -23,6 +23,8 @@ public class Constants {
     public static final String [] userCorrectlyErasedText={"El usuario ha sido correctamente borrado"};
     public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion revertible","1. Confirmar","2. Salir"};
 
+    public static final String [] notChallengeToValidate={"No hay ningun desafio esperando ser validado"};
+    public static final String [] validateChallengeText={"Deseas validar el desafio que se ha mostrado en pantalla","1. Si","2. No","3. Salir"};
     public static final String[] playerMenuText={"1. Crear Personaje","2. Borrar Personaje","3. Administrar equipo personaje"
             ,"4. Desafiar a otro jugador","5. Consultar registro de oro","6. Ver Ranking","7. Ver Estado del Luchador","8. Cerrar Sesion","9. Borrar Usuario"};
     public static final String [] operatorMenuText={"1. Editar personaje","2. Editar Equipo, Esbirros, Modificadores","3. Validar Desafios",

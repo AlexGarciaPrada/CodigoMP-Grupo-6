@@ -7,21 +7,27 @@ import combate2000lasecuela.managers.Database;
 
 public class OperatorFlow {
     private static boolean operatorLogin =true;
-    private static boolean eraseUser = false;
+    private static boolean eraseOperator = false;
     private static boolean block = false;
     private static boolean unblock = false;
+    private static boolean vchallenge=false;
 
-    public static void operatorMachine(Operator operator,Database database,MessageManager messageManager){
-        if (block) {
-            blockUser(operator,database,messageManager);
-        } else if (unblock) {
-            unblockUser(operator,database,messageManager);
-        } else if (operatorLogin)
-            operatorLogin(operator,messageManager);
-        else if (eraseUser) {
-            eraseOperator(operator,database,messageManager);
+    public static void operatorMachine(Operator operator,Database database,MessageManager messageManager) {
+        operatorLogin=true;
+        while (operatorLogin) {
+            if (block) {
+                blockUser(operator, database, messageManager);
+            } else if (unblock) {
+                unblockUser(operator, database, messageManager);
+            } else if (vchallenge) {
+                validateChallenge(operator, database, messageManager);
+            } else if (eraseOperator) {
+                eraseOperator(operator, database, messageManager);
+            }else{
+                operatorLogin(operator,messageManager);
+            }
+
         }
-
     }
 
     public static void operatorLogin(Operator operator,MessageManager messageManager){
@@ -32,6 +38,7 @@ public class OperatorFlow {
             case 2: //Editar equipo,esbirros,modificadores
                 break;
             case 3: //Validar desafios
+                vchallenge=true;
                 break;
             case 4: //Bloquear Usuario
                 block=true;
@@ -43,7 +50,7 @@ public class OperatorFlow {
                 operatorLogin =false;
                 break;
             case 7: //Borrar Usuario
-                eraseUser =true;
+                eraseOperator =true;
                 break;
         }
     }
@@ -88,14 +95,36 @@ public class OperatorFlow {
         }
     }
 
-    private static void eraseOperator(User user,Database database,MessageManager messageManager){
-        int option = messageManager.showEraseUser(user.getNick());
-        eraseUser =false;
+    private static void eraseOperator(Operator operator,Database database,MessageManager messageManager){
+        int option = messageManager.showEraseUser(operator.getNick());
+        eraseOperator =false;
         if (option == 1){
             messageManager.showContent(userCorrectlyErasedText);
-            database.erasePlayer((Player) user);
+            database.eraseOperator(operator);
             operatorLogin =false;
         }
+    }
+    private static void validateChallenge (Operator operator,Database database, MessageManager messageManager){
+        if (database.isEmptyChallengeManager()){
+            vchallenge=false;
+            messageManager.showContent(notChallengeToValidate);
+            return;
+        }
+        Challenge challenge = database.getChallenge();
+        messageManager.showContent(challenge.getChallengeData());
+        int option = messageManager.showReadableBox(validateChallengeText,3);
+        switch(option){
+            case 1:
+                database.getChallenge().getChallenged().addPendingChallenge(challenge);
+                database.eraseChallenge();
+                break;
+            case 2:
+                database.eraseChallenge();
+                break;
+            case 3:
+                break;
+        }
+        vchallenge=false;
     }
 
 }
