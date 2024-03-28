@@ -84,7 +84,6 @@ public class Loader implements Serializable {
            case "GHOUL":
                mm.addElement("MinionMap", parts[0], new Ghoul (line));
                break;
-
        }
     }
 

@@ -6,7 +6,7 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static combate2000lasecuela.Constants.createFighter;
+import static combate2000lasecuela.Constants.*;
 
 public class Database {
     private UserManager usermanager;
@@ -14,6 +14,8 @@ public class Database {
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
 
+    private MinionManager minionManager;
+    private ItemManager itemManager;
     private ModifierManager modifierManager;
 
 
@@ -22,6 +24,8 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
+        this.minionManager = new MinionManager();
+        this.itemManager = new ItemManager();
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -45,6 +49,9 @@ public class Database {
     public void updateCombats() {
         combatregister.saveCollection("Combat");
     }
+
+    public void updateItems() {itemManager.saveCollection("Item");}
+    public void updateMinions() {minionManager.saveCollection("Minion");}
 
     public void addPendingChallenge(Player challenged, Challenge challenge) {
         challenged.addPendingChallenge(challenge);
@@ -314,16 +321,123 @@ public class Database {
         updateUsers();
     }
 
-    public boolean deleteElement(Operator operator, Player player, String elementName) {
-        return operator.deleteElement(player, elementName);
+    public boolean deleteElement(Operator operator, Player player, String elementId) {
+        boolean done;
+        done = operator.deleteElement(player, elementId);
+        updateItems();
+        return done;
     }
-    public boolean addElement(Operator operator, Player player, String newElemName) {
-        return operator.addElement(player, newElemName);
+    public boolean addElement(Operator operator, Player player, String newElemId) {
+        boolean done = false;
+        Map<String, Item> itemMap = itemManager.getElements().get("WeaponMap");
+        for (String key : itemMap.keySet()) {
+            Item item = itemMap.get(key);
+            if (item.getId().equals(newElemId)) {
+                done = operator.addElement(player, newElemId);
+            }
+        }
+        updateItems();
+        return done;
     }
-    public boolean deleteMinion(Operator operator, Player player, String minionName) {
-        return operator.deleteMinion(player, minionName);
+
+    public boolean deleteMinion(Operator operator, Player player, String minionId) {
+        boolean done;
+        done = operator.deleteMinion(player, minionId);
+        updateMinions();
+        return done;
     }
-    public boolean addMinion(Operator operator, Player player, String newMinionName) {
-        return operator.addMinion(player, newMinionName);
+    public boolean addMinion(Operator operator, Player player, String newMinionId) {
+        boolean done = false;
+        Map<String, Minion> minionMap = minionManager.getElements().get("MinionMap");
+        for (String key : minionMap.keySet()) {
+            Minion minion = minionMap.get(key);
+            if (minion.getId().equals(newMinionId)) {
+                done = operator.addMinion(player, newMinionId);
+            }
+        }
+        updateMinions();
+        return done;
+
     }
+
+    public String [] generateMinionText(Player player) {
+        ArrayList<String> miniontext = new ArrayList<>();
+        int i =1;
+        Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
+        for (String key : minionMap.keySet()) {
+            Minion minion = minionMap.get(key);
+            if (player.getFighter().getMyMinions().contains(minion)) {
+                if (minion instanceof Ghoul) {
+                    miniontext.add("M" + Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Dependencia: " + ((Ghoul) minion).getLealtad() + " Salud: " + minion.getHealth());
+                } else if (minion instanceof Human) {
+                    miniontext.add("M" + Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Lealtad: " + ((Human) minion).getLealtad() + " Salud: " + minion.getHealth());
+                } else {
+                    miniontext.add("M" + Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Pacto: " + ((Demon) minion).getPact() + " Salud: " + minion.getHealth());
+                }
+            } else {
+                if (minion instanceof Ghoul) {
+                    miniontext.add(Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Dependencia: " + ((Ghoul) minion).getLealtad() + " Salud: " + minion.getHealth());
+                } else if (minion instanceof Human) {
+                    miniontext.add(Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Lealtad: " + ((Human) minion).getLealtad() + " Salud: " + minion.getHealth());
+                } else {
+                    miniontext.add(Integer.toString(i) + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Pacto: " + ((Demon) minion).getPact() + " Salud: " + minion.getHealth());
+                }
+            }
+            i++;
+        }
+        Stack<Minion> MyMin = player.getFighter().getMyMinion();
+        System.out.println(MyMin);
+        return miniontext.toArray(new String[miniontext.size()]);
+    }
+
+    public String [] generateWeaponText(Player player) {
+        ArrayList<String> weaponText = new ArrayList<>();
+        Integer i =1;
+        Map<String, Item> itemMap = loader.getIm().getElements().get("WeaponMap");
+        for (String key : itemMap.keySet()) {
+            Item item = itemMap.get(key);
+            if (item instanceof Weapon) {
+                if (player.getFighter().getMyWeapon().contains(item)) {
+                    weaponText.add("E " + Integer.toString(i) + ". " + item.getName() + " Ataque: " + Integer.toString(item.getAttack()) + " " + ((Weapon) item).handConverter());
+                } else {
+                    weaponText.add(" " + Integer.toString(i) +". "+item.getName()+" Ataque: "+Integer.toString(item.getAttack()) + " " + ((Weapon) item).handConverter());
+                }
+            }
+            i++;
+        }
+        return weaponText.toArray(new String[weaponText.size()]);
+    }
+
+    public String [] generateArmorText(Player player) {
+        ArrayList<String> armorText = new ArrayList<>();
+        Integer i =1;
+        Map<String, Item> itemMap = loader.getIm().getElements().get("ArmorMap");
+        for (String key : itemMap.keySet()) {
+            Item item = itemMap.get(key);
+            if (item instanceof Armor) {
+                if (player.getFighter().getMyArmor().contains(item)) {
+                    armorText.add("E " + Integer.toString(i + generateWeaponText(player).length) + ". " + item.getName() + " Ataque: " + Integer.toString(item.getAttack()) + " Defensa: " + ((Armor) item).getDefense());
+                } else {
+                    armorText.add(Integer.toString(i + generateWeaponText(player).length) +". "+item.getName()+" Ataque: "+Integer.toString(item.getAttack()) + " Defensa: " + ((Armor) item).getDefense());
+                }
+            }
+            i++;
+        }
+        return armorText.toArray(new String[armorText.size()]);
+    }
+
+    public String[] generateEquipmentText(Player player) {
+        String [] equipment = new String [generateWeaponText(player).length+ generateArmorText(player).length+2];
+        equipment [0] = weaponSeparator;
+        for (int i=0;i<generateWeaponText(player).length;i++){
+            equipment[i+1]=generateWeaponText(player)[i];
+        }
+        equipment [generateWeaponText(player).length+1] = armorSeparator;
+        for(int i =0 ;i< generateArmorText(player).length;i++){
+            equipment[generateWeaponText(player).length+2+i]=generateArmorText(player)[i];
+        }
+        return equipment;
+    }
+
+
 }
