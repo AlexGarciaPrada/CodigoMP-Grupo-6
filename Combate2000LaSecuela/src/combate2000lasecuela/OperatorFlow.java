@@ -190,36 +190,10 @@ public class  OperatorFlow {
                     int option = messageManager.showReadableBox(editEquipmentMenu,3);
                 switch (option){
                     case 1:
-                        messageManager.showContent(player.getFighter().generateEquipment());
-                        String elementName = messageManager.showReadString(elementText);
-                        String newElemName = messageManager.showReadString(newElementText);
-                        boolean done = database.deleteElement(operator, player, elementName);
-                        if (!done) {
-                            messageManager.showContent(elementNotEquipped);
-                        } else {
-                            boolean check = database.addElement(operator, player, newElemName);
-                            if (!check) {
-                                messageManager.showContent(elementAlreadyEquipped);
-                            } else {
-                                messageManager.showContent(elementEquipped);
-                            }
-                        }
+                        editArmorWeapon(operator, player, database, messageManager);
                         break;
                     case 2:
-                        messageManager.showContent(player.getFighter().generateMinionText());
-                        String minionName = messageManager.showReadString(elementText);
-                        String newMinionName = messageManager.showReadString(newElementText);
-                        boolean done2 = database.deleteMinion(operator, player, minionName);
-                        if (!done2) {
-                            messageManager.showContent(elementNotEquipped);
-                        } else {
-                            boolean check2 = database.addMinion(operator, player, newMinionName);
-                            if (!check2) {
-                                messageManager.showContent(elementAlreadyEquipped);
-                            } else {
-                                messageManager.showContent(elementEquipped);
-                            }
-                        }
+                        editMinions(operator, player, database, messageManager);
                         break;
                     case 3: //definir fortalezas y debilidades
                         break;
@@ -227,6 +201,66 @@ public class  OperatorFlow {
             }
         }else{
             messageManager.showContent(userNotFoundText);
+        }
+    }
+
+    private static void editArmorWeapon(Operator operator, Player player, Database database, MessageManager messageManager) {
+        messageManager.showContent(database.generateEquipmentText(player));
+        int option = messageManager.showReadableBox(editArmorWeaponMenu,2);
+        switch (option) {
+            case 1:
+                String elementName = messageManager.showReadString(elementText);
+                String newElemName = messageManager.showReadString(newElementText);
+                boolean done = database.deleteElement(operator, player, elementName);
+                if (!done) {
+                    messageManager.showContent(elementNotEquipped);
+                } else {
+                    boolean check = database.addElement(operator, player, newElemName);
+                    if (!check) {
+                        messageManager.showContent(elementAlreadyEquipped);
+                    } else {
+                        messageManager.showContent(elementEquipped);
+                    }
+                }
+                break;
+            case 2:
+                String elem = messageManager.showReadString(newElementText);
+                boolean check = database.addElement(operator, player, elem);
+                if (!check) {
+                    messageManager.showContent(elementAlreadyEquipped);
+                } else {
+                    messageManager.showContent(elementEquipped);
+                }
+        }
+    }
+
+    private static void editMinions(Operator operator, Player player, Database database, MessageManager messageManager) {
+        messageManager.showContent(database.generateMinionText(player));
+        int option = messageManager.showReadableBox(editMinionsMenu,2);
+        switch (option) {
+            case 1:
+                String minionName = messageManager.showReadString(elementText);
+                String newMinionName = messageManager.showReadString(newElementText);
+                boolean done2 = database.deleteMinion(operator, player, minionName);
+                if (!done2) {
+                    messageManager.showContent(elementNotEquipped);
+                } else {
+                    boolean check2 = database.addMinion(operator, player, newMinionName);
+                    if (!check2) {
+                        messageManager.showContent(elementAlreadyEquipped);
+                    } else {
+                        messageManager.showContent(elementEquipped);
+                    }
+                }
+                break;
+            case 2:
+                String minion = messageManager.showReadString(newElementText);
+                boolean check = database.addMinion(operator, player, minion);
+                if (!check) {
+                    messageManager.showContent(elementAlreadyEquipped);
+                } else {
+                    messageManager.showContent(elementEquipped);
+                }
         }
     }
 

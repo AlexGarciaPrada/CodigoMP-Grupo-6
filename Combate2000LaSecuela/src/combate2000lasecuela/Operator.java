@@ -29,7 +29,7 @@ public class Operator extends User {
     public boolean deleteMinion(Player player, String minionName) {
         boolean deleted = false;
         for (Minion minion: player.getFighter().getMyMinions()) {
-            if (minion.getName().equals(minionName) && minion.isEquipped()) {
+            if (minion.getName().equals(minionName)) {
                 player.getFighter().getMyMinions().remove(minion);
                 deleted = true;
             }
@@ -37,10 +37,10 @@ public class Operator extends User {
         return deleted;
     }
 
-    public boolean addMinion(Player player, String minionName) {
+    public boolean addMinion(Player player, String minionId) {
         boolean added = false;
         for (Minion minion: player.getFighter().getMyMinions()) {
-            if (minion.getName().equals(minionName) && !minion.isEquipped()) {
+            if (!minion.getId().equals(minionId)) {
                 player.getFighter().getMyMinions().push(minion);
                 added = true;
             }
@@ -67,17 +67,17 @@ public class Operator extends User {
         } return deleted;
      }
 
-     public boolean addElement(Player player, String elementName) {
+     public boolean addElement(Player player, String elementId) {
          boolean added = false;
          for (Armor armor: player.getFighter().getMyArmor()) {
-             if (armor.getName().equals(elementName) && !armor.isEquipped()) {
+             if (armor.getId().equals(elementId) && !armor.isEquipped()) {
                  player.getFighter().getMyArmor().add(armor);
                  added = true;
              }
          }
          if (!added) {
              for (Weapon weapon: player.getFighter().getMyWeapon()) {
-                 if (weapon.getName().equals(elementName) && !weapon.isEquipped()) {
+                 if (weapon.getId().equals(elementId) && !weapon.isEquipped()) {
                      player.getFighter().getMyWeapon().add(weapon);
                      added = true;
                  }

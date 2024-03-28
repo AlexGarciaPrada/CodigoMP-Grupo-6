@@ -223,32 +223,6 @@ public abstract class Fighter implements Serializable {
         return armortext.toArray(new String[armortext.size()]);
     }
 
-    public String [] generateMinionText() {
-        ArrayList<String> miniontext=new ArrayList<>();
-        int i =1;
-        for (Minion element: myMinions){
-            if (element.isEquipped()) {
-                if (element instanceof Ghoul) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
-            } else {
-                if (element instanceof Ghoul) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
-            }
-            i++;
-        }
-        return miniontext.toArray(new String[miniontext.size()]);
-    }
-
     public void mostrarArmaduras(){
         do {
             //terminal.show(getMyWeapon().remove().toString());
