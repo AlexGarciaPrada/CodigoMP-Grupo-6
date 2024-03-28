@@ -20,4 +20,6 @@ int lealtad;
     public int getHealth() {
         return health;
     }
+
+    public int getLealtad() {return this.lealtad;}
 }

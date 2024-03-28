@@ -20,4 +20,6 @@ String lealtad;
     public int getHealth() {
         return health;
     }
+
+    public String getLealtad() {return this.lealtad;}
 }

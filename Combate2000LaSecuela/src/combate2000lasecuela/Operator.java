@@ -8,6 +8,7 @@ import combate2000lasecuela.managers.ChallengeManager;
 import combate2000lasecuela.managers.UserManager;
 import combate2000lasecuela.screen.Textterminal;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -28,36 +29,67 @@ public class Operator extends User {
         player.getFighter().changeSpecialSkill(skill);
     }
 
+    public boolean deleteMinion(Player player, String minionName) {
+        boolean deleted = false;
+        for (Minion minion: player.getFighter().getMyMinions()) {
+            if (minion.getName().equals(minionName) && minion.isEquipped()) {
+                player.getFighter().getMyMinions().remove(minion);
+                deleted = true;
+            }
+        }
+        return deleted;
+    }
 
-    //para añadir arma a la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere añadirse
-    public void addWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
-        MyWeapons.add(weapon);
-    };
-
-    //para añadir armadura a la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere añadirse
-    public void addArmor(LinkedList<Armor> MyArmor, Armor armor) {
-        MyArmor.add(armor);
-    };
-
-    //para añadir minion a la pila (no al fichero), Alex me pasa la pila y el minion (elegido del fichero) que quiere añadirse
-    public void addMinion(Stack<Minion> MyMinions, Minion minion) {
-        MyMinions.push(minion);
-    };
-
-    //para eliminar arma de la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere eliminarse
-    public void deleteWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
-        MyWeapons.remove(weapon);
-    };
+    public boolean addMinion(Player player, String minionName) {
+        boolean added = false;
+        for (Minion minion: player.getFighter().getMyMinions()) {
+            if (minion.getName().equals(minionName) && !minion.isEquipped()) {
+                player.getFighter().getMyMinions().push(minion);
+                added = true;
+            }
+        }
+        return added;
+    }
 
     //para eliminar armadura de la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere eliminarse
-    public void deleteArmor(LinkedList<Armor> MyArmor, Armor armor) {
-        MyArmor.remove(armor);
-    };
+    public boolean deleteElement(Player player, String elementName) {
+        boolean deleted = false;
+        for (Armor armor: player.getFighter().getMyArmor()) {
+            if (armor.getName().equals(elementName) && armor.isEquipped()) {
+                player.getFighter().getMyArmor().remove(armor);
+                deleted = true;
+            }
+        }
+        if (!deleted) {
+            for (Weapon weapon: player.getFighter().getMyWeapon()) {
+                if (weapon.getName().equals(elementName) && weapon.isEquipped()) {
+                    player.getFighter().getMyWeapon().remove(weapon);
+                    deleted = true;
+                }
+            }
+        } return deleted;
+     }
 
-    //para eliminar minion de la pila (no al fichero), Alex me pasa la pila y se elimina la cima
-    public void deleteMinion(Stack<Minion> MyMinions, Minion minion) {
-        MyMinions.pop();
-    };
+     public boolean addElement(Player player, String elementName) {
+         boolean added = false;
+         for (Armor armor: player.getFighter().getMyArmor()) {
+             if (armor.getName().equals(elementName) && !armor.isEquipped()) {
+                 player.getFighter().getMyArmor().add(armor);
+                 added = true;
+             }
+         }
+         if (!added) {
+             for (Weapon weapon: player.getFighter().getMyWeapon()) {
+                 if (weapon.getName().equals(elementName) && !weapon.isEquipped()) {
+                     player.getFighter().getMyWeapon().add(weapon);
+                     added = true;
+                 }
+             }
+         } return added;
+
+     }
+
+
 
 
     //aun no estan definidas las fortalezas y debilidades
