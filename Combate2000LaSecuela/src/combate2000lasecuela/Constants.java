@@ -66,7 +66,12 @@ public class Constants {
     public static final String createFighter = "Elige el tipo de personaje que deseas crear: ";
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
-
+    public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas y Armaduras","2. Esbirros","3. Modificadores"};
+    public static final String elementText="Escriba el nombre del elemento a eliminar: ";
+    public static final String newElementText="Escriba el nombre del elemento a añadir: : ";
+    public static final String [] elementNotEquipped = {"El elemento introducido no esta equipado"};
+    public static final String [] elementAlreadyEquipped = {"El elemento introducido ya esta equipado"};
+    public static final String [] elementEquipped = {"El elemento introducido se ha equipado correctamente"};
 
 
 }

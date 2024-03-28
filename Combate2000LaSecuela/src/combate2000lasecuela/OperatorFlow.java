@@ -187,7 +187,7 @@ public class  OperatorFlow {
             if (player.getFighter()==null){
                 messageManager.showContent(thisPlayerNotFighter);
             }else{
-                int option = messageManager.showReadableBox(editEquipmentMenu,3);
+                    int option = messageManager.showReadableBox(editEquipmentMenu,3);
                 switch (option){
                     case 1:
                         messageManager.showContent(player.getFighter().generateEquipment());

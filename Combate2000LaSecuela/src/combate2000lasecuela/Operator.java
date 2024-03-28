@@ -4,9 +4,6 @@ import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Minion;
 import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
-import combate2000lasecuela.managers.ChallengeManager;
-import combate2000lasecuela.managers.UserManager;
-import combate2000lasecuela.screen.Textterminal;
 
 import java.util.Iterator;
 import java.util.LinkedList;
