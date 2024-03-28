@@ -148,21 +148,21 @@ public class OperatorFlow {
                 messageManager.showContent(player.getFighter().generateFighterState());
                 int option = messageManager.showReadableBox(editFighterMenu,4);
                 switch (option){
-                    case 1:
+                    case 1: //Nombre
                         String name = messageManager.showReadString(nameText);
                         database.changeFighterName(player,name);
                         break;
-                    case 2:
+                    case 2: //Raza
                         int race = messageManager.showReadableBox(fighterTypesText,3);
                          database.changeFighterRace(player,race);
                         break;
-                    case 3:
+                    case 3: //Tipo
                         ArrayList<TFighter> TFighters = database.managerToListTFighter();
                         int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length-1);
                         TFighter type = TFighters.get(opttype-1);
                         database.changeFighterType(player,type);
                         break;
-                    case 4:
+                    case 4: //Salir
                         break;
                 }
             }

@@ -38,7 +38,7 @@ public class Constants {
     public static final String theUserText = "El usuario ";
     public static final String gold = "Oro a apostar: ";
     public static final String [] noCombatsText = {"No hay combates anteriores"};
-    public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Oro"};
+    public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Salir"};
     public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";

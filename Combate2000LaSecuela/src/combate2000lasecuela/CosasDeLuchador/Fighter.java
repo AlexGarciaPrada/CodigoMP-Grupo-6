@@ -316,15 +316,15 @@ public abstract class Fighter implements Serializable {
     }
 
     public String [] generateFighterState(){
-        String hija =null;
+        String subtype =null;
         if (this instanceof Vampire){
-            hija="Vampiro";
+            subtype ="Vampiro";
         } else if (this instanceof Lycanthrope) {
-            hija="Licantropo";
+            subtype ="Licantropo";
         } else if (this instanceof Hunter) {
-            hija = "Hunter";
+            subtype = "Cazador";
         }
-        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+hija
+        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
         ,"Tipo: "+type.getName()};
         return text;
     }

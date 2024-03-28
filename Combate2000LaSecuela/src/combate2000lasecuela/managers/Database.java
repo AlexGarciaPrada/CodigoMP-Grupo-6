@@ -284,13 +284,13 @@ public class Database {
         return combatregister.getCollection("CombatMap").isEmpty();
     }
     public void changeFighterName(Player player,String name){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         fighter.setName(name);
         updateUsers();
     }
     public void changeFighterRace(Player player, int option){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         switch (option){
             case 1:
@@ -303,10 +303,12 @@ public class Database {
                 fighter = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
         }
+        fighter.setGold(player.getFighter().getGold());
+        player.setFighter(fighter);
         updateUsers();
     }
     public void changeFighterType(Player player, TFighter type){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         fighter.setType(type);
         updateUsers();

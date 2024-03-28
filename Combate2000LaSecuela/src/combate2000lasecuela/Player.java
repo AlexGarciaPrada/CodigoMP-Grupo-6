@@ -158,5 +158,9 @@ public class Player extends User {
     public void setBlocked(boolean state) {blocked = state;}
 
     public boolean isBlocked() {return blocked;}
+
+    public void setFighter(Fighter fighter) {
+        this.fighter = fighter;
+    }
 }
 
