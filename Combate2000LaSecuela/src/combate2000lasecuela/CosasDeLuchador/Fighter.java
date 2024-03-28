@@ -26,7 +26,7 @@ public abstract class Fighter implements Serializable {
     private int minionHealth;
     private Weapon arma1;
     private Weapon arma2;
-    private Armor armadura;
+    private Armor armor;
 
     private PendingChallenges pendingChallenges;
     Specialskill specialskill;
@@ -47,7 +47,7 @@ public abstract class Fighter implements Serializable {
         this.pendingChallenges = new PendingChallenges();
         this.arma1=equiparPredefinidoArma();
         this.arma2=null;
-        this.armadura=equiparPredefinidoArmadura();
+        this.armor =equiparPredefinidoArmadura();
         this.gold=100;
         this.specialskill=verHabilidad();
     }
@@ -64,8 +64,14 @@ public abstract class Fighter implements Serializable {
             return talent;
         }
     }
-
+/*
     public Combat startFighting (Fighter desafiante, int oroApostado){
+        fightEachPlayer(desafiante,this,oroApostado);
+        fightEachPlayer(this,desafiante,oroApostado);
+        return new Combat(desafiante,this,0,oroApostado);
+    }
+
+    public void fightEachPlayer(Fighter desafiante, Fighter challenged, int oroApostado){
         int rounds=0;
         int pA=0;
         int pD=0;
@@ -73,8 +79,33 @@ public abstract class Fighter implements Serializable {
         do {
             rounds++; //donde recibe el desafiado
             //terminal.show("Ronda numero" + rounds + "comienza");
-                pA = potencialAtaque(desafiante);
-                pD = potencialDefensa(this);
+            pA = potencialAtaque(desafiante);
+            pD = potencialDefensa(challenged);
+            if (comprobarDaños(pA,pD)){
+                ajusteHabilidad(pA,pD);
+                // terminal.show(this.name+" ha recibido un golpe");
+                if (this.minionHealth>0){
+                    //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                    this.minionHealth-=1;
+                }else {
+                    this.health -= 1; //considerar caso de que se maten a la vez
+                    // terminal.show(this.health+ " vidas restantes");
+                }
+            }
+        }while((this.health>0)||(desafiante.health>0));
+    }
+*/
+
+    public Combat startFighting (Fighter challenger, int oroApostado){
+        int rounds=0;
+        int pA=0;
+        int pD=0;
+        //boolean esEmpate=false;//preparativo para meterselo al combat
+        do {
+            rounds++; //donde recibe el desafiado
+            //terminal.show("Ronda numero" + rounds + "comienza");
+                pA = potencialAtaque(challenger);
+                pD = defensePotential(this);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
                        // terminal.show(this.name+" ha recibido un golpe");
@@ -86,41 +117,41 @@ public abstract class Fighter implements Serializable {
                            // terminal.show(this.health+ " vidas restantes");
                         }
                     }
-            //donde recibe el desafiante
+            //donde recibe el challenger
             //aunque esté separado, físicamente, ocurre de manera simultánea
                 pA = potencialAtaque(this);
-                pD = potencialDefensa(desafiante);
+                pD = defensePotential(challenger);
                 if (comprobarDaños(pA,pD)){
                     ajusteHabilidad(pA,pD);
-                  //  terminal.show(desafiante.name+" ha recibido un golpe");
-                    if (desafiante.minionHealth>0){
+                  //  terminal.show(challenger.name+" ha recibido un golpe");
+                    if (challenger.minionHealth>0){
                        // terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                        desafiante.minionHealth-=1;
+                        challenger.minionHealth-=1;
                     }else {
-                        desafiante.health -= 1;
-                      //  terminal.show (desafiante.health+" vidas restantes");
+                        challenger.health -= 1;
+                      //  terminal.show (challenger.health+" vidas restantes");
                     }
                 }
-        }while((this.health>0)||(desafiante.health>0));
-        return new Combat(desafiante, this, rounds, oroApostado);
+        }while((this.health>0)||(challenger.health>0));
+        return new Combat(challenger, this, rounds, oroApostado);
     }
 
     public int potencialAtaque (Fighter f){
-        int potencial=f.power+f.arma1.getAttack()+f.armadura.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
+        int potential=f.power+f.arma1.getAttack()+f.armor.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
         if (f.arma2!=null){
-            potencial+=f.arma2.getAttack();
+            potential+=f.arma2.getAttack();
         }
-        return verExitos(potencial);
+        return checkSuccess(potential);
     }
-    public int potencialDefensa (Fighter f){
-        int potencial=f.armadura.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
+    public int defensePotential(Fighter f){
+        int potencial=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
-            return verExitos(potencial);
+            return checkSuccess(potencial);
     }
-    public int verExitos (int potencial){
+    public int checkSuccess(int potential){
         int acierto=0;
         int aux;
-        for (int i=0; i<potencial;i++){
+        for (int i=0; i<potential;i++){
          aux = random.nextInt(6)+1;
          if (aux>=5){
              acierto+=1;
@@ -138,9 +169,9 @@ public abstract class Fighter implements Serializable {
             int total = 0;
 
             while (!this.myMinions.isEmpty()) {
-                Minion esclavo = this.myMinions.pop();
-                if (esclavo != null) {
-                    total += esclavo.getHealth();
+                Minion slave = this.myMinions.pop();
+                if (slave != null) {
+                    total += slave.getHealth();
                 }
             }
             return total;
@@ -184,7 +215,7 @@ public abstract class Fighter implements Serializable {
       //  terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
         String leido = opcion.toString();
         setArmor(buscarArmaduraLeida(leido));
-        if (getArmadura()==null){
+        if (getArmor()==null){
             //terminal.show("Valor no valido");
             elegirArmadura(myArmor,opcion);
         }else{
@@ -249,21 +280,88 @@ public abstract class Fighter implements Serializable {
         return miniontext.toArray(new String[miniontext.size()]);
     }
 
+    public Armor equiparPredefinidoArmadura(){
+        return this.myArmor.remove(0);
+    }
+    public Weapon equiparPredefinidoArma(){
+        return this.myWeapon.remove(0);
+    }
+
     public void mostrarArmaduras(){
         do {
             //terminal.show(getMyWeapon().remove().toString());
         } while(!getMyWeapon().isEmpty());
     }
-    public LinkedList<Weapon> getMyWeapon(){
-        return this.myWeapon;
-    }
-    public LinkedList<Armor> getMyArmor(){
-        return this.myArmor;
+    public Weapon buscarArmaLeida (String leido){
+        boolean encontrado=false;
+        Weapon aux;
+        Weapon aux2=null;
+        while ((!getMyWeapon().isEmpty())||(encontrado)) {
+            aux=getMyWeapon().remove();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
     }
 
+    public Armor buscarArmaduraLeida(String leido){
+        boolean encontrado=false;
+        Armor aux=null;
+        Armor aux2=null;
+        while ((!getMyArmor().isEmpty())||(encontrado)) {
+            aux=getMyArmor().remove();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
+    }
+    public void setWeapon1 (Weapon arma1){
+      this.arma1=arma1;
+      this.arma1.elegida=true;
+    }
+    public String [] generateFighterState(){
+        String subtype =null;
+        if (this instanceof Vampire){
+            subtype ="Vampiro";
+        } else if (this instanceof Lycanthrope) {
+            subtype ="Licantropo";
+        } else if (this instanceof Hunter) {
+            subtype = "Cazador";
+        }
+        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+        ,"Tipo: "+type.getName()};
+        return text;
+    }
+    public boolean hasActiveEquipment() {
+        return (this.armor != null && this.arma1 != null);
+    }
+    public String[] generateEquipment(){
+        String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
+        equipment [0] = weaponSeparator;
+        for (int i=0;i<generateWeaponsText().length;i++){
+            equipment[i+1]=generateWeaponsText()[i];
+        }
+        equipment [generateWeaponsText().length+1] = armorSeparator;
+        for(int i =0 ;i< generateArmorText().length;i++){
+            equipment[generateWeaponsText().length+2+i]=generateArmorText()[i];
+        }
+        return equipment;
+    }
 
+    public void changeSpecialSkill(Specialskill nuevo){
+        this.specialskill=nuevo;
+    }
+
+    public PendingChallenges getPendingChallenges() {
+        return pendingChallenges;
+    }
+    public String getName() {
+        return name;
+    }
     public void setName(String name) {
-            this.name = name;
+        this.name = name;
     }
 
     public void setGold(int gold) {
@@ -284,92 +382,6 @@ public abstract class Fighter implements Serializable {
 
     public int getGold() {
         return gold;
-    }
-
-    public Weapon buscarArmaLeida (String leido){
-        boolean encontrado=false;
-        Weapon aux;
-        Weapon aux2=null;
-        while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public Armor buscarArmaduraLeida(String leido){
-        boolean encontrado=false;
-        Armor aux=null;
-        Armor aux2=null;
-        while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public void setWeapon1 (Weapon arma1){
-      this.arma1=arma1;
-      this.arma1.elegida=true;
-    }
-    public Weapon getArma1(){
-        return this.arma1;
-    }
-    public Weapon getArma2(){
-        return this.arma2;
-    }
-    public Armor getArmadura(){
-        return this.armadura;
-    }
-    public void setArmor (Armor armadura){
-        this.armadura=armadura;
-    }
-    public void setWeapon2 (Weapon arma2){
-        this.arma2=arma2;
-        this.arma2.elegida=true;
-    }
-    public void changeSpecialSkill(Specialskill nuevo){
-        this.specialskill=nuevo;
-    }
-
-    public PendingChallenges getPendingChallenges() {
-        return pendingChallenges;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String [] generateFighterState(){
-        String subtype =null;
-        if (this instanceof Vampire){
-            subtype ="Vampiro";
-        } else if (this instanceof Lycanthrope) {
-            subtype ="Licantropo";
-        } else if (this instanceof Hunter) {
-            subtype = "Cazador";
-        }
-        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-        ,"Tipo: "+type.getName()};
-        return text;
-    }
-
-    public boolean hasActiveEquipment() {
-        return (this.armadura != null && this.arma1 != null);
-    }
-    public String[] generateEquipment(){
-        String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
-        equipment [0] = weaponSeparator;
-        for (int i=0;i<generateWeaponsText().length;i++){
-            equipment[i+1]=generateWeaponsText()[i];
-        }
-        equipment [generateWeaponsText().length+1] = armorSeparator;
-        for(int i =0 ;i< generateArmorText().length;i++){
-            equipment[generateWeaponsText().length+2+i]=generateArmorText()[i];
-        }
-        return equipment;
     }
 
     public int getPower() {
@@ -399,11 +411,29 @@ public abstract class Fighter implements Serializable {
     public void setType(TFighter type) {
         this.type = type;
     }
-    public Armor equiparPredefinidoArmadura(){
-        return this.myArmor.remove(0);
+
+    public Weapon getArma1(){
+        return this.arma1;
     }
-    public Weapon equiparPredefinidoArma(){
-        return this.myWeapon.remove(0);
+    public Weapon getArma2(){
+        return this.arma2;
+    }
+    public Armor getArmor(){
+        return this.armor;
+    }
+    public void setArmor (Armor armadura){
+        this.armor =armadura;
+    }
+    public void setWeapon2 (Weapon arma2){
+        this.arma2=arma2;
+        this.arma2.elegida=true;
+    }
+    public LinkedList<Weapon> getMyWeapon(){
+        return this.myWeapon;
+    }
+
+    public LinkedList<Armor> getMyArmor(){
+        return this.myArmor;
     }
 }
 
