@@ -1,13 +1,10 @@
 package combate2000lasecuela;
 
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Fighter;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 
 public class Player extends User {
@@ -57,19 +54,19 @@ public class Player extends User {
     }
 
      */
+    public int whoGetsGold(Combat c) {
+        if (c.getResult().equals(Constants.isTie)) {
+            return 0;
+        }
+        else if (c.getResult().equals(this.fighter.getName())) {
+            return c.getGoldGained();
+        } else return -c.getGoldGained();
+    }
 
     public void Fight(Player challenger, int gold) {
         this.getFighter().startFighting(challenger.getFighter(), gold);
         this.deletePendingChallenge();
     }
-
-    public int getVictories() {return victories;}
-
-    public Fighter getFighter() {return fighter;}
-
-    public void setBlocked(boolean state) {blocked = state;}
-
-    public boolean isBlocked() {return blocked;}
 
     public void createFighter(Fighter  fighter){
         if (this.fighter == null) {
@@ -92,7 +89,6 @@ public class Player extends User {
 
     public void deleteFighter() {fighter = null;}
 
-
     public Challenge challengePlayer(Player challenged, int gold) {
         if (!this.isBlocked() && !challenged.isBlocked()) {
             if (this.fighter != null && challenged.getFighter() != null) {
@@ -103,7 +99,8 @@ public class Player extends User {
         } else return null;
     } 
 
-    public void updateAfterCombat(Combat c) {
+    /*
+    public void updateAfterCombat(Combat c, Fighter f) {
         if (c.getChallenger() == c.getWinner()) {
             int actualGold = c.getChallenger().getGold();
             actualGold += c.getGoldGained();
@@ -117,6 +114,8 @@ public class Player extends User {
             c.getChallenger().setGold(-c.getGoldGained());
         }
     }
+*/
+
 
     //para saber si se puede realizar un combate antes de llamar a player.fight
     public boolean hasActiveEquipment() {
@@ -151,13 +150,17 @@ public class Player extends User {
         this.getFighter().getPendingChallenges().deleteChallenge();
     }
 
-    public int whogetsGold(Combat c) {
-        if (c.getWinner() == null) {
-            return 0;
-        }
-        else if (c.getWinner().equals(this.fighter)) {
-            return c.getGoldGained();
-        } else return -c.getGoldGained();
+
+    public int getVictories() {return victories;}
+
+    public Fighter getFighter() {return fighter;}
+
+    public void setBlocked(boolean state) {blocked = state;}
+
+    public boolean isBlocked() {return blocked;}
+
+    public void setFighter(Fighter fighter) {
+        this.fighter = fighter;
     }
 }
 

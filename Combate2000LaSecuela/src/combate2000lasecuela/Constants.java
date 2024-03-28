@@ -5,11 +5,8 @@ public class Constants {
     public static final String weaponsFile = "./files/txtfiles/Armas.txt";
     public static final String armorsFile = "./files/txtfiles/Armaduras.txt";
     public static final String tfighterFile = "./files/txtfiles/TFighter.txt";
-
     public static final String strentghFile = "./files/txtfiles/Fortalezas";
-
     public static final String weaknessFile = "./files/txtfiles/Debilidades";
-
     public static final String serRoute="./files/serfiles/";
 
     //Contantes para los Strings del Messagemanager
@@ -41,7 +38,7 @@ public class Constants {
     public static final String theUserText = "El usuario ";
     public static final String gold = "Oro a apostar: ";
     public static final String [] noCombatsText = {"No hay combates anteriores"};
-    public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Oro"};
+    public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Salir"};
     public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
@@ -63,8 +60,10 @@ public class Constants {
     public static final String unblockUserText="DESBLOQUEO DE USUARIOS";
     public static final String userBlock="ha sido bloqueado correctamente";
     public static final String userUnblock="ha sido desbloqueado correctamente";
-
-
+    public static final String isTie = " El resultado es un empate";
+    public static final String[] winner = {"Has ganado el combate"};
+    public static final String[] loser = {"Has perdido el combate"};
+    public static final String createFighter = "Elige el tipo de personaje que deseas crear: ";
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
 

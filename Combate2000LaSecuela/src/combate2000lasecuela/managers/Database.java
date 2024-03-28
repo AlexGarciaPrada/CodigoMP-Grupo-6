@@ -6,6 +6,8 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static combate2000lasecuela.Constants.createFighter;
+
 public class Database {
     private UserManager usermanager;
     private Loader loader;
@@ -25,14 +27,11 @@ public class Database {
     public void addFighter(Player player, Fighter fighter) {
         player.createFighter(fighter);
         updateUsers();
-
     }
 
     public void eraseFighter(Player player) {
         player.deleteFighter();
-        ;
         updateUsers();
-
     }
 
     public void updateUsers() {
@@ -41,6 +40,10 @@ public class Database {
 
     public void updateChallenges() {
         challengeManager.saveCollection("Challenge");
+    }
+
+    public void updateCombats() {
+        combatregister.saveCollection("Combat");
     }
 
     public void addPendingChallenge(Player challenged, Challenge challenge) {
@@ -122,18 +125,18 @@ public class Database {
         int handicap=10;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
-        Minion esclavo;
-        int numero = random.nextInt(80) + 1 + suerte;
+        Minion slave;
+        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1 + suerte;
         if (numero>handicap){
             numero-=handicap;
         }
         for (Integer i = 0; i <= numero; i++) {
-            esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
-            if (!(esVampiro) || !(esclavo instanceof Human)) {
-                myMinions.push(esclavo);
-                if ((esclavo instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+            slave = loader.getMm().getElements().get("MinionMap").get(i.toString());
+            if (!(esVampiro) || !(slave instanceof Human)) {
+                myMinions.push(slave);
+                if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
                     tope += 1;
-                    ((Demon) esclavo).setPilaDemoniaca(randomMinionDemon(tope));
+                    ((Demon) slave).setDemonStack(randomMinionDemon(tope));
                 }
             }
         }
@@ -185,7 +188,7 @@ public class Database {
 
     public String[] getTFighterText(ArrayList<TFighter> tFightersList) {
         ArrayList<String> text = new ArrayList<>();
-        text.add("Elige el tipo de personaje que deseas crear: ");
+        text.add(createFighter);
         int i = 1;
         for (TFighter tfighter : tFightersList) {
             text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getSuerteM() + " Armaduras: +" + tfighter.getSuerteA() + " Armas: +" + tfighter.getSuerteW());
@@ -248,7 +251,6 @@ public class Database {
             updateChallenges();
             return; //Para salir en la primera iteracion
         }
-
     }
 
     public void addChallenge(Challenge challenge) {
@@ -268,7 +270,7 @@ public class Database {
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
             if (combat.getChallenger().equals(player.getFighter()) || combat.getChallenged().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.Result()+ " Oro ganado/perdido: " + player.whogetsGold(combat));
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.result()+ " Oro ganado/perdido: " + player.whoGetsGold(combat));
 
             }
         }
@@ -282,13 +284,13 @@ public class Database {
         return combatregister.getCollection("CombatMap").isEmpty();
     }
     public void changeFighterName(Player player,String name){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         fighter.setName(name);
         updateUsers();
     }
     public void changeFighterRace(Player player, int option){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         switch (option){
             case 1:
@@ -301,12 +303,27 @@ public class Database {
                 fighter = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
         }
+        fighter.setGold(player.getFighter().getGold());
+        player.setFighter(fighter);
         updateUsers();
     }
     public void changeFighterType(Player player, TFighter type){
-        Player aux = (Player) usermanager.getCollection("PlayerMap").get(player.getNick());
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
         fighter.setType(type);
         updateUsers();
+    }
+
+    public boolean deleteElement(Operator operator, Player player, String elementName) {
+        return operator.deleteElement(player, elementName);
+    }
+    public boolean addElement(Operator operator, Player player, String newElemName) {
+        return operator.addElement(player, newElemName);
+    }
+    public boolean deleteMinion(Operator operator, Player player, String minionName) {
+        return operator.deleteMinion(player, minionName);
+    }
+    public boolean addMinion(Operator operator, Player player, String newMinionName) {
+        return operator.addMinion(player, newMinionName);
     }
 }
