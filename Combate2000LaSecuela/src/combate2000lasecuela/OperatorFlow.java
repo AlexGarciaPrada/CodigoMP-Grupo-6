@@ -48,6 +48,7 @@ public class  OperatorFlow {
                 editfighter=true;
                 break;
             case 2: //Editar equipo,esbirros,modificadores
+                editEquipment = true;
                 break;
             case 3: //Validar desafios
                 vchallenge=true;
