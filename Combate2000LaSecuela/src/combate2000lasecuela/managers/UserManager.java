@@ -16,5 +16,4 @@ public class UserManager extends AbstractManager<User> {
         }
     }
 
-
 }

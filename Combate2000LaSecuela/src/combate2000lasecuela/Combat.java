@@ -2,10 +2,7 @@ package combate2000lasecuela;
 
 import java.util.Date;
 
-
 import combate2000lasecuela.CosasDeLuchador.Fighter;
-import combate2000lasecuela.Saveable;
-
 
 public class Combat implements Saveable {
     private Fighter challenger;
@@ -41,17 +38,6 @@ public class Combat implements Saveable {
         } else return null;
     }
 
-    public Fighter getWinner () {return this.winner;}
-
-    public int getGoldGained() {return goldGained;}
-
-    public Fighter getChallenger() {return challenger;}
-
-    public Fighter getChallenged() {return challenged;}
-    @Override
-    public String getId() {
-        return null;
-    }
 
    /* public void setEmpate(String empate) {
         this.empate = empate;
@@ -87,7 +73,56 @@ public class Combat implements Saveable {
         else return "Empate";
     }
 
-    public Date getDate() {return this.date;}
+    public Date getDate() {return date;}
+
+    public Fighter getWinner () {return winner;}
+
+    public int getGoldGained() {return goldGained;}
+
+    public Fighter getChallenger() {return challenger;}
+
+    public Fighter getChallenged() {return challenged;}
+
+    public void setChallenger(Fighter challenger) {
+        this.challenger = challenger;
+    }
+
+    public void setChallenged(Fighter challenged) {
+        this.challenged = challenged;
+    }
+
+    public int getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setWinner(Fighter winner) {
+        this.winner = winner;
+    }
+
+    public void setGoldGained(int goldGained) {
+        this.goldGained = goldGained;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }
 
 
