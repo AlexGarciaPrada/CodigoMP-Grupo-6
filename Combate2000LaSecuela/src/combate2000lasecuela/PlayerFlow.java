@@ -31,7 +31,6 @@ public class PlayerFlow extends Gameflow {
         if (player.hasPendingChallenges()){
             challengemode =true;
         }
-
         if (challengemode) {
             challengeMode(player, database,messageManager);
         } else if (fighterstate) {
@@ -96,7 +95,8 @@ public class PlayerFlow extends Gameflow {
         String [] challengeData= challenge.getChallengeData();
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
-            player.Fight(challenge.getChallenger(),gold);
+            player.Fight(challenge.getChallenger(),gold);  //TODO
+            database.updateCombats(); // TODO
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);

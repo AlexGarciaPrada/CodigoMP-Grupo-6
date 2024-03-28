@@ -43,6 +43,10 @@ public class Database {
         challengeManager.saveCollection("Challenge");
     }
 
+    public void updateCombats() {
+        combatregister.saveCollection("Combat");
+    }
+
     public void addPendingChallenge(Player challenged, Challenge challenge) {
         challenged.addPendingChallenge(challenge);
         updateUsers();
@@ -268,7 +272,7 @@ public class Database {
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
             if (combat.getChallenger().equals(player.getFighter()) || combat.getChallenged().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.Result()+ " Oro ganado/perdido: " + player.whogetsGold(combat));
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.result()+ " Oro ganado/perdido: " + player.whoGetsGold(combat));
 
             }
         }

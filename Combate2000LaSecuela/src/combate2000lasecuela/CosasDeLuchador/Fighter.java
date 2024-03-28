@@ -14,42 +14,41 @@ import static combate2000lasecuela.Constants.armorSeparator;
 import static combate2000lasecuela.Constants.weaponSeparator;
 
 public abstract class Fighter implements Serializable {
-
     private String name;
-        private int gold;
-        private int health;
-        private int power;
-        private Stack<Minion> myMinions;
-        private LinkedList <Armor> myArmor;
-        private LinkedList<Weapon> myWeapon;
-        private TFighter type;
-        private Random random = new Random(); //Esto es un atributo
-        private int minionHealth;
-        private Weapon arma1;
-        private Weapon arma2;
-        private Armor armadura;
+    private int gold;
+    private int health;
+    private int power;
+    private Stack<Minion> myMinions;
+    private LinkedList <Armor> myArmor;
+    private LinkedList<Weapon> myWeapon;
+    private TFighter type;
+    private Random random = new Random(); //Esto es un atributo
+    private int minionHealth;
+    private Weapon arma1;
+    private Weapon arma2;
+    private Armor armadura;
 
-        private PendingChallenges pendingChallenges;
-        Specialskill specialskill;
+    private PendingChallenges pendingChallenges;
+    Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-                   Stack<Minion> myMinions,LinkedList<Armor> myArmor,
-                   LinkedList<Weapon> myWeapon) {
-            this.name = name;
-            this.health = random.nextInt(5) + 1;
-            this.power = random.nextInt(5)+1;
-            this.type = type;
-            this.myMinions = myMinions;
-            this.myArmor= myArmor;
-            this.myWeapon = myWeapon;
-            this.minionHealth= calcularVidaMinions();
-            this.pendingChallenges = new PendingChallenges();
-            this.arma1=equiparPredefinidoArma();
-            this.arma2=null;
-            this.armadura=equiparPredefinidoArmadura();
-            this.gold=100;
-            this.specialskill=verHabilidad();
-        }
+       Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+       LinkedList<Weapon> myWeapon) {
+       this.name = name;
+       this.health = random.nextInt(5) + 1;
+       this.power = random.nextInt(5)+1;
+       this.type = type;
+       this.myMinions = myMinions;
+       this.myArmor= myArmor;
+       this.myWeapon = myWeapon;
+       this.minionHealth= calcularVidaMinions();
+       this.pendingChallenges = new PendingChallenges();
+       this.arma1=equiparPredefinidoArma();
+       this.arma2=null;
+       this.armadura=equiparPredefinidoArmadura();
+       this.gold=100;
+       this.specialskill=verHabilidad();
+    }
 
     public Specialskill verHabilidad(){
         if (this instanceof Lycanthrope){
@@ -65,47 +64,45 @@ public abstract class Fighter implements Serializable {
     }
 
     public Combat startFighting (Fighter desafiante, int oroApostado){
-            int i=0;
-            int pA=0;
-            int pD=0;
-            String esEmpate = null;//preparativo para meterselo al combat
-            do {
-                i++; //donde recibe el desafiado
-                //terminal.show("Ronda numero" + i + "comienza");
-                    pA = potencialAtaque(desafiante);
-                    pD = potencialDefensa(this);
-                        if (comprobarDaños(pA,pD)){
-                            ajusteHabilidad(pA,pD);
-                           // terminal.show(this.name+" ha recibido un golpe");
-                            if (this.minionHealth>0){
-                              //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                               this.minionHealth-=1;
-                            }else {
-                                this.health -= 1; //considerar caso de que se maten a la vez
-                               // terminal.show(this.health+ " vidas restantes");
-                            }
-                        }
-                //donde recibe el desafiante
-                //aunque esté separado, físicamente, ocurre de manera simultánea
-                    pA = potencialAtaque(this);
-                    pD = potencialDefensa(desafiante);
+        int rounds=0;
+        int pA=0;
+        int pD=0;
+        //boolean esEmpate=false;//preparativo para meterselo al combat
+        do {
+            rounds++; //donde recibe el desafiado
+            //terminal.show("Ronda numero" + rounds + "comienza");
+                pA = potencialAtaque(desafiante);
+                pD = potencialDefensa(this);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
-                      //  terminal.show(desafiante.name+" ha recibido un golpe");
-                        if (desafiante.minionHealth>0){
-                           // terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                            desafiante.minionHealth-=1;
+                       // terminal.show(this.name+" ha recibido un golpe");
+                        if (this.minionHealth>0){
+                          //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                           this.minionHealth-=1;
                         }else {
-                            desafiante.health -= 1;
-                          //  terminal.show (desafiante.health+" vidas restantes");
+                            this.health -= 1; //considerar caso de que se maten a la vez
+                           // terminal.show(this.health+ " vidas restantes");
                         }
                     }
-            }while((this.health>0)||(desafiante.health>0));
-            if ((this.health==0)&& (desafiante.health==0)){
-                esEmpate="si";
-            }
-            return new Combat(desafiante, this, i, oroApostado, esEmpate);
+            //donde recibe el desafiante
+            //aunque esté separado, físicamente, ocurre de manera simultánea
+                pA = potencialAtaque(this);
+                pD = potencialDefensa(desafiante);
+                if (comprobarDaños(pA,pD)){
+                    ajusteHabilidad(pA,pD);
+                  //  terminal.show(desafiante.name+" ha recibido un golpe");
+                    if (desafiante.minionHealth>0){
+                       // terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                        desafiante.minionHealth-=1;
+                    }else {
+                        desafiante.health -= 1;
+                      //  terminal.show (desafiante.health+" vidas restantes");
+                    }
+                }
+        }while((this.health>0)||(desafiante.health>0));
+        return new Combat(desafiante, this, rounds, oroApostado);
     }
+
     public int potencialAtaque (Fighter f){
         int potencial=f.power+f.arma1.getAttack()+f.armadura.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
         if (f.arma2!=null){
@@ -150,6 +147,7 @@ public abstract class Fighter implements Serializable {
     public Stack<Minion> getMyMinion(){
         return this.myMinions;
     }
+
     public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
        // terminal.show("Se te mostraran las armas de que dispones");
         //mostrarArmas();

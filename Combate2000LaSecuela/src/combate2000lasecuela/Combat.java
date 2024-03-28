@@ -9,73 +9,30 @@ public class Combat implements Saveable {
     private Fighter challenged;
     private int rounds;
     private Date date;
-    private Fighter winner;
+    private String winner;
     private int goldGained;
-
     private String result;
 
-    //private boolean esEmpate;
-    //private String empate;
-
-
-    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained, String result) {
+    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained) {
         this.challenger = challenger;
         this.challenged = challenged;
         this.rounds = rounds;
         this.date = new Date();
-        this.winner = whoWin(challenger, challenged);
         this.goldGained = goldGained;
-        //this.esEmpate=esEmpate;
-        //this.empate=verSiEmpate();
-        this.result = Result();
+        this.result = result();
     }
 
-    public Fighter whoWin(Fighter challenger, Fighter challenged) {
+
+    public String result() {
         if (challenger.getHealth() < challenged.getHealth()) {
-            return challenged;
-        } else if (challenger.getHealth() > challenged.getHealth()) {
-            return challenger;
-        } else return null;
-    }
-
-
-   /* public void setEmpate(String empate) {
-        this.empate = empate;
-    }
-
-    public boolean getEsEmpate() {
-        return this.esEmpate;
-    }
-
-    public String getEmpate() {
-        return this.empate;
-    }
-
-    public String verSiEmpate(){
-        if (getEsEmpate()) {
-            setEmpate("Empate");
-            return getEmpate();
-        }else{
-            setEmpate("Hubo ganador");
-            return getEmpate();
+            return challenged.getName();        }
+        else if (challenger.getHealth() > challenged.getHealth()) {
+            return challenger.getName();
         }
-    }
-
-    */
-
-    public String Result() {
-        if (this.winner == challenger) {
-            return "Ganado";
-        }
-        else if (this.winner == challenged) {
-            return "Perdido";
-        }
-        else return "Empate";
+        else return Constants.isTie;
     }
 
     public Date getDate() {return date;}
-
-    public Fighter getWinner () {return winner;}
 
     public int getGoldGained() {return goldGained;}
 
@@ -103,9 +60,6 @@ public class Combat implements Saveable {
         this.date = date;
     }
 
-    public void setWinner(Fighter winner) {
-        this.winner = winner;
-    }
 
     public void setGoldGained(int goldGained) {
         this.goldGained = goldGained;
