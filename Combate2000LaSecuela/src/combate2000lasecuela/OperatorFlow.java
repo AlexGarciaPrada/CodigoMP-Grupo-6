@@ -206,7 +206,7 @@ public class  OperatorFlow {
                         }
                         break;
                     case 2:
-                        messageManager.showContent(player.getFighter().generateEquipment());
+                        messageManager.showContent(player.getFighter().generateMinionText());
                         String minionName = messageManager.showReadString(elementText);
                         String newMinionName = messageManager.showReadString(newElementText);
                         boolean done2 = database.deleteMinion(operator, player, minionName);
