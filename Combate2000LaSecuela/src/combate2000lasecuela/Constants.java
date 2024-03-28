@@ -63,6 +63,7 @@ public class Constants {
     public static final String isTie = " El resultado es un empate";
     public static final String[] winner = {"Has ganado el combate"};
     public static final String[] loser = {"Has perdido el combate"};
+    public static final String createFighter = "Elige el tipo de personaje que deseas crear: ";
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
 

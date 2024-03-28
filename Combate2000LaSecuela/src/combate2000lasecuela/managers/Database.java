@@ -6,6 +6,8 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static combate2000lasecuela.Constants.createFighter;
+
 public class Database {
     private UserManager usermanager;
     private Loader loader;
@@ -123,18 +125,18 @@ public class Database {
         int handicap=10;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
-        Minion esclavo;
-        int numero = random.nextInt(80) + 1 + suerte;
+        Minion slave;
+        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1 + suerte;
         if (numero>handicap){
             numero-=handicap;
         }
         for (Integer i = 0; i <= numero; i++) {
-            esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
-            if (!(esVampiro) || !(esclavo instanceof Human)) {
-                myMinions.push(esclavo);
-                if ((esclavo instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+            slave = loader.getMm().getElements().get("MinionMap").get(i.toString());
+            if (!(esVampiro) || !(slave instanceof Human)) {
+                myMinions.push(slave);
+                if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
                     tope += 1;
-                    ((Demon) esclavo).setPilaDemoniaca(randomMinionDemon(tope));
+                    ((Demon) slave).setDemonStack(randomMinionDemon(tope));
                 }
             }
         }
@@ -186,7 +188,7 @@ public class Database {
 
     public String[] getTFighterText(ArrayList<TFighter> tFightersList) {
         ArrayList<String> text = new ArrayList<>();
-        text.add("Elige el tipo de personaje que deseas crear: ");
+        text.add(createFighter);
         int i = 1;
         for (TFighter tfighter : tFightersList) {
             text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getSuerteM() + " Armaduras: +" + tfighter.getSuerteA() + " Armas: +" + tfighter.getSuerteW());

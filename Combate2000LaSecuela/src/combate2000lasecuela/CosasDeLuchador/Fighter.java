@@ -32,22 +32,24 @@ public abstract class Fighter implements Serializable {
     Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
-       Stack<Minion> myMinions,LinkedList<Armor> myArmor,
-       LinkedList<Weapon> myWeapon) {
-       this.name = name;
-       this.health = random.nextInt(5) + 1;
-       this.power = random.nextInt(5)+1;
-       this.type = type;
-       this.myMinions = myMinions;
-       this.myArmor= myArmor;
-       this.myWeapon = myWeapon;
-       this.minionHealth= calcularVidaMinions();
-       this.pendingChallenges = new PendingChallenges();
-       this.arma1=equiparPredefinidoArma();
-       this.arma2=null;
-       this.armadura=equiparPredefinidoArmadura();
-       this.gold=100;
-       this.specialskill=verHabilidad();
+        Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+        LinkedList<Weapon> myWeapon) {
+        this.name = name;
+        this.health = random.nextInt(5) + 1;
+        //this.power = random.nextInt(5)+1;
+        // this.power = (int) (Math.random()+1);
+        //bound es 5
+        this.type = type;
+        this.myMinions = myMinions;
+        this.myArmor= myArmor;
+        this.myWeapon = myWeapon;
+        this.minionHealth= calcularVidaMinions();
+        this.pendingChallenges = new PendingChallenges();
+        this.arma1=equiparPredefinidoArma();
+        this.arma2=null;
+        this.armadura=equiparPredefinidoArmadura();
+        this.gold=100;
+        this.specialskill=verHabilidad();
     }
 
     public Specialskill verHabilidad(){

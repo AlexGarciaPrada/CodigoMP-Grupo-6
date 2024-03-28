@@ -10,7 +10,7 @@ private Stack<Minion> pilaDemoniaca;
         this.pilaDemoniaca=null;
     }
 
-    public void setPilaDemoniaca(Stack<Minion> pilaDemoniaca) {
+    public void setDemonStack(Stack<Minion> pilaDemoniaca) {
         this.pilaDemoniaca = pilaDemoniaca;
     }
 
