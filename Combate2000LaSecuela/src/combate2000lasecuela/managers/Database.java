@@ -154,9 +154,6 @@ public class Database {
         int number = random.nextInt(28) + 1 + suerte;
         for (Integer i = 1; i <= number; i++) {
             weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
-            if (i == 1) {
-                weapon.setEquipped(true);
-            }
             myWeapon.add(weapon);
         }
         return myWeapon;
@@ -169,9 +166,6 @@ public class Database {
         int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 + suerte;
         for (int i = 1; i <= numero; i++) {
             armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(i));
-            if (i == 1) {
-                armor.setEquipped(true);
-            }
             myArmor.add(armor);
         }
         return myArmor;

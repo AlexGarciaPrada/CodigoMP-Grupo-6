@@ -44,9 +44,9 @@ public abstract class Fighter implements Serializable {
             this.myWeapon = myWeapon;
             this.minionHealth= calcularVidaMinions();
             this.pendingChallenges = new PendingChallenges();
-            this.arma1=null;
+            this.arma1=equiparPredefinidoArma();
             this.arma2=null;
-            this.armadura=null;
+            this.armadura=equiparPredefinidoArmadura();
             this.gold=100;
         }
 
@@ -359,4 +359,11 @@ public abstract class Fighter implements Serializable {
     public void setType(TFighter type) {
         this.type = type;
     }
+    public Armor equiparPredefinidoArmadura(){
+        return this.myArmor.remove(0);
+    }
+    public Weapon equiparPredefinidoArma(){
+        return this.myWeapon.remove(0);
+    }
 }
+
