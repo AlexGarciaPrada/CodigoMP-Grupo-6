@@ -86,8 +86,16 @@ public class Operator extends User {
         player.setBlocked(false);
     }
 
-    public boolean validateChallenge(boolean state) {
-        return validate = state;
+    public boolean validateChallenge(Challenge c , int option) { // option = 1 (aceptar desafio). opption = 2 (denegar desafio)
+        Player challenged = c.getChallenged();
+        switch (option) {
+            case 1:
+                challenged.addPendingChallenge(c);
+                return true;
+            case 2:
+                return false;
+        }
+        return false;
     }
 
     public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {

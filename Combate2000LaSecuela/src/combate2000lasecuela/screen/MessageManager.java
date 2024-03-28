@@ -60,6 +60,10 @@ public class MessageManager {
         t.show(info);
         return t.readString();
     }
+    public String showEditFighterMenu(){
+        t.showln(editFighterText);
+        return showReadString(nickText);
+    }
     public void showLogInMenu(){
     t.showln(logInText);
     t.showln(exitAdvice);

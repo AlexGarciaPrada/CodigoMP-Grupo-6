@@ -3,6 +3,7 @@ package combate2000lasecuela;
 import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.managers.MinionManager;
 import combate2000lasecuela.managers.ItemManager;
+import combate2000lasecuela.managers.ModifierManager;
 import combate2000lasecuela.managers.TFighterManager;
 
 import java.io.*;
@@ -14,14 +15,20 @@ public class Loader implements Serializable {
     private MinionManager mm;
     private TFighterManager tfm;
 
+    private ModifierManager mom;
+
     public Loader() {
       im = new ItemManager();
       mm= new MinionManager();
       tfm = new TFighterManager();
+      mom = new ModifierManager();
       read(minionsFile);
       read(weaponsFile);
       read(tfighterFile);
       read(armorsFile);
+      read(strentghFile);
+      read(weaknessFile);
+
 
 
     }
@@ -44,6 +51,12 @@ public class Loader implements Serializable {
                     case tfighterFile:
                         readTFighterFile(line);
                         break;
+                    case strentghFile:
+                        readStrengthFile(line);
+                        break;
+                    case weaknessFile:
+                        readWeaknessFile(line);
+                        break;
                 }
             }
             br.close();
@@ -56,6 +69,8 @@ public class Loader implements Serializable {
         read(minionsFile);
         read(Constants.weaponsFile);
         read(Constants.armorsFile);
+        read(strentghFile);
+        read(weaknessFile);
     }
 
     // ------------------------ MINIONS
@@ -88,6 +103,16 @@ public class Loader implements Serializable {
         im.addElementSubMap("ArmorMap", parts[0], new Armor(line));
     }
 
+    private void readStrengthFile(String line) {
+        String [] parts = line.split(";");
+        mom.addElementSubMap("StrengthMap", parts[0], new Strength(line));
+    }
+
+    private void readWeaknessFile(String line) {
+        String [] parts = line.split(";");
+        mom.addElementSubMap("WeaknessMap", parts[0], new Weakness(line));
+    }
+
     // ------------------------ TFIGHTER
     private void readTFighterFile(String line) {
 
@@ -106,4 +131,6 @@ public class Loader implements Serializable {
     public TFighterManager getTfm() {
         return tfm;
     }
+
+    public ModifierManager getMom() {return mom;}
 }
