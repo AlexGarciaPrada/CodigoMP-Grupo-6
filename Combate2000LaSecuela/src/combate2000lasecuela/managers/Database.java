@@ -119,10 +119,14 @@ public class Database {
     }
 
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
+        int handicap=10;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
         Minion esclavo;
         int numero = random.nextInt(80) + 1 + suerte;
+        if (numero>handicap){
+            numero-=handicap;
+        }
         for (Integer i = 0; i <= numero; i++) {
             esclavo = loader.getMm().getElements().get("MinionMap").get(i.toString());
             if (!(esVampiro) || !(esclavo instanceof Human)) {
@@ -148,10 +152,14 @@ public class Database {
     }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
+        int handicap=8;
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
         Weapon weapon;
         int number = random.nextInt(28) + 1 + suerte;
+        if (number>8){
+            number-=handicap;
+        }
         for (Integer i = 1; i <= number; i++) {
             weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
             myWeapon.add(weapon);
@@ -160,10 +168,14 @@ public class Database {
     }
 
     public LinkedList<Armor> randomArmor(int suerte) {
+        int handicap = 8;
         Random random = new Random();
         Armor armor;
         LinkedList<Armor> myArmor = new LinkedList<>();
         int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 + suerte;
+        if (numero>8){
+            numero-=8;
+        }
         for (int i = 1; i <= numero; i++) {
             armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(i));
             myArmor.add(armor);
