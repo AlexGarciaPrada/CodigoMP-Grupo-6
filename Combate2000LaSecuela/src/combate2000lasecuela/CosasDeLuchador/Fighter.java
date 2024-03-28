@@ -48,8 +48,21 @@ public abstract class Fighter implements Serializable {
             this.arma2=null;
             this.armadura=equiparPredefinidoArmadura();
             this.gold=100;
+            this.specialskill=verHabilidad();
         }
 
+    public Specialskill verHabilidad(){
+        if (this instanceof Lycanthrope){
+            Gift gift = new Gift();
+            return gift;
+        }else if (this instanceof  Vampire){
+            Discipline discipline = new Discipline();
+            return discipline;
+        }else{
+            Talent talent = new Talent();
+            return talent;
+        }
+    }
 
     public Combat startFighting (Fighter desafiante, int oroApostado){
             int i=0;
