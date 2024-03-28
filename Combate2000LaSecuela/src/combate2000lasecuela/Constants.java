@@ -61,8 +61,8 @@ public class Constants {
     public static final String userBlock="ha sido bloqueado correctamente";
     public static final String userUnblock="ha sido desbloqueado correctamente";
     public static final String isTie = " El resultado es un empate";
-    public static final String winner = "%s ha ganado el combate";
-    public static final String loser = "%s ha perdido el combate";
+    public static final String[] winner = {"Has ganado el combate"};
+    public static final String[] loser = {"Has perdido el combate"};
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
 

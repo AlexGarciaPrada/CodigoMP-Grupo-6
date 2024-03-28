@@ -25,14 +25,11 @@ public class Database {
     public void addFighter(Player player, Fighter fighter) {
         player.createFighter(fighter);
         updateUsers();
-
     }
 
     public void eraseFighter(Player player) {
         player.deleteFighter();
-        ;
         updateUsers();
-
     }
 
     public void updateUsers() {
@@ -252,7 +249,6 @@ public class Database {
             updateChallenges();
             return; //Para salir en la primera iteracion
         }
-
     }
 
     public void addChallenge(Challenge challenge) {

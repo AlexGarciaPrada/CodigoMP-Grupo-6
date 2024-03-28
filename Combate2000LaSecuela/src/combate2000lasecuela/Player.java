@@ -89,7 +89,6 @@ public class Player extends User {
 
     public void deleteFighter() {fighter = null;}
 
-
     public Challenge challengePlayer(Player challenged, int gold) {
         if (!this.isBlocked() && !challenged.isBlocked()) {
             if (this.fighter != null && challenged.getFighter() != null) {

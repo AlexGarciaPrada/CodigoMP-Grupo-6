@@ -97,6 +97,7 @@ public class PlayerFlow extends Gameflow {
         if (option ==1){ //Desafio aceptado
             player.Fight(challenge.getChallenger(),gold);  //TODO
             database.updateCombats(); // TODO
+            //messageManager.showContent(loser);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);
