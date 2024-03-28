@@ -3,19 +3,21 @@ package combate2000lasecuela;
 import static combate2000lasecuela.Constants.*;
 import static combate2000lasecuela.Constants.userNotFoundText;
 
+import combate2000lasecuela.CosasDeLuchador.Item;
 import combate2000lasecuela.CosasDeLuchador.TFighter;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
 import java.util.ArrayList;
 
-public class OperatorFlow {
+public class  OperatorFlow {
     private static boolean operatorlogin =true;
     private static boolean editfighter = false;
     private static boolean eraseoperator = false;
     private static boolean block = false;
     private static boolean unblock = false;
     private static boolean vchallenge=false;
+    private static boolean editEquipment = false;
 
     public static void operatorMachine(Operator operator,Database database,MessageManager messageManager) {
         operatorlogin =true;
@@ -27,7 +29,9 @@ public class OperatorFlow {
             } else if (vchallenge) {
                 validateChallenge(operator, database, messageManager);
             } else if (editfighter) {
-                editFighter(database,messageManager);
+                editFighter(database, messageManager);
+            } else if (editEquipment) {
+                editEquipment(operator, database, messageManager);
             } else if (eraseoperator) {
                 eraseOperator(operator, database, messageManager);
             }else{
@@ -170,5 +174,61 @@ public class OperatorFlow {
             messageManager.showContent(userNotFoundText);
         }
     }
+
+    private static void editEquipment(Operator operator, Database database, MessageManager messageManager) {
+        editEquipment=false;
+        String nick = messageManager.showEditFighterMenu();
+        if (nick.equals("SALIR")){
+            return;
+        }
+        if (database.isAPlayer(nick)){
+            Player player = (Player) database.getUser(nick);
+            if (player.getFighter()==null){
+                messageManager.showContent(thisPlayerNotFighter);
+            }else{
+                int option = messageManager.showReadableBox(editEquipmentMenu,3);
+                switch (option){
+                    case 1:
+                        messageManager.showContent(player.getFighter().generateEquipment());
+                        String elementName = messageManager.showReadString(elementText);
+                        String newElemName = messageManager.showReadString(newElementText);
+                        boolean done = database.deleteElement(operator, player, elementName);
+                        if (!done) {
+                            messageManager.showContent(elementNotEquipped);
+                        } else {
+                            boolean check = database.addElement(operator, player, newElemName);
+                            if (!check) {
+                                messageManager.showContent(elementAlreadyEquipped);
+                            } else {
+                                messageManager.showContent(elementEquipped);
+                            }
+                        }
+                        break;
+                    case 2:
+                        messageManager.showContent(player.getFighter().generateEquipment());
+                        String minionName = messageManager.showReadString(elementText);
+                        String newMinionName = messageManager.showReadString(newElementText);
+                        boolean done2 = database.deleteMinion(operator, player, minionName);
+                        if (!done2) {
+                            messageManager.showContent(elementNotEquipped);
+                        } else {
+                            boolean check2 = database.addMinion(operator, player, newMinionName);
+                            if (!check2) {
+                                messageManager.showContent(elementAlreadyEquipped);
+                            } else {
+                                messageManager.showContent(elementEquipped);
+                            }
+                        }
+                        break;
+                    case 3: //definir fortalezas y debilidades
+                        break;
+                }
+            }
+        }else{
+            messageManager.showContent(userNotFoundText);
+        }
+    }
+
+
 
 }

@@ -39,6 +39,12 @@ public class Constants {
     public static final String gold = "Oro a apostar: ";
     public static final String [] noCombatsText = {"No hay combates anteriores"};
     public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Oro"};
+    public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas y Armaduras","2. Esbirros","3. Modificadores"};
+    public static final String elementText="Escriba el nombre del elemento a eliminar: ";
+    public static final String newElementText="Escriba el nombre del elemento a añadir: : ";
+    public static final String [] elementNotEquipped = {"El elemento introducido no esta equipado"};
+    public static final String [] elementAlreadyEquipped = {"El elemento introducido ya esta equipado"};
+    public static final String [] elementEquipped = {"El elemento introducido se ha equipado correctamente"};
     public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";

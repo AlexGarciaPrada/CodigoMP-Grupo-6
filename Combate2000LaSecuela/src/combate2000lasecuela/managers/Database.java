@@ -311,4 +311,17 @@ public class Database {
         fighter.setType(type);
         updateUsers();
     }
+
+    public boolean deleteElement(Operator operator, Player player, String elementName) {
+        return operator.deleteElement(player, elementName);
+    }
+    public boolean addElement(Operator operator, Player player, String newElemName) {
+        return operator.addElement(player, newElemName);
+    }
+    public boolean deleteMinion(Operator operator, Player player, String minionName) {
+        return operator.deleteMinion(player, minionName);
+    }
+    public boolean addMinion(Operator operator, Player player, String newMinionName) {
+        return operator.addMinion(player, newMinionName);
+    }
 }

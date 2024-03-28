@@ -9,6 +9,7 @@ public abstract class Minion implements Saveable {
     private String tipo;
     private int id;
     private int minionId;
+    private boolean equipped;
 
     public Minion(String linea){
         String [] valores = linea.split(";");
@@ -44,5 +45,11 @@ public abstract class Minion implements Saveable {
     public void setMinionId(int minionId) {
         this.minionId = minionId;
     }
+    public void setEquipped(boolean state){equipped = state;}
+    public boolean isEquipped() {
+        return equipped;
+    }
+
+    public String getTipo() { return this.tipo;}
 
 }
