@@ -1,10 +1,7 @@
 package combate2000lasecuela;
 
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.screen.MessageManager;
-import combate2000lasecuela.CosasDeLuchador.Hunter;
-import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
-import combate2000lasecuela.CosasDeLuchador.TFighter;
-import combate2000lasecuela.CosasDeLuchador.Vampire;
 import combate2000lasecuela.managers.Database;
 
 import java.util.ArrayList;
@@ -42,7 +39,7 @@ public class PlayerFlow extends Gameflow {
         } else if (erasefighter) {
             eraseFighter(player, database,messageManager);
         } else if (equipadmin) {
-            adminEquipment(player, messageManager);
+            adminEquipment(player,database, messageManager);
         } else if (ranking) {
             playersRanking(database,messageManager);
         } else if (goldregister) {
@@ -95,8 +92,15 @@ public class PlayerFlow extends Gameflow {
         String [] challengeData= challenge.getChallengeData();
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
-            player.Fight(challenge.getChallenger(),gold);  //TODO
+            Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
+            messageManager.showContent(combat.result());
+            if (!(combat.result().equals(isTie))){
+            Fighter winner = combat.getWinner();
+            Fighter loser = combat.getLoser();
+            database.updateGold(winner,gold);
+            database.updateGold(loser,-gold);
             database.updateCombats(); // TODO
+            }
             //messageManager.showContent(loser);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
@@ -108,15 +112,48 @@ public class PlayerFlow extends Gameflow {
             challengemode = false;
         }
     }
-    private static void adminEquipment(Player player, MessageManager messageManager){
+    private static void adminEquipment(Player player,Database database, MessageManager messageManager){
         equipadmin =false;
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
         }
-        int option = messageManager.showReadableBox(player.getFighter().generateEquipment(),(player.getFighter().generateEquipment().length-2));
-        ///Aquí habría que hacer cosas
+        int equipoption = messageManager.showReadableBox(selectEquipmentText,3);
+        switch(equipoption){
+            case 1: //Arma
+                adminWeapon( player,database, messageManager);
+                break;
+            case 2: //Armadura
+                adminArmor( player,database, messageManager);
+                break;
+            case 3: //Salir
+                break;
+        }
+        //int option = messageManager.showReadableBox(player.getFighter().generateEquipment(),(player.getFighter().generateEquipment().length-2));
     }
+    private static void adminWeapon(Player player, Database database,MessageManager messageManager){
+
+        int option = messageManager.showReadableBox(selectWeaponText,3);
+        int weaponoption = messageManager.showReadableBox(player.getFighter().generateWeaponsText(),player.getFighter().generateWeaponsText().length)    ;
+        Weapon weapon = player.getFighter().getMyWeapon().get(weaponoption-1);
+            switch (option){
+                case 1:
+                    database.equipWeapon1(player,weapon);
+                    break;
+                case 2:
+                    database.equipWeapon2(player,weapon);
+                    break;
+                case 3:
+                    break;
+            }
+        }
+    private static void adminArmor(Player player, Database database,MessageManager messageManager){
+        int optionarmor = messageManager.showReadableBox(player.getFighter().generateArmorText(),player.getFighter().generateArmorText().length);
+        Armor armor = player.getFighter().getMyArmor().get(optionarmor-1);
+        database.equipArmor(player,armor);
+    }
+
+
     private static void challengePlayer(Player player, Database database, MessageManager messageManager){
         challengeplayer =false;
         if (player.getFighter()==null){

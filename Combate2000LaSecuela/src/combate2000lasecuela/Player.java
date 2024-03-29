@@ -29,8 +29,8 @@ public class Player extends User {
             Fighter desafiado = playerDesafiado.getFighter();
             if (desafiante.getArmadura()==null) {
                 getNumero(opcion);
-                changeActiveArmor(this,desafiante.getMyArmor(),opcion);
-            }else if (desafiante.getArma1()==null){
+                changeActiveArmor(this,desafiante.getMyArmo(),opcion);
+            }else if (desafiante.getArma1()==null){r
                 changeActiveWeapon(this,desafiante.getMyWeapon(),getArma(opcion));
             }
 
@@ -64,9 +64,8 @@ public class Player extends User {
         } else return -c.getGoldGained();
     }
 
-    public void Fight(Player challenger, int gold) {
-        this.getFighter().startFighting(challenger.getFighter(), gold);
-        this.deletePendingChallenge();
+    public Combat Fight(Player challenger, int gold) {
+        return getFighter().startFighting(challenger.getFighter(), gold);
     }
 
     public void createFighter(Fighter  fighter){

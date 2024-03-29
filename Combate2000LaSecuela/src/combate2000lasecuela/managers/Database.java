@@ -183,8 +183,8 @@ public class Database {
         Armor armor;
         LinkedList<Armor> myArmor = new LinkedList<>();
         int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 + suerte;
-        if (numero>8){
-            numero-=8;
+        if (numero>handicap){
+            numero-=handicap;
         }
         for (int i = 1; i <= numero; i++) {
             armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(i));
@@ -438,6 +438,43 @@ public class Database {
         }
         return equipment;
     }
+    public void equipWeapon1(Player player, Weapon weapon){
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
+        Fighter fighter = aux.getFighter();
+        if (fighter.getArma2() != null){
+            if (weapon.isOneHand()){
+                fighter.setWeapon1(weapon);
+
+                updateUsers();
+            }
+
+        }else{
+            fighter.setWeapon1(weapon);
+
+            updateUsers();
+        }
+
+    }
 
 
+    public void equipWeapon2(Player player, Weapon weapon) {
+        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
+        Fighter fighter = aux.getFighter();
+        if ( !(weapon.isOneHand())){
+            return;
+        }
+
+        if (fighter.getArma1().isOneHand()){
+            fighter.setWeapon2(weapon);
+            updateUsers();
+        }
+    }
+    public void equipArmor(Player player, Armor armor){
+        player.getFighter().setArmor(armor);
+        updateUsers();
+    }
+    public void updateGold(Fighter fighter, int gold){
+        fighter.setGold(fighter.getGold()+gold);
+        updateUsers();
+    }
 }

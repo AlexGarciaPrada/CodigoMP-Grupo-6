@@ -9,9 +9,11 @@ public class Combat implements Saveable {
     private Fighter challenged;
     private int rounds;
     private Date date;
-    private String winner;
+    private Fighter winner;
+    private Fighter loser;
+
     private int goldGained;
-    private String result;
+    private String [] result;
 
     public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained) {
         this.challenger = challenger;
@@ -23,13 +25,22 @@ public class Combat implements Saveable {
     }
 
 
-    public String result() {
+    public String [] result() {
+        String [] text = new String[1];
         if (challenger.getHealth() < challenged.getHealth()) {
-            return challenged.getName();        }
+            text[0]="Ha ganado "+challenged.getName();
+            setWinner(challenged);
+            setLoser(challenger);
+            return text; }
         else if (challenger.getHealth() > challenged.getHealth()) {
-            return challenger.getName();
+            text[0]="Ha ganado "+challenger.getName();
+            setWinner(challenger);
+            setLoser(challenged);
+            return text;
+        }else {
+            return Constants.isTie;
         }
-        else return Constants.isTie;
+
     }
 
     public Date getDate() {return date;}
@@ -60,16 +71,31 @@ public class Combat implements Saveable {
         this.date = date;
     }
 
+    public void setWinner(Fighter winner) {
+        this.winner = winner;
+    }
+
+    public void setLoser(Fighter loser) {
+        this.loser = loser;
+    }
+
+    public Fighter getWinner() {
+        return winner;
+    }
+
+    public Fighter getLoser() {
+        return loser;
+    }
 
     public void setGoldGained(int goldGained) {
         this.goldGained = goldGained;
     }
 
-    public String getResult() {
+    public String [] getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(String [] result) {
         this.result = result;
     }
 
