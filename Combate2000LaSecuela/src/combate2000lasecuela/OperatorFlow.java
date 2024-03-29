@@ -190,12 +190,13 @@ public class  OperatorFlow {
                     int option = messageManager.showReadableBox(editEquipmentMenu,3);
                 switch (option){
                     case 1:
-                        editArmorWeapon(operator, player, database, messageManager);
+                        editWeapon(operator, player, database, messageManager);
                         break;
                     case 2:
-                        editMinions(operator, player, database, messageManager);
+                        editArmor(operator, player, database, messageManager);
                         break;
-                    case 3: //definir fortalezas y debilidades
+                    case 3:
+                        editMinions(operator, player, database, messageManager);
                         break;
                 }
             }
@@ -204,62 +205,77 @@ public class  OperatorFlow {
         }
     }
 
-    private static void editArmorWeapon(Operator operator, Player player, Database database, MessageManager messageManager) {
-        messageManager.showContent(database.generateEquipmentText(player));
-        int option = messageManager.showReadableBox(editArmorWeaponMenu,2);
+    private static void editWeapon(Operator operator, Player player, Database database, MessageManager messageManager) {
+        int option = messageManager.showReadableBox(editMenu,2);
         switch (option) {
             case 1:
-                String elementName = messageManager.showReadString(elementText);
-                String newElemName = messageManager.showReadString(newElementText);
-                boolean done = database.deleteElement(operator, player, elementName);
+                messageManager.showContent(player.getFighter().generateWeaponsText());
+                String elementId = messageManager.showReadString(elementText);
+                boolean done = database.deleteElement(operator, player, elementId);
                 if (!done) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
-                    boolean check = database.addElement(operator, player, newElemName);
-                    if (!check) {
-                        messageManager.showContent(elementAlreadyEquipped);
-                    } else {
-                        messageManager.showContent(elementEquipped);
-                    }
+                    messageManager.showContent(elementDeleted);
                 }
                 break;
             case 2:
-                String elem = messageManager.showReadString(newElementText);
-                boolean check = database.addElement(operator, player, elem);
+                messageManager.showContent(database.generateWeaponText());
+                String elemId = messageManager.showReadString(newElementText);
+                boolean check = database.addWeapon(operator, player, elemId);
                 if (!check) {
                     messageManager.showContent(elementAlreadyEquipped);
                 } else {
-                    messageManager.showContent(elementEquipped);
+                    messageManager.showContent(elementAdded);
+                }
+        }
+    }
+
+    private static void editArmor(Operator operator, Player player, Database database, MessageManager messageManager) {
+        int option = messageManager.showReadableBox(editMenu,2);
+        switch (option) {
+            case 1:
+                messageManager.showContent(player.getFighter().generateArmorText());
+                String elementId = messageManager.showReadString(elementText);
+                boolean done = database.deleteElement(operator, player, elementId);
+                if (!done) {
+                    messageManager.showContent(elementNotEquipped);
+                } else {
+                    messageManager.showContent(elementDeleted);
+                }
+                break;
+            case 2:
+                messageManager.showContent(database.generateArmorText());
+                String elemId = messageManager.showReadString(newElementText);
+                boolean check = database.addArmor(operator, player, elemId);
+                if (!check) {
+                    messageManager.showContent(elementAlreadyEquipped);
+                } else {
+                    messageManager.showContent(elementAdded);
                 }
         }
     }
 
     private static void editMinions(Operator operator, Player player, Database database, MessageManager messageManager) {
-        messageManager.showContent(database.generateMinionText(player));
-        int option = messageManager.showReadableBox(editMinionsMenu,2);
+        int option = messageManager.showReadableBox(editMenu,2);
         switch (option) {
             case 1:
+                messageManager.showContent(player.getFighter().generateMinionText());
                 String minionName = messageManager.showReadString(elementText);
-                String newMinionName = messageManager.showReadString(newElementText);
                 boolean done2 = database.deleteMinion(operator, player, minionName);
                 if (!done2) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
-                    boolean check2 = database.addMinion(operator, player, newMinionName);
-                    if (!check2) {
-                        messageManager.showContent(elementAlreadyEquipped);
-                    } else {
-                        messageManager.showContent(elementEquipped);
-                    }
+                    messageManager.showContent(elementDeleted);
                 }
                 break;
             case 2:
+                messageManager.showContent(database.generateMinionText());
                 String minion = messageManager.showReadString(newElementText);
                 boolean check = database.addMinion(operator, player, minion);
                 if (!check) {
                     messageManager.showContent(elementAlreadyEquipped);
                 } else {
-                    messageManager.showContent(elementEquipped);
+                    messageManager.showContent(elementAdded);
                 }
         }
     }

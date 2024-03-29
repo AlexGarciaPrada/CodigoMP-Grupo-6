@@ -1,14 +1,12 @@
 package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 import java.lang.Integer;
 import java.lang.String;
-import java.util.LinkedList;
 
 import static combate2000lasecuela.Constants.armorSeparator;
 import static combate2000lasecuela.Constants.weaponSeparator;
@@ -253,25 +251,15 @@ public abstract class Fighter implements Serializable {
     }
 
     public String [] generateMinionText() {
-        ArrayList<String> miniontext=new ArrayList<>();
+        ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        for (Minion element: myMinions){
-            if (element.isEquipped()) {
-                if (element instanceof Ghoul) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
+        for (Minion element: this.getMyMinion()){
+            if (element instanceof Ghoul) {
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
+            } else if (element instanceof Human) {
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
             } else {
-                if (element instanceof Ghoul) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
             }
             i++;
         }
