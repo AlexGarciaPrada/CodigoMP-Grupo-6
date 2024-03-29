@@ -95,11 +95,17 @@ public class PlayerFlow extends Gameflow {
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
             messageManager.showContent(combat.result());
             if (!(combat.result().equals(isTie))){
-            Fighter winner = combat.getWinner();
-            Fighter loser = combat.getLoser();
-            database.updateGold(winner,gold);
-            database.updateGold(loser,-gold);
-            database.updateCombats(); // TODO
+                Fighter winner = combat.getWinner();
+                Fighter loser = combat.getLoser();
+                database.updateGold(winner,gold);
+                database.updateGold(loser,-gold);
+                database.updateCombats(); // TODO
+                if (challenge.getChallenger().getFighter().equals(winner)){
+                    database.addVictories(challenge.getChallenger());
+            }
+                else {
+                    database.addVictories(challenge.getChallenged());
+                }
             }
             //messageManager.showContent(loser);
         }else{ //Desafio rechazado

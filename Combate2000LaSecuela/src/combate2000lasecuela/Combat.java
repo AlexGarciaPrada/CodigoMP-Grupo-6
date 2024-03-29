@@ -11,7 +11,6 @@ public class Combat implements Saveable {
     private Date date;
     private Fighter winner;
     private Fighter loser;
-
     private int goldGained;
     private String [] result;
 

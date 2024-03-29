@@ -172,5 +172,7 @@ public class Player extends User {
     public void setFighter(Fighter fighter) {
         this.fighter = fighter;
     }
+
+    public void setVictories(int victories) {this.victories = victories;  }
 }
 

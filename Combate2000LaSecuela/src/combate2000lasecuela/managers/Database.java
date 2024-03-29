@@ -121,11 +121,16 @@ public class Database {
     public ArrayList<String> getRanking() {
         ArrayList<String> ranking = new ArrayList<>();
         ArrayList<Player> playerList = mapToNotOrderedRanking(usermanager.getElements().get("Player"));
-        Collections.sort(playerList, Comparator.comparing(Player::getVictories));
+        playerList.sort(Comparator.comparing(Player::getVictories).reversed());
         for (Player player : playerList) {
             ranking.add(String.valueOf(playerList.indexOf(player) + 1) + ". " + player.getNick() + " Victorias: " + player.getVictories());
         }
         return ranking;
+    }
+
+    public void addVictories(Player player){
+        player.setVictories(player.getVictories()+1);
+        updateUsers();
     }
 
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
@@ -357,7 +362,6 @@ public class Database {
         }
         updateMinions();
         return done;
-
     }
 
     public String [] generateMinionText(Player player) {
@@ -444,16 +448,13 @@ public class Database {
         if (fighter.getArma2() != null){
             if (weapon.isOneHand()){
                 fighter.setWeapon1(weapon);
-
                 updateUsers();
             }
 
         }else{
             fighter.setWeapon1(weapon);
-
             updateUsers();
         }
-
     }
 
 
@@ -463,7 +464,6 @@ public class Database {
         if ( !(weapon.isOneHand())){
             return;
         }
-
         if (fighter.getArma1().isOneHand()){
             fighter.setWeapon2(weapon);
             updateUsers();
