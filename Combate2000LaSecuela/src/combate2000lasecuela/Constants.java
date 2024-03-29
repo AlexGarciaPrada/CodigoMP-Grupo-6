@@ -67,6 +67,8 @@ public class Constants {
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
     public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas y Armaduras","2. Esbirros","3. Modificadores"};
+    public static final String [] editArmorWeaponMenu={"Elige que deseas hacer:","1. Cambiar arma/armadura","2. Añadir arma/armadura"};
+    public static final String [] editMinionsMenu={"Elige que deseas hacer:","1. Cambiar esbirros","2. Añadir esbirros"};
     public static final String elementText="Escriba el nombre del elemento a eliminar: ";
     public static final String newElementText="Escriba el nombre del elemento a añadir: : ";
     public static final String [] elementNotEquipped = {"El elemento introducido no esta equipado"};

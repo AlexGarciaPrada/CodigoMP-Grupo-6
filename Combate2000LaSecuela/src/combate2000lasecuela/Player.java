@@ -59,6 +59,7 @@ public class Player extends User {
             return 0;
         }
         else if (c.getResult().equals(this.fighter.getName())) {
+            victories++;
             return c.getGoldGained();
         } else return -c.getGoldGained();
     }
@@ -89,6 +90,7 @@ public class Player extends User {
 
     public void deleteFighter() {fighter = null;}
 
+    /*
     public Challenge challengePlayer(Player challenged, int gold) {
         if (!this.isBlocked() && !challenged.isBlocked()) {
             if (this.fighter != null && challenged.getFighter() != null) {
@@ -97,7 +99,16 @@ public class Player extends User {
                 } else return null;
             } else return null;
         } else return null;
-    } 
+    }
+*/ // se podia reducir el numero de ifs
+    public Challenge challengePlayer(Player challenged, int gold) {
+        if (!this.isBlocked() && !challenged.isBlocked() && this.fighter != null && challenged.getFighter() != null) {
+            if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
+                return new Challenge(this, challenged, gold);
+            }
+        }
+        return null;
+    }
 
     /*
     public void updateAfterCombat(Combat c, Fighter f) {
