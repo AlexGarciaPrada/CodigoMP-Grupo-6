@@ -20,7 +20,6 @@ public abstract class Fighter implements Serializable {
     private LinkedList <Armor> myArmor;
     private LinkedList<Weapon> myWeapon;
     private TFighter type;
-    private Random random = new Random(); //Esto es un atributo
     private int minionHealth;
     private Weapon arma1;
     private Weapon arma2;
@@ -33,10 +32,7 @@ public abstract class Fighter implements Serializable {
         Stack<Minion> myMinions,LinkedList<Armor> myArmor,
         LinkedList<Weapon> myWeapon) {
         this.name = name;
-        this.health = random.nextInt(5) + 1;
-        //this.power = random.nextInt(5)+1;
-        // this.power = (int) (Math.random()+1);
-        //bound es 5
+        this.health = vidaAleatoria();
         this.type = type;
         this.myMinions = myMinions;
         this.myArmor= myArmor;
@@ -49,174 +45,56 @@ public abstract class Fighter implements Serializable {
         this.gold=100;
         this.specialskill=verHabilidad();
     }
-
-    public Specialskill verHabilidad(){
-        if (this instanceof Lycanthrope){
-            Gift gift = new Gift();
-            return gift;
-        }else if (this instanceof  Vampire){
-            Discipline discipline = new Discipline();
-            return discipline;
-        }else{
-            Talent talent = new Talent();
-            return talent;
-        }
-    }
-/*
-    public Combat startFighting (Fighter desafiante, int oroApostado){
-        fightEachPlayer(desafiante,this,oroApostado);
-        fightEachPlayer(this,desafiante,oroApostado);
-        return new Combat(desafiante,this,0,oroApostado);
-    }
-
-    public void fightEachPlayer(Fighter desafiante, Fighter challenged, int oroApostado){
-        int rounds=0;
-        int pA=0;
-        int pD=0;
-        //boolean esEmpate=false;//preparativo para meterselo al combat
-        do {
-            rounds++; //donde recibe el desafiado
-            //terminal.show("Ronda numero" + rounds + "comienza");
-            pA = potencialAtaque(desafiante);
-            pD = potencialDefensa(challenged);
-            if (comprobarDaños(pA,pD)){
-                ajusteHabilidad(pA,pD);
-                // terminal.show(this.name+" ha recibido un golpe");
-                if (this.minionHealth>0){
-                    //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                    this.minionHealth-=1;
-                }else {
-                    this.health -= 1; //considerar caso de que se maten a la vez
-                    // terminal.show(this.health+ " vidas restantes");
-                }
-            }
-        }while((this.health>0)||(desafiante.health>0));
-    }
-*/
-
+/*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
     public Combat startFighting (Fighter challenger, int oroApostado){
         int rounds=0;
         int pA=0;
         int pD=0;
-        //boolean esEmpate=false;//preparativo para meterselo al combat
         do {
             rounds++; //donde recibe el desafiado
-            //terminal.show("Ronda numero" + rounds + "comienza");
                 pA = potencialAtaque(challenger);
                 pD = defensePotential(this);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
-                       // terminal.show(this.name+" ha recibido un golpe");
                         if (this.minionHealth>0){
                           //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
                            this.minionHealth-=1;
                         }else {
                             this.health -= 1; //considerar caso de que se maten a la vez
-                           // terminal.show(this.health+ " vidas restantes");
                         }
                     }
-            //donde recibe el challenger
-            //aunque esté separado, físicamente, ocurre de manera simultánea
                 pA = potencialAtaque(this);
                 pD = defensePotential(challenger);
                 if (comprobarDaños(pA,pD)){
                     ajusteHabilidad(pA,pD);
-                  //  terminal.show(challenger.name+" ha recibido un golpe");
                     if (challenger.minionHealth>0){
-                       // terminal.show(" aunque lo han acabado recibiendo los esbirros");
                         challenger.minionHealth-=1;
                     }else {
                         challenger.health -= 1;
-                      //  terminal.show (challenger.health+" vidas restantes");
                     }
                 }
         }while((this.health>0)||(challenger.health>0));
         return new Combat(challenger, this, rounds, oroApostado);
     }
 
-    public int potencialAtaque (Fighter f){
-        int potential=f.power+f.arma1.getAttack()+f.armor.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
-        if (f.arma2!=null){
-            potential+=f.arma2.getAttack();
-        }
-        return checkSuccess(potential);
-    }
-    public int defensePotential(Fighter f){
-        int potencial=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
-        //porque la implementación de ambos sería idéntica.
-            return checkSuccess(potencial);
-    }
-    public int checkSuccess(int potential){
-        int acierto=0;
-        int aux;
-        for (int i=0; i<potential;i++){
-         aux = random.nextInt(6)+1;
-         if (aux>=5){
-             acierto+=1;
-         }
-        }
-        return acierto;
-    }
-    private boolean comprobarDaños(int pA, int pD){
-        return (pA>pD);
-    }
-    public int calcularVidaMinions(){
-        if (getMyMinion() == null){
-            return 0;
-        }else {
-            int total = 0;
-
-            while (!this.myMinions.isEmpty()) {
-                Minion slave = this.myMinions.pop();
-                if (slave != null) {
-                    total += slave.getHealth();
-                }
-            }
-            return total;
-        }
-    }
-    public Stack<Minion> getMyMinion(){
-        return this.myMinions;
-    }
 
     public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
         setWeapon1(buscarArmaLeida(leido));
         if (getArma1()==null){
-          //  terminal.show("No has introducido un valor valido");
             elegirArma(myWeapon,leido);
         }else {//si es valor valido
             if (getArma1().isOneHand) {
                 if ("SI".equals(leido.toUpperCase())){
-                    //terminal.show("Pon su numero al igual que antes");
                     leido = "scanner.nextLine()";
                     Weapon temporal = (buscarArmaLeida(leido));
                     if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
-                       // terminal.show("No hagas trampas!!");
-                        //terminal.show("Por intentarlo se te impide en esta ocasión introducir la segunda arma");
                     } else {
                         setWeapon2(temporal);
                     }
                 }
-            } else {
-               // terminal.show("Dado que portas un mandoble no puedes tener mas armas simultaneamente");
             }
         }
     }
-    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
-        //terminal.show("A continuacion se te mostrara tu repertorio de armaduras");
-        mostrarArmaduras();
-      //  terminal.show("Elige la que quieras de todas ellas indicando el numero que les corresponde");
-        String leido = opcion.toString();
-        setArmor(buscarArmaduraLeida(leido));
-        if (getArmor()==null){
-            //terminal.show("Valor no valido");
-            elegirArmadura(myArmor,opcion);
-        }else{
-           // terminal.show("La armadura se ha seleccionado con exito");
-        }
-    }
-    public abstract void ajusteHabilidad(int pA, int pD);
-    public abstract int SpecialAttack();
 
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
@@ -265,48 +143,6 @@ public abstract class Fighter implements Serializable {
         }
         return miniontext.toArray(new String[miniontext.size()]);
     }
-
-    public void equiparPredefinidoArmadura(){
-        armor= myArmor.get(0);
-    }
-    public void equiparPredefinidoArma(){
-         arma1 = myWeapon.get(0);
-    }
-
-    public void mostrarArmaduras(){
-        do {
-            //terminal.show(getMyWeapon().remove().toString());
-        } while(!getMyWeapon().isEmpty());
-    }
-    public Weapon buscarArmaLeida (String leido){
-        boolean encontrado=false;
-        Weapon aux;
-        Weapon aux2=null;
-        while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-
-    public Armor buscarArmaduraLeida(String leido){
-        boolean encontrado=false;
-        Armor aux=null;
-        Armor aux2=null;
-        while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public void setWeapon1 (Weapon arma1){
-      this.arma1=arma1;
-      this.arma1.setEquipped1(true);
-    }
     public String [] generateFighterState(){
         String subtype =null;
         if (this instanceof Vampire){
@@ -325,9 +161,6 @@ public abstract class Fighter implements Serializable {
         ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName()};
         return text;
     }
-    public boolean hasActiveEquipment() {
-        return (this.armor != null && this.arma1 != null);
-    }
     public String[] generateEquipment(){
         String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
         equipment [0] = weaponSeparator;
@@ -340,11 +173,119 @@ public abstract class Fighter implements Serializable {
         }
         return equipment;
     }
+    /*---------------------------FUNCIONES MEDIANAS---------------------------------------*/
+    public Specialskill verHabilidad(){
+        if (this instanceof Lycanthrope){
+            Gift gift = new Gift();
+            return gift;
+        }else if (this instanceof  Vampire){
+            Discipline discipline = new Discipline();
+            return discipline;
+        }else{
+            Talent talent = new Talent();
+            return talent;
+        }
+    }
 
+    public int calcularVidaMinions(){
+        if (getMyMinion() == null){
+            return 0;
+        }else {
+            int total = 0;
+
+            while (!this.myMinions.isEmpty()) {
+                Minion slave = this.myMinions.pop();
+                if (slave != null) {
+                    total += slave.getHealth();
+                }
+            }
+            return total;
+        }
+    }
+    public int checkSuccess(int potential){
+        Random random = new Random();
+        int acierto=0;
+        int aux;
+        for (int i=0; i<potential;i++){
+            aux = random.nextInt(6)+1;
+            if (aux>=5){
+                acierto+=1;
+            }
+        }
+        return acierto;
+    }
+    public Armor buscarArmaduraLeida(String leido){
+        boolean encontrado=false;
+        Armor aux=null;
+        Armor aux2=null;
+        while ((!getMyArmor().isEmpty())||(encontrado)) {
+            aux=getMyArmor().remove();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
+    }
+    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
+        String leido = opcion.toString();
+        setArmor(buscarArmaduraLeida(leido));
+        if (getArmor()==null){
+            elegirArmadura(myArmor,opcion);
+        }
+    }
+    public Weapon buscarArmaLeida (String leido){
+        boolean encontrado=false;
+        Weapon aux;
+        Weapon aux2=null;
+        while ((!getMyWeapon().isEmpty())||(encontrado)) {
+            aux=getMyWeapon().remove();
+            if (leido.equals(aux.getId())){
+                encontrado=true;
+                aux2=aux;
+            }
+        }return aux2;
+    }
+    /*---------------------------FUNCIONES PEQUEÑAS---------------------------------------*/
+    public int potencialAtaque (Fighter f){
+        int potential=f.power+f.arma1.getAttack()+f.armor.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
+        if (f.arma2!=null){
+            potential+=f.arma2.getAttack();
+        }
+        return checkSuccess(potential);
+    }
+    public int defensePotential(Fighter f){
+        int potencial=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
+        //porque la implementación de ambos sería idéntica.
+        return checkSuccess(potencial);
+    }
+
+    private int vidaAleatoria(){
+        Random random = new Random();
+        return random.nextInt(5)+1;
+    }
+    private boolean comprobarDaños(int pA, int pD){
+        return (pA>pD);
+    }
+    public abstract void ajusteHabilidad(int pA, int pD);
+    public abstract int SpecialAttack();
+    public boolean hasActiveEquipment() {
+        return (this.armor != null && this.arma1 != null);
+    }
+    public void equiparPredefinidoArmadura(){
+        armor= myArmor.get(0);
+    }
+    public void equiparPredefinidoArma(){
+        arma1 = myWeapon.get(0);
+    }
+
+    /*--------------------------- GETTERS Y SETTERS---------------------------------------*/
+    public void setWeapon1 (Weapon arma1){
+        this.arma1=arma1;
+        this.arma1.setEquipped1(true);
+    }
     public void changeSpecialSkill(Specialskill nuevo){
         this.specialskill=nuevo;
     }
-
     public PendingChallenges getPendingChallenges() {
         return pendingChallenges;
     }
@@ -354,7 +295,9 @@ public abstract class Fighter implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
+    public Stack<Minion> getMyMinion(){
+        return this.myMinions;
+    }
     public void setGold(int gold) {
         this.gold = gold;
     }
@@ -386,11 +329,6 @@ public abstract class Fighter implements Serializable {
     public TFighter getType() {
         return type;
     }
-
-    public Random getRandom() {
-        return random;
-    }
-
     public int getMinionHealth() {
         return minionHealth;
     }
@@ -429,4 +367,34 @@ public abstract class Fighter implements Serializable {
         return this.myArmor;
     }
 }
+/*
+    public Combat startFighting (Fighter desafiante, int oroApostado){
+        fightEachPlayer(desafiante,this,oroApostado);
+        fightEachPlayer(this,desafiante,oroApostado);
+        return new Combat(desafiante,this,0,oroApostado);
+    }
 
+    public void fightEachPlayer(Fighter desafiante, Fighter challenged, int oroApostado){
+        int rounds=0;
+        int pA=0;
+        int pD=0;
+        //boolean esEmpate=false;//preparativo para meterselo al combat
+        do {
+            rounds++; //donde recibe el desafiado
+            //terminal.show("Ronda numero" + rounds + "comienza");
+            pA = potencialAtaque(desafiante);
+            pD = potencialDefensa(challenged);
+            if (comprobarDaños(pA,pD)){
+                ajusteHabilidad(pA,pD);
+                // terminal.show(this.name+" ha recibido un golpe");
+                if (this.minionHealth>0){
+                    //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
+                    this.minionHealth-=1;
+                }else {
+                    this.health -= 1; //considerar caso de que se maten a la vez
+                    // terminal.show(this.health+ " vidas restantes");
+                }
+            }
+        }while((this.health>0)||(desafiante.health>0));
+    }
+*/
