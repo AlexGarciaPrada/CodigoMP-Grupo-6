@@ -151,7 +151,7 @@ public class Database {
             }
         }
         return myMinions;
-    } //no estoy muy seguro de que esto este bien, pero no veo problemas de primeras
+    }
 
     public Stack<Minion> randomMinionDemon(int tope) {
         if (tope <= 3) {

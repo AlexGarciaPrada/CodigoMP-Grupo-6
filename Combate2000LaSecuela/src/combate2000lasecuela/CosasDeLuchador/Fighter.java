@@ -1,13 +1,10 @@
 package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
-import org.w3c.dom.stylesheets.LinkStyle;
-
 import java.io.Serializable;
 import java.util.*;
 import java.lang.Integer;
 import java.lang.String;
-
 import static combate2000lasecuela.Constants.armorSeparator;
 import static combate2000lasecuela.Constants.weaponSeparator;
 
@@ -34,7 +31,7 @@ public abstract class Fighter implements Serializable {
         this.name = name;
         this.health = vidaAleatoria();
         this.type = type;
-        this.myMinions = myMinions;
+        this.myMinions=myMinions;
         this.myArmor= myArmor;
         this.myWeapon = myWeapon;
         this.minionHealth= calcularVidaMinions();
@@ -131,7 +128,8 @@ public abstract class Fighter implements Serializable {
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        for (Minion element: this.getMyMinion()){
+        System.out.println("patata"+getMyMinions().pop().toString());
+        for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
                 miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
             } else if (element instanceof Human) {
@@ -186,19 +184,28 @@ public abstract class Fighter implements Serializable {
             return talent;
         }
     }
-
+    public Stack<Minion> copiaSegura(){
+        Stack<Minion> aux= new Stack<Minion>();
+        for (Minion minion: getMyMinion()){
+            aux.push(minion);
+        }
+        return aux;
+    }
     public int calcularVidaMinions(){
-        if (getMyMinion() == null){
+        Stack<Minion> aux= getMyMinions();
+        Stack<Minion> copia=copiaSegura();
+        if (aux == null){
             return 0;
         }else {
             int total = 0;
 
-            while (!this.myMinions.isEmpty()) {
-                Minion slave = this.myMinions.pop();
+            while (!aux.isEmpty()) {
+                Minion slave = aux.pop();
                 if (slave != null) {
                     total += slave.getHealth();
                 }
             }
+            setMyMinions(copia);
             return total;
         }
     }
@@ -253,6 +260,7 @@ public abstract class Fighter implements Serializable {
         }
         return checkSuccess(potential);
     }
+
     public int defensePotential(Fighter f){
         int potencial=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
@@ -301,7 +309,9 @@ public abstract class Fighter implements Serializable {
     public void setGold(int gold) {
         this.gold = gold;
     }
-
+    public void setMyMinions(Stack<Minion> a){
+        this.myMinions=a;
+    }
     public void setHealth(int Health) {
         this.health = Health;
     }
@@ -323,7 +333,7 @@ public abstract class Fighter implements Serializable {
     }
 
     public Stack<Minion> getMyMinions() {
-        return myMinions;
+        return this.myMinions;
     }
 
     public TFighter getType() {

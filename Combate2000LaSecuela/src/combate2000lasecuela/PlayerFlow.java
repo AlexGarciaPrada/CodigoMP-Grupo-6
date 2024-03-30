@@ -4,7 +4,9 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -209,7 +211,10 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    database.addFighter(player,new Vampire(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    System.out.println("patata inicio");
+                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),false,0);
+                    System.out.println(aux.pop().toString());
+                    database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
                     database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
