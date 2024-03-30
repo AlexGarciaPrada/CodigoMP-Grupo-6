@@ -131,13 +131,7 @@ public class Player extends User {
         this.getFighter().setGold(this.getFighter().getGold()- (int) (gold*0.1));
     }
 
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        super.changeActiveWeapon(player, MyWeapons, weapon);
-    }
 
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        super.changeActiveArmor(player, MyArmor, option);
-    }
 
     public boolean hasPendingChallenges(){
         if (this.getFighter()==null){

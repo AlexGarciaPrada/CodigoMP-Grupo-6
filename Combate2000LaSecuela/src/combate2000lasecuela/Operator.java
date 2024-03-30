@@ -147,13 +147,7 @@ public class Operator extends User {
         return false;
     }
 
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        super.changeActiveWeapon(player, MyWeapons, weapon);
-    }
 
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        super.changeActiveArmor(player, MyArmor, option);
-    }
 
 
     @Override

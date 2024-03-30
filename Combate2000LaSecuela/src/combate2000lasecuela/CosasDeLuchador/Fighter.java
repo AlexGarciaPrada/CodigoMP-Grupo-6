@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.*;
 import java.lang.Integer;
 import java.lang.String;
-import static combate2000lasecuela.Constants.armorSeparator;
-import static combate2000lasecuela.Constants.weaponSeparator;
 
 public abstract class Fighter implements Serializable {
     private String name;
@@ -23,7 +21,7 @@ public abstract class Fighter implements Serializable {
     private Armor armor;
 
     private PendingChallenges pendingChallenges;
-    Specialskill specialskill;
+    private Specialskill specialskill;
 
     public Fighter(String name, TFighter type,
         Stack<Minion> myMinions,LinkedList<Armor> myArmor,
@@ -34,33 +32,32 @@ public abstract class Fighter implements Serializable {
         this.myMinions=myMinions;
         this.myArmor= myArmor;
         this.myWeapon = myWeapon;
-        this.minionHealth= calcularVidaMinions();
+        this.minionHealth= calculateMinionHealth();
         this.pendingChallenges = new PendingChallenges();
         equiparPredefinidoArma();
         this.arma2=null;
         equiparPredefinidoArmadura();
         this.gold=100;
-        this.specialskill=verHabilidad();
+        this.specialskill= setAbility();
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
-    public Combat startFighting (Fighter challenger, int oroApostado){
+    public Combat startFighting (Fighter challenger, int oroApostado){ //Cuidado con lo de la vida postcombates
         int rounds=0;
         int pA=0;
         int pD=0;
         do {
             rounds++; //donde recibe el desafiado
-                pA = potencialAtaque(challenger);
+                pA = attackPotential(challenger);
                 pD = defensePotential(this);
                     if (comprobarDaños(pA,pD)){
                         ajusteHabilidad(pA,pD);
                         if (this.minionHealth>0){
-                          //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
                            this.minionHealth-=1;
                         }else {
                             this.health -= 1; //considerar caso de que se maten a la vez
                         }
                     }
-                pA = potencialAtaque(this);
+                pA = attackPotential(this);
                 pD = defensePotential(challenger);
                 if (comprobarDaños(pA,pD)){
                     ajusteHabilidad(pA,pD);
@@ -73,26 +70,6 @@ public abstract class Fighter implements Serializable {
         }while((this.health>0)||(challenger.health>0));
         return new Combat(challenger, this, rounds, oroApostado);
     }
-
-
-    public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
-        setWeapon1(buscarArmaLeida(leido));
-        if (getArma1()==null){
-            elegirArma(myWeapon,leido);
-        }else {//si es valor valido
-            if (getArma1().isOneHand) {
-                if ("SI".equals(leido.toUpperCase())){
-                    leido = "scanner.nextLine()";
-                    Weapon temporal = (buscarArmaLeida(leido));
-                    if (!temporal.isOneHand && !temporal.elegida) { //anti buggs (que tengas equipada la misma arma dos veces)
-                    } else {
-                        setWeapon2(temporal);
-                    }
-                }
-            }
-        }
-    }
-
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
@@ -110,6 +87,7 @@ public abstract class Fighter implements Serializable {
         }
         return weapontext.toArray(new String[weapontext.size()]);
     }
+
     public String [] generateArmorText() {
         ArrayList<String> armortext=new ArrayList<>();
         int i =1;
@@ -151,34 +129,25 @@ public abstract class Fighter implements Serializable {
         }
         ArrayList <String> textbuilder = new ArrayList<>();
         if (arma2 ==null){
-            String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+            String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
                     ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "};
+
             textbuilder.addAll(Arrays.asList(text));
             textbuilder.addAll(Arrays.asList(generateMinionText()));
             return textbuilder.toArray(new String[textbuilder.size()]);
 
 
         }
-        String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+        String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
         ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName(),"Esbirros"};
+
         textbuilder.addAll(Arrays.asList(text));
         textbuilder.addAll(Arrays.asList(generateMinionText()));
         return textbuilder.toArray(new String[textbuilder.size()]);
     }
-    public String[] generateEquipment(){
-        String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
-        equipment [0] = weaponSeparator;
-        for (int i=0;i<generateWeaponsText().length;i++){
-            equipment[i+1]=generateWeaponsText()[i];
-        }
-        equipment [generateWeaponsText().length+1] = armorSeparator;
-        for(int i =0 ;i< generateArmorText().length;i++){
-            equipment[generateWeaponsText().length+2+i]=generateArmorText()[i];
-        }
-        return equipment;
-    }
+
     /*---------------------------FUNCIONES MEDIANAS---------------------------------------*/
-    public Specialskill verHabilidad(){
+    public Specialskill setAbility(){
         if (this instanceof Lycanthrope){
             Gift gift = new Gift();
             return gift;
@@ -190,31 +159,16 @@ public abstract class Fighter implements Serializable {
             return talent;
         }
     }
-    public Stack<Minion> copiaSegura(){
-        Stack<Minion> aux= new Stack<Minion>();
-        for (Minion minion: getMyMinion()){
-            aux.push(minion);
-        }
-        return aux;
-    }
-    public int calcularVidaMinions(){
-        Stack<Minion> aux= getMyMinions();
-        Stack<Minion> copia=copiaSegura();
-        if (aux == null){
+    public int calculateMinionHealth(){
+        if (myMinions == null){
             return 0;
         }else {
             int total = 0;
-
-            while (!aux.isEmpty()) {
-                Minion slave = aux.pop();
-                if (slave != null) {
-                    total += slave.getHealth();
-                }
+            for (Minion minion:myMinions){
+                total+=minion.getHealth();
             }
-            setMyMinions(copia);
             return total;
-        }
-    }
+    }}
     public int checkSuccess(int potential){
         Random random = new Random();
         int acierto=0;
@@ -227,39 +181,9 @@ public abstract class Fighter implements Serializable {
         }
         return acierto;
     }
-    public Armor buscarArmaduraLeida(String leido){
-        boolean encontrado=false;
-        Armor aux=null;
-        Armor aux2=null;
-        while ((!getMyArmor().isEmpty())||(encontrado)) {
-            aux=getMyArmor().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
-    public void elegirArmadura (LinkedList<Armor> myArmor, Integer opcion){
-        String leido = opcion.toString();
-        setArmor(buscarArmaduraLeida(leido));
-        if (getArmor()==null){
-            elegirArmadura(myArmor,opcion);
-        }
-    }
-    public Weapon buscarArmaLeida (String leido){
-        boolean encontrado=false;
-        Weapon aux;
-        Weapon aux2=null;
-        while ((!getMyWeapon().isEmpty())||(encontrado)) {
-            aux=getMyWeapon().remove();
-            if (leido.equals(aux.getId())){
-                encontrado=true;
-                aux2=aux;
-            }
-        }return aux2;
-    }
+
     /*---------------------------FUNCIONES PEQUEÑAS---------------------------------------*/
-    public int potencialAtaque (Fighter f){
+    public int attackPotential(Fighter f){
         int potential=f.power+f.arma1.getAttack()+f.armor.getAttack()+ f.specialskill.getDamage()+SpecialAttack();
         if (f.arma2!=null){
             potential+=f.arma2.getAttack();

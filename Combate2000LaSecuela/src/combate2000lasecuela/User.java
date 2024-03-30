@@ -53,12 +53,6 @@ public abstract class User implements Saveable {
         this.nick = nick;
     }
 
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        player.getFighter().elegirArma(MyWeapons, weapon);
-    }
 
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        player.getFighter().elegirArmadura(MyArmor, option);
-    }
 
 }
