@@ -128,14 +128,13 @@ public abstract class Fighter implements Serializable {
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        System.out.println("patata"+getMyMinions().pop().toString());
         for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
             } else if (element instanceof Human) {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
             } else {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
             }
             i++;
         }

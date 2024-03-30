@@ -363,7 +363,7 @@ public class Database {
     }
     public boolean addMinion(Operator operator, Player player, String newMinionId) {
         boolean done = false;
-        Map<String, Minion> minionMap = minionManager.getElements().get("MinionMap");
+        Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
             if (minion.getId().equals(newMinionId)) {

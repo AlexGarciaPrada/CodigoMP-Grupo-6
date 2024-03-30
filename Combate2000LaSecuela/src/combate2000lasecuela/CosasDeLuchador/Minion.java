@@ -20,7 +20,7 @@ public abstract class Minion implements Saveable {
 
     @Override
     public String getId() {
-        return null;
+        return Integer.toString(this.id);
     }
 
     //------------------------ GETTERS & SETTERS
