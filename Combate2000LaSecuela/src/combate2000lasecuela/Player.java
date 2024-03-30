@@ -101,12 +101,7 @@ public class Player extends User {
     }
 */ // se podia reducir el numero de ifs
     public Challenge challengePlayer(Player challenged, int gold) {
-        if (!this.isBlocked() && !challenged.isBlocked() && this.fighter != null && challenged.getFighter() != null) {
-            if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
                 return new Challenge(this, challenged, gold);
-            }
-        }
-        return null;
     }
 
     /*

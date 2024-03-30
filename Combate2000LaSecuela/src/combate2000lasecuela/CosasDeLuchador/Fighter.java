@@ -130,11 +130,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
             } else if (element instanceof Human) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
             } else {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
+                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
             }
             i++;
         }
@@ -149,14 +149,21 @@ public abstract class Fighter implements Serializable {
         } else if (this instanceof Hunter) {
             subtype = "Cazador";
         }
+        ArrayList <String> textbuilder = new ArrayList<>();
         if (arma2 ==null){
             String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-                    ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes Julio","Armadura: "+armor.getName()};
-            return text;
+                    ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "};
+            textbuilder.addAll(Arrays.asList(text));
+            textbuilder.addAll(Arrays.asList(generateMinionText()));
+            return textbuilder.toArray(new String[textbuilder.size()]);
+
+
         }
         String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-        ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName()};
-        return text;
+        ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName(),"Esbirros"};
+        textbuilder.addAll(Arrays.asList(text));
+        textbuilder.addAll(Arrays.asList(generateMinionText()));
+        return textbuilder.toArray(new String[textbuilder.size()]);
     }
     public String[] generateEquipment(){
         String [] equipment = new String [generateWeaponsText().length+ generateArmorText().length+2];
