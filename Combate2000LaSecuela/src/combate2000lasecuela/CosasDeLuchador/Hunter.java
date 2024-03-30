@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class Hunter extends Fighter implements Serializable {
-int will;
-Talent talent;
+    int will;
+    Talent talent;
     public Hunter(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.will=3;
@@ -20,9 +20,9 @@ Talent talent;
 
     @Override
     public void ajusteHabilidad(int pA, int pD) {
-    if ((pA<pD)&&(getWill()>0)){
-        setWill(getWill()-1);
-    }
+        if ((pA<pD)&&(getWill()>0)){
+            setWill(getWill()-1);
+        }
     }
 
     public int getWill() {
