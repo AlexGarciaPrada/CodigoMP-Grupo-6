@@ -28,11 +28,11 @@ public class Operator extends User {
 
     public boolean deleteMinion(Player player, String minionId) {
         boolean deleted = false;
-        Stack<Minion> minionStack = player.getFighter().getMyMinions();
-        Stack<Minion> temporaryStack = player.getFighter().getMyMinions();
+        Stack<Minion> minionStack = player.getFighter().getMyMinion();
+        Stack<Minion> temporaryStack = new Stack<>();
         while (!minionStack.isEmpty()) {
             Minion minion = minionStack.pop();
-            if (minion.getId().equals(minionId)) {
+            if ((minion.getId().equals(minionId))){
                 deleted = true;
                 break;
             } else {
@@ -56,12 +56,13 @@ public class Operator extends User {
     }
 
     public boolean containsMinion(Player player, Minion minion) {
+        boolean found = false;
         Stack<Minion> myMin = player.getFighter().getMyMinion();
         for (Minion minion1 : myMin) {
             if (minion1.equals(minion)) {
-                return true;
+                found = true;
             }
-        } return false;
+        } return found;
     }
 
     public boolean deleteElement(Player player, String elementId) {
