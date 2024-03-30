@@ -48,7 +48,6 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         String filePath = String.format(serRoute+"%s.ser", className);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(elements);        // Serializa el HashMap llamado 'users'
-            System.out.println("Datos de usuarios serializados correctamente.");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -40,8 +40,11 @@ public class Constants {
     public static final String [] noCombatsText = {"No hay combates anteriores"};
     public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Salir"};
     public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
+    public static final String [] ilegalWeaponOperation={"No se ha podido realizar la operacion"};
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
+    public static final String []  selectWeaponText={"Elige lo que quieras editar","1. Arma 1 (Equipada de manera predefinida","2. Arma2","3. Salir"};
+    public static final String[]   selectEquipmentText={"Elige lo que deseas editar","1. Arma","2. Armadura","3. Salir"};
     public static final String editFighterText="Elige el usuario que vas a editar (para volver atras introduce SALIR)";
 
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
@@ -60,20 +63,21 @@ public class Constants {
     public static final String unblockUserText="DESBLOQUEO DE USUARIOS";
     public static final String userBlock="ha sido bloqueado correctamente";
     public static final String userUnblock="ha sido desbloqueado correctamente";
-    public static final String isTie = " El resultado es un empate";
+    public static final String [] isTie ={" El resultado es un empate"};
     public static final String[] winner = {"Has ganado el combate"};
     public static final String[] loser = {"Has perdido el combate"};
     public static final String createFighter = "Elige el tipo de personaje que deseas crear: ";
 
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
-    public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas y Armaduras","2. Esbirros","3. Modificadores"};
-    public static final String [] editArmorWeaponMenu={"Elige que deseas hacer:","1. Cambiar arma/armadura","2. Añadir arma/armadura"};
-    public static final String [] editMinionsMenu={"Elige que deseas hacer:","1. Cambiar esbirros","2. Añadir esbirros"};
+    public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas","2. Armaduras","3. Esbirros"};
+    public static final String [] editMenu={"Elige que deseas hacer:","1. Eliminar","2. Añadir"};
     public static final String elementText="Escriba el nombre del elemento a eliminar: ";
     public static final String newElementText="Escriba el nombre del elemento a añadir: : ";
     public static final String [] elementNotEquipped = {"El elemento introducido no esta equipado"};
     public static final String [] elementAlreadyEquipped = {"El elemento introducido ya esta equipado"};
-    public static final String [] elementEquipped = {"El elemento introducido se ha equipado correctamente"};
+    public static final String [] elementDeleted = {"El elemento introducido se ha eliminado correctamente"};
+    public static final String [] elementAdded = {"El elemento introducido se ha añadido correctamente"};
+
 
 
 }

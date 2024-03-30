@@ -26,65 +26,84 @@ public class Operator extends User {
         player.getFighter().changeSpecialSkill(skill);
     }
 
-    public boolean deleteMinion(Player player, String minionName) {
+    public boolean deleteMinion(Player player, String minionId) {
         boolean deleted = false;
-        for (Minion minion: player.getFighter().getMyMinions()) {
-            if (minion.getName().equals(minionName)) {
-                player.getFighter().getMyMinions().remove(minion);
+        Stack<Minion> minionStack = player.getFighter().getMyMinions();
+        Stack<Minion> temporaryStack = player.getFighter().getMyMinions();
+        while (!minionStack.isEmpty()) {
+            Minion minion = minionStack.pop();
+            if (minion.getId().equals(minionId)) {
                 deleted = true;
+                break;
+            } else {
+                temporaryStack.push(minion);
             }
         }
+        while (!temporaryStack.isEmpty()) {
+            minionStack.push(temporaryStack.pop());
+        }
+
         return deleted;
     }
 
-    public boolean addMinion(Player player, String minionId) {
+    public boolean addMinion(Player player, Minion minion) {
         boolean added = false;
-        for (Minion minion: player.getFighter().getMyMinions()) {
-            if (!minion.getId().equals(minionId)) {
-                player.getFighter().getMyMinions().push(minion);
-                added = true;
-            }
+        if (!containsMinion(player, minion)) {
+            player.getFighter().getMyMinion().push(minion);
+            added = true;
         }
         return added;
     }
 
-    //para eliminar armadura de la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere eliminarse
-    public boolean deleteElement(Player player, String elementName) {
+    public boolean containsMinion(Player player, Minion minion) {
+        Stack<Minion> myMin = player.getFighter().getMyMinion();
+        for (Minion minion1 : myMin) {
+            if (minion1.equals(minion)) {
+                return true;
+            }
+        } return false;
+    }
+
+    public boolean deleteElement(Player player, String elementId) {
         boolean deleted = false;
-        for (Armor armor: player.getFighter().getMyArmor()) {
-            if (armor.getName().equals(elementName) && armor.isEquipped()) {
-                player.getFighter().getMyArmor().remove(armor);
+        Iterator<Armor> armorIterator = player.getFighter().getMyArmor().iterator();
+        while (armorIterator.hasNext()) {
+            Armor armor = armorIterator.next();
+            if (armor.getId().equals(elementId)) {
+                armorIterator.remove();
                 deleted = true;
+                break;
             }
         }
         if (!deleted) {
-            for (Weapon weapon: player.getFighter().getMyWeapon()) {
-                if (weapon.getName().equals(elementName) && weapon.isEquipped()) {
-                    player.getFighter().getMyWeapon().remove(weapon);
+            Iterator<Weapon> weaponIterator = player.getFighter().getMyWeapon().iterator();
+            while (weaponIterator.hasNext()) {
+                Weapon weapon = weaponIterator.next();
+                if (weapon.getId().equals(elementId)) {
+                    weaponIterator.remove();
                     deleted = true;
+                    break;
                 }
             }
         } return deleted;
-     }
+    }
 
-     public boolean addElement(Player player, String elementId) {
-         boolean added = false;
-         for (Armor armor: player.getFighter().getMyArmor()) {
-             if (armor.getId().equals(elementId) && !armor.isEquipped()) {
-                 player.getFighter().getMyArmor().add(armor);
-                 added = true;
-             }
-         }
-         if (!added) {
-             for (Weapon weapon: player.getFighter().getMyWeapon()) {
-                 if (weapon.getId().equals(elementId) && !weapon.isEquipped()) {
-                     player.getFighter().getMyWeapon().add(weapon);
-                     added = true;
-                 }
-             }
-         } return added;
 
-     }
+    public boolean addWeapon(Player player, Weapon element) {
+        boolean added = false;
+        if (!player.getFighter().getMyWeapon().contains(element)) {
+            player.getFighter().getMyWeapon().add(element);
+            added = true;
+        } return added;
+    }
+
+    public boolean addArmor(Player player, Armor element) {
+        boolean added = false;
+        if (!player.getFighter().getMyArmor().contains(element)) {
+            player.getFighter().getMyArmor().add(element);
+            added = true;
+        } return added;
+    }
 
 
 

@@ -1,14 +1,12 @@
 package combate2000lasecuela.CosasDeLuchador;
 import combate2000lasecuela.Combat;
 import combate2000lasecuela.PendingChallenges;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 import java.lang.Integer;
 import java.lang.String;
-import java.util.LinkedList;
 
 import static combate2000lasecuela.Constants.armorSeparator;
 import static combate2000lasecuela.Constants.weaponSeparator;
@@ -45,9 +43,9 @@ public abstract class Fighter implements Serializable {
         this.myWeapon = myWeapon;
         this.minionHealth= calcularVidaMinions();
         this.pendingChallenges = new PendingChallenges();
-        this.arma1=equiparPredefinidoArma();
+        equiparPredefinidoArma();
         this.arma2=null;
-        this.armor =equiparPredefinidoArmadura();
+        equiparPredefinidoArmadura();
         this.gold=100;
         this.specialskill=verHabilidad();
     }
@@ -182,17 +180,12 @@ public abstract class Fighter implements Serializable {
     }
 
     public void elegirArma(LinkedList<Weapon> myWeapon,String leido){
-       // terminal.show("Se te mostraran las armas de que dispones");
-        //mostrarArmas();
-        //terminal.show("Elige un arma de las disponibles indicando su numero identificativo");
         setWeapon1(buscarArmaLeida(leido));
         if (getArma1()==null){
           //  terminal.show("No has introducido un valor valido");
             elegirArma(myWeapon,leido);
         }else {//si es valor valido
             if (getArma1().isOneHand) {
-                //terminal.show("Como tu arma es de una mano se te permite coger otra arma");
-                //terminal.show("Quieres hacerlo?");
                 if ("SI".equals(leido.toUpperCase())){
                     //terminal.show("Pon su numero al igual que antes");
                     leido = "scanner.nextLine()";
@@ -229,8 +222,11 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
         for (Weapon element: myWeapon){
-            if (element.isEquipped()){
-                weapontext.add("E "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            if (element.equals(arma1)){
+                weapontext.add("E Arma 1 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else if (element.equals(arma2)){
+
+                weapontext.add("E Arma 2 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }else{
                 weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
@@ -243,10 +239,10 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> armortext=new ArrayList<>();
         int i =1;
         for (Armor element: myArmor){
-            if (element.isEquipped()){
-                armortext.add("E "+Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+            if (element.equals(armor)){
+                armortext.add("E "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }else{
-                armortext.add(Integer.toString(i+ generateWeaponsText().length) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
+                armortext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }
 
             i++;
@@ -255,36 +251,26 @@ public abstract class Fighter implements Serializable {
     }
 
     public String [] generateMinionText() {
-        ArrayList<String> miniontext=new ArrayList<>();
+        ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        for (Minion element: myMinions){
-            if (element.isEquipped()) {
-                if (element instanceof Ghoul) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add("M" + Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
+        for (Minion element: this.getMyMinion()){
+            if (element instanceof Ghoul) {
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
+            } else if (element instanceof Human) {
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
             } else {
-                if (element instanceof Ghoul) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-                } else if (element instanceof Human) {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-                } else {
-                    miniontext.add(Integer.toString(i) + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-                }
+                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
             }
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
     }
 
-    public Armor equiparPredefinidoArmadura(){
-        return this.myArmor.remove(0);
+    public void equiparPredefinidoArmadura(){
+        armor= myArmor.get(0);
     }
-    public Weapon equiparPredefinidoArma(){
-        return this.myWeapon.remove(0);
+    public void equiparPredefinidoArma(){
+         arma1 = myWeapon.get(0);
     }
 
     public void mostrarArmaduras(){
@@ -319,7 +305,7 @@ public abstract class Fighter implements Serializable {
     }
     public void setWeapon1 (Weapon arma1){
       this.arma1=arma1;
-      this.arma1.elegida=true;
+      this.arma1.setEquipped1(true);
     }
     public String [] generateFighterState(){
         String subtype =null;
@@ -330,8 +316,13 @@ public abstract class Fighter implements Serializable {
         } else if (this instanceof Hunter) {
             subtype = "Cazador";
         }
+        if (arma2 ==null){
+            String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+                    ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes Julio","Armadura: "+armor.getName()};
+            return text;
+        }
         String [] text ={"Nombre del luchador: "+this.getName(),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-        ,"Tipo: "+type.getName()};
+        ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName()};
         return text;
     }
     public boolean hasActiveEquipment() {
@@ -420,13 +411,15 @@ public abstract class Fighter implements Serializable {
     }
     public Armor getArmor(){
         return this.armor;
+
     }
     public void setArmor (Armor armadura){
         this.armor =armadura;
+        armor.setEquipped(true);
     }
     public void setWeapon2 (Weapon arma2){
         this.arma2=arma2;
-        this.arma2.elegida=true;
+        this.arma2.setEquipped2(true);
     }
     public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
