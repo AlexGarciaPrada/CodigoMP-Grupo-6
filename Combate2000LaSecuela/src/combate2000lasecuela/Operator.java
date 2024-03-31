@@ -6,13 +6,11 @@ import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Stack;
 
 
 public class Operator extends User {
 
-    private boolean validate;
     public Operator(String name, String password, String nick) {
         super(name, password, nick);
     }
@@ -106,14 +104,6 @@ public class Operator extends User {
         } return added;
     }
 
-
-
-
-    //aun no estan definidas las fortalezas y debilidades
-    public void changeWeakness() {};
-
-    public void changeStrength() {};
-
     public void changeGold (Player player, int amount) {
         player.getFighter().setGold(amount);
     }
@@ -133,26 +123,6 @@ public class Operator extends User {
 
     public void unblockPlayer(Player player){
         player.setBlocked(false);
-    }
-
-    public boolean validateChallenge(Challenge c , int option) { // option = 1 (aceptar desafio). opption = 2 (denegar desafio)
-        Player challenged = c.getChallenged();
-        switch (option) {
-            case 1:
-                challenged.addPendingChallenge(c);
-                return true;
-            case 2:
-                return false;
-        }
-        return false;
-    }
-
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        super.changeActiveWeapon(player, MyWeapons, weapon);
-    }
-
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        super.changeActiveArmor(player, MyArmor, option);
     }
 
 

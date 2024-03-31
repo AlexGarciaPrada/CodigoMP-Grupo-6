@@ -14,8 +14,6 @@ public abstract class User implements Saveable {
         private String nick;
         private String registerNumber;
 
-        private MessageManager messageManager;
-
         public User(String name, String password, String nick) {
             this.name = name;
             this.password = password;
@@ -30,8 +28,6 @@ public abstract class User implements Saveable {
     public String getName() {
         return name;
     }
-
-    public MessageManager getMessageManager() {return messageManager;}
 
     public void setName(String name) {
         this.name = name;
@@ -53,12 +49,6 @@ public abstract class User implements Saveable {
         this.nick = nick;
     }
 
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        player.getFighter().elegirArma(MyWeapons, weapon);
-    }
 
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        player.getFighter().elegirArmadura(MyArmor, option);
-    }
 
 }

@@ -26,7 +26,4 @@ public abstract class Item implements Saveable {
         this.attack = attack;
     }
 
-    public boolean isEquipped() {
-        return equipped;
-    }
 }

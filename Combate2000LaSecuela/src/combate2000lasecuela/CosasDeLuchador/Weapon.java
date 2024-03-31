@@ -8,7 +8,6 @@ public class Weapon extends Item implements Serializable {
     final boolean isOneHand;
     private boolean equipped1;
     private boolean equipped2;
-
     private String id;
     boolean elegida;
     public Weapon (String linea){
