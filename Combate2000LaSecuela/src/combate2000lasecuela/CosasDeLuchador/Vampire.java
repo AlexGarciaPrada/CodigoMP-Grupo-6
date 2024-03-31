@@ -33,6 +33,8 @@ public class Vampire extends Fighter implements Serializable {
     public void ajusteHabilidad(int pA, int pD) {
         if (pA-5>=pD){
            setPuntosSangre(getPuntosSangre()+4);
+        }else if (pA>pD){
+            aumentarSangre();
         }
     }
 

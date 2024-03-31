@@ -41,7 +41,9 @@ public abstract class Fighter implements Serializable {
         this.specialskill= setAbility();
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
-    public Combat startFighting (Fighter challenger, int oroApostado){ //Cuidado con lo de la vida postcombates
+    public Combat startFighting (Fighter challenger, int oroApostado){
+        int vidaDesafiado= this.getHealth();
+        int vidaDesafiante=challenger.getHealth();
         int rounds=0;
         int pA=0;
         int pD=0;
@@ -54,7 +56,7 @@ public abstract class Fighter implements Serializable {
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
                         }else {
-                            this.health -= 1; //considerar caso de que se maten a la vez
+                            this.health -= 1;
                         }
                     }
                 pA = attackPotential(this);
@@ -68,6 +70,8 @@ public abstract class Fighter implements Serializable {
                     }
                 }
         }while((this.health>0)||(challenger.health>0));
+        this.setHealth(vidaDesafiado);
+        challenger.setHealth(vidaDesafiante);
         return new Combat(challenger, this, rounds, oroApostado);
     }
     public String [] generateWeaponsText() {
@@ -128,8 +132,8 @@ public abstract class Fighter implements Serializable {
             subtype = "Cazador";
         }
         ArrayList <String> textbuilder = new ArrayList<>();
-        if (arma2 ==null){
-            String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+            if (arma2 ==null){
+                String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
                     ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "};
 
             textbuilder.addAll(Arrays.asList(text));
