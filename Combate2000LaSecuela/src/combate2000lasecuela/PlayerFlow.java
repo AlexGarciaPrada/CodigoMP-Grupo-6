@@ -211,9 +211,7 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    System.out.println("patata inicio");
                     Stack<Minion> aux = database.randomMinions(type.getSuerteM(),false,0);
-                    System.out.println(aux.pop().toString());
                     database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
