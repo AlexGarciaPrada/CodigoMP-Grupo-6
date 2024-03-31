@@ -19,9 +19,10 @@ public abstract class Fighter implements Serializable {
     private Weapon arma1;
     private Weapon arma2;
     private Armor armor;
-
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
+    ArrayList<String> textoBatalla = new ArrayList<>();
+
 
     public Fighter(String name, TFighter type,
         Stack<Minion> myMinions,LinkedList<Armor> myArmor,
@@ -55,9 +56,13 @@ public abstract class Fighter implements Serializable {
                         ajusteHabilidad(pA,pD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
+                            estadoBatalla(rounds,this,true,textoBatalla,false);
                         }else {
                             this.health -= 1;
+                            estadoBatalla(rounds,this,false,textoBatalla,false);
                         }
+                    }else{
+                        estadoBatalla(rounds,this,false,textoBatalla,true);
                     }
                 pA = attackPotential(this);
                 pD = defensePotential(challenger);
@@ -65,9 +70,14 @@ public abstract class Fighter implements Serializable {
                     ajusteHabilidad(pA,pD);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
+                        estadoBatalla(rounds,this,true,textoBatalla,false);
                     }else {
                         challenger.health -= 1;
+                        estadoBatalla(rounds,this,false,textoBatalla,false);
                     }
+                }else{
+                    estadoBatalla(rounds,this,false,textoBatalla,true);
+
                 }
         }while((this.health>0)||(challenger.health>0));
         this.setHealth(vidaDesafiado);
@@ -121,6 +131,35 @@ public abstract class Fighter implements Serializable {
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
+    }
+    public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){
+        String nombre;
+        String aux;
+        if (!esEmpate){
+            if (f==this){
+                nombre=this.name;
+            }else {
+                nombre = f.name;
+            }
+            if (impactoAmortiguado){
+                aux= " El golpe se lo llevaron los esbirros";
+            }else{
+                aux= " El impacto lo sufrio el personaje";
+            }
+             String[] texto= {"Es la ronda "+ ronda+ " el luchador: "+ nombre + " ha recibido un golpe"+ aux+
+                " a los esbirros les queda "+ f.getMinionHealth()+
+                " de vida en total y al personaje "+ f.getHealth()+ " vidas"};
+             textoBatalla.addAll(Arrays.asList(texto));
+        }else{
+            String[] texto = {"Es la ronda "+ronda+ " y se ha producido un empate tecnico"};
+            textoBatalla.addAll(Arrays.asList(texto));
+
+        }
+
+
+    }
+    public String[] publicarTocho(){
+        return this.textoBatalla.toArray(new String[this.textoBatalla.size()]);
     }
     public String [] generateFighterState(){
         String subtype =null;

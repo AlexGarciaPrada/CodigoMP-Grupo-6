@@ -95,6 +95,7 @@ public class PlayerFlow extends Gameflow {
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
+            messageManager.showContent(player.getFighter().publicarTocho());
             messageManager.showContent(combat.result());
             if (!(combat.result().equals(isTie))){
                 Fighter winner = combat.getWinner();
