@@ -24,13 +24,13 @@ public class Operator extends User {
         player.getFighter().changeSpecialSkill(skill);
     }
 
-    public boolean deleteMinion(Player player, String minionId) {
+    public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
         Stack<Minion> minionStack = player.getFighter().getMyMinion();
         Stack<Minion> temporaryStack = new Stack<>();
         while (!minionStack.isEmpty()) {
             Minion minion = minionStack.pop();
-            if ((minion.getId().equals(minionId))){
+            if (minion.getId().equals(Integer.toString(minionId))) {
                 deleted = true;
                 break;
             } else {
@@ -63,12 +63,12 @@ public class Operator extends User {
         } return found;
     }
 
-    public boolean deleteElement(Player player, String elementId) {
+    public boolean deleteElement(Player player, int elementId) {
         boolean deleted = false;
         Iterator<Armor> armorIterator = player.getFighter().getMyArmor().iterator();
         while (armorIterator.hasNext()) {
             Armor armor = armorIterator.next();
-            if (armor.getId().equals(elementId)) {
+            if (armor != null && armor.getId().equals(Integer.toString(elementId))) {
                 armorIterator.remove();
                 deleted = true;
                 break;
@@ -78,7 +78,7 @@ public class Operator extends User {
             Iterator<Weapon> weaponIterator = player.getFighter().getMyWeapon().iterator();
             while (weaponIterator.hasNext()) {
                 Weapon weapon = weaponIterator.next();
-                if (weapon.getId().equals(elementId)) {
+                if (weapon != null && weapon.getId().equals(Integer.toString(elementId))) {
                     weaponIterator.remove();
                     deleted = true;
                     break;
