@@ -8,14 +8,20 @@ public abstract class Minion implements Saveable {
     private int health;
     private String tipo;
     private int id;
+<<<<<<< Updated upstream
     private int minionId;
     private boolean equipped;
+=======
+    private boolean equipped;
+    protected MinionAttributes addedAttribute;
+>>>>>>> Stashed changes
 
-    public Minion(String linea){
+    public Minion(String linea, MinionAttributes addedAttribute){
         String [] valores = linea.split(";");
         this.id=Integer.parseInt(valores[0]);
         this.name = valores[1];
         this.tipo = valores[2];
+        this.addedAttribute = addedAttribute;
     }
 
     @Override
@@ -52,4 +58,7 @@ public abstract class Minion implements Saveable {
 
     public String getTipo() { return this.tipo;}
 
+    public MinionAttributes getAddedAttribute() {
+        return addedAttribute;
+    }
 }
