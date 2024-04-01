@@ -256,16 +256,6 @@ public abstract class Fighter implements Serializable {
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-<<<<<<< Updated upstream
-        for (Minion element: this.getMyMinion()){
-            if (element instanceof Ghoul) {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Dependencia: " + ((Ghoul) element).getLealtad() + "Salud: " + element.getHealth());
-            } else if (element instanceof Human) {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Lealtad: " + ((Human) element).getLealtad() + "Salud: " + element.getHealth());
-            } else {
-                miniontext.add(i + ". " + element.getName() + "Tipo: " + element.getTipo() + "Pacto: " + ((Demon) element).getPact() + "Salud: " + element.getHealth());
-            }
-=======
         for (Minion element: getMyMinions()){
 //            if (element instanceof Ghoul) {
 //                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
@@ -275,7 +265,6 @@ public abstract class Fighter implements Serializable {
 //                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
 //            }
             addMinionText(miniontext,i,element);
->>>>>>> Stashed changes
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
