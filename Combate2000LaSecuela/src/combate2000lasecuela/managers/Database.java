@@ -135,9 +135,9 @@ public class Database {
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
         Minion slave;
-        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1 + suerte;
+        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1;
         if (numero>handicap){
-            numero=(numero%handicap)+1;
+            numero=(numero%handicap)+1+ suerte;
         }
         for (int i = 0; i <= numero; i++) {
             eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
@@ -170,9 +170,10 @@ public class Database {
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
         Weapon weapon;
-        int numero = random.nextInt(28) + 1 + suerte;
+        int numero = random.nextInt(28) + 1;
         if (numero>handicap){
-            numero=(numero%handicap)+1;        }
+            numero=(numero%handicap)+1+ suerte;
+        }
         for (int i = 1; i <= numero; i++) {
             eleccion = random.nextInt(loader.getIm().getElements().get("WeaponMap").size());
             weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(Integer.toString(eleccion));
@@ -187,9 +188,9 @@ public class Database {
         int eleccion;
         Armor armor;
         LinkedList<Armor> myArmor = new LinkedList<>();
-        int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 + suerte;
+        int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 ;
         if (numero>handicap){
-            numero=(numero%handicap)+1; //si alguno no entiende el +1 que me pregunte
+            numero=(numero%handicap)+1+suerte; //si alguno no entiende el +1 que me pregunte
         }
         for (int i = 1; i <= numero; i++) {
             eleccion = random.nextInt(loader.getIm().getElements().get("ArmorMap").size());
@@ -373,19 +374,17 @@ public class Database {
         return done;
     }
 
+    public void addMinionText (ArrayList miniontext, int i, Minion minion){
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " " +  minion.getAddedAttribute().name() + ":" + minion.getAddedAttribute().getValue() + " Salud: " + minion.getHealth());
+    }
+
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
         Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
-            if (minion instanceof Ghoul) {
-                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Dependencia: " + ((Ghoul) minion).getLealtad() + " Salud: " + minion.getHealth());
-            } else if (minion instanceof Human) {
-                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Lealtad: " + ((Human) minion).getLealtad() + " Salud: " + minion.getHealth());
-            } else {
-                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Pacto: " + ((Demon) minion).getPact() + " Salud: " + minion.getHealth());
-            }
+            addMinionText(miniontext,i,minion);
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);

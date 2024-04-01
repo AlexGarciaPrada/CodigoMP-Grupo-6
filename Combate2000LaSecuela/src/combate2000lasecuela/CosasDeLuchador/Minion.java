@@ -9,11 +9,16 @@ public abstract class Minion implements Saveable {
     private String tipo;
     private int id;
 
-    public Minion(String linea){
+    private int minionId;
+    private boolean equipped;
+    protected MinionAttributes addedAttribute;
+
+    public Minion(String linea, MinionAttributes addedAttribute){
         String [] valores = linea.split(";");
         this.id=Integer.parseInt(valores[0]);
         this.name = valores[1];
         this.tipo = valores[2];
+        this.addedAttribute = addedAttribute;
     }
 
     @Override
@@ -38,4 +43,7 @@ public abstract class Minion implements Saveable {
 
     public String getTipo() { return this.tipo;}
 
+    public MinionAttributes getAddedAttribute() {
+        return addedAttribute;
+    }
 }
