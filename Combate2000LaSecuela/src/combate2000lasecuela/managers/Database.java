@@ -328,46 +328,46 @@ public class Database {
         updateUsers();
     }
 
-    public boolean deleteElement(Operator operator, Player player, String elementId) {
+    public boolean deleteElement(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteElement(player, elementId);
         return done;
     }
-    public boolean addWeapon(Operator operator, Player player, String newElemId) {
+    public boolean addWeapon(Operator operator, Player player, int newElemId) {
         boolean done = false;
         Map<String, Item> itemMap = loader.getIm().getElements().get("WeaponMap");
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
-            if (item.getId().equals(newElemId)) {
+            if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addWeapon(player, (Weapon) item);
             }
         }
         return done;
     }
 
-    public boolean addArmor(Operator operator, Player player, String newElemId) {
+    public boolean addArmor(Operator operator, Player player, int newElemId) {
         boolean done = false;
         Map<String, Item> itemMap = loader.getIm().getElements().get("ArmorMap");
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
-            if (item.getId().equals(newElemId)) {
+            if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addArmor(player, (Armor) item);
             }
         }
         return done;
     }
 
-    public boolean deleteMinion(Operator operator, Player player, String minionId) {
+    public boolean deleteMinion(Operator operator, Player player, int minionId) {
         boolean done;
         done = operator.deleteMinion(player, minionId);
         return done;
     }
-    public boolean addMinion(Operator operator, Player player, String newMinionId) {
+    public boolean addMinion(Operator operator, Player player, int newMinionId) {
         boolean done = false;
         Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
-            if (minion.getId().equals(newMinionId)) {
+            if (minion.getId().equals(Integer.toString(newMinionId))) {
                 done = operator.addMinion(player, minion);
             }
         }

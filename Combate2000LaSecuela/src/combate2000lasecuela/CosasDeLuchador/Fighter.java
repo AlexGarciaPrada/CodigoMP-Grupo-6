@@ -88,13 +88,13 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
         for (Weapon element: myWeapon){
-            if (element.equals(arma1)){
-                weapontext.add("E Arma 1 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else if (element.equals(arma2)){
+            if (element != null && element.getId().equals(arma1.getId())){
+                weapontext.add("E Arma 1: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else if (element != null && element.equals(arma2)){
 
-                weapontext.add("E Arma 2 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else{
-                weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add("E Arma 2: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else if (element != null){
+                weapontext.add(element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
 
             i++;
@@ -106,9 +106,9 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> armortext=new ArrayList<>();
         int i =1;
         for (Armor element: myArmor){
-            if (element.equals(armor)){
+            if (element != null && element.getId().equals(armor.getId())){
                 armortext.add("E "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
-            }else{
+            }else if (element != null){
                 armortext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }
 
