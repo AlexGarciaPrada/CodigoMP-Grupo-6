@@ -6,7 +6,6 @@ import static java.lang.Integer.valueOf;
 
 public class Ghoul extends Minion implements Serializable {
     int health;
-    int lealtad;
 
     private MinionAttributes addedAttribute = MinionAttributes.Dependencia;
 
@@ -27,7 +26,11 @@ public class Ghoul extends Minion implements Serializable {
             return addedAttribute;
         }
 
-        public void setAddedAttribute(MinionAttributes addedAttribute) {
+    public String getLealtad() {
+        return this.addedAttribute.getValue();
+    }
+
+    public void setAddedAttribute(MinionAttributes addedAttribute) {
             this.addedAttribute = addedAttribute;
         }
     }

@@ -5,7 +5,9 @@ public enum MinionAttributes {
 
     private String value;
 
-    MinionAttributes() { }
+    MinionAttributes() {
+
+    }
 
     public String getValue() {
         return value;
