@@ -2,7 +2,6 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Saveable;
 
-import java.io.Serializable;
 
 public class TFighter implements Saveable {
     private String name;

@@ -4,7 +4,9 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -93,6 +95,7 @@ public class PlayerFlow extends Gameflow {
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
+            messageManager.showContent(player.getFighter().publicarTocho());
             messageManager.showContent(combat.result());
             if (!(combat.result().equals(isTie))){
                 Fighter winner = combat.getWinner();
@@ -172,7 +175,7 @@ public class PlayerFlow extends Gameflow {
             Player challenged = (Player) database.getUser(user);
             if (challenged.getFighter()!=null){
                 int gold = messageManager.showReadGold(player.getFighter().getGold());
-                Challenge challenge = player.challengePlayer((Player) database.getUser(user),gold);
+                Challenge challenge = player.challengePlayer(challenged,gold);
                 database.addChallenge(challenge);
             }
             else{
@@ -209,7 +212,8 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    database.addFighter(player,new Vampire(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),false,0);
+                    database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
                     database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));

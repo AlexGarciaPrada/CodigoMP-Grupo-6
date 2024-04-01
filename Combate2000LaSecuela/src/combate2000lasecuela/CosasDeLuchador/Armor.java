@@ -8,7 +8,6 @@ public class Armor extends Item implements Serializable {
     public Armor (String linea){
         String [] valores = linea.split(";");
         this.id=valores[0];
-        setEquipped(false);
         setName(valores[1].trim());
         this.defense = Integer.parseInt(valores[2].trim());
         setAttack(Integer.parseInt( valores[3].trim()));;

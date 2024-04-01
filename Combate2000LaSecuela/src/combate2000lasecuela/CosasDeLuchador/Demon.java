@@ -26,6 +26,9 @@ public class Demon extends Minion implements Serializable {
     public MinionAttributes getAddedAttribute() {
         return addedAttribute;
     }
+    public String getPact(){
+        return addedAttribute.getValue();
+    }
     public void setAddedAttribute(MinionAttributes addedAttribute) {
         this.addedAttribute = addedAttribute;
     }

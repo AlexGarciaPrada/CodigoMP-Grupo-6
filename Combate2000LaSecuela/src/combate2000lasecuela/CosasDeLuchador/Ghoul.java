@@ -5,20 +5,8 @@ import java.io.Serializable;
 import static java.lang.Integer.valueOf;
 
 public class Ghoul extends Minion implements Serializable {
-<<<<<<< Updated upstream
-int health;
-int lealtad;
-    public Ghoul(String linea) {
-
-        super(linea);
-        String [] valores = linea.split(";");
-        this.lealtad=Integer.parseInt(valores[3].trim());
-        this.health=Integer.parseInt(valores[4].trim());
-        setHealth(health);
-    }
-=======
-
     int health;
+
     private MinionAttributes addedAttribute = MinionAttributes.Dependencia;
 
     public Ghoul(String linea) {
@@ -28,7 +16,6 @@ int lealtad;
             this.health=Integer.parseInt(valores[4].trim());
             setHealth(health);
         }
->>>>>>> Stashed changes
 
         @Override
         public int getHealth() {
@@ -39,7 +26,11 @@ int lealtad;
             return addedAttribute;
         }
 
-        public void setAddedAttribute(MinionAttributes addedAttribute) {
+    public String getLealtad() {
+        return this.addedAttribute.getValue();
+    }
+
+    public void setAddedAttribute(MinionAttributes addedAttribute) {
             this.addedAttribute = addedAttribute;
         }
     }

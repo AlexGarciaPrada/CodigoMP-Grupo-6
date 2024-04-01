@@ -21,39 +21,7 @@ public class Player extends User {
         this.blocked = false;
         this.fighter =null;
     }
-    /*
-    public void Fight(Player playerDesafiado, int oroApostado){
-        int opcion=0;
-        if (haveFighter(this)&&(haveFighter(playerDesafiado))) {
-            Fighter desafiante = this.getFighter();
-            Fighter desafiado = playerDesafiado.getFighter();
-            if (desafiante.getArmadura()==null) {
-                getNumero(opcion);
-                changeActiveArmor(this,desafiante.getMyArmo(),opcion);
-            }else if (desafiante.getArma1()==null){r
-                changeActiveWeapon(this,desafiante.getMyWeapon(),getArma(opcion));
-            }
 
-            if (desafiado.getArmadura()==null) {
-                getNumero(opcion);
-                changeActiveArmor(playerDesafiado,desafiado.getMyArmor(),opcion);
-            }else if (desafiado.getArma1()==null){
-                changeActiveWeapon(playerDesafiado,desafiado.getMyWeapon(),getArma(opcion));
-            }
-            //comprobaciones que petarían el combater terminadas
-            Combat combate= desafiado.startFighting(desafiante,oroApostado);
-            //falta guardar en el registro de combates el resultado
-        }
-    }
-    public String getArma(int opcion){
-        return Integer.toString(opcion);
-    }
-    public int getNumero(int opcion){
-        //desde el GameFLow tengo que recibir el scanner de la opcion
-        return opcion;
-    }
-
-     */
     public int whoGetsGold(Combat c) {
         if (c.getResult().equals(Constants.isTie)) {
             return 0;
@@ -74,6 +42,7 @@ public class Player extends User {
         }
     }
 
+    //STATIC COUNTER
     private String generateRegisterNum(int num) {
         Random r = new Random();
 
@@ -101,47 +70,11 @@ public class Player extends User {
     }
 */ // se podia reducir el numero de ifs
     public Challenge challengePlayer(Player challenged, int gold) {
-        if (!this.isBlocked() && !challenged.isBlocked() && this.fighter != null && challenged.getFighter() != null) {
-            if (this.getFighter().getGold() > gold && challenged.getFighter().getGold() > gold) {
                 return new Challenge(this, challenged, gold);
-            }
-        }
-        return null;
-    }
-
-    /*
-    public void updateAfterCombat(Combat c, Fighter f) {
-        if (c.getChallenger() == c.getWinner()) {
-            int actualGold = c.getChallenger().getGold();
-            actualGold += c.getGoldGained();
-            c.getChallenger().setGold(actualGold);
-            c.getChallenged().setGold(-c.getGoldGained());
-        }
-        else if (c.getChallenged() == c.getWinner()) {
-            int actualGold = c.getChallenged().getGold();
-            actualGold += c.getGoldGained();
-            c.getChallenged().setGold(actualGold);
-            c.getChallenger().setGold(-c.getGoldGained());
-        }
-    }
-*/
-
-
-    //para saber si se puede realizar un combate antes de llamar a player.fight
-    public boolean hasActiveEquipment() {
-        return this.getFighter().hasActiveEquipment();
     }
 
     public void rejectingChallenge(int gold){
         this.getFighter().setGold(this.getFighter().getGold()- (int) (gold*0.1));
-    }
-
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        super.changeActiveWeapon(player, MyWeapons, weapon);
-    }
-
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        super.changeActiveArmor(player, MyArmor, option);
     }
 
     public boolean hasPendingChallenges(){

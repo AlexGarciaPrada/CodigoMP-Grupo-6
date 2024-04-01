@@ -131,15 +131,17 @@ public class Database {
 
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
         int handicap=10;
+        int eleccion;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
         Minion slave;
-        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1 + suerte;
+        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1;
         if (numero>handicap){
-            numero-=handicap;
+            numero=(numero%handicap)+1+ suerte;
         }
-        for (Integer i = 0; i <= numero; i++) {
-            slave = loader.getMm().getElements().get("MinionMap").get(i.toString());
+        for (int i = 0; i <= numero; i++) {
+            eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
+            slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
             if (!(esVampiro) || !(slave instanceof Human)) {
                 myMinions.push(slave);
                 if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
@@ -149,7 +151,7 @@ public class Database {
             }
         }
         return myMinions;
-    } //no estoy muy seguro de que esto este bien, pero no veo problemas de primeras
+    }
 
     public Stack<Minion> randomMinionDemon(int tope) {
         if (tope <= 3) {
@@ -163,32 +165,36 @@ public class Database {
     }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
-        int handicap=8;
+        int handicap=10;
+        int eleccion;
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
         Weapon weapon;
-        int number = random.nextInt(28) + 1 + suerte;
-        if (number>8){
-            number-=handicap;
+        int numero = random.nextInt(28) + 1;
+        if (numero>handicap){
+            numero=(numero%handicap)+1+ suerte;
         }
-        for (Integer i = 1; i <= number; i++) {
-            weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(i.toString());
+        for (int i = 1; i <= numero; i++) {
+            eleccion = random.nextInt(loader.getIm().getElements().get("WeaponMap").size());
+            weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(Integer.toString(eleccion));
             myWeapon.add(weapon);
         }
         return myWeapon;
     }
 
     public LinkedList<Armor> randomArmor(int suerte) {
-        int handicap = 8;
+        int handicap = 10;
         Random random = new Random();
+        int eleccion;
         Armor armor;
         LinkedList<Armor> myArmor = new LinkedList<>();
-        int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 + suerte;
+        int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 ;
         if (numero>handicap){
-            numero-=handicap;
+            numero=(numero%handicap)+1+suerte; //si alguno no entiende el +1 que me pregunte
         }
         for (int i = 1; i <= numero; i++) {
-            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(i));
+            eleccion = random.nextInt(loader.getIm().getElements().get("ArmorMap").size());
+            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(eleccion));
             myArmor.add(armor);
         }
         return myArmor;
@@ -358,7 +364,7 @@ public class Database {
     }
     public boolean addMinion(Operator operator, Player player, String newMinionId) {
         boolean done = false;
-        Map<String, Minion> minionMap = minionManager.getElements().get("MinionMap");
+        Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
             if (minion.getId().equals(newMinionId)) {
