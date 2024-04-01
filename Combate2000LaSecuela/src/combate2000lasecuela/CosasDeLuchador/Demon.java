@@ -4,14 +4,15 @@ import java.io.Serializable;
 import java.util.Stack;
 
 public class Demon extends Minion implements Serializable {
-    private Stack<Minion> pilaDemoniaca;
-    private MinionAttributes addedAttribute = MinionAttributes.Pacto;
+
+    private String Pact;
+private Stack<Minion> pilaDemoniaca;
 
     public Demon(String linea) {
-        super(linea,MinionAttributes.Pacto);
+        super(linea);
         String [] valores = linea.split(";");
         this.pilaDemoniaca=null;
-        this.addedAttribute.setValue(valores[3]);
+        this.Pact = valores[3];
     }
 
     public void setDemonStack(Stack<Minion> pilaDemoniaca) {
@@ -23,10 +24,5 @@ public class Demon extends Minion implements Serializable {
         return 0;
     }
 
-    public MinionAttributes getAddedAttribute() {
-        return addedAttribute;
-    }
-    public void setAddedAttribute(MinionAttributes addedAttribute) {
-        this.addedAttribute = addedAttribute;
-    }
+    public String getPact() {return this.Pact;}
 }

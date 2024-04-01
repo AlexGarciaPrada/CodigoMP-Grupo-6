@@ -373,17 +373,19 @@ public class Database {
         return done;
     }
 
-    public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " " +  minion.getAddedAttribute().name() + ":" + minion.getAddedAttribute().getValue() + " Salud: " + minion.getHealth());
-    }
-
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
         Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
-            addMinionText(miniontext,i,minion);
+            if (minion instanceof Ghoul) {
+                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Dependencia: " + ((Ghoul) minion).getLealtad() + " Salud: " + minion.getHealth());
+            } else if (minion instanceof Human) {
+                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Lealtad: " + ((Human) minion).getLealtad() + " Salud: " + minion.getHealth());
+            } else {
+                miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " Pacto: " + ((Demon) minion).getPact() + " Salud: " + minion.getHealth());
+            }
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
