@@ -45,6 +45,8 @@ public abstract class Fighter implements Serializable {
     public Combat startFighting (Fighter challenger, int oroApostado){
         int vidaDesafiado= this.getHealth();
         int vidaDesafiante=challenger.getHealth();
+        int vidaMinionsDesafiado=this.minionHealth;
+        int vidaMinionsDesafiante=challenger.minionHealth;
         int rounds=0;
         int pA=0;
         int pD=0;
@@ -82,6 +84,8 @@ public abstract class Fighter implements Serializable {
         }while((this.health>0)||(challenger.health>0));
         this.setHealth(vidaDesafiado);
         challenger.setHealth(vidaDesafiante);
+        this.setMinionsHealth(vidaMinionsDesafiado);
+        challenger.setMinionsHealth(vidaMinionsDesafiante);
         return new Combat(challenger, this, rounds, oroApostado);
     }
     public String [] generateWeaponsText() {
@@ -266,6 +270,9 @@ public abstract class Fighter implements Serializable {
     public void setWeapon1 (Weapon arma1){
         this.arma1=arma1;
         this.arma1.setEquipped1(true);
+    }
+    public void setMinionsHealth(int vida){
+        this.minionHealth=vida;
     }
     public void changeSpecialSkill(Specialskill nuevo){
         this.specialskill=nuevo;
