@@ -57,7 +57,7 @@
 57; AZAZEL; DEMONIO; Pacto de Odio;
 58; LAURA; HUMANO; NORMAL; 2;
 59; VORTEX; GHOUL; 4; 1;
-60; BELCEBÚ; DEMONIO; Pacto de Maldición;
+60; VALORUS; DEMONIO; Pacto del Chocolate;
 61; VLAD; GHOUL; 1; 3;
 62; LILITH; GHOUL; 5; 2;
 63; MAMMON; DEMONIO; Pacto de Fuego Infernal;

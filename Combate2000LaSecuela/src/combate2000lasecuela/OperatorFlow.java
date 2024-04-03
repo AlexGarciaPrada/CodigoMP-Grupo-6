@@ -213,7 +213,7 @@ public class  OperatorFlow {
             case 1:
                 messageManager.showContent(player.getFighter().generateWeaponsText());
                 int elementId = messageManager.showReadableBox(elementText, 28);
-                boolean done = database.deleteElement(operator, player, elementId);
+                boolean done = database.deleteWeapon(operator, player, elementId);
                 if (!done) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
@@ -238,7 +238,7 @@ public class  OperatorFlow {
             case 1:
                 messageManager.showContent(player.getFighter().generateArmorText());
                 int elementId = messageManager.showReadableBox(elementText, 28);
-                boolean done = database.deleteElement(operator, player, elementId);
+                boolean done = database.deleteArmor(operator, player, elementId);
                 if (!done) {
                     messageManager.showContent(elementNotEquipped);
                 } else {

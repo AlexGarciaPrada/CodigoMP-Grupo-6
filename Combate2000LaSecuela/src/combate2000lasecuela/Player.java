@@ -42,7 +42,7 @@ public class Player extends User {
             this.fighter = fighter;
         }
     }
-    
+
     private String generateRegisterNum() {
         Random r = new Random();
 

@@ -93,12 +93,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Weapon element: myWeapon){
             if (element != null && element.getId().equals(arma1.getId())){
-                weapontext.add("E Arma 1: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add("E Arma 1: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }else if (element != null && element.equals(arma2)){
-
-                weapontext.add("E Arma 2: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add("E Arma 2: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }else if (element != null){
-                weapontext.add(element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add(i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
 
             i++;
@@ -129,11 +128,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
             } else if (element instanceof Human) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
             } else {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
             }
             i++;
         }
