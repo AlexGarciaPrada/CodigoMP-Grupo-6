@@ -21,6 +21,7 @@ public abstract class Fighter implements Serializable {
     private Armor armor;
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
+    private ArrayList<String [] > mailbox ;
     ArrayList<String> textoBatalla = new ArrayList<>();
 
 
@@ -40,6 +41,7 @@ public abstract class Fighter implements Serializable {
         equiparPredefinidoArmadura();
         this.gold=100;
         this.specialskill= setAbility();
+        this.mailbox = new ArrayList<>();
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
     public Combat startFighting (Fighter challenger, int oroApostado){
@@ -351,6 +353,18 @@ public abstract class Fighter implements Serializable {
         this.arma2=arma2;
         this.arma2.setEquipped2(true);
     }
+    public void addMail(String [] element){
+        mailbox.add(element);
+    }
+    public String [] getMail(){
+       String [] text =mailbox.get(0);
+       mailbox.remove(0);
+       return text;
+    }
+    public boolean isMailboxEmpty(){
+        return mailbox.isEmpty();
+    }
+
     public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }

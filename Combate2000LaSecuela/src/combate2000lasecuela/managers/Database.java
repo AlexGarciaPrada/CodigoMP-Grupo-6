@@ -471,4 +471,11 @@ public class Database {
         fighter.setGold(fighter.getGold()+gold);
         updateUsers();
     }
+    public void addMail(Player player,String [] mail){
+        player.getFighter().addMail(mail);
+    }
+    public String [] getMail(Player player){
+        return player.getFighter().getMail();
+    }
+
 }
