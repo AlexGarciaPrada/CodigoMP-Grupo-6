@@ -475,7 +475,9 @@ public class Database {
         player.getFighter().addMail(mail);
     }
     public String [] getMail(Player player){
-        return player.getFighter().getMail();
+        String [] text = player.getFighter().getMail();
+        updateUsers();
+        return text;
     }
 
 }
