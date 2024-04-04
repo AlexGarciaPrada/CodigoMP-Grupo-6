@@ -13,11 +13,9 @@ public abstract class Item implements Saveable {
     public String getName() {
         return name;
     }
-
     public int getAttack() {
         return attack;
     }
-
     public void setName(String name) {
         this.name = name;
     }

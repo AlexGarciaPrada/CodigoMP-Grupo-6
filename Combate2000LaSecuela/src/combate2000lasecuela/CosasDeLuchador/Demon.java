@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.util.Stack;
 
 public class Demon extends Minion implements Serializable {
-    private Stack<Minion> pilaDemoniaca;
-    private MinionAttributes addedAttribute = MinionAttributes.Pacto;
-
-    public Demon(String linea) {
-        super(linea);
-        String [] valores = linea.split(";");
-        this.pilaDemoniaca=null;
+    private Stack<Minion> demonStack;
+    public Demon(String line) {
+        super(line);
+        String [] values = line.split(";");
+        this.demonStack =null;
     }
 
     @Override
@@ -18,10 +16,7 @@ public class Demon extends Minion implements Serializable {
         return "Pacto";
     }
 
-    public void setDemonStack(Stack<Minion> pilaDemoniaca) {
-        this.pilaDemoniaca = pilaDemoniaca;
+    public void setDemonStack(Stack<Minion> demonStack) {
+        this.demonStack = demonStack;
     }
-
-
-
 }

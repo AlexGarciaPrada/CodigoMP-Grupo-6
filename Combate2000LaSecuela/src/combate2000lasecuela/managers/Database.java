@@ -444,13 +444,11 @@ public class Database {
                 fighter.setWeapon1(weapon);
                 updateUsers();
             }
-
         }else{
             fighter.setWeapon1(weapon);
             updateUsers();
         }
     }
-
 
     public void equipWeapon2(Player player, Weapon weapon) {
         Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
@@ -479,5 +477,4 @@ public class Database {
         updateUsers();
         return text;
     }
-
 }
