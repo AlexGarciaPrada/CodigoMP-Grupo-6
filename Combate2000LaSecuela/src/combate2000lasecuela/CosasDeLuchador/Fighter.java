@@ -84,11 +84,12 @@ public abstract class Fighter implements Serializable {
 
                 }
         }while((this.health>0)&&(challenger.health>0));
+        boolean desafiadoEsGanador = this.health>challenger.health;
         this.setHealth(vidaDesafiado);
         challenger.setHealth(vidaDesafiante);
         this.setMinionsHealth(vidaMinionsDesafiado);
         challenger.setMinionsHealth(vidaMinionsDesafiante);
-        return new Combat(challenger, this, rounds, oroApostado);
+        return new Combat(challenger, this, rounds, oroApostado,desafiadoEsGanador);
     }
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
