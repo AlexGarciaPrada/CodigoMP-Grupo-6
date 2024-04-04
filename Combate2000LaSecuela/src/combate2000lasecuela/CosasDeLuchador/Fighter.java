@@ -174,16 +174,7 @@ public abstract class Fighter implements Serializable {
             subtype = "Cazador";
         }
         ArrayList <String> textbuilder = new ArrayList<>();
-            if (arma2 ==null){
-                String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-                    ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "};
-            textbuilder.addAll(Arrays.asList(text));
-            textbuilder.addAll(Arrays.asList(generateMinionText()));
-            return textbuilder.toArray(new String[textbuilder.size()]);
-        }
-        String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-        ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName(),"Esbirros"};
-
+        String[] text = new String[]{this.toString()};
         textbuilder.addAll(Arrays.asList(text));
         textbuilder.addAll(Arrays.asList(generateMinionText()));
         return textbuilder.toArray(new String[textbuilder.size()]);
@@ -364,26 +355,19 @@ public abstract class Fighter implements Serializable {
     public LinkedList<Armor> getMyArmor(){
         return this.myArmor;
     }
+    public boolean getEquipped2(){
+        if (arma2!=null){
+            return false;
+        }
+        return false;
+    }
 
     public String toString(){
-        return arma2.getEquipped2() ? getFighterText(arma2.getName()): getFighterText("No tienes");
+        return this.getEquipped2() ? getFighterText(arma2.getName()): getFighterText("No tienes");
     }
-    public String getFighterText(String hasWeapon2) {
-        return "Fighter{" +
-                "name='" + name + '\'' +
-                ", gold=" + gold +
-                ", health=" + health +
-                ", power=" + power +
-                ", myMinions=" + myMinions +
-                ", myArmor=" + myArmor +
-                ", myWeapon=" + myWeapon +
-                ", type=" + type +
-                ", minionHealth=" + minionHealth +
-                ", arma1=" + arma1 +
-                ", arma2=" + arma2.getEquipped2() +
-                ", armor=" + armor +
-                '}';
-    }
+    public String getFighterText(String hasWeapon2, String subtype) {
+        return  "Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
+            ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "}
 }
 /*
     public Combat startFighting (Fighter desafiante, int oroApostado){
