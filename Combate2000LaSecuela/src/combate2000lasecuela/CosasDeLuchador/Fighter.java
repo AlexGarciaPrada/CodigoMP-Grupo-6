@@ -50,14 +50,16 @@ public abstract class Fighter implements Serializable {
         int vidaMinionsDesafiado=this.minionHealth;
         int vidaMinionsDesafiante=challenger.minionHealth;
         int rounds=0;
-        int pA=0;
-        int pD=0;
-        do {
+        int pAA;
+        int pDD;
+        int pAD;
+        int pDA;
+        while((this.health>0)&&(challenger.health>0)){
             rounds++; //donde recibe el desafiado
-                pA = attackPotential(challenger);
-                pD = defensePotential(this);
-                    if (comprobarDaños(pA,pD)){
-                        ajusteHabilidad(pA,pD);
+                pAA = attackPotential(challenger);
+                pDD = defensePotential(this);
+                    if (comprobarDaños(pAA,pDD)){
+                        ajusteHabilidad(pAA,pDD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
                             estadoBatalla(rounds,this,true,textoBatalla,false);
@@ -68,27 +70,28 @@ public abstract class Fighter implements Serializable {
                     }else{
                         estadoBatalla(rounds,this,false,textoBatalla,true);
                     }
-                pA = attackPotential(this);
-                pD = defensePotential(challenger);
-                if (comprobarDaños(pA,pD)){
-                    ajusteHabilidad(pA,pD);
+                pAD = attackPotential(this);
+                pDA = defensePotential(challenger);
+                if (comprobarDaños(pAD,pDA)){
+                    ajusteHabilidad(pAD,pDA);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
-                        estadoBatalla(rounds,this,true,textoBatalla,false);
+                        estadoBatalla(rounds,challenger,true,textoBatalla,false);
                     }else {
                         challenger.health -= 1;
-                        estadoBatalla(rounds,this,false,textoBatalla,false);
+                        estadoBatalla(rounds,challenger,false,textoBatalla,false);
                     }
                 }else{
-                    estadoBatalla(rounds,this,false,textoBatalla,true);
+                    estadoBatalla(rounds,challenger,false,textoBatalla,true);
 
                 }
-        }while((this.health>0)||(challenger.health>0));
+        }
+        boolean desafiadoEsGanador = this.health>challenger.health;
         this.setHealth(vidaDesafiado);
         challenger.setHealth(vidaDesafiante);
         this.setMinionsHealth(vidaMinionsDesafiado);
         challenger.setMinionsHealth(vidaMinionsDesafiante);
-        return new Combat(challenger, this, rounds, oroApostado);
+        return new Combat(challenger, this, rounds, oroApostado,desafiadoEsGanador);
     }
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();

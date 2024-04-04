@@ -7,7 +7,7 @@ public class Discipline extends Specialskill implements Serializable {
     int costeSangre;
     int puntosDisponibles;
     public Discipline(){
-       this.disciplineDamage=2; //por ejemplo
+       this.disciplineDamage=1; //se acaba de comer un nerfeo
        this.costeSangre=0;
     }
     public boolean usarDisciplina(int puntosDisponibles){

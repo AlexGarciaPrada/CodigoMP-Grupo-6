@@ -13,25 +13,28 @@ public class Combat implements Saveable {
     private Fighter loser;
     private int goldGained;
     private String [] result;
+    private boolean desafiadoEsGanador;
 
-    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained) {
+    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained,boolean desafiadoEsGanador) {
         this.challenger = challenger;
         this.challenged = challenged;
         this.rounds = rounds;
         this.date = new Date();
         this.goldGained = goldGained;
         this.result = result();
+        this.desafiadoEsGanador=desafiadoEsGanador;
+
     }
 
 
     public String [] result() {
         String [] text = new String[1];
-        if (challenger.getHealth() < challenged.getHealth()) {
+        if (desafiadoEsGanador) {
             text[0]="Ha ganado "+challenged.getName();
             setWinner(challenged);
             setLoser(challenger);
             return text; }
-        else if (challenger.getHealth() > challenged.getHealth()) {
+        else if (!desafiadoEsGanador) {
             text[0]="Ha ganado "+challenger.getName();
             setWinner(challenger);
             setLoser(challenged);
