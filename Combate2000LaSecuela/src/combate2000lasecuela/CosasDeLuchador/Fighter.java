@@ -21,6 +21,7 @@ public abstract class Fighter implements Serializable {
     private Armor armor;
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
+    private ArrayList<String [] > mailbox ;
     ArrayList<String> textoBatalla = new ArrayList<>();
 
 
@@ -40,6 +41,7 @@ public abstract class Fighter implements Serializable {
         equiparPredefinidoArmadura();
         this.gold=100;
         this.specialskill= setAbility();
+        this.mailbox = new ArrayList<>();
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
     public Combat startFighting (Fighter challenger, int oroApostado){
@@ -93,12 +95,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Weapon element: myWeapon){
             if (element != null && element.getId().equals(arma1.getId())){
-                weapontext.add("E Arma 1: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add("E Arma 1: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }else if (element != null && element.equals(arma2)){
-
-                weapontext.add("E Arma 2: "+ element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add("E Arma 2: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }else if (element != null){
-                weapontext.add(element.getId() +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+                weapontext.add(i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
 
             i++;
@@ -129,11 +130,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
             } else if (element instanceof Human) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
             } else {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
             }
             i++;
         }
@@ -352,6 +353,18 @@ public abstract class Fighter implements Serializable {
         this.arma2=arma2;
         this.arma2.setEquipped2(true);
     }
+    public void addMail(String [] element){
+        mailbox.add(element);
+    }
+    public String [] getMail(){
+       String [] text =mailbox.get(0);
+       mailbox.remove(0);
+       return text;
+    }
+    public boolean isMailboxEmpty(){
+        return mailbox.isEmpty();
+    }
+
     public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }

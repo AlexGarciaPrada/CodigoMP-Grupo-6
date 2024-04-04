@@ -328,9 +328,15 @@ public class Database {
         updateUsers();
     }
 
-    public boolean deleteElement(Operator operator, Player player, int elementId) {
+    public boolean deleteArmor(Operator operator, Player player, int elementId) {
         boolean done;
-        done = operator.deleteElement(player, elementId);
+        done = operator.deleteArmor(player, elementId);
+        return done;
+    }
+
+    public boolean deleteWeapon(Operator operator, Player player, int elementId) {
+        boolean done;
+        done = operator.deleteWeapon(player, elementId);
         return done;
     }
     public boolean addWeapon(Operator operator, Player player, int newElemId) {
@@ -465,4 +471,13 @@ public class Database {
         fighter.setGold(fighter.getGold()+gold);
         updateUsers();
     }
+    public void addMail(Player player,String [] mail){
+        player.getFighter().addMail(mail);
+    }
+    public String [] getMail(Player player){
+        String [] text = player.getFighter().getMail();
+        updateUsers();
+        return text;
+    }
+
 }

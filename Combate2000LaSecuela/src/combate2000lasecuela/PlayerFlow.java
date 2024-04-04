@@ -56,6 +56,11 @@ public class PlayerFlow extends Gameflow {
     }
 
     private static void playerLogin(Player player, MessageManager messageManager) {
+        if (player.getFighter()!=null) {
+            while (!(player.getFighter().isMailboxEmpty())) {
+                messageManager.showContent(player.getFighter().getMail());
+            }
+        }
         int option = messageManager.showPlayerMenu(player.getName());
         switch(option){
             case 1: //Crear personaje
@@ -97,6 +102,9 @@ public class PlayerFlow extends Gameflow {
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
             messageManager.showContent(player.getFighter().publicarTocho());
             messageManager.showContent(combat.result());
+            //Para que lo reciba el otro jugador
+            challenge.getChallenger().getFighter().addMail(player.getFighter().publicarTocho());
+            challenge.getChallenger().getFighter().addMail(combat.result());
             if (!(combat.result().equals(isTie))){
                 Fighter winner = combat.getWinner();
                 Fighter loser = combat.getLoser();
@@ -252,8 +260,6 @@ public class PlayerFlow extends Gameflow {
         if (database.isCombatRegisterEmpty()){
             messageManager.showContent(noCombatsText);
         }else{
-
-
         String [] content = database.getCombatHistory(player);
         if (content==null){
             messageManager.showContent(noCombatsText);
