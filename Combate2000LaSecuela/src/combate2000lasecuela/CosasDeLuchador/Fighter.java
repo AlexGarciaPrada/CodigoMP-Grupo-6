@@ -83,7 +83,7 @@ public abstract class Fighter implements Serializable {
                     estadoBatalla(rounds,this,false,textoBatalla,true);
 
                 }
-        }while((this.health>0)||(challenger.health>0));
+        }while((this.health>0)&&(challenger.health>0));
         this.setHealth(vidaDesafiado);
         challenger.setHealth(vidaDesafiante);
         this.setMinionsHealth(vidaMinionsDesafiado);
