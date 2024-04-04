@@ -6,6 +6,7 @@ import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Stack;
 
 
@@ -24,13 +25,13 @@ public class Operator extends User {
         player.getFighter().changeSpecialSkill(skill);
     }
 
-    public boolean deleteMinion(Player player, String minionId) {
+    public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
         Stack<Minion> minionStack = player.getFighter().getMyMinion();
         Stack<Minion> temporaryStack = new Stack<>();
         while (!minionStack.isEmpty()) {
             Minion minion = minionStack.pop();
-            if ((minion.getId().equals(minionId))){
+            if (minion.getId().equals(Integer.toString(minionId))) {
                 deleted = true;
                 break;
             } else {
@@ -63,31 +64,22 @@ public class Operator extends User {
         } return found;
     }
 
-    public boolean deleteElement(Player player, String elementId) {
+    public boolean deleteWeapon(Player player, int elementId) {
         boolean deleted = false;
-        Iterator<Armor> armorIterator = player.getFighter().getMyArmor().iterator();
-        while (armorIterator.hasNext()) {
-            Armor armor = armorIterator.next();
-            if (armor.getId().equals(elementId)) {
-                armorIterator.remove();
-                deleted = true;
-                break;
-            }
-        }
-        if (!deleted) {
-            Iterator<Weapon> weaponIterator = player.getFighter().getMyWeapon().iterator();
-            while (weaponIterator.hasNext()) {
-                Weapon weapon = weaponIterator.next();
-                if (weapon.getId().equals(elementId)) {
-                    weaponIterator.remove();
-                    deleted = true;
-                    break;
-                }
-            }
+        LinkedList<Weapon> weaponList = player.getFighter().getMyWeapon();
+        if (elementId <= weaponList.size()) {
+            weaponList.remove(elementId - 1);
+            deleted = true;
         } return deleted;
     }
-
-
+    public boolean deleteArmor(Player player, int elementId) {
+        boolean deleted = false;
+        LinkedList<Armor> armorList = player.getFighter().getMyArmor();
+        if (elementId <= armorList.size()) {
+            armorList.remove(elementId-1);
+            deleted = true;
+        } return deleted;
+    }
     public boolean addWeapon(Player player, Weapon element) {
         boolean added = false;
         if (!player.getFighter().getMyWeapon().contains(element)) {

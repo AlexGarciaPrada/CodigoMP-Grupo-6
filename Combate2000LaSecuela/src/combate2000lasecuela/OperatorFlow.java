@@ -212,8 +212,8 @@ public class  OperatorFlow {
         switch (option) {
             case 1:
                 messageManager.showContent(player.getFighter().generateWeaponsText());
-                String elementId = messageManager.showReadString(elementText);
-                boolean done = database.deleteElement(operator, player, elementId);
+                int elementId = messageManager.showReadableBox(elementText, 28);
+                boolean done = database.deleteWeapon(operator, player, elementId);
                 if (!done) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
@@ -222,7 +222,7 @@ public class  OperatorFlow {
                 break;
             case 2:
                 messageManager.showContent(database.generateWeaponText());
-                String elemId = messageManager.showReadString(newElementText);
+                int elemId = messageManager.showReadableBox(newElementText, 28);
                 boolean check = database.addWeapon(operator, player, elemId);
                 if (!check) {
                     messageManager.showContent(elementAlreadyEquipped);
@@ -237,8 +237,8 @@ public class  OperatorFlow {
         switch (option) {
             case 1:
                 messageManager.showContent(player.getFighter().generateArmorText());
-                String elementId = messageManager.showReadString(elementText);
-                boolean done = database.deleteElement(operator, player, elementId);
+                int elementId = messageManager.showReadableBox(elementText, 28);
+                boolean done = database.deleteArmor(operator, player, elementId);
                 if (!done) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
@@ -247,7 +247,7 @@ public class  OperatorFlow {
                 break;
             case 2:
                 messageManager.showContent(database.generateArmorText());
-                String elemId = messageManager.showReadString(newElementText);
+                int elemId = messageManager.showReadableBox(newElementText, 28);
                 boolean check = database.addArmor(operator, player, elemId);
                 if (!check) {
                     messageManager.showContent(elementAlreadyEquipped);
@@ -262,8 +262,8 @@ public class  OperatorFlow {
         switch (option) {
             case 1:
                 messageManager.showContent(player.getFighter().generateMinionText());
-                String minionName = messageManager.showReadString(elementText);
-                boolean done2 = database.deleteMinion(operator, player, minionName);
+                int elementId = messageManager.showReadableBox(elementText, 100);
+                boolean done2 = database.deleteMinion(operator, player, elementId);
                 if (!done2) {
                     messageManager.showContent(elementNotEquipped);
                 } else {
@@ -272,8 +272,8 @@ public class  OperatorFlow {
                 break;
             case 2:
                 messageManager.showContent(database.generateMinionText());
-                String minion = messageManager.showReadString(newElementText);
-                boolean check = database.addMinion(operator, player, minion);
+                int elemId = messageManager.showReadableBox(newElementText, 100);
+                boolean check = database.addMinion(operator, player, elemId);
                 if (!check) {
                     messageManager.showContent(elementAlreadyEquipped);
                 } else {

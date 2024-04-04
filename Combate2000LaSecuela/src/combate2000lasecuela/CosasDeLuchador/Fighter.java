@@ -21,6 +21,7 @@ public abstract class Fighter implements Serializable {
     private Armor armor;
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
+    private ArrayList<String [] > mailbox ;
     ArrayList<String> textoBatalla = new ArrayList<>();
 
 
@@ -40,11 +41,14 @@ public abstract class Fighter implements Serializable {
         equiparPredefinidoArmadura();
         this.gold=100;
         this.specialskill= setAbility();
+        this.mailbox = new ArrayList<>();
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
     public Combat startFighting (Fighter challenger, int oroApostado){
         int vidaDesafiado= this.getHealth();
         int vidaDesafiante=challenger.getHealth();
+        int vidaMinionsDesafiado=this.minionHealth;
+        int vidaMinionsDesafiante=challenger.minionHealth;
         int rounds=0;
         int pA=0;
         int pD=0;
@@ -82,19 +86,20 @@ public abstract class Fighter implements Serializable {
         }while((this.health>0)||(challenger.health>0));
         this.setHealth(vidaDesafiado);
         challenger.setHealth(vidaDesafiante);
+        this.setMinionsHealth(vidaMinionsDesafiado);
+        challenger.setMinionsHealth(vidaMinionsDesafiante);
         return new Combat(challenger, this, rounds, oroApostado);
     }
     public String [] generateWeaponsText() {
         ArrayList<String> weapontext=new ArrayList<>();
         int i =1;
         for (Weapon element: myWeapon){
-            if (element.equals(arma1)){
-                weapontext.add("E Arma 1 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else if (element.equals(arma2)){
-
-                weapontext.add("E Arma 2 "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else{
-                weapontext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            if (element != null && element.getId().equals(arma1.getId())){
+                weapontext.add("E Arma 1: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else if (element != null && element.equals(arma2)){
+                weapontext.add("E Arma 2: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
+            }else if (element != null){
+                weapontext.add(i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
 
             i++;
@@ -106,9 +111,9 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> armortext=new ArrayList<>();
         int i =1;
         for (Armor element: myArmor){
-            if (element.equals(armor)){
+            if (element != null && element.getId().equals(armor.getId())){
                 armortext.add("E "+Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
-            }else{
+            }else if (element != null){
                 armortext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }
 
@@ -125,11 +130,11 @@ public abstract class Fighter implements Serializable {
         int i =1;
         for (Minion element: getMyMinions()){
             if (element instanceof Ghoul) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
             } else if (element instanceof Human) {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
             } else {
-                miniontext.add(element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
             }
             i++;
         }
@@ -267,6 +272,9 @@ public abstract class Fighter implements Serializable {
         this.arma1=arma1;
         this.arma1.setEquipped1(true);
     }
+    public void setMinionsHealth(int vida){
+        this.minionHealth=vida;
+    }
     public void changeSpecialSkill(Specialskill nuevo){
         this.specialskill=nuevo;
     }
@@ -345,6 +353,18 @@ public abstract class Fighter implements Serializable {
         this.arma2=arma2;
         this.arma2.setEquipped2(true);
     }
+    public void addMail(String [] element){
+        mailbox.add(element);
+    }
+    public String [] getMail(){
+       String [] text =mailbox.get(0);
+       mailbox.remove(0);
+       return text;
+    }
+    public boolean isMailboxEmpty(){
+        return mailbox.isEmpty();
+    }
+
     public LinkedList<Weapon> getMyWeapon(){
         return this.myWeapon;
     }
