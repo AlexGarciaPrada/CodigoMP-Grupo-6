@@ -8,28 +8,20 @@ public class Demon extends Minion implements Serializable {
     private MinionAttributes addedAttribute = MinionAttributes.Pacto;
 
     public Demon(String linea) {
-        super(linea,MinionAttributes.Pacto);
+        super(linea);
         String [] valores = linea.split(";");
         this.pilaDemoniaca=null;
-        this.addedAttribute.setValue(valores[3]);
+    }
+
+    @Override
+    public String getSpecialSkillName() {
+        return "Pacto";
     }
 
     public void setDemonStack(Stack<Minion> pilaDemoniaca) {
         this.pilaDemoniaca = pilaDemoniaca;
     }
 
-    @Override
-    public int getHealth() {
-        return 0;
-    }
 
-    public MinionAttributes getAddedAttribute() {
-        return addedAttribute;
-    }
-    public String getPact(){
-        return addedAttribute.getValue();
-    }
-    public void setAddedAttribute(MinionAttributes addedAttribute) {
-        this.addedAttribute = addedAttribute;
-    }
+
 }

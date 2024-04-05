@@ -142,9 +142,9 @@ public class Database {
         for (int i = 0; i <= numero; i++) {
             eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
             slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
-            if (!(esVampiro) || !(slave instanceof Human)) {
+            if (!(esVampiro) || (slave.getTipo().toUpperCase().equals("HUMAN"))) {
                 myMinions.push(slave);
-                if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+                if ((slave.getTipo().equals("Demon")) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
                     tope += 1;
                     ((Demon) slave).setDemonStack(randomMinionDemon(tope));
                 }
@@ -381,7 +381,7 @@ public class Database {
     }
 
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " " +  minion.getAddedAttribute().name() + ":" + minion.getAddedAttribute().getValue() + " Salud: " + minion.getHealth());
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  +minion.getSpecialSkillName() +":"+ minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
 
     public String [] generateMinionText() {
