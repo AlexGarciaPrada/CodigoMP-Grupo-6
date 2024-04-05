@@ -126,13 +126,19 @@ public abstract class Fighter implements Serializable {
     }
 
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " " +  minion.getAddedAttribute().name() + ":" + minion.getAddedAttribute().getValue() + " Salud: " + minion.getHealth());
     }
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
         for (Minion element: getMyMinions()){
-            addMinionText(miniontext,i,element);
+            if (element instanceof Ghoul) {
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Dependencia: " + ((Ghoul) element).getLealtad() + " Salud: " + element.getHealth());
+            } else if (element instanceof Human) {
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Lealtad: " + ((Human) element).getLealtad() + " Salud: " + element.getHealth());
+            } else {
+                miniontext.add("Id: "+ element.getId() + ". " + element.getName() + " Tipo: " + element.getTipo() + " Pacto: " + ((Demon) element).getPact() + " Salud: " + element.getHealth());
+            }
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);

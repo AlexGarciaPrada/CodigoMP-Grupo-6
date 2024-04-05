@@ -8,17 +8,17 @@ public abstract class Minion implements Saveable {
     private int health;
     private String tipo;
     private int id;
+
     private int minionId;
     private boolean equipped;
-    private String specialSkill;
+    protected MinionAttributes addedAttribute;
 
-    public Minion(String linea){
+    public Minion(String linea, MinionAttributes addedAttribute){
         String [] valores = linea.split(";");
         this.id=Integer.parseInt(valores[0]);
         this.name = valores[1];
         this.tipo = valores[2];
-        this.health = Integer.parseInt(valores[4].trim());
-        this.setSpecialSkill(valores[3]);
+        this.addedAttribute = addedAttribute;
     }
 
     @Override
@@ -26,19 +26,7 @@ public abstract class Minion implements Saveable {
         return Integer.toString(this.id);
     }
 
-    public void setSpecialSkill(String skill){
-        this.specialSkill = skill;
-    }
-    public abstract String getSpecialSkillName();
-
     //------------------------ GETTERS & SETTERS
-
-    public void setHealth() {
-        this.health = health;
-    }
-    public String getSpecialSkill() {
-        return specialSkill;
-    }
     public String getName() {
         return name;
     }
@@ -47,9 +35,15 @@ public abstract class Minion implements Saveable {
         this.name = name;
     }
 
-    public int getHealth(){
-        return this.health;
+    public abstract int getHealth();
+
+    public void setHealth(int health) {
+        this.health = health;
     }
+
     public String getTipo() { return this.tipo;}
 
+    public MinionAttributes getAddedAttribute() {
+        return addedAttribute;
+    }
 }
