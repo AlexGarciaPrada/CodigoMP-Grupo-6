@@ -18,19 +18,16 @@ public class Loader implements Serializable {
     private ModifierManager mom;
 
     public Loader() {
-      im = new ItemManager();
-      mm= new MinionManager();
-      tfm = new TFighterManager();
-      mom = new ModifierManager();
-      read(minionsFile);
-      read(weaponsFile);
-      read(tfighterFile);
-      read(armorsFile);
-      read(strentghFile);
-      read(weaknessFile);
-
-
-
+        im = new ItemManager();
+        mm= new MinionManager();
+        tfm = new TFighterManager();
+        mom = new ModifierManager();
+        read(minionsFile);
+        read(weaponsFile);
+        read(tfighterFile);
+        read(armorsFile);
+        read(strentghFile);
+        read(weaknessFile);
     }
 
     private void read(String filename) {
@@ -87,7 +84,6 @@ public class Loader implements Serializable {
            case "GHOUL":
                mm.addElement("MinionMap", parts[0], new Ghoul (line));
                break;
-
        }
     }
 

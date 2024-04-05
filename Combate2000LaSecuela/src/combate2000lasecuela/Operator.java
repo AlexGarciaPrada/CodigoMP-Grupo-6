@@ -4,17 +4,14 @@ import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Minion;
 import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
-import combate2000lasecuela.managers.ChallengeManager;
-import combate2000lasecuela.managers.UserManager;
-import combate2000lasecuela.screen.Textterminal;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 
 
 public class Operator extends User {
 
-    private boolean validate;
     public Operator(String name, String password, String nick) {
         super(name, password, nick);
     }
@@ -28,42 +25,76 @@ public class Operator extends User {
         player.getFighter().changeSpecialSkill(skill);
     }
 
+    public boolean deleteMinion(Player player, int minionId) {
+        boolean deleted = false;
+        Stack<Minion> minionStack = player.getFighter().getMyMinion();
+        Stack<Minion> temporaryStack = new Stack<>();
+        while (!minionStack.isEmpty()) {
+            Minion minion = minionStack.pop();
+            if (minion.getId().equals(Integer.toString(minionId))) {
+                deleted = true;
+                break;
+            } else {
+                temporaryStack.push(minion);
+            }
+        }
+        while (!temporaryStack.isEmpty()) {
+            minionStack.push(temporaryStack.pop());
+        }
 
-    //para añadir arma a la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere añadirse
-    public void addWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
-        MyWeapons.add(weapon);
-    };
+        return deleted;
+    }
 
-    //para añadir armadura a la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere añadirse
-    public void addArmor(LinkedList<Armor> MyArmor, Armor armor) {
-        MyArmor.add(armor);
-    };
+    public boolean addMinion(Player player, Minion minion) {
+        boolean added = false;
+        if (!containsMinion(player, minion)) {
+            player.getFighter().getMyMinion().push(minion);
+            added = true;
+        }
+        return added;
+    }
 
-    //para añadir minion a la pila (no al fichero), Alex me pasa la pila y el minion (elegido del fichero) que quiere añadirse
-    public void addMinion(Stack<Minion> MyMinions, Minion minion) {
-        MyMinions.push(minion);
-    };
+    public boolean containsMinion(Player player, Minion minion) {
+        boolean found = false;
+        Stack<Minion> myMin = player.getFighter().getMyMinion();
+        for (Minion minion1 : myMin) {
+            if (minion1.equals(minion)) {
+                found = true;
+            }
+        } return found;
+    }
 
-    //para eliminar arma de la lista (no al fichero), Alex me pasa la lista y la arma (elegida del fichero) que quiere eliminarse
-    public void deleteWeapon(LinkedList<Weapon> MyWeapons, Weapon weapon) {
-        MyWeapons.remove(weapon);
-    };
+    public boolean deleteWeapon(Player player, int elementId) {
+        boolean deleted = false;
+        LinkedList<Weapon> weaponList = player.getFighter().getMyWeapon();
+        if (elementId <= weaponList.size()) {
+            weaponList.remove(elementId - 1);
+            deleted = true;
+        } return deleted;
+    }
+    public boolean deleteArmor(Player player, int elementId) {
+        boolean deleted = false;
+        LinkedList<Armor> armorList = player.getFighter().getMyArmor();
+        if (elementId <= armorList.size()) {
+            armorList.remove(elementId-1);
+            deleted = true;
+        } return deleted;
+    }
+    public boolean addWeapon(Player player, Weapon element) {
+        boolean added = false;
+        if (!player.getFighter().getMyWeapon().contains(element)) {
+            player.getFighter().getMyWeapon().add(element);
+            added = true;
+        } return added;
+    }
 
-    //para eliminar armadura de la lista (no al fichero), Alex me pasa la lista y la armadura (elegida del fichero) que quiere eliminarse
-    public void deleteArmor(LinkedList<Armor> MyArmor, Armor armor) {
-        MyArmor.remove(armor);
-    };
-
-    //para eliminar minion de la pila (no al fichero), Alex me pasa la pila y se elimina la cima
-    public void deleteMinion(Stack<Minion> MyMinions, Minion minion) {
-        MyMinions.pop();
-    };
-
-
-    //aun no estan definidas las fortalezas y debilidades
-    public void changeWeakness() {};
-
-    public void changeStrength() {};
+    public boolean addArmor(Player player, Armor element) {
+        boolean added = false;
+        if (!player.getFighter().getMyArmor().contains(element)) {
+            player.getFighter().getMyArmor().add(element);
+            added = true;
+        } return added;
+    }
 
     public void changeGold (Player player, int amount) {
         player.getFighter().setGold(amount);
@@ -84,18 +115,6 @@ public class Operator extends User {
 
     public void unblockPlayer(Player player){
         player.setBlocked(false);
-    }
-
-    public boolean validateChallenge(boolean state) {
-        return validate = state;
-    }
-
-    public void changeActiveWeapon(Player player, LinkedList<Weapon> MyWeapons, String weapon) {
-        super.changeActiveWeapon(player, MyWeapons, weapon);
-    }
-
-    public void changeActiveArmor(Player player, LinkedList<Armor> MyArmor, int option) {
-        super.changeActiveArmor(player, MyArmor, option);
     }
 
 
