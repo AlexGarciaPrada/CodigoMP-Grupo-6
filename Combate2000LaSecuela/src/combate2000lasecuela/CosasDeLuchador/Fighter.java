@@ -131,8 +131,17 @@ public abstract class Fighter implements Serializable {
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
+        int j = 1;
         for (Minion element: getMyMinions()){
             addMinionText(miniontext,i,element);
+            if (element instanceof Demon) {
+                if (((Demon) element).getDemonStack() != null) {
+                    for (Minion elem: ((Demon) element).getDemonStack()) {
+                        addMinionText(miniontext,j,elem);
+                        j++;
+                    }
+                }
+            }
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
