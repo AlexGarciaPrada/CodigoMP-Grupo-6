@@ -4,7 +4,6 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -100,10 +99,10 @@ public class PlayerFlow extends Gameflow {
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
-            messageManager.showContent(player.getFighter().publicarTocho());
+            messageManager.showContent(player.getFighter().publishText());
             messageManager.showContent(combat.result());
             //Para que lo reciba el otro jugador
-            challenge.getChallenger().getFighter().addMail(player.getFighter().publicarTocho());
+            challenge.getChallenger().getFighter().addMail(player.getFighter().publishText());
             challenge.getChallenger().getFighter().addMail(combat.result());
             if (!(combat.result().equals(isTie))){
                 Fighter winner = combat.getWinner();

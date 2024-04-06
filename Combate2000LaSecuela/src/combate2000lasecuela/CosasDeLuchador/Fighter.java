@@ -22,7 +22,7 @@ public abstract class Fighter implements Serializable {
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
     private ArrayList<String [] > mailbox ;
-    ArrayList<String> textoBatalla = new ArrayList<>();
+    ArrayList<String> battleText = new ArrayList<>();
 
 
     public Fighter(String name, TFighter type,
@@ -62,13 +62,13 @@ public abstract class Fighter implements Serializable {
                         ajusteHabilidad(pAA,pDD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
-                            estadoBatalla(rounds,this,true,textoBatalla,false);
+                            estadoBatalla(rounds,this,true, battleText,false);
                         }else {
                             this.health -= 1;
-                            estadoBatalla(rounds,this,false,textoBatalla,false);
+                            estadoBatalla(rounds,this,false, battleText,false);
                         }
                     }else{
-                        estadoBatalla(rounds,this,false,textoBatalla,true);
+                        estadoBatalla(rounds,this,false, battleText,true);
                     }
                 pAD = attackPotential(this);
                 pDA = defensePotential(challenger);
@@ -76,13 +76,13 @@ public abstract class Fighter implements Serializable {
                     ajusteHabilidad(pAD,pDA);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
-                        estadoBatalla(rounds,challenger,true,textoBatalla,false);
+                        estadoBatalla(rounds,challenger,true, battleText,false);
                     }else {
                         challenger.health -= 1;
-                        estadoBatalla(rounds,challenger,false,textoBatalla,false);
+                        estadoBatalla(rounds,challenger,false, battleText,false);
                     }
                 }else{
-                    estadoBatalla(rounds,challenger,false,textoBatalla,true);
+                    estadoBatalla(rounds,challenger,false, battleText,true);
 
                 }
         }
@@ -126,31 +126,17 @@ public abstract class Fighter implements Serializable {
     }
 
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(minion.getId() + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
-    public String [] generateMinionText(Stack<Minion> mmins) {
+    public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        for (Minion element: mmins){
-            if (element != null) {
-                addMinionText(miniontext,i,element);
-            }
-            if (element instanceof Demon) {
-                Demon demon = (Demon) element;
-                Stack<Minion> mins = demon.getDemonStack();
-                if (mins != null) {
-                    String [] minss = generateMinionText(mins);
-                    for (String text: minss) {
-                        miniontext.add(text);
-                    }
-                }
-            }
+        for (Minion element: getMyMinions()){
+            addMinionText(miniontext,i,element);
             i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
     }
-
-
     public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){
         String nombre;
         String aux;
@@ -172,39 +158,17 @@ public abstract class Fighter implements Serializable {
         }else{
             String[] texto = {"Es la ronda "+ronda+ " y se ha producido un empate tecnico"};
             textoBatalla.addAll(Arrays.asList(texto));
-
         }
-
-
     }
-    public String[] publicarTocho(){
-        return this.textoBatalla.toArray(new String[this.textoBatalla.size()]);
+
+    public String[] publishText(){
+        return this.battleText.toArray(new String[this.battleText.size()]);
     }
     public String [] generateFighterState(){
-        String subtype =null;
-        if (this instanceof Vampire){
-            subtype ="Vampiro";
-        } else if (this instanceof Lycanthrope) {
-            subtype ="Licantropo";
-        } else if (this instanceof Hunter) {
-            subtype = "Cazador";
-        }
         ArrayList <String> textbuilder = new ArrayList<>();
-            if (arma2 ==null){
-                String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-                    ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "};
-
-            textbuilder.addAll(Arrays.asList(text));
-            textbuilder.addAll(Arrays.asList(generateMinionText(getMyMinions())));
-            return textbuilder.toArray(new String[textbuilder.size()]);
-
-
-        }
-        String [] text ={"Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-        ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: "+arma2.getName(),"Armadura: "+armor.getName(),"Esbirros"};
-
+        String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
-        textbuilder.addAll(Arrays.asList(generateMinionText(getMyMinions())));
+        textbuilder.addAll(Arrays.asList(generateMinionText()));
         return textbuilder.toArray(new String[textbuilder.size()]);
     }
 
@@ -383,7 +347,32 @@ public abstract class Fighter implements Serializable {
     public LinkedList<Armor> getMyArmor(){
         return this.myArmor;
     }
-}
+    public boolean getEquipped2(){
+        if (arma2!=null){
+            return false;
+        }
+        return false;
+    }
+
+    public String[] fighterToString(){
+        return new String[]{"Nombre del luchador: " + this.getName(),
+                "Vida: " + Integer.toString(health),
+                "Oro del luchador: " + Integer.toString(this.getGold()),
+                "Raza: " + this.getClass().getSimpleName(),
+                "Tipo: " + type.getName(),
+                "Arma 1: " + arma1.getName(),
+                displayIfArmor2(),
+                "Armadura: " + armor.getName(),
+                "Esbirros: "};
+    }
+
+    public String displayIfArmor2(){
+        if (this.arma2 != null){
+            return "Arma 2: "+arma2.getName();
+        }
+        return "Arma 2: No equipada";
+    }
+    }
 /*
     public Combat startFighting (Fighter desafiante, int oroApostado){
         fightEachPlayer(desafiante,this,oroApostado);
