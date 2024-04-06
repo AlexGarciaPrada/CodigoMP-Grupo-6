@@ -21,6 +21,7 @@ public class Demon extends Minion implements Serializable {
     public void setDemonStack(Stack<Minion> pilaDemoniaca) {
         this.pilaDemoniaca = pilaDemoniaca;
     }
+    public Stack<Minion> getDemonStack() {return this.pilaDemoniaca;}
 
 
 

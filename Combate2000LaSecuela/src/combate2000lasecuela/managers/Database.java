@@ -147,10 +147,10 @@ public class Database {
             }else if (!(slave instanceof Human)) {
                 myMinions.push(slave);
             }
-                if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
-                    tope += 1;
-                    ((Demon) slave).setDemonStack(randomMinionDemon(tope));
-                }
+            if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+                tope += 1;
+                ((Demon) slave).setDemonStack(randomMinionDemon(tope));
+            }
 
         }
         return myMinions;
