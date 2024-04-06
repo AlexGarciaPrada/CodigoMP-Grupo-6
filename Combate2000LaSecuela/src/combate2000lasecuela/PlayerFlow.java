@@ -181,13 +181,18 @@ public class PlayerFlow extends Gameflow {
         String user = messageManager.showReadString(nickText);
         if ((database.isAPlayer(user))){
             Player challenged = (Player) database.getUser(user);
-            if (challenged.getFighter()!=null){
-                int gold = messageManager.showReadGold(player.getFighter().getGold());
-                Challenge challenge = player.challengePlayer(challenged,gold);
-                database.addChallenge(challenge);
+            if (!player.getNick().equals(challenged.getNick())) {
+                if (challenged.getFighter()!=null){
+                    int gold = messageManager.showReadGold(player.getFighter().getGold());
+                    Challenge challenge = player.challengePlayer(challenged,gold);
+                    database.addChallenge(challenge);
+                }
+                else{
+                    messageManager.showContent(notFighterChallenged);
+                }
             }
-            else{
-                messageManager.showContent(notFighterChallenged);
+            else {
+                messageManager.showContent(wrongNick);
             }
 
         }else{
