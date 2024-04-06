@@ -166,15 +166,9 @@ public abstract class Fighter implements Serializable {
     }
     public String [] generateFighterState(){
         String subtype =null;
-        if (this instanceof Vampire){
-            subtype ="Vampiro";
-        } else if (this instanceof Lycanthrope) {
-            subtype ="Licantropo";
-        } else if (this instanceof Hunter) {
-            subtype = "Cazador";
-        }
+
         ArrayList <String> textbuilder = new ArrayList<>();
-        String[] text = new String[]{this.toString()};
+        String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
         textbuilder.addAll(Arrays.asList(generateMinionText()));
         return textbuilder.toArray(new String[textbuilder.size()]);
@@ -362,13 +356,23 @@ public abstract class Fighter implements Serializable {
         return false;
     }
 
-    public String toString(){
-        return this.getEquipped2() ? getFighterText(arma2.getName()): getFighterText("No tienes");
+    public String[] fighterToString(){
+        return new String[]{"Nombre del luchador: " + this.getName() +
+                "Vida: " + Integer.toString(health) +
+                "Oro del luchador: " + Integer.toString(this.getGold()) +
+                "Raza: " + this.getClass().getSimpleName() +
+                "Tipo: " + type.getName() +
+                "Arma 1: " + arma1.getName() +
+                displayIfArmor2() +
+                "Armadura: " + armor.getName() + "Esbirros: "};}
+
+    public String displayIfArmor2(){
+        if (this.arma2 != null){
+            return "Arma 2: "+arma2.getName();
+        }
+        return "Arma 2: No equipada";
     }
-    public String getFighterText(String hasWeapon2, String subtype) {
-        return  "Nombre del luchador: "+this.getName(),"Vida: "+Integer.toString(health),"Oro del luchador: "+Integer.toString(this.getGold()),"Raza: "+ subtype
-            ,"Tipo: "+type.getName(),"Arma 1: "+arma1.getName(),"Arma 2: No tienes un segundo arma activado","Armadura: "+armor.getName(),"Esbirros: "}
-}
+    }
 /*
     public Combat startFighting (Fighter desafiante, int oroApostado){
         fightEachPlayer(desafiante,this,oroApostado);
