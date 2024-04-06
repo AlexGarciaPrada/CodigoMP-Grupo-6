@@ -165,8 +165,6 @@ public abstract class Fighter implements Serializable {
         return this.battleText.toArray(new String[this.battleText.size()]);
     }
     public String [] generateFighterState(){
-        String subtype =null;
-
         ArrayList <String> textbuilder = new ArrayList<>();
         String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
@@ -357,14 +355,16 @@ public abstract class Fighter implements Serializable {
     }
 
     public String[] fighterToString(){
-        return new String[]{"Nombre del luchador: " + this.getName() +
-                "Vida: " + Integer.toString(health) +
-                "Oro del luchador: " + Integer.toString(this.getGold()) +
-                "Raza: " + this.getClass().getSimpleName() +
-                "Tipo: " + type.getName() +
-                "Arma 1: " + arma1.getName() +
-                displayIfArmor2() +
-                "Armadura: " + armor.getName() + "Esbirros: "};}
+        return new String[]{"Nombre del luchador: " + this.getName(),
+                "Vida: " + Integer.toString(health),
+                "Oro del luchador: " + Integer.toString(this.getGold()),
+                "Raza: " + this.getClass().getSimpleName(),
+                "Tipo: " + type.getName(),
+                "Arma 1: " + arma1.getName(),
+                displayIfArmor2(),
+                "Armadura: " + armor.getName(),
+                "Esbirros: "};
+    }
 
     public String displayIfArmor2(){
         if (this.arma2 != null){
