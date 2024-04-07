@@ -12,6 +12,6 @@ public class Ghoul extends Minion implements Serializable {
         }
     @Override
     public String getSpecialSkillName() {
-        return "Lealtad";
+        return "Dependencia";
     }
 }
