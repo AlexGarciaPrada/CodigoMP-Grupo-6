@@ -333,8 +333,10 @@ public abstract class Fighter implements Serializable {
     }
     public String [] getMail(){
        String [] text =mailbox.get(0);
-       mailbox.remove(0);
        return text;
+    }
+    public void eraseMail(){
+        mailbox.removeFirst();
     }
     public boolean isMailboxEmpty(){
         return mailbox.isEmpty();

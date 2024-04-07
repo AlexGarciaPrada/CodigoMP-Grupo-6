@@ -13,10 +13,7 @@ public class Database {
     private Loader loader;
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
-
-    private MinionManager minionManager;
-    private ItemManager itemManager;
-    private ModifierManager modifierManager;
+;
 
 
     public Database() {
@@ -24,8 +21,6 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
-        this.minionManager = new MinionManager();
-        this.itemManager = new ItemManager();
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -286,9 +281,11 @@ public class Database {
         ArrayList<String> combattext = new ArrayList<>();
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
-            if (combat.getChallenger().equals(player.getFighter()) || combat.getChallenged().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.result()+ " Oro ganado/perdido: " + player.whoGetsGold(combat));
+            if (combat.getLoser().equals(player.getFighter())) {
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: -" + Integer.toString(combat.getGoldGained()));
 
+            }else if (combat.getWinner().equals(player.getFighter())){
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + Integer.toString(combat.getGoldGained()));
             }
         }
         if (combattext.isEmpty()){
@@ -479,5 +476,13 @@ public class Database {
         String [] text = player.getFighter().getMail();
         updateUsers();
         return text;
+    }
+    public void addCombat (Combat combat){
+        combatregister.addElement("CombatMap",combat.getDate().toString(),combat);
+        updateCombats();
+    }
+    public void eraseMail(Player player){
+        player.getFighter().eraseMail();
+        updateUsers();
     }
 }

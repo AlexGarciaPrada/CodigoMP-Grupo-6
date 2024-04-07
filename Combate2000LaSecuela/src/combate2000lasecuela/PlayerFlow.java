@@ -49,15 +49,16 @@ public class PlayerFlow extends Gameflow {
             erasePlayer(player,database,messageManager);
 
         } else {
-            playerLogin(player, messageManager);
+            playerLogin(player,database, messageManager);
         }
     }
     }
 
-    private static void playerLogin(Player player, MessageManager messageManager) {
+    private static void playerLogin(Player player, Database database,MessageManager messageManager) {
         if (player.getFighter()!=null) {
             while (!(player.getFighter().isMailboxEmpty())) {
                 messageManager.showContent(player.getFighter().getMail());
+                database.eraseMail(player);
             }
         }
         int option = messageManager.showPlayerMenu(player.getName());
@@ -109,7 +110,6 @@ public class PlayerFlow extends Gameflow {
                 Fighter loser = combat.getLoser();
                 database.updateGold(winner,gold);
                 database.updateGold(loser,-gold);
-                database.updateCombats(); // TODO
                 if (challenge.getChallenger().getFighter().equals(winner)){
                     database.addVictories(challenge.getChallenger());
             }
@@ -117,6 +117,7 @@ public class PlayerFlow extends Gameflow {
                     database.addVictories(challenge.getChallenged());
                 }
             }
+            database.addCombat(combat);
             //messageManager.showContent(loser);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
