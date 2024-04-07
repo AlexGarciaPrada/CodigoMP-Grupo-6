@@ -163,7 +163,7 @@ public class Database {
     }
 
     public LinkedList<Minion> randomMinionDemon(int tope) {
-        if (tope <= 3) {
+        if (tope < 3) {
             return randomMinions(0, false, tope + 1);
         }
         return null;
