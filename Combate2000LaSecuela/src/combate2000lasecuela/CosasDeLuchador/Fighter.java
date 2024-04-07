@@ -130,10 +130,9 @@ public abstract class Fighter implements Serializable {
     public void addMinionText (ArrayList miniontext, Minion minion){
         miniontext.add(minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
-    public String [] generateMinionText(LinkedList<Minion> mins) {
+    public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
-        int i =1;
-        for (Minion element: mins){
+        for (Minion element: myMinions){
             if (element != null) {
                 addMinionText(miniontext,element);
                 if (element instanceof Demon) {
@@ -151,7 +150,7 @@ public abstract class Fighter implements Serializable {
     public String [] getAllMinionText () {
         ArrayList<String> allText = new ArrayList<>();
         int i = 1;
-        String [] minionText = generateMinionText(getMyMinions());
+        String [] minionText = generateMinionText();
         for (String text: minionText) {
             if (!text.startsWith("Esbirros de") && !text.equals("No tiene")) {
                 allText.add(i + ". " + text);
@@ -193,7 +192,7 @@ public abstract class Fighter implements Serializable {
         ArrayList <String> textbuilder = new ArrayList<>();
         String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
-        textbuilder.addAll(Arrays.asList(generateMinionText(getMyMinions())));
+        textbuilder.addAll(Arrays.asList(generateMinionText()));
         return textbuilder.toArray(new String[textbuilder.size()]);
     }
 
