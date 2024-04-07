@@ -261,7 +261,7 @@ public class  OperatorFlow {
         int option = messageManager.showReadableBox(editMenu,2);
         switch (option) {
             case 1:
-                messageManager.showContent(player.getFighter().generateMinionText());
+                messageManager.showContent(player.getFighter().generateMinionText(player.getFighter().getMyMinions()));
                 int elementId = messageManager.showReadableBox(elementText, 100);
                 boolean done2 = database.deleteMinion(operator, player, elementId);
                 if (!done2) {

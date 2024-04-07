@@ -13,10 +13,7 @@ public class Database {
     private Loader loader;
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
-
-    private MinionManager minionManager;
-    private ItemManager itemManager;
-    private ModifierManager modifierManager;
+;
 
 
     public Database() {
@@ -24,8 +21,6 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
-        this.minionManager = new MinionManager();
-        this.itemManager = new ItemManager();
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -132,6 +127,7 @@ public class Database {
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
         int handicap=10;
         int eleccion;
+        int e=0;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
         Minion slave;
@@ -142,13 +138,30 @@ public class Database {
         for (int i = 0; i <= numero; i++) {
             eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
             slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
-            if (!(esVampiro) || !(slave instanceof Human)) {
+            if (!esVampiro) {
                 myMinions.push(slave);
-                if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
-                    tope += 1;
-                    ((Demon) slave).setDemonStack(randomMinionDemon(tope));
+            }else if (!(slave instanceof Human)) {
+                myMinions.push(slave);
+            }else{ //caso limite que vio Alex
+                while (slave instanceof Human){
+                    e++;
+                    eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
+                    slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+                    if (e>=10){
+                        slave=loader.getMm().getElements().get("MinionMap").get(Integer.toString(2));
+                    } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
+                    //y la probabilidad de que entre varias veces ya sería un chiste mal contado
+                    if (!(slave instanceof Human)){
+                        myMinions.push(slave);
+                        e=0;
+                    }
                 }
             }
+            if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+                tope += 1;
+                ((Demon) slave).setDemonStack(randomMinionDemon(tope));
+            }
+
         }
         return myMinions;
     }
@@ -283,9 +296,11 @@ public class Database {
         ArrayList<String> combattext = new ArrayList<>();
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
-            if (combat.getChallenger().equals(player.getFighter()) || combat.getChallenged().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + combat.result()+ " Oro ganado/perdido: " + player.whoGetsGold(combat));
+            if (combat.getLoser().equals(player.getFighter())) {
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: -" + Integer.toString(combat.getGoldGained()));
 
+            }else if (combat.getWinner().equals(player.getFighter())){
+                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + Integer.toString(combat.getGoldGained()));
             }
         }
         if (combattext.isEmpty()){
@@ -381,7 +396,7 @@ public class Database {
     }
 
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " " +  minion.getAddedAttribute().name() + ":" + minion.getAddedAttribute().getValue() + " Salud: " + minion.getHealth());
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  +minion.getSpecialSkillName() +":"+ minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
 
     public String [] generateMinionText() {
@@ -444,13 +459,11 @@ public class Database {
                 fighter.setWeapon1(weapon);
                 updateUsers();
             }
-
         }else{
             fighter.setWeapon1(weapon);
             updateUsers();
         }
     }
-
 
     public void equipWeapon2(Player player, Weapon weapon) {
         Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
@@ -479,5 +492,12 @@ public class Database {
         updateUsers();
         return text;
     }
-
+    public void addCombat (Combat combat){
+        combatregister.addElement("CombatMap",combat.getDate().toString(),combat);
+        updateCombats();
+    }
+    public void eraseMail(Player player){
+        player.getFighter().eraseMail();
+        updateUsers();
+    }
 }

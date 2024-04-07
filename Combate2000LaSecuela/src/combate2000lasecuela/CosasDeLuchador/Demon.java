@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class Demon extends Minion implements Serializable {
     private Stack<Minion> pilaDemoniaca;
-    private MinionAttributes addedAttribute = MinionAttributes.Pacto;
+//    private MinionAttributes addedAttribute = MinionAttributes.Pacto;
 
     public Demon(String linea) {
         super(linea,MinionAttributes.Pacto);
@@ -17,6 +17,7 @@ public class Demon extends Minion implements Serializable {
     public void setDemonStack(Stack<Minion> pilaDemoniaca) {
         this.pilaDemoniaca = pilaDemoniaca;
     }
+    public Stack<Minion> getDemonStack() {return this.pilaDemoniaca;}
 
     @Override
     public int getHealth() {

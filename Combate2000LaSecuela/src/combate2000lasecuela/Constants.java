@@ -77,7 +77,7 @@ public class Constants {
     public static final String [] elementAlreadyEquipped = {"El elemento introducido ya esta equipado"};
     public static final String [] elementDeleted = {"El elemento introducido se ha eliminado correctamente"};
     public static final String [] elementAdded = {"El elemento introducido se ha añadido correctamente"};
-
+    public static final String [] wrongNick = {"Debes introducir un nick valido"};
 
 
 }
