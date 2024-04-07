@@ -4,7 +4,6 @@ import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -100,10 +99,10 @@ public class PlayerFlow extends Gameflow {
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
             Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
-            messageManager.showContent(player.getFighter().publicarTocho());
+            messageManager.showContent(player.getFighter().publishText());
             messageManager.showContent(combat.result());
             //Para que lo reciba el otro jugador
-            challenge.getChallenger().getFighter().addMail(player.getFighter().publicarTocho());
+            challenge.getChallenger().getFighter().addMail(player.getFighter().publishText());
             challenge.getChallenger().getFighter().addMail(combat.result());
             if (!(combat.result().equals(isTie))){
                 Fighter winner = combat.getWinner();
@@ -181,13 +180,18 @@ public class PlayerFlow extends Gameflow {
         String user = messageManager.showReadString(nickText);
         if ((database.isAPlayer(user))){
             Player challenged = (Player) database.getUser(user);
-            if (challenged.getFighter()!=null){
-                int gold = messageManager.showReadGold(player.getFighter().getGold());
-                Challenge challenge = player.challengePlayer(challenged,gold);
-                database.addChallenge(challenge);
+            if (!player.getNick().equals(challenged.getNick())) {
+                if (challenged.getFighter()!=null){
+                    int gold = messageManager.showReadGold(player.getFighter().getGold());
+                    Challenge challenge = player.challengePlayer(challenged,gold);
+                    database.addChallenge(challenge);
+                }
+                else{
+                    messageManager.showContent(notFighterChallenged);
+                }
             }
-            else{
-                messageManager.showContent(notFighterChallenged);
+            else {
+                messageManager.showContent(wrongNick);
             }
 
         }else{
@@ -220,7 +224,7 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),false,0);
+                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),true,0);
                     database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo

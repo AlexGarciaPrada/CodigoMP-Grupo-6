@@ -40,11 +40,11 @@ public class Weapon extends Item implements Serializable {
         return isOneHand;
     }
 
-    public boolean isEquipped1() {
+    public boolean getEquipped1() {
         return equipped1;
     }
 
-    public boolean isEquipped2() {
+    public boolean getEquipped2() {
         return equipped2;
     }
 

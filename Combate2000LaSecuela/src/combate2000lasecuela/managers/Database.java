@@ -142,13 +142,16 @@ public class Database {
         for (int i = 0; i <= numero; i++) {
             eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
             slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
-            if (!(esVampiro) || (slave.getTipo().toUpperCase().equals("HUMAN"))) {
+            if (!esVampiro) {
                 myMinions.push(slave);
-                if ((slave.getTipo().equals(" DEMONIO")) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
-                    tope += 1;
-                    ((Demon) slave).setDemonStack(randomMinionDemon(tope));
-                }
+            }else if (!(slave instanceof Human)) {
+                myMinions.push(slave);
             }
+            if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+                tope += 1;
+                ((Demon) slave).setDemonStack(randomMinionDemon(tope));
+            }
+
         }
         return myMinions;
     }
@@ -444,13 +447,11 @@ public class Database {
                 fighter.setWeapon1(weapon);
                 updateUsers();
             }
-
         }else{
             fighter.setWeapon1(weapon);
             updateUsers();
         }
     }
-
 
     public void equipWeapon2(Player player, Weapon weapon) {
         Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
@@ -479,5 +480,4 @@ public class Database {
         updateUsers();
         return text;
     }
-
 }
