@@ -9,6 +9,7 @@ import java.lang.String;
 public abstract class Fighter implements Serializable {
     private String name;
     private int gold;
+    private int pendingGold;
     private int health;
     private int power;
     private LinkedList<Minion> myMinions;
@@ -29,17 +30,18 @@ public abstract class Fighter implements Serializable {
         LinkedList<Minion> myMinions,LinkedList<Armor> myArmor,
         LinkedList<Weapon> myWeapon) {
         this.name = name;
-        this.health = vidaAleatoria();
+        this.health = randomHealth();
         this.type = type;
         this.myMinions=myMinions;
         this.myArmor= myArmor;
         this.myWeapon = myWeapon;
         this.minionHealth= calculateMinionHealth();
         this.pendingChallenges = new PendingChallenges();
-        equiparPredefinidoArma();
+        equipDefaultWeapon();
         this.arma2=null;
-        equiparPredefinidoArmadura();
+        equipDefaultArmor();
         this.gold=100;
+        this.pendingGold=100;
         this.specialskill= setAbility();
         this.mailbox = new ArrayList<>();
     }
@@ -58,8 +60,8 @@ public abstract class Fighter implements Serializable {
             rounds++; //donde recibe el desafiado
                 pAA = attackPotential(challenger);
                 pDD = defensePotential(this);
-                    if (comprobarDaños(pAA,pDD)){
-                        ajusteHabilidad(pAA,pDD);
+                    if (checkDamage(pAA,pDD)){
+                        adjustAbility(pAA,pDD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
                             estadoBatalla(rounds,this,true, battleText,false);
@@ -72,8 +74,8 @@ public abstract class Fighter implements Serializable {
                     }
                 pAD = attackPotential(this);
                 pDA = defensePotential(challenger);
-                if (comprobarDaños(pAD,pDA)){
-                    ajusteHabilidad(pAD,pDA);
+                if (checkDamage(pAD,pDA)){
+                    adjustAbility(pAD,pDA);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
                         estadoBatalla(rounds,challenger,true, battleText,false);
@@ -238,22 +240,22 @@ public abstract class Fighter implements Serializable {
         return checkSuccess(potencial);
     }
 
-    private int vidaAleatoria(){
+    private int randomHealth(){
         Random random = new Random();
         return random.nextInt(5)+1;
     }
-    private boolean comprobarDaños(int pA, int pD){
+    private boolean checkDamage(int pA, int pD){
         return (pA>pD);
     }
-    public abstract void ajusteHabilidad(int pA, int pD);
+    public abstract void adjustAbility(int pA, int pD);
     public abstract int SpecialAttack();
     public boolean hasActiveEquipment() {
         return (this.armor != null && this.arma1 != null);
     }
-    public void equiparPredefinidoArmadura(){
+    public void equipDefaultArmor(){
         armor= myArmor.get(0);
     }
-    public void equiparPredefinidoArma(){
+    public void equipDefaultWeapon(){
         arma1 = myWeapon.get(0);
     }
 
@@ -316,18 +318,22 @@ public abstract class Fighter implements Serializable {
     public int getMinionHealth() {
         return minionHealth;
     }
-
-    public Specialskill getSpecialskill() {
-        return specialskill;
-    }
-
     public void setType(TFighter type) {
         this.type = type;
+    }
+
+    public void setPendingGold(int pendingGold) {
+        this.pendingGold = pendingGold;
     }
 
     public Weapon getArma1(){
         return this.arma1;
     }
+
+    public int getPendingGold() {
+        return pendingGold;
+    }
+
     public Weapon getArma2(){
         return this.arma2;
     }
@@ -337,7 +343,6 @@ public abstract class Fighter implements Serializable {
     }
     public void setArmor (Armor armadura){
         this.armor =armadura;
-        armor.setEquipped(true);
     }
     public void setWeapon2 (Weapon arma2){
         this.arma2=arma2;

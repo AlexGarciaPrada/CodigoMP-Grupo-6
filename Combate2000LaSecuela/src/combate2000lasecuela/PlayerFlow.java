@@ -184,7 +184,8 @@ public class PlayerFlow extends Gameflow {
             Player challenged = (Player) database.getUser(user);
             if (!player.getNick().equals(challenged.getNick())) {
                 if (challenged.getFighter()!=null){
-                    int gold = messageManager.showReadGold(player.getFighter().getGold());
+                    int gold = messageManager.showReadGold(player.getFighter().getPendingGold());
+                    database.reducePendingGold(gold,player);
                     Challenge challenge = player.challengePlayer(challenged,gold);
                     database.addChallenge(challenge);
                 }

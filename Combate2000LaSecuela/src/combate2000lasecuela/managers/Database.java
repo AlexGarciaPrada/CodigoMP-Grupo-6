@@ -49,10 +49,6 @@ public class Database {
         updateUsers();
     }
 
-    public void loadUsers() {
-        usermanager.loadElement("User");
-    }
-
     public void addPlayer(Player player) {
         usermanager.addElement("Player", player.getNick(), player);
         updateUsers();
@@ -482,22 +478,23 @@ public class Database {
     }
     public void updateGold(Fighter fighter, int gold){
         fighter.setGold(fighter.getGold()+gold);
+        fighter.setPendingGold(fighter.getPendingGold()+gold);
         updateUsers();
     }
     public void addMail(Player player,String [] mail){
         player.getFighter().addMail(mail);
     }
-    public String [] getMail(Player player){
-        String [] text = player.getFighter().getMail();
-        updateUsers();
-        return text;
-    }
+
     public void addCombat (Combat combat){
         combatregister.addElement("CombatMap",combat.getDate().toString(),combat);
         updateCombats();
     }
     public void eraseMail(Player player){
         player.getFighter().eraseMail();
+        updateUsers();
+    }
+    public void reducePendingGold(int gold,Player player){
+        player.getFighter().setPendingGold(player.getFighter().getPendingGold()-gold);
         updateUsers();
     }
 }

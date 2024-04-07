@@ -9,7 +9,7 @@ public class Constants {
     public static final String weaknessFile = "./files/txtfiles/Debilidades";
     public static final String serRoute="./files/serfiles/";
 
-    //Contantes para los Strings del Messagemanager
+    //Contantes para los Strings [] del Messagemanager
 
     public static final String[] initMenuText = {"Bienvenido a Combate2000", "1. Iniciar Sesion", "2. Registro", "3. Salir"};
     public static final String[] userTypeMenuText = {"Introduce el tipo de usuario que deseas registrar", "1. Jugador", "2. Operador", "3. Salir"};
@@ -41,12 +41,16 @@ public class Constants {
     public static final String [] editFighterMenu={"Elige lo que deseas cambiar del personaje:","1. Nombre ","2. Raza","3. Tipo","4. Salir"};
     public static final String [] thisPlayerNotFighter={"El jugador seleccionado no tiene luchadores creados"};
     public static final String [] ilegalWeaponOperation={"No se ha podido realizar la operacion"};
-    public static final String userRegistered2 = " ha sido registrado correctamente";
-    public static final String logInText ="Inicio de Sesion";
+
     public static final String []  selectWeaponText={"Elige lo que quieras editar","1. Arma 1 (Equipada de manera predefinida","2. Arma2","3. Salir"};
     public static final String[]   selectEquipmentText={"Elige lo que deseas editar","1. Arma","2. Armadura","3. Salir"};
-    public static final String editFighterText="Elige el usuario que vas a editar (para volver atras introduce SALIR)";
 
+
+    //Strings del MessageManager
+
+    public static final String editFighterText="Elige el usuario que vas a editar (para volver atras introduce SALIR)";
+    public static final String userRegistered2 = " ha sido registrado correctamente";
+    public static final String logInText ="Inicio de Sesion";
     public static final String exitAdvice = "(En caso de querer volver al menu anterior introduce SALIR en cualquiera de los campos)";
     public static final String registerText ="Registro";
     public static final String nameText="Nombre: ";

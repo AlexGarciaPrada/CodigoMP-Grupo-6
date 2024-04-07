@@ -14,14 +14,6 @@ public class Operator extends User {
     }
 
     //opciones editar personaje y equipo
-    public void changeName (Player player, String newName) {
-        player.getFighter().setName(newName);
-    }
-
-    public void changeSpecialSkill(Player player, Specialskill skill) {
-        player.getFighter().changeSpecialSkill(skill);
-    }
-
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
         LinkedList<Minion> minionList = player.getFighter().getMyMinion();
@@ -91,18 +83,6 @@ public class Operator extends User {
             player.getFighter().getMyArmor().add(element);
             added = true;
         } return added;
-    }
-
-    public void changeGold (Player player, int amount) {
-        player.getFighter().setGold(amount);
-    }
-
-    public void changeHealth(Player player, int health) {
-        player.getFighter().setHealth(health);
-    }
-
-    public void changePower(Player player, int power) {
-        player.getFighter().setPower(power);
     }
 
     //opciones bloqueo/desbloqueo

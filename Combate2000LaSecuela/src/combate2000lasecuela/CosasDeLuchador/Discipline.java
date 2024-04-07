@@ -5,7 +5,6 @@ import java.util.Random;
 public class Discipline extends Specialskill implements Serializable {
     int disciplineDamage;
     int costeSangre;
-    int puntosDisponibles;
     public Discipline(){
        this.disciplineDamage=1; //se acaba de comer un nerfeo
        this.costeSangre=0;

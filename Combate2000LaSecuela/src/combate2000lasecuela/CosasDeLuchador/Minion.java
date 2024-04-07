@@ -8,8 +8,6 @@ public abstract class Minion implements Saveable {
     private int health;
     private String tipo;
     private int id;
-    private int minionId;
-    private boolean equipped;
     private String specialSkill;
 
     public Minion(String linea){
@@ -32,10 +30,6 @@ public abstract class Minion implements Saveable {
     public abstract String getSpecialSkillName();
 
     //------------------------ GETTERS & SETTERS
-
-    public void setHealth() {
-        this.health = health;
-    }
     public String getSpecialSkill() {
         return specialSkill;
     }
@@ -46,7 +40,6 @@ public abstract class Minion implements Saveable {
     public void setName(String name) {
         this.name = name;
     }
-
     public int getHealth(){
         return this.health;
     }
