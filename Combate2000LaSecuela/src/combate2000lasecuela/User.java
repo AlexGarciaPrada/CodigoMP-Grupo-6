@@ -22,7 +22,7 @@ public abstract class User implements Saveable {
         // --------------------------------------   GETTERS AND SETTERS
 
     @Override
-    public String getId() {return null}
+    public String getId() {return null;}
 
     public String getName() {
         return name;

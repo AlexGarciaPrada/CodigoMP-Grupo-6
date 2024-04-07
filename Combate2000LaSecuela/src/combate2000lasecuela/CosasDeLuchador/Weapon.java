@@ -35,11 +35,4 @@ public class Weapon extends Item implements Serializable {
         return isOneHand;
     }
 
-    public void setEquipped1(boolean equipped1) {
-        this.equipped1 = equipped1;
-    }
-
-    public void setEquipped2(boolean equipped2) {
-        this.equipped2 = equipped2;
-    }
 }

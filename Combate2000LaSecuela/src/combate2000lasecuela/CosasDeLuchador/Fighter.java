@@ -262,7 +262,6 @@ public abstract class Fighter implements Serializable {
     /*--------------------------- GETTERS Y SETTERS---------------------------------------*/
     public void setWeapon1 (Weapon arma1){
         this.arma1=arma1;
-        this.arma1.setEquipped1(true);
     }
     public void setMinionsHealth(int vida){
         this.minionHealth=vida;
@@ -346,7 +345,6 @@ public abstract class Fighter implements Serializable {
     }
     public void setWeapon2 (Weapon arma2){
         this.arma2=arma2;
-        this.arma2.setEquipped2(true);
     }
     public void addMail(String [] element){
         mailbox.add(element);
