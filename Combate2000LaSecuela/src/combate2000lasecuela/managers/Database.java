@@ -141,6 +141,14 @@ public class Database {
                 myMinions.push(slave);
             }else if (!(slave instanceof Human)) {
                 myMinions.push(slave);
+            }else{ //caso limite que vio Alex
+                while (slave instanceof Human){
+                    eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
+                    slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+                    if (!(slave instanceof Human)){
+                        myMinions.push(slave);
+                    }
+                }
             }
             if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
                 tope += 1;
