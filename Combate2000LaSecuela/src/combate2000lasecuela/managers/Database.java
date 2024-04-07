@@ -153,7 +153,7 @@ public class Database {
                     }
                 }
             }
-            if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
+            if ((slave instanceof Demon) && (tope < 3)) { //que no se meta en bucle continuo, capo a los demonios
                 tope += 1;
                 ((Demon) slave).setDemonList(randomMinionDemon(tope));
             }
@@ -163,7 +163,7 @@ public class Database {
     }
 
     public LinkedList<Minion> randomMinionDemon(int tope) {
-        if (tope < 3) {
+        if (tope <= 3) {
             return randomMinions(0, false, tope + 1);
         }
         return null;

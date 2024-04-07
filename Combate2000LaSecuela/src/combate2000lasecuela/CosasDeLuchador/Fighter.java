@@ -139,15 +139,12 @@ public abstract class Fighter implements Serializable {
             }
             if (element instanceof Demon) {
                 Demon demon = (Demon) element;
-                LinkedList<Minion> mmins = demon.getDemonList();
-                if (mmins != null) {
-                    String [] minss = generateMinionText(mmins);
-                    for (String text: minss) {
+                String [] demontext = demon.getDemonListText();
+                    for (String text: demontext) {
                         miniontext.add(text);
                     }
                 }
             }
-        }
         return miniontext.toArray(new String[miniontext.size()]);
     }
     public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){

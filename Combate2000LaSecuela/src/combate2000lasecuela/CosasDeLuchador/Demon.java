@@ -1,6 +1,7 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Demon extends Minion implements Serializable {
@@ -22,6 +23,25 @@ public class Demon extends Minion implements Serializable {
         this.listaDemoniaca = listaDemoniaca;
     }
     public LinkedList<Minion> getDemonList() {return this.listaDemoniaca;}
+
+    public String [] getDemonListText(){
+        ArrayList<String> demonText = new ArrayList<>();
+        demonText.add("Esbirros de "+ this.getName()+" :");
+        if ((listaDemoniaca==null) || (listaDemoniaca.isEmpty())  ){
+            demonText.add("No tiene");
+            return demonText.toArray(new String [demonText.size()]);
+        }
+        for (Minion minion: listaDemoniaca){
+            demonText.add(minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+            if (minion instanceof Demon){
+                String [] littleDemonText = ((Demon) minion).getDemonListText();
+                for (String text: littleDemonText){
+                    demonText.add(text);
+                }
+            }
+        }
+        return demonText.toArray(new String [demonText.size()]);
+    }
 
 
 
