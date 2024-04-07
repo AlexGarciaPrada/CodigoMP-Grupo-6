@@ -147,7 +147,7 @@ public class Database {
                         slave=loader.getMm().getElements().get("MinionMap").get(Integer.toString(2));
                     } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
                     //y la probabilidad de que entre varias veces ya sería un chiste mal contado
-                    if (!(slave instanceof Human)){
+                    if ((slave instanceof Ghoul)){
                         myMinions.add(slave);
                         e=0;
                     }
