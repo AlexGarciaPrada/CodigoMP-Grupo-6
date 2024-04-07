@@ -154,8 +154,10 @@ public class Database {
                 }
             }
             if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
-                tope += 1;
-                ((Demon) slave).setDemonList(randomMinionDemon(tope));
+                if (((Demon) slave).getDemonList() == null) {
+                    tope += 1;
+                    ((Demon) slave).setDemonList(randomMinionDemon(tope));
+                }
             }
 
         }
