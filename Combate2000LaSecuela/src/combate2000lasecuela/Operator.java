@@ -1,9 +1,7 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Armor;
-import combate2000lasecuela.CosasDeLuchador.Minion;
-import combate2000lasecuela.CosasDeLuchador.Specialskill;
-import combate2000lasecuela.CosasDeLuchador.Weapon;
+import combate2000lasecuela.CosasDeLuchador.*;
+
 import java.util.LinkedList;
 
 
@@ -16,39 +14,31 @@ public class Operator extends User {
     //opciones editar personaje y equipo
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
-        LinkedList<Minion> minionList = player.getFighter().getMyMinion();
-        LinkedList<Minion> esclavoTemporal = new LinkedList<>();
-        while (!minionList.isEmpty()) {
-            Minion minion = minionList.remove();
-            if (minion.getId().equals(Integer.toString(minionId))) {
-                deleted = true;
-                break;
-            } else {
-                esclavoTemporal.add(minion);
-            }
-        }
-        while (!esclavoTemporal.isEmpty()) {
-            minionList.add(esclavoTemporal.remove());
-        }
-
-        return deleted;
+        LinkedList<Minion> minList = player.getFighter().getMyMinions();
+        if (minionId <= minList.size()) {
+            minList.remove(minionId - 1);
+            deleted = true;
+        } return deleted;
     }
 
     public boolean addMinion(Player player, Minion minion) {
         boolean added = false;
-        if (!containsMinion(player, minion)) {
+        if (!containsMinion(player.getFighter().getMyMinions(), minion)) {
             player.getFighter().getMyMinion().add(minion);
             added = true;
         }
         return added;
     }
 
-    public boolean containsMinion(Player player, Minion minion) {
+    public boolean containsMinion(LinkedList<Minion> myMins, Minion minion) {
         boolean found = false;
-        LinkedList<Minion> myMin = player.getFighter().getMyMinion();
-        for (Minion minion1 : myMin) {
+        //LinkedList<Minion> myMin = player.getFighter().getMyMinion();
+        for (Minion minion1 : myMins) {
             if (minion1.equals(minion)) {
                 found = true;
+            } else if (minion1 instanceof Demon) {
+                LinkedList<Minion> demMins = ((Demon) minion1).getDemonList();
+                return containsMinion(demMins, minion);
             }
         } return found;
     }

@@ -136,17 +136,32 @@ public abstract class Fighter implements Serializable {
         for (Minion element: mins){
             if (element != null) {
                 addMinionText(miniontext,element);
-            }
-            if (element instanceof Demon) {
-                Demon demon = (Demon) element;
-                String [] demontext = demon.getDemonListText();
+                if (element instanceof Demon) {
+                    Demon demon = (Demon) element;
+                    String [] demontext = demon.getDemonListText();
                     for (String text: demontext) {
                         miniontext.add(text);
                     }
                 }
             }
+        }
         return miniontext.toArray(new String[miniontext.size()]);
     }
+
+    public String [] getAllMinionText () {
+        ArrayList<String> allText = new ArrayList<>();
+        int i = 1;
+        String [] minionText = generateMinionText(getMyMinions());
+        for (String text: minionText) {
+            if (!text.startsWith("Esbirros de") && !text.equals("No tiene")) {
+                allText.add(i + ". " + text);
+                i++;
+            } else {
+                allText.add(text);
+            }
+        } return allText.toArray(new String[allText.size()]);
+    }
+
     public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){
         String nombre;
         String aux;
