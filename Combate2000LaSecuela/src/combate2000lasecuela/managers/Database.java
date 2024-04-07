@@ -153,6 +153,7 @@ public class Database {
                     //y la probabilidad de que entre varias veces ya sería un chiste mal contado
                     if (!(slave instanceof Human)){
                         myMinions.push(slave);
+                        e=0;
                     }
                 }
             }
