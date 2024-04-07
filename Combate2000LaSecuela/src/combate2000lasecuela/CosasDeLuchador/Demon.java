@@ -1,16 +1,16 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import java.io.Serializable;
-import java.util.Stack;
+import java.util.LinkedList;
 
 public class Demon extends Minion implements Serializable {
-    private Stack<Minion> pilaDemoniaca;
+    private LinkedList<Minion> listaDemoniaca;
 //    private MinionAttributes addedAttribute = MinionAttributes.Pacto;
 
     public Demon(String linea) {
         super(linea);
         String [] valores = linea.split(";");
-        this.pilaDemoniaca=null;
+        this.listaDemoniaca=null;
     }
 
     @Override
@@ -18,10 +18,10 @@ public class Demon extends Minion implements Serializable {
         return "Pacto";
     }
 
-    public void setDemonStack(Stack<Minion> pilaDemoniaca) {
-        this.pilaDemoniaca = pilaDemoniaca;
+    public void setDemonList(LinkedList<Minion> listaDemoniaca) {
+        this.listaDemoniaca = listaDemoniaca;
     }
-    public Stack<Minion> getDemonStack() {return this.pilaDemoniaca;}
+    public LinkedList<Minion> getDemonList() {return this.listaDemoniaca;}
 
 
 

@@ -11,7 +11,7 @@ public abstract class Fighter implements Serializable {
     private int gold;
     private int health;
     private int power;
-    private Stack<Minion> myMinions;
+    private LinkedList<Minion> myMinions;
     private LinkedList <Armor> myArmor;
     private LinkedList<Weapon> myWeapon;
     private TFighter type;
@@ -26,7 +26,7 @@ public abstract class Fighter implements Serializable {
 
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+        LinkedList<Minion> myMinions,LinkedList<Armor> myArmor,
         LinkedList<Weapon> myWeapon) {
         this.name = name;
         this.health = vidaAleatoria();
@@ -128,7 +128,7 @@ public abstract class Fighter implements Serializable {
     public void addMinionText (ArrayList miniontext, Minion minion){
         miniontext.add("Id: "+ minion.getId() + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
-    public String [] generateMinionText(Stack<Minion> mins) {
+    public String [] generateMinionText(LinkedList<Minion> mins) {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
         for (Minion element: mins){
@@ -137,7 +137,7 @@ public abstract class Fighter implements Serializable {
             }
             if (element instanceof Demon) {
                 Demon demon = (Demon) element;
-                Stack<Minion> mmins = demon.getDemonStack();
+                LinkedList<Minion> mmins = demon.getDemonList();
                 if (mmins != null) {
                     String [] minss = generateMinionText(mmins);
                     for (String text: minss) {
@@ -277,13 +277,13 @@ public abstract class Fighter implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public Stack<Minion> getMyMinion(){
+    public LinkedList<Minion> getMyMinion(){
         return this.myMinions;
     }
     public void setGold(int gold) {
         this.gold = gold;
     }
-    public void setMyMinions(Stack<Minion> a){
+    public void setMyMinions(LinkedList<Minion> a){
         this.myMinions=a;
     }
     public void setHealth(int Health) {
@@ -306,7 +306,7 @@ public abstract class Fighter implements Serializable {
         return power;
     }
 
-    public Stack<Minion> getMyMinions() {
+    public LinkedList<Minion> getMyMinions() {
         return this.myMinions;
     }
 

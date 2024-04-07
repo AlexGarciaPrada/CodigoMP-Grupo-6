@@ -124,12 +124,12 @@ public class Database {
         updateUsers();
     }
 
-    public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
+    public LinkedList<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
         int handicap=10;
         int eleccion;
         int e=0;
         Random random = new Random();
-        Stack<Minion> myMinions = new Stack<>();
+        LinkedList<Minion> myMinions = new LinkedList<>();
         Minion slave;
         int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1;
         if (numero>handicap){
@@ -139,9 +139,9 @@ public class Database {
             eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
             slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
             if (!esVampiro) {
-                myMinions.push(slave);
+                myMinions.add(slave);
             }else if (!(slave instanceof Human)) {
-                myMinions.push(slave);
+                myMinions.add(slave);
             }else{ //caso limite que vio Alex
                 while (slave instanceof Human){
                     e++;
@@ -152,21 +152,21 @@ public class Database {
                     } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
                     //y la probabilidad de que entre varias veces ya sería un chiste mal contado
                     if (!(slave instanceof Human)){
-                        myMinions.push(slave);
+                        myMinions.add(slave);
                         e=0;
                     }
                 }
             }
             if ((slave instanceof Demon) && (tope <= 3)) { //que no se meta en bucle continuo, capo a los demonios
                 tope += 1;
-                ((Demon) slave).setDemonStack(randomMinionDemon(tope));
+                ((Demon) slave).setDemonList(randomMinionDemon(tope));
             }
 
         }
         return myMinions;
     }
 
-    public Stack<Minion> randomMinionDemon(int tope) {
+    public LinkedList<Minion> randomMinionDemon(int tope) {
         if (tope <= 3) {
             return randomMinions(0, false, tope + 1);
         }

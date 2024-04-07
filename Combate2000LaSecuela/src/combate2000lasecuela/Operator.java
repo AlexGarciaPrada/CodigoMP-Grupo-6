@@ -4,10 +4,7 @@ import combate2000lasecuela.CosasDeLuchador.Armor;
 import combate2000lasecuela.CosasDeLuchador.Minion;
 import combate2000lasecuela.CosasDeLuchador.Specialskill;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
-
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Stack;
 
 
 public class Operator extends User {
@@ -27,19 +24,19 @@ public class Operator extends User {
 
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
-        Stack<Minion> minionStack = player.getFighter().getMyMinion();
-        Stack<Minion> temporaryStack = new Stack<>();
-        while (!minionStack.isEmpty()) {
-            Minion minion = minionStack.pop();
+        LinkedList<Minion> minionList = player.getFighter().getMyMinion();
+        LinkedList<Minion> esclavoTemporal = new LinkedList<>();
+        while (!minionList.isEmpty()) {
+            Minion minion = minionList.remove();
             if (minion.getId().equals(Integer.toString(minionId))) {
                 deleted = true;
                 break;
             } else {
-                temporaryStack.push(minion);
+                esclavoTemporal.add(minion);
             }
         }
-        while (!temporaryStack.isEmpty()) {
-            minionStack.push(temporaryStack.pop());
+        while (!esclavoTemporal.isEmpty()) {
+            minionList.add(esclavoTemporal.remove());
         }
 
         return deleted;
@@ -48,7 +45,7 @@ public class Operator extends User {
     public boolean addMinion(Player player, Minion minion) {
         boolean added = false;
         if (!containsMinion(player, minion)) {
-            player.getFighter().getMyMinion().push(minion);
+            player.getFighter().getMyMinion().add(minion);
             added = true;
         }
         return added;
@@ -56,7 +53,7 @@ public class Operator extends User {
 
     public boolean containsMinion(Player player, Minion minion) {
         boolean found = false;
-        Stack<Minion> myMin = player.getFighter().getMyMinion();
+        LinkedList<Minion> myMin = player.getFighter().getMyMinion();
         for (Minion minion1 : myMin) {
             if (minion1.equals(minion)) {
                 found = true;

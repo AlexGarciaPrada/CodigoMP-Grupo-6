@@ -5,6 +5,7 @@ import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import static combate2000lasecuela.Constants.*;
@@ -225,7 +226,7 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),true,0);
+                    LinkedList<Minion> aux = database.randomMinions(type.getSuerteM(),true,0);
                     database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
