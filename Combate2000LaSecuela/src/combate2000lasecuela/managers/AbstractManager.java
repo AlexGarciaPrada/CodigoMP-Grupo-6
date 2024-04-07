@@ -24,14 +24,6 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         this.elements.get(type).put(mapKey,element);
     }
 
-    public T deleteElement(String type, String mapKey){
-        return this.elements.get(type).remove(mapKey);
-    }
-
-    public void addElementSubMap(String submap, String key, T element){
-        this.elements.get(submap).put(key, element);
-    }
-
     // --------------------------------- SERIALIZATION METHODS
     public void saveElement(T element){
         try {
@@ -68,10 +60,6 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String getType(){
-        return String.valueOf((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
     //------------------------------------ CHECK IF AN ELEMENT IS IN THE MAP

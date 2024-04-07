@@ -93,22 +93,6 @@ public abstract class Fighter implements Serializable {
         challenger.setMinionsHealth(vidaMinionsDesafiante);
         return new Combat(challenger, this, rounds, oroApostado,desafiadoEsGanador);
     }
-    public String [] generateWeaponsText() {
-        ArrayList<String> weapontext=new ArrayList<>();
-        int i =1;
-        for (Weapon element: myWeapon){
-            if (element != null && element.getId().equals(arma1.getId())){
-                weapontext.add("E Arma 1: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else if (element != null && element.equals(arma2)){
-                weapontext.add("E Arma 2: "+ i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }else if (element != null){
-                weapontext.add(i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
-            }
-
-            i++;
-        }
-        return weapontext.toArray(new String[weapontext.size()]);
-    }
 
     public String [] generateArmorText() {
         ArrayList<String> armortext=new ArrayList<>();
@@ -119,7 +103,6 @@ public abstract class Fighter implements Serializable {
             }else if (element != null){
                 armortext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }
-
             i++;
         }
         return armortext.toArray(new String[armortext.size()]);
@@ -128,6 +111,7 @@ public abstract class Fighter implements Serializable {
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
         miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
+
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
@@ -160,9 +144,32 @@ public abstract class Fighter implements Serializable {
             textoBatalla.addAll(Arrays.asList(texto));
         }
     }
-
     public String[] publishText(){
         return this.battleText.toArray(new String[this.battleText.size()]);
+    }
+
+    public String [] generateWeaponsText() {
+        ArrayList<String> weapontext = new ArrayList<>();
+        int i = 1;
+        for (Weapon element : myWeapon) {
+            String[] text = this.weaponToString(element, i);
+            weapontext.addAll(Arrays.asList(text));
+        }
+        i++;
+        return weapontext.toArray(new String[weapontext.size()]);
+    }
+
+    public String [] weaponToString(Weapon armor, int counter){
+        return new String[]{whichArmor(armor)+counter +". "+armor.getName()+" Ataque: "+Integer.toString(armor.getAttack())+" "+armor.handConverter()};
+    }
+
+    public String whichArmor(Weapon armor){
+        if (armor.equals(arma1)){
+            return "Arma 1: ";
+        }else if (armor.equals(arma2)){
+            return "Arma 2: ";
+        }
+        return "No equipadas: ";
     }
     public String [] generateFighterState(){
         ArrayList <String> textbuilder = new ArrayList<>();
