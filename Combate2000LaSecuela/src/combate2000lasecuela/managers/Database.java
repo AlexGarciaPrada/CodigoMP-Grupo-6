@@ -127,6 +127,7 @@ public class Database {
     public Stack<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
         int handicap=10;
         int eleccion;
+        int e=0;
         Random random = new Random();
         Stack<Minion> myMinions = new Stack<>();
         Minion slave;
@@ -143,8 +144,13 @@ public class Database {
                 myMinions.push(slave);
             }else{ //caso limite que vio Alex
                 while (slave instanceof Human){
+                    e++;
                     eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
                     slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+                    if (e>=10){
+                        slave=loader.getMm().getElements().get("MinionMap").get(Integer.toString(2));
+                    } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
+                    //y la probabilidad de que entre varias veces ya sería un chiste mal contado
                     if (!(slave instanceof Human)){
                         myMinions.push(slave);
                     }
