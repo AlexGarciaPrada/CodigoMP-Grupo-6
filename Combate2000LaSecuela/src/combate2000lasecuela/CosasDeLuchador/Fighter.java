@@ -125,24 +125,25 @@ public abstract class Fighter implements Serializable {
         return armortext.toArray(new String[armortext.size()]);
     }
 
-    public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+    public void addMinionText (ArrayList miniontext, Minion minion){
+        miniontext.add("Id: " + minion.getId() + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
-    public String [] generateMinionText() {
+    public String [] generateMinionText(Stack <Minion> mins) {
         ArrayList<String> miniontext = new ArrayList<>();
-        int i =1;
-        int j = 1;
-        for (Minion element: getMyMinions()){
-            addMinionText(miniontext,i,element);
+        for (Minion element: mins){
+            if (element != null) {
+                addMinionText(miniontext,element);
+            }
             if (element instanceof Demon) {
-                if (((Demon) element).getDemonStack() != null) {
-                    for (Minion elem: ((Demon) element).getDemonStack()) {
-                        addMinionText(miniontext,j,elem);
-                        j++;
+                Demon demon = (Demon) element;
+                Stack <Minion> mmins = demon.getDemonStack();
+                if (mmins != null) {
+                    String [] minss = generateMinionText(mmins);
+                    for (String text : minss) {
+                        miniontext.add(text);
                     }
                 }
             }
-            i++;
         }
         return miniontext.toArray(new String[miniontext.size()]);
     }
@@ -177,7 +178,7 @@ public abstract class Fighter implements Serializable {
         ArrayList <String> textbuilder = new ArrayList<>();
         String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
-        textbuilder.addAll(Arrays.asList(generateMinionText()));
+        textbuilder.addAll(Arrays.asList(generateMinionText(getMyMinions())));
         return textbuilder.toArray(new String[textbuilder.size()]);
     }
 

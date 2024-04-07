@@ -25,4 +25,5 @@ public class Demon extends Minion implements Serializable {
 
 
 
+
 }
