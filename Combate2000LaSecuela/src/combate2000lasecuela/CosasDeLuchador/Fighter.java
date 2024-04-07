@@ -152,21 +152,23 @@ public abstract class Fighter implements Serializable {
         ArrayList<String> weapontext = new ArrayList<>();
         int i = 1;
         for (Weapon element : myWeapon) {
-            String[] text = this.weaponToString(element, i);
-            weapontext.addAll(Arrays.asList(text));
-        }
+            String text = this.weaponToString(element, i);
+            weapontext.add(text);
         i++;
+    }
         return weapontext.toArray(new String[weapontext.size()]);
     }
 
-    public String [] weaponToString(Weapon armor, int counter){
-        return new String[]{whichArmor(armor)+counter +". "+armor.getName()+" Ataque: "+Integer.toString(armor.getAttack())+" "+armor.handConverter()};
-    }
+    public String weaponToString(Weapon armor, int counter){
+        String s = counter + ". " + armor.getName() + " Ataque: " + Integer.toString(armor.getAttack()) + " " + armor.handConverter();
+        return s;
+    };
+
 
     public String whichArmor(Weapon armor){
-        if (armor.equals(arma1)){
+        if (armor !=null &&  armor.equals(arma1)) {
             return "Arma 1: ";
-        }else if (armor.equals(arma2)){
+        } else if (armor !=null &&  armor.equals(arma2)) {
             return "Arma 2: ";
         }
         return "No equipadas: ";
