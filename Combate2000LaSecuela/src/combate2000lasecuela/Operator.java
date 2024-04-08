@@ -15,7 +15,7 @@ public class Operator extends User {
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
         LinkedList<Minion> allList = player.getFighter().getAllMinionsList(player.getFighter().getMyMinions());
-        if (minionId>= 0 && minionId < allList.size()) {
+        if (minionId>= 0 && minionId-1 < allList.size()) {
             if (!allList.isEmpty()) {
                 Minion minion = allList.remove(minionId - 1);
                 deleted = eraseMinion(player.getFighter().getMyMinions(), minion);
@@ -59,7 +59,7 @@ public class Operator extends User {
             }
         } return found;
     }
-    
+
      */
 
     public boolean deleteWeapon(Player player, int elementId) {
