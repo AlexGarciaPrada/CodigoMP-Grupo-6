@@ -227,14 +227,14 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    LinkedList<Minion> aux = database.randomMinions(type.getSuerteM(),true,0);
+                    LinkedList<Minion> aux = database.randomMinions(type.getSuerteM(),true, true,0);
                     database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(), true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }

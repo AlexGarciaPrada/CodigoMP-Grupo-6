@@ -13,7 +13,7 @@ public class Database {
     private Loader loader;
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
-;
+    private int topeDemoniaco;
 
 
     public Database() {
@@ -21,6 +21,7 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
+        this.topeDemoniaco=0;
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -120,7 +121,7 @@ public class Database {
         updateUsers();
     }
 
-    public LinkedList<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
+    public LinkedList<Minion> randomMinions(int suerte, boolean esJugador, boolean esVampiro, int tope) {
         int handicap=Constants.handicap;
         int eleccion;
         int e=0;
@@ -153,8 +154,12 @@ public class Database {
                     }
                 }
             }
-            if ((slave instanceof Demon) && (tope < 3)) { //que no se meta en bucle continuo, capo a los demonios
-                tope += 1;
+            if ((slave instanceof Demon) && (tope < Constants.handicap) && (getTopeDemoniaco()<Constants.handicap)) { //que no se meta en bucle continuo, capo a los demonios
+                if (esJugador) {
+                    tope += 1;
+                }else{
+                    setTopeDemoniaco(getTopeDemoniaco()+1);
+                }
                 ((Demon) slave).setDemonList(randomMinionDemon(tope));
             }
 
@@ -163,10 +168,7 @@ public class Database {
     }
 
     public LinkedList<Minion> randomMinionDemon(int tope) {
-        if (tope <= 3) {
-            return randomMinions(0, false, tope + 1);
-        }
-        return null;
+            return randomMinions(0, false, false,tope);
     }
 
     public TFighter getTFighter() {
@@ -496,5 +498,13 @@ public class Database {
     public void reducePendingGold(int gold,Player player){
         player.getFighter().setPendingGold(player.getFighter().getPendingGold()-gold);
         updateUsers();
+    }
+
+    public void setTopeDemoniaco(int topeDemoniaco) {
+        this.topeDemoniaco = topeDemoniaco;
+    }
+
+    public int getTopeDemoniaco() {
+        return topeDemoniaco;
     }
 }
