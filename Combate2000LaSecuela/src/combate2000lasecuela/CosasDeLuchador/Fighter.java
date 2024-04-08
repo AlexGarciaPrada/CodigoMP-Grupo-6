@@ -283,10 +283,11 @@ public abstract class Fighter implements Serializable {
             aux = myArmor.get(i);
             i++;
         }
-        if (armor!=null) {
+        if (aux!=null) {
             setArmor(aux);
         }else{//caso absurdamente improbable
             Armor armadura = new Armor("3; ARMADURA DE COBRE COMÚN; 1; 0;");
+            myArmor.add(armadura);
             setArmor(armadura);
         }
     }
@@ -297,10 +298,11 @@ public abstract class Fighter implements Serializable {
             aux = myWeapon.get(i);
             i++;
         }
-        if (armor!=null) {
+        if (aux!=null) {
             setWeapon1(aux);
         }else{//caso absurdamente improbable
             Weapon arma = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+            myWeapon.add(arma);
             setWeapon1(arma);
         }
     }
