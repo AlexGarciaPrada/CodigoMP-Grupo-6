@@ -264,10 +264,32 @@ public abstract class Fighter implements Serializable {
         return (this.armor != null && this.arma1 != null);
     }
     public void equipDefaultArmor(){
-        armor= myArmor.get(0);
+        int i=0;
+        Armor aux = null;
+        while ((aux==null)&&(i<=myArmor.toArray().length)) {
+            aux = myArmor.get(i);
+            i++;
+        }
+        if (armor!=null) {
+            setArmor(aux);
+        }else{//caso absurdamente improbable
+            Armor armadura = new Armor("3; ARMADURA DE COBRE COMÚN; 1; 0;");
+            setArmor(armadura);
+        }
     }
     public void equipDefaultWeapon(){
-        arma1 = myWeapon.get(0);
+        int i=0;
+        Weapon aux = null;
+        while ((aux==null)&&(i<=myWeapon.toArray().length)) {
+            aux = myWeapon.get(i);
+            i++;
+        }
+        if (armor!=null) {
+            setWeapon1(aux);
+        }else{//caso absurdamente improbable
+            Weapon arma = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+            setWeapon1(arma);
+        }
     }
 
     /*--------------------------- GETTERS Y SETTERS---------------------------------------*/

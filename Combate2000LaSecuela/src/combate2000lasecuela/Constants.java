@@ -1,6 +1,7 @@
 package combate2000lasecuela;
 
 public class Constants {
+    public static final int handicap=3;
     public static final String minionsFile = "./files/txtfiles/Esbirros.txt";
     public static final String weaponsFile = "./files/txtfiles/Armas.txt";
     public static final String armorsFile = "./files/txtfiles/Armaduras.txt";

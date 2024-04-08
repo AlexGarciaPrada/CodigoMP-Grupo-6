@@ -121,7 +121,7 @@ public class Database {
     }
 
     public LinkedList<Minion> randomMinions(int suerte, boolean esVampiro, int tope) {
-        int handicap=10;
+        int handicap=Constants.handicap;
         int eleccion;
         int e=0;
         Random random = new Random();
@@ -174,7 +174,7 @@ public class Database {
     }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
-        int handicap=10;
+        int handicap=Constants.handicap;
         int eleccion;
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
@@ -192,7 +192,7 @@ public class Database {
     }
 
     public LinkedList<Armor> randomArmor(int suerte) {
-        int handicap = 10;
+        int handicap = Constants.handicap;
         Random random = new Random();
         int eleccion;
         Armor armor;
