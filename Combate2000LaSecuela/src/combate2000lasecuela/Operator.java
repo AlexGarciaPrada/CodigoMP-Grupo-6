@@ -14,22 +14,39 @@ public class Operator extends User {
     //opciones editar personaje y equipo
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
-        LinkedList<Minion> minList = player.getFighter().getMyMinions();
-        if (minionId <= minList.size()) {
-            minList.remove(minionId - 1);
+        LinkedList<Minion> allList = player.getFighter().getAllMinionsList(player.getFighter().getMyMinions());
+        if (minionId>= 0 && minionId < allList.size()) {
+            if (!allList.isEmpty()) {
+                Minion minion = allList.remove(minionId - 1);
+                deleted = eraseMinion(player.getFighter().getMyMinions(), minion);
+            }
+        } return deleted;
+    }
+    public boolean eraseMinion (LinkedList<Minion> mins, Minion minion) {
+        boolean deleted = false;
+        if (mins.contains(minion)) {
+            mins.remove(minion);
             deleted = true;
+        } else {
+            for (Minion min: mins) {
+                if (min instanceof Demon) {
+                    if (((Demon) min).getDemonList() != null) {
+                        deleted = eraseMinion(((Demon) min).getDemonList(), minion);
+                    }
+                }
+            }
         } return deleted;
     }
 
     public boolean addMinion(Player player, Minion minion) {
         boolean added = false;
-        if (!containsMinion(player.getFighter().getMyMinions(), minion)) {
-            player.getFighter().getMyMinion().add(minion);
+        if (!player.getFighter().getMyMinions().contains(minion)) {
+            player.getFighter().getMyMinions().add(minion);
             added = true;
-        }
-        return added;
+        } return added;
     }
 
+    /*
     public boolean containsMinion(LinkedList<Minion> myMins, Minion minion) {
         boolean found = false;
         //LinkedList<Minion> myMin = player.getFighter().getMyMinion();
@@ -42,6 +59,8 @@ public class Operator extends User {
             }
         } return found;
     }
+    
+     */
 
     public boolean deleteWeapon(Player player, int elementId) {
         boolean deleted = false;
