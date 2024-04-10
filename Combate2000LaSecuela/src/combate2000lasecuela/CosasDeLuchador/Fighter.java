@@ -9,9 +9,10 @@ import java.lang.String;
 public abstract class Fighter implements Serializable {
     private String name;
     private int gold;
+    private int pendingGold;
     private int health;
     private int power;
-    private Stack<Minion> myMinions;
+    private LinkedList<Minion> myMinions;
     private LinkedList <Armor> myArmor;
     private LinkedList<Weapon> myWeapon;
     private TFighter type;
@@ -26,20 +27,21 @@ public abstract class Fighter implements Serializable {
 
 
     public Fighter(String name, TFighter type,
-        Stack<Minion> myMinions,LinkedList<Armor> myArmor,
+        LinkedList<Minion> myMinions,LinkedList<Armor> myArmor,
         LinkedList<Weapon> myWeapon) {
         this.name = name;
-        this.health = vidaAleatoria();
+        this.health = randomHealth();
         this.type = type;
         this.myMinions=myMinions;
         this.myArmor= myArmor;
         this.myWeapon = myWeapon;
         this.minionHealth= calculateMinionHealth();
         this.pendingChallenges = new PendingChallenges();
-        equiparPredefinidoArma();
+        equipDefaultWeapon();
         this.arma2=null;
-        equiparPredefinidoArmadura();
+        equipDefaultArmor();
         this.gold=100;
+        this.pendingGold=100;
         this.specialskill= setAbility();
         this.mailbox = new ArrayList<>();
     }
@@ -58,8 +60,8 @@ public abstract class Fighter implements Serializable {
             rounds++; //donde recibe el desafiado
                 pAA = attackPotential(challenger);
                 pDD = defensePotential(this);
-                    if (comprobarDaños(pAA,pDD)){
-                        ajusteHabilidad(pAA,pDD);
+                    if (checkDamage(pAA,pDD)){
+                        adjustAbility(pAA,pDD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
                             estadoBatalla(rounds,this,true, battleText,false);
@@ -72,8 +74,8 @@ public abstract class Fighter implements Serializable {
                     }
                 pAD = attackPotential(this);
                 pDA = defensePotential(challenger);
-                if (comprobarDaños(pAD,pDA)){
-                    ajusteHabilidad(pAD,pDA);
+                if (checkDamage(pAD,pDA)){
+                    adjustAbility(pAD,pDA);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
                         estadoBatalla(rounds,challenger,true, battleText,false);
@@ -108,19 +110,54 @@ public abstract class Fighter implements Serializable {
         return armortext.toArray(new String[armortext.size()]);
     }
 
-    public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+    public void addMinionText (ArrayList miniontext, Minion minion){
+        miniontext.add(minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
 
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
-        int i =1;
-        for (Minion element: getMyMinions()){
-            addMinionText(miniontext,i,element);
-            i++;
+        for (Minion element: myMinions){
+            if (element != null) {
+                addMinionText(miniontext,element);
+                if (element instanceof Demon) {
+                    Demon demon = (Demon) element;
+                    String [] demontext = demon.getDemonListText();
+                    for (String text: demontext) {
+                        miniontext.add(text);
+                    }
+                }
+            }
         }
         return miniontext.toArray(new String[miniontext.size()]);
     }
+
+    public String [] getAllMinionText () {
+        ArrayList<String> allText = new ArrayList<>();
+        int i = 1;
+        String [] minionText = generateMinionText();
+        for (String text: minionText) {
+            if (!text.startsWith("Esbirros de") && !text.equals("No tiene")) {
+                allText.add(i + ". " + text);
+                i++;
+            } else {
+                allText.add(text);
+            }
+        } return allText.toArray(new String[allText.size()]);
+    }
+
+    public LinkedList<Minion> getAllMinionsList(LinkedList<Minion> mins) {
+        LinkedList<Minion> allList = new LinkedList<>();
+        for (Minion minion: mins) {
+            allList.add(minion);
+            if (minion instanceof  Demon) {
+                if (((Demon) minion).getDemonList() != null) {
+                    LinkedList<Minion> subList = getAllMinionsList(((Demon) minion).getDemonList());
+                    allList.addAll(subList);
+                }
+            }
+        } return allList;
+    }
+
     public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){
         String nombre;
         String aux;
@@ -195,15 +232,19 @@ public abstract class Fighter implements Serializable {
         }
     }
     public int calculateMinionHealth(){
+        int value = 0;
         if (myMinions == null){
             return 0;
         }else {
             int total = 0;
-            for (Minion minion:myMinions){
-                total+=minion.getHealth();
+            for (Minion minion : myMinions) {
+                if (minion != null) {
+                    total += minion.getHealth();
+                    value = total;
+                }
             }
-            return total;
-    }}
+        } return value;
+    }
     public int checkSuccess(int potential){
         Random random = new Random();
         int acierto=0;
@@ -232,29 +273,52 @@ public abstract class Fighter implements Serializable {
         return checkSuccess(potencial);
     }
 
-    private int vidaAleatoria(){
+    private int randomHealth(){
         Random random = new Random();
         return random.nextInt(5)+1;
     }
-    private boolean comprobarDaños(int pA, int pD){
+    private boolean checkDamage(int pA, int pD){
         return (pA>pD);
     }
-    public abstract void ajusteHabilidad(int pA, int pD);
+    public abstract void adjustAbility(int pA, int pD);
     public abstract int SpecialAttack();
     public boolean hasActiveEquipment() {
         return (this.armor != null && this.arma1 != null);
     }
-    public void equiparPredefinidoArmadura(){
-        armor= myArmor.get(0);
+    public void equipDefaultArmor(){
+        int i=0;
+        Armor aux = null;
+        while ((aux==null)&&(i<=myArmor.toArray().length)) {
+            aux = myArmor.get(i);
+            i++;
+        }
+        if (aux!=null) {
+            setArmor(aux);
+        }else{//caso absurdamente improbable
+            Armor armadura = new Armor("3; ARMADURA DE COBRE COMÚN; 1; 0;");
+            myArmor.add(armadura);
+            setArmor(armadura);
+        }
     }
-    public void equiparPredefinidoArma(){
-        arma1 = myWeapon.get(0);
+    public void equipDefaultWeapon(){
+        int i=0;
+        Weapon aux = null;
+        while ((aux==null)&&(i<=myWeapon.toArray().length)) {
+            aux = myWeapon.get(i);
+            i++;
+        }
+        if (aux!=null) {
+            setWeapon1(aux);
+        }else{//caso absurdamente improbable
+            Weapon arma = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+            myWeapon.add(arma);
+            setWeapon1(arma);
+        }
     }
 
     /*--------------------------- GETTERS Y SETTERS---------------------------------------*/
     public void setWeapon1 (Weapon arma1){
         this.arma1=arma1;
-        this.arma1.setEquipped1(true);
     }
     public void setMinionsHealth(int vida){
         this.minionHealth=vida;
@@ -271,13 +335,13 @@ public abstract class Fighter implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public Stack<Minion> getMyMinion(){
+    public LinkedList<Minion> getMyMinion(){
         return this.myMinions;
     }
     public void setGold(int gold) {
         this.gold = gold;
     }
-    public void setMyMinions(Stack<Minion> a){
+    public void setMyMinions(LinkedList<Minion> a){
         this.myMinions=a;
     }
     public void setHealth(int Health) {
@@ -300,7 +364,7 @@ public abstract class Fighter implements Serializable {
         return power;
     }
 
-    public Stack<Minion> getMyMinions() {
+    public LinkedList<Minion> getMyMinions() {
         return this.myMinions;
     }
 
@@ -310,18 +374,22 @@ public abstract class Fighter implements Serializable {
     public int getMinionHealth() {
         return minionHealth;
     }
-
-    public Specialskill getSpecialskill() {
-        return specialskill;
-    }
-
     public void setType(TFighter type) {
         this.type = type;
+    }
+
+    public void setPendingGold(int pendingGold) {
+        this.pendingGold = pendingGold;
     }
 
     public Weapon getArma1(){
         return this.arma1;
     }
+
+    public int getPendingGold() {
+        return pendingGold;
+    }
+
     public Weapon getArma2(){
         return this.arma2;
     }
@@ -331,19 +399,19 @@ public abstract class Fighter implements Serializable {
     }
     public void setArmor (Armor armadura){
         this.armor =armadura;
-        armor.setEquipped(true);
     }
     public void setWeapon2 (Weapon arma2){
         this.arma2=arma2;
-        this.arma2.setEquipped2(true);
     }
     public void addMail(String [] element){
         mailbox.add(element);
     }
     public String [] getMail(){
        String [] text =mailbox.get(0);
-       mailbox.remove(0);
        return text;
+    }
+    public void eraseMail(){
+        mailbox.removeFirst();
     }
     public boolean isMailboxEmpty(){
         return mailbox.isEmpty();

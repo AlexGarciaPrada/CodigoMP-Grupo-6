@@ -1,13 +1,8 @@
 package combate2000lasecuela;
 
-import combate2000lasecuela.CosasDeLuchador.Armor;
-import combate2000lasecuela.CosasDeLuchador.Minion;
-import combate2000lasecuela.CosasDeLuchador.Specialskill;
-import combate2000lasecuela.CosasDeLuchador.Weapon;
+import combate2000lasecuela.CosasDeLuchador.*;
 
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Stack;
 
 
 public class Operator extends User {
@@ -17,52 +12,55 @@ public class Operator extends User {
     }
 
     //opciones editar personaje y equipo
-    public void changeName (Player player, String newName) {
-        player.getFighter().setName(newName);
-    }
-
-    public void changeSpecialSkill(Player player, Specialskill skill) {
-        player.getFighter().changeSpecialSkill(skill);
-    }
-
     public boolean deleteMinion(Player player, int minionId) {
         boolean deleted = false;
-        Stack<Minion> minionStack = player.getFighter().getMyMinion();
-        Stack<Minion> temporaryStack = new Stack<>();
-        while (!minionStack.isEmpty()) {
-            Minion minion = minionStack.pop();
-            if (minion.getId().equals(Integer.toString(minionId))) {
-                deleted = true;
-                break;
-            } else {
-                temporaryStack.push(minion);
+        LinkedList<Minion> allList = player.getFighter().getAllMinionsList(player.getFighter().getMyMinions());
+        if (minionId>= 0 && minionId-1 < allList.size()) {
+            if (!allList.isEmpty()) {
+                Minion minion = allList.remove(minionId - 1);
+                deleted = eraseMinion(player.getFighter().getMyMinions(), minion);
             }
-        }
-        while (!temporaryStack.isEmpty()) {
-            minionStack.push(temporaryStack.pop());
-        }
-
-        return deleted;
+        } return deleted;
+    }
+    public boolean eraseMinion (LinkedList<Minion> mins, Minion minion) {
+        boolean deleted = false;
+        if (mins.contains(minion)) {
+            mins.remove(minion);
+            deleted = true;
+        } else {
+            for (Minion min: mins) {
+                if (min instanceof Demon) {
+                    if (((Demon) min).getDemonList() != null) {
+                        deleted = eraseMinion(((Demon) min).getDemonList(), minion);
+                    }
+                }
+            }
+        } return deleted;
     }
 
     public boolean addMinion(Player player, Minion minion) {
         boolean added = false;
-        if (!containsMinion(player, minion)) {
-            player.getFighter().getMyMinion().push(minion);
+        if (!player.getFighter().getMyMinions().contains(minion)) {
+            player.getFighter().getMyMinions().add(minion);
             added = true;
-        }
-        return added;
+        } return added;
     }
 
-    public boolean containsMinion(Player player, Minion minion) {
+    /*
+    public boolean containsMinion(LinkedList<Minion> myMins, Minion minion) {
         boolean found = false;
-        Stack<Minion> myMin = player.getFighter().getMyMinion();
-        for (Minion minion1 : myMin) {
+        //LinkedList<Minion> myMin = player.getFighter().getMyMinion();
+        for (Minion minion1 : myMins) {
             if (minion1.equals(minion)) {
                 found = true;
+            } else if (minion1 instanceof Demon) {
+                LinkedList<Minion> demMins = ((Demon) minion1).getDemonList();
+                return containsMinion(demMins, minion);
             }
         } return found;
     }
+
+     */
 
     public boolean deleteWeapon(Player player, int elementId) {
         boolean deleted = false;
@@ -94,18 +92,6 @@ public class Operator extends User {
             player.getFighter().getMyArmor().add(element);
             added = true;
         } return added;
-    }
-
-    public void changeGold (Player player, int amount) {
-        player.getFighter().setGold(amount);
-    }
-
-    public void changeHealth(Player player, int health) {
-        player.getFighter().setHealth(health);
-    }
-
-    public void changePower(Player player, int power) {
-        player.getFighter().setPower(power);
     }
 
     //opciones bloqueo/desbloqueo

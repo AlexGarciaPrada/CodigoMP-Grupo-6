@@ -17,8 +17,7 @@ public class Gameflow  {
     private boolean login;
     private boolean playerlogin;
     private boolean operatorlogin;
-    private boolean eraseuser;
-    private boolean challengemode;
+
 
 
     
@@ -29,7 +28,6 @@ public class Gameflow  {
         login=false;
         playerlogin=false;
         operatorlogin=false;
-        eraseuser=false;
     }
 
     public void startMenu() {
@@ -88,9 +86,6 @@ public class Gameflow  {
                                if (user instanceof Player){
                                    if (!((Player) user).isBlocked()){
                                        playerlogin = true;
-                                       if (((Player) user).hasPendingChallenges()){
-                                            challengemode=true;
-                                       }
                                    }else{
                                        messageManager.showContent(playerBlockedText);
                                    }

@@ -5,14 +5,14 @@ import java.util.Date;
 import combate2000lasecuela.CosasDeLuchador.Fighter;
 
 public class Combat implements Saveable {
-    private Fighter challenger;
-    private Fighter challenged;
-    private int rounds;
-    private Date date;
-    private Fighter winner;
-    private Fighter loser;
-    private int goldGained;
-    private String [] result;
+    private final Fighter challenger;
+    private final Fighter challenged;
+    private final int rounds;
+    private final Date date;
+    private  Fighter winner;
+    private  Fighter loser;
+    private final int goldGained;
+    private final String [] result;
     private boolean desafiadoEsGanador;
 
     public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained,boolean desafiadoEsGanador) {
@@ -49,30 +49,6 @@ public class Combat implements Saveable {
 
     public int getGoldGained() {return goldGained;}
 
-    public Fighter getChallenger() {return challenger;}
-
-    public Fighter getChallenged() {return challenged;}
-
-    public void setChallenger(Fighter challenger) {
-        this.challenger = challenger;
-    }
-
-    public void setChallenged(Fighter challenged) {
-        this.challenged = challenged;
-    }
-
-    public int getRounds() {
-        return rounds;
-    }
-
-    public void setRounds(int rounds) {
-        this.rounds = rounds;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public void setWinner(Fighter winner) {
         this.winner = winner;
     }
@@ -89,16 +65,8 @@ public class Combat implements Saveable {
         return loser;
     }
 
-    public void setGoldGained(int goldGained) {
-        this.goldGained = goldGained;
-    }
-
     public String [] getResult() {
         return result;
-    }
-
-    public void setResult(String [] result) {
-        this.result = result;
     }
 
     @Override

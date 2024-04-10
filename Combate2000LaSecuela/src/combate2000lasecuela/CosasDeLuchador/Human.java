@@ -13,6 +13,6 @@ public class Human extends Minion implements Serializable {
 
     @Override
     public String getSpecialSkillName() {
-        return "Dependencia";
+        return "Lealtad";
     }
 }

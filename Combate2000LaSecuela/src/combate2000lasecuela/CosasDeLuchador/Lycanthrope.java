@@ -1,9 +1,7 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Stack;
 
 public class Lycanthrope extends Fighter{
     int rage;
@@ -11,7 +9,7 @@ public class Lycanthrope extends Fighter{
     int peso;
     Random random= new Random();
     private Gift don;
-    public Lycanthrope(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
+    public Lycanthrope(String name, TFighter type, LinkedList<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.peso= random.nextInt(20)+90;
         this.rage=0;
@@ -28,7 +26,7 @@ public class Lycanthrope extends Fighter{
     }
 
     @Override
-    public void ajusteHabilidad(int pA, int pD) {
+    public void adjustAbility(int pA, int pD) {
         if ((pA<pD)&&(getRage()<=3)){
             setRage(getRage()+1);
         }

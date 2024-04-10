@@ -2,12 +2,11 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class Hunter extends Fighter implements Serializable {
     int will;
     Talent talent;
-    public Hunter(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
+    public Hunter(String name, TFighter type, LinkedList<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.will=3;
         this.talent = new Talent();
@@ -19,7 +18,7 @@ public class Hunter extends Fighter implements Serializable {
     }
 
     @Override
-    public void ajusteHabilidad(int pA, int pD) {
+    public void adjustAbility(int pA, int pD) {
         if ((pA<pD)&&(getWill()>0)){
             setWill(getWill()-1);
         }

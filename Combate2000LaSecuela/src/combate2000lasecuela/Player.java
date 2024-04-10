@@ -23,16 +23,6 @@ public class Player extends User {
         this.fighter =null;
     }
 
-    public int whoGetsGold(Combat c) {
-        if (c.getResult().equals(Constants.isTie)) {
-            return 0;
-        }
-        else if (c.getResult().equals(this.fighter.getName())) {
-            victories++;
-            return c.getGoldGained();
-        } else return -c.getGoldGained();
-    }
-
     public Combat Fight(Player challenger, int gold) {
         return getFighter().startFighting(challenger.getFighter(), gold);
     }

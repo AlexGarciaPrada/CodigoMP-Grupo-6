@@ -3,38 +3,37 @@ package combate2000lasecuela.CosasDeLuchador;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Stack;
 
 public class Vampire extends Fighter implements Serializable {
     private int puntosSangre;
     private int age;
     private Discipline discipline;
     Random random = new Random();
-    public Vampire(String name, TFighter type, Stack<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
+    public Vampire(String name, TFighter type, LinkedList<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.puntosSangre=0;
         this.discipline = new Discipline();
         this.age = random.nextInt(1500)+120;
     }
-    public int aumentarSangre(){
+    public int increaseBlood(){
         return this.puntosSangre+=1;
     }
-    public int disminuirSangre(int cantidad){
+    public int reduceBlood(int cantidad){
         return (this.puntosSangre-cantidad);
     }
     public int SpecialAttack(){
         if (getDiscipline().usarDisciplina(getPuntosSangre())){
-            disminuirSangre(discipline.getCosteSangre());
+            reduceBlood(discipline.getCosteSangre());
            return discipline.getDamage();
         }
         return 0;
     }
     @Override
-    public void ajusteHabilidad(int pA, int pD) {
+    public void adjustAbility(int pA, int pD) {
         if (pA-5>=pD){
            setPuntosSangre(getPuntosSangre()+4);
         }else if (pA>pD){
-            aumentarSangre();
+            increaseBlood();
         }
     }
 

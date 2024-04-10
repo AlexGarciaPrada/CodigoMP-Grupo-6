@@ -5,6 +5,7 @@ import combate2000lasecuela.screen.MessageManager;
 import combate2000lasecuela.managers.Database;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import static combate2000lasecuela.Constants.*;
@@ -49,15 +50,16 @@ public class PlayerFlow extends Gameflow {
             erasePlayer(player,database,messageManager);
 
         } else {
-            playerLogin(player, messageManager);
+            playerLogin(player,database, messageManager);
         }
     }
     }
 
-    private static void playerLogin(Player player, MessageManager messageManager) {
+    private static void playerLogin(Player player, Database database,MessageManager messageManager) {
         if (player.getFighter()!=null) {
             while (!(player.getFighter().isMailboxEmpty())) {
                 messageManager.showContent(player.getFighter().getMail());
+                database.eraseMail(player);
             }
         }
         int option = messageManager.showPlayerMenu(player.getName());
@@ -109,7 +111,6 @@ public class PlayerFlow extends Gameflow {
                 Fighter loser = combat.getLoser();
                 database.updateGold(winner,gold);
                 database.updateGold(loser,-gold);
-                database.updateCombats(); // TODO
                 if (challenge.getChallenger().getFighter().equals(winner)){
                     database.addVictories(challenge.getChallenger());
             }
@@ -117,6 +118,7 @@ public class PlayerFlow extends Gameflow {
                     database.addVictories(challenge.getChallenged());
                 }
             }
+            database.addCombat(combat);
             //messageManager.showContent(loser);
         }else{ //Desafio rechazado
             challenge.getChallenger().rejectingChallenge(-gold);
@@ -180,13 +182,19 @@ public class PlayerFlow extends Gameflow {
         String user = messageManager.showReadString(nickText);
         if ((database.isAPlayer(user))){
             Player challenged = (Player) database.getUser(user);
-            if (challenged.getFighter()!=null){
-                int gold = messageManager.showReadGold(player.getFighter().getGold());
-                Challenge challenge = player.challengePlayer(challenged,gold);
-                database.addChallenge(challenge);
+            if (!player.getNick().equals(challenged.getNick())) {
+                if (challenged.getFighter()!=null){
+                    int gold = messageManager.showReadGold(player.getFighter().getPendingGold());
+                    database.reducePendingGold(gold,player);
+                    Challenge challenge = player.challengePlayer(challenged,gold);
+                    database.addChallenge(challenge);
+                }
+                else{
+                    messageManager.showContent(notFighterChallenged);
+                }
             }
-            else{
-                messageManager.showContent(notFighterChallenged);
+            else {
+                messageManager.showContent(wrongNick);
             }
 
         }else{
@@ -219,14 +227,14 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    Stack<Minion> aux = database.randomMinions(type.getSuerteM(),true,0);
+                    LinkedList<Minion> aux = database.randomMinions(type.getSuerteM(),true, true,0);
                     database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(), true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
                     break;
             }
         }
