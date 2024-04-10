@@ -212,14 +212,19 @@ public class  OperatorFlow {
         switch (option) {
             case 1:
                 messageManager.showContent(player.getFighter().generateWeaponsText());
-                int elementId = messageManager.showReadableBox(elementText, 28);
-                boolean done = database.deleteWeapon(operator, player, elementId);
-                if (!done) {
-                    messageManager.showContent(elementNotEquipped);
+                if (player.getFighter().getMyWeapon().size() > 1) {
+                    int elementId = messageManager.showReadableBox(elementText, 28);
+                    boolean done = database.deleteWeapon(operator, player, elementId);
+                    if (!done) {
+                        messageManager.showContent(elementNotEquipped);
+                    } else {
+                        messageManager.showContent(elementDeleted);
+                    }
+                    break;
                 } else {
-                    messageManager.showContent(elementDeleted);
+                    messageManager.showContent(OneElementOnly);
+                    break;
                 }
-                break;
             case 2:
                 messageManager.showContent(database.generateWeaponText());
                 int elemId = messageManager.showReadableBox(newElementText, 28);
@@ -237,14 +242,19 @@ public class  OperatorFlow {
         switch (option) {
             case 1:
                 messageManager.showContent(player.getFighter().generateArmorText());
-                int elementId = messageManager.showReadableBox(elementText, 28);
-                boolean done = database.deleteArmor(operator, player, elementId);
-                if (!done) {
-                    messageManager.showContent(elementNotEquipped);
+                if (player.getFighter().getMyArmor().size() > 1) {
+                    int elementId = messageManager.showReadableBox(elementText, 28);
+                    boolean done = database.deleteArmor(operator, player, elementId);
+                    if (!done) {
+                        messageManager.showContent(elementNotEquipped);
+                    } else {
+                        messageManager.showContent(elementDeleted);
+                    }
+                    break;
                 } else {
-                    messageManager.showContent(elementDeleted);
+                    messageManager.showContent(OneElementOnly);
+                    break;
                 }
-                break;
             case 2:
                 messageManager.showContent(database.generateArmorText());
                 int elemId = messageManager.showReadableBox(newElementText, 28);
@@ -261,15 +271,20 @@ public class  OperatorFlow {
         int option = messageManager.showReadableBox(editMenu,2);
         switch (option) {
             case 1:
-                messageManager.showContent(player.getFighter().getAllMinionText());
-                int elementId = messageManager.showReadableBox(elementText, 100);
-                boolean done2 = database.deleteMinion(operator, player, elementId);
-                if (!done2) {
-                    messageManager.showContent(elementNotEquipped);
+                if (!player.getFighter().getMyMinions().isEmpty()) {
+                    messageManager.showContent(player.getFighter().getAllMinionText());
+                    int elementId = messageManager.showReadableBox(elementText, 100);
+                    boolean done2 = database.deleteMinion(operator, player, elementId);
+                    if (!done2) {
+                        messageManager.showContent(elementNotEquipped);
+                    } else {
+                        messageManager.showContent(elementDeleted);
+                    }
+                    break;
                 } else {
-                    messageManager.showContent(elementDeleted);
+                    messageManager.showContent(NoMinions);
+                    break;
                 }
-                break;
             case 2:
                 messageManager.showContent(database.generateMinionText());
                 int elemId = messageManager.showReadableBox(newElementText, 100);
