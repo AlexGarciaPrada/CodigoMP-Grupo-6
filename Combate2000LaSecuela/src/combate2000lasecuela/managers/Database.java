@@ -353,12 +353,14 @@ public class Database {
     public boolean deleteArmor(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteArmor(player, elementId);
+        updateUsers();
         return done;
     }
 
     public boolean deleteWeapon(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteWeapon(player, elementId);
+        updateUsers();
         return done;
     }
     public boolean addWeapon(Operator operator, Player player, int newElemId) {
