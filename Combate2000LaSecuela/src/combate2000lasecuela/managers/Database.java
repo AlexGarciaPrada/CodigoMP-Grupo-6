@@ -451,19 +451,19 @@ public class Database {
         }
         return armorText.toArray(new String[armorText.size()]);
     }
-
-    public String[] generateEquipmentText() {
-        String [] equipment = new String [generateWeaponText().length+ generateArmorText().length+2];
-        equipment [0] = weaponSeparator;
-        for (int i=0;i<generateWeaponText().length;i++){
-            equipment[i+1]=generateWeaponText()[i];
-        }
-        equipment [generateWeaponText().length+1] = armorSeparator;
-        for(int i =0 ;i< generateArmorText().length;i++){
-            equipment[generateWeaponText().length+2+i]=generateArmorText()[i];
-        }
-        return equipment;
-    }
+//
+//    public String[] generateEquipmentText() {
+//        String [] equipment = new String [generateWeaponText().length+ generateArmorText().length+2];
+//        equipment [0] = weaponSeparator;
+//        for (int i=0;i<generateWeaponText().length;i++){
+//            equipment[i+1]=generateWeaponText()[i];
+//        }
+//        equipment [generateWeaponText().length+1] = armorSeparator;
+//        for(int i =0 ;i< generateArmorText().length;i++){
+//            equipment[generateWeaponText().length+2+i]=generateArmorText()[i];
+//        }
+//        return equipment;
+//    }
     public void equipWeapon1(Player player, Weapon weapon){
         Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
