@@ -353,12 +353,14 @@ public class Database {
     public boolean deleteArmor(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteArmor(player, elementId);
+        updateUsers();
         return done;
     }
 
     public boolean deleteWeapon(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteWeapon(player, elementId);
+        updateUsers();
         return done;
     }
     public boolean addWeapon(Operator operator, Player player, int newElemId) {
@@ -368,6 +370,7 @@ public class Database {
             Item item = itemMap.get(key);
             if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addWeapon(player, (Weapon) item);
+                updateUsers();
             }
         }
         return done;
@@ -380,6 +383,7 @@ public class Database {
             Item item = itemMap.get(key);
             if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addArmor(player, (Armor) item);
+                updateUsers();
             }
         }
         return done;
@@ -388,6 +392,7 @@ public class Database {
     public boolean deleteMinion(Operator operator, Player player, int minionId) {
         boolean done;
         done = operator.deleteMinion(player, minionId);
+        updateUsers();
         return done;
     }
     public boolean addMinion(Operator operator, Player player, int newMinionId) {
@@ -397,6 +402,7 @@ public class Database {
             Minion minion = minionMap.get(key);
             if (minion.getId().equals(Integer.toString(newMinionId))) {
                 done = operator.addMinion(player, minion);
+                updateUsers();
             }
         }
         return done;

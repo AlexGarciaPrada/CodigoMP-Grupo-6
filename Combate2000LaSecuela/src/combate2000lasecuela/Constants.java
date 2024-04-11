@@ -84,8 +84,6 @@ public class Constants {
     public static final String [] elementDeleted = {"El elemento introducido se ha eliminado correctamente"};
     public static final String [] elementAdded = {"El elemento introducido se ha añadido correctamente"};
     public static final String [] wrongNick = {"Debes introducir un nick valido"};
-    public static final String [] OneElementOnly = {"No puedes eliminar ninun elemento porque debes tener al menos uno equipado"};
+    public static final String [] OneElementOnly = {"No puedes eliminar ningun elemento porque debes tener al menos uno equipado"};
     public static final String [] NoMinions = {"No tienes esbirros"};
-
-
 }
