@@ -124,8 +124,8 @@ public class  OperatorFlow {
             return;
         }
         Challenge challenge = database.getChallenge();
-        messageManager.showContent(challenge.getChallenger().getFighter().generateFighterState());
-        messageManager.showContent(challenge.getChallenged().getFighter().generateFighterState());
+        messageManager.showContent(challenge.getChallenger().getFighter().generateFighterForOperatorState());
+        messageManager.showContent(challenge.getChallenged().getFighter().generateFighterForOperatorState());
         messageManager.showContent(challenge.getChallengeData());
         int option = messageManager.showReadableBox(validateChallengeText,3);
         switch(option){

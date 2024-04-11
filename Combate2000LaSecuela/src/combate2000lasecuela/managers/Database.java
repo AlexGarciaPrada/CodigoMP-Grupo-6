@@ -122,7 +122,7 @@ public class Database {
     }
 
     public LinkedList<Minion> randomMinions(int suerte, boolean isPlayer, boolean esVampiro, int max) {
-        int handicap=Constants.handicap;
+        int handicap=Constants.handicapMinion;
         int election;
         int e=0;
         Random random = new Random();
@@ -154,7 +154,7 @@ public class Database {
                     }
                 }
             }
-            if ((slave instanceof Demon) && (max < Constants.handicap) && (getDemonMax()<Constants.handicap)) { //que no se meta en bucle continuo, capo a los demonios
+            if ((slave instanceof Demon) && (max < Constants.handicapMinion) && (getDemonMax()<Constants.handicapMinion)) { //que no se meta en bucle continuo, capo a los demonios
                 if (isPlayer) {
                     max += 1;
                 }else{
@@ -176,7 +176,7 @@ public class Database {
     }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
-        int handicap=Constants.handicap;
+        int handicap= handicapItem;
         int eleccion;
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
@@ -194,7 +194,7 @@ public class Database {
     }
 
     public LinkedList<Armor> randomArmor(int suerte) {
-        int handicap = Constants.handicap;
+        int handicap = handicapItem;
         Random random = new Random();
         int eleccion;
         Armor armor;

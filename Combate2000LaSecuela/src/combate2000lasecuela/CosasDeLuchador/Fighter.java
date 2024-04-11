@@ -205,7 +205,15 @@ public abstract class Fighter implements Serializable {
         ArrayList <String> textbuilder = new ArrayList<>();
         String [] text = this.fighterToString();
         textbuilder.addAll(Arrays.asList(text));
+        textbuilder.add("Esbirros: ");
         textbuilder.addAll(Arrays.asList(generateMinionText()));
+        return textbuilder.toArray(new String[textbuilder.size()]);
+    }
+    public String [] generateFighterForOperatorState(){
+        ArrayList <String> textbuilder = new ArrayList<>();
+        String [] text = this.fighterToString();
+        textbuilder.addAll(Arrays.asList(text));
+        textbuilder.add("Vida Minions: "+Integer.toString(minionHealth));
         return textbuilder.toArray(new String[textbuilder.size()]);
     }
 
@@ -430,8 +438,7 @@ public abstract class Fighter implements Serializable {
                 "Tipo: " + type.getName(),
                 "Arma 1: " + arma1.getName(),
                 displayIfArmor2(),
-                "Armadura: " + armor.getName(),
-                "Esbirros: "};
+                "Armadura: " + armor.getName()};
     }
 
     public String displayIfArmor2(){
