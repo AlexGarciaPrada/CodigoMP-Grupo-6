@@ -126,7 +126,7 @@ public abstract class Fighter implements Serializable {
     }
 
     public void addMinionText (ArrayList miniontext, Minion minion){
-        miniontext.add(minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+        miniontext.add(minion.getName() + " Tipo: " + minion.getType() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();

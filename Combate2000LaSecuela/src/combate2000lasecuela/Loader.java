@@ -11,23 +11,17 @@ import java.io.*;
 import static combate2000lasecuela.Constants.*;
 
 public class Loader implements Serializable {
-    private ItemManager im;
-    private MinionManager mm;
-    private TFighterManager tfm;
-
-    private ModifierManager mom;
+    private ItemManager itemManager;
+    private MinionManager minionManager;
+    private TFighterManager tFighterManager;
+    private ModifierManager modifierManager;
 
     public Loader() {
-        im = new ItemManager();
-        mm= new MinionManager();
-        tfm = new TFighterManager();
-        mom = new ModifierManager();
-        read(minionsFile);
-        read(weaponsFile);
-        read(tfighterFile);
-        read(armorsFile);
-        read(strentghFile);
-        read(weaknessFile);
+        this.itemManager = new ItemManager();
+        this.minionManager = new MinionManager();
+        this.tFighterManager = new TFighterManager();
+        this.modifierManager = new ModifierManager();
+        this.load();
     }
 
     private void read(String filename) {
@@ -76,13 +70,13 @@ public class Loader implements Serializable {
        String [] parts = line.split(";");
        switch(parts[2].trim()){
            case "HUMANO":
-               mm.addElement("MinionMap", parts[0], new Human(line));
+               minionManager.addElement("MinionMap", parts[0], new Human(line));
                break;
            case "DEMONIO":
-               mm.addElement("MinionMap", parts[0], new Demon (line));
+               minionManager.addElement("MinionMap", parts[0], new Demon (line));
                break;
            case "GHOUL":
-               mm.addElement("MinionMap", parts[0], new Ghoul (line));
+               minionManager.addElement("MinionMap", parts[0], new Ghoul (line));
                break;
        }
     }
@@ -90,43 +84,42 @@ public class Loader implements Serializable {
     // ------------------------ WEAPONS
     private void readWeaponFile(String line) {
        String [] parts = line.split(";");
-        im.addElementSubMap("WeaponMap", parts[0], new Weapon(line));
+        itemManager.addElementSubMap("WeaponMap", parts[0], new Weapon(line));
     }
 
     // ------------------------ ARMORS
     private void readArmorFile(String line) {
         String [] parts = line.split(";");
-        im.addElementSubMap("ArmorMap", parts[0], new Armor(line));
+        itemManager.addElementSubMap("ArmorMap", parts[0], new Armor(line));
     }
 
     private void readStrengthFile(String line) {
         String [] parts = line.split(";");
-        mom.addElementSubMap("StrengthMap", parts[0], new Strength(line));
+        modifierManager.addElementSubMap("StrengthMap", parts[0], new Strength(line));
     }
 
     private void readWeaknessFile(String line) {
         String [] parts = line.split(";");
-        mom.addElementSubMap("WeaknessMap", parts[0], new Weakness(line));
+        modifierManager.addElementSubMap("WeaknessMap", parts[0], new Weakness(line));
     }
 
     // ------------------------ TFIGHTER
     private void readTFighterFile(String line) {
-
         String [] parts = line.split(";");
-        tfm.addElement("TFighterMap", parts[0], new TFighter(line));
+        tFighterManager.addElement("TFighterMap", parts[0], new TFighter(line));
     }
 
-    public ItemManager getIm() {
-        return im;
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
-    public MinionManager getMm() {
-        return mm;
+    public MinionManager getMinionManager() {
+        return minionManager;
     }
 
-    public TFighterManager getTfm() {
-        return tfm;
+    public TFighterManager gettFighterManager() {
+        return tFighterManager;
     }
 
-    public ModifierManager getMom() {return mom;}
+    public ModifierManager getModifierManager() {return modifierManager;}
 }

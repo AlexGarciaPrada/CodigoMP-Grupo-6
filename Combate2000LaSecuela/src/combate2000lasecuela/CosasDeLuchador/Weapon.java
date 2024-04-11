@@ -1,22 +1,22 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.CosasDeLuchador.Item;
+import combate2000lasecuela.Constants;
 
 import java.io.Serializable;
 
 public class Weapon extends Item implements Serializable {
     final boolean isOneHand;
     private String id;
-    boolean elegida;
-    public Weapon (String linea){
-        String [] valores = linea.split(";");
-        this.id=valores[0];
-        setName(valores[1].trim());
-        setAttack(Integer.parseInt(valores[2].trim())); ;
-        this.isOneHand = interpretarFichero( valores[3].trim());
-        this.elegida=false;
+    boolean chosen;
+    public Weapon (String line){
+        String [] values = line.split(";");
+        this.id=values[0];
+        this.setName(values[1].trim());
+        this.setAttack(Integer.parseInt(values[2].trim())); ;
+        this.isOneHand = fileTrimer(values[3].trim());
+        this.chosen =false;
     }
-    public boolean interpretarFichero(String a){
+    public boolean fileTrimer(String a){
         return ((a.trim()).equals("1"));
     }
     public int getDefense(){return 0;}
@@ -26,9 +26,9 @@ public class Weapon extends Item implements Serializable {
     }
     public String handConverter(){
         if (isOneHand){
-            return "Una Mano";
+            return Constants.oneHand;
         }
-        return "Dos Manos";
+        return Constants.twoHands;
     }
 
     public boolean isOneHand() {
