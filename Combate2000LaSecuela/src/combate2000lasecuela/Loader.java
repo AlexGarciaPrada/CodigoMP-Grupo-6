@@ -61,6 +61,7 @@ public class Loader implements Serializable {
         read(Constants.weaponsFile);
         read(Constants.armorsFile);
         read(strentghFile);
+        read(tfighterFile);
         read(weaknessFile);
     }
 
