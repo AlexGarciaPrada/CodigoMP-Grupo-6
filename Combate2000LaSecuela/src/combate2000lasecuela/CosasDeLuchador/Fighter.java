@@ -23,7 +23,7 @@ public abstract class Fighter implements Serializable {
     private PendingChallenges pendingChallenges;
     private Specialskill specialskill;
     private ArrayList<String [] > mailbox ;
-    ArrayList<String> battleText = new ArrayList<>();
+    private ArrayList<String> battleText = new ArrayList<>();
 
 
     public Fighter(String name, TFighter type,
@@ -47,10 +47,10 @@ public abstract class Fighter implements Serializable {
     }
 /*---------------------------FUNCIONES PRINCIPALES--------------------------------*/
     public Combat startFighting (Fighter challenger, int oroApostado){
-        int vidaDesafiado= this.getHealth();
-        int vidaDesafiante=challenger.getHealth();
-        int vidaMinionsDesafiado=this.minionHealth;
-        int vidaMinionsDesafiante=challenger.minionHealth;
+        int challengedHealth= this.getHealth();
+        int challengerHealth=challenger.getHealth();
+        int challengedMinionHealth=this.minionHealth;
+        int challengerMinionHealth=challenger.minionHealth;
         int rounds=0;
         int pAA;
         int pDD;
@@ -64,13 +64,13 @@ public abstract class Fighter implements Serializable {
                         adjustAbility(pAA,pDD);
                         if (this.minionHealth>0){
                            this.minionHealth-=1;
-                            estadoBatalla(rounds,this,true, battleText,false);
+                            battleState(rounds,this,true, battleText,false);
                         }else {
                             this.health -= 1;
-                            estadoBatalla(rounds,this,false, battleText,false);
+                            battleState(rounds,this,false, battleText,false);
                         }
                     }else{
-                        estadoBatalla(rounds,this,false, battleText,true);
+                        battleState(rounds,this,false, battleText,true);
                     }
                 pAD = attackPotential(this);
                 pDA = defensePotential(challenger);
@@ -78,21 +78,21 @@ public abstract class Fighter implements Serializable {
                     adjustAbility(pAD,pDA);
                     if (challenger.minionHealth>0){
                         challenger.minionHealth-=1;
-                        estadoBatalla(rounds,challenger,true, battleText,false);
+                        battleState(rounds,challenger,true, battleText,false);
                     }else {
                         challenger.health -= 1;
-                        estadoBatalla(rounds,challenger,false, battleText,false);
+                        battleState(rounds,challenger,false, battleText,false);
                     }
                 }else{
-                    estadoBatalla(rounds,challenger,false, battleText,true);
+                    battleState(rounds,challenger,false, battleText,true);
 
                 }
         }
         boolean desafiadoEsGanador = this.health>challenger.health;
-        this.setHealth(vidaDesafiado);
-        challenger.setHealth(vidaDesafiante);
-        this.setMinionsHealth(vidaMinionsDesafiado);
-        challenger.setMinionsHealth(vidaMinionsDesafiante);
+        this.setHealth(challengedHealth);
+        challenger.setHealth(challengerHealth);
+        this.setMinionsHealth(challengedMinionHealth);
+        challenger.setMinionsHealth(challengerMinionHealth);
         return new Combat(challenger, this, rounds, oroApostado,desafiadoEsGanador);
     }
     public String [] generateWeaponsText() {
@@ -106,7 +106,6 @@ public abstract class Fighter implements Serializable {
             }else if (element != null){
                 weapontext.add(i +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" "+element.handConverter());
             }
-
             i++;
         }
         return weapontext.toArray(new String[weapontext.size()]);
@@ -121,7 +120,6 @@ public abstract class Fighter implements Serializable {
             }else if (element != null){
                 armortext.add(Integer.toString(i) +". "+element.getName()+" Ataque: "+Integer.toString(element.getAttack())+" Defensa: "+(element.getDefense()));
             }
-
             i++;
         }
         return armortext.toArray(new String[armortext.size()]);
@@ -174,26 +172,26 @@ public abstract class Fighter implements Serializable {
         } return allList;
     }
 
-    public void estadoBatalla(int ronda, Fighter f,boolean impactoAmortiguado,ArrayList<String> textoBatalla,boolean esEmpate){
-        String nombre;
+    public void battleState(int round, Fighter f, boolean impactCushioned, ArrayList<String> textoBatalla, boolean esEmpate){
+        String name;
         String aux;
         if (!esEmpate){
             if (f==this){
-                nombre=this.name;
+                name=this.name;
             }else {
-                nombre = f.name;
+                name = f.name;
             }
-            if (impactoAmortiguado){
+            if (impactCushioned){
                 aux= " El golpe se lo llevaron los esbirros";
             }else{
                 aux= " El impacto lo sufrio el personaje";
             }
-             String[] texto= {"Es la ronda "+ ronda+ " el luchador: "+ nombre + " ha recibido un golpe"+ aux+
+             String[] texto= {"Es la ronda "+ round+ " el luchador: "+ name + " ha recibido un golpe"+ aux+
                 " a los esbirros les queda "+ f.getMinionHealth()+
                 " de vida en total y al personaje "+ f.getHealth()+ " vidas"};
              textoBatalla.addAll(Arrays.asList(texto));
         }else{
-            String[] texto = {"Es la ronda "+ronda+ " y se ha producido un empate tecnico"};
+            String[] texto = {"Es la ronda "+round+ " y se ha producido un empate tecnico"};
             textoBatalla.addAll(Arrays.asList(texto));
         }
     }
@@ -267,9 +265,9 @@ public abstract class Fighter implements Serializable {
     }
 
     public int defensePotential(Fighter f){
-        int potencial=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
+        int potential=f.armor.getDefense()+ f.specialskill.getDamage()+SpecialAttack();
         //porque la implementación de ambos sería idéntica.
-        return checkSuccess(potencial);
+        return checkSuccess(potential);
     }
 
     private int randomHealth(){
@@ -294,9 +292,9 @@ public abstract class Fighter implements Serializable {
         if (aux!=null) {
             setArmor(aux);
         }else{//caso absurdamente improbable
-            Armor armadura = new Armor("3; ARMADURA DE COBRE COMÚN; 1; 0;");
-            myArmor.add(armadura);
-            setArmor(armadura);
+            Armor armor = new Armor("3; ARMADURA DE COBRE COMÚN; 1; 0;");
+            myArmor.add(armor);
+            setArmor(armor);
         }
     }
     public void equipDefaultWeapon(){
@@ -309,9 +307,9 @@ public abstract class Fighter implements Serializable {
         if (aux!=null) {
             setWeapon1(aux);
         }else{//caso absurdamente improbable
-            Weapon arma = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
-            myWeapon.add(arma);
-            setWeapon1(arma);
+            Weapon armor = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+            myWeapon.add(armor);
+            setWeapon1(armor);
         }
     }
 
