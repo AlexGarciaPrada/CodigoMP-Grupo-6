@@ -13,7 +13,7 @@ public class Database {
     private Loader loader;
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
-    private int topeDemoniaco;
+    private int demonMax;
 
 
     public Database() {
@@ -21,7 +21,7 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
-        this.topeDemoniaco=0;
+        this.demonMax =0;
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -121,9 +121,9 @@ public class Database {
         updateUsers();
     }
 
-    public LinkedList<Minion> randomMinions(int suerte, boolean esJugador, boolean esVampiro, int tope) {
+    public LinkedList<Minion> randomMinions(int suerte, boolean isPlayer, boolean esVampiro, int max) {
         int handicap=Constants.handicap;
-        int eleccion;
+        int election;
         int e=0;
         Random random = new Random();
         LinkedList<Minion> myMinions = new LinkedList<>();
@@ -133,8 +133,8 @@ public class Database {
             numero=(numero%handicap)+1+ suerte;
         }
         for (int i = 0; i <= numero; i++) {
-            eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
-            slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+            election = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
+            slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(election));
             if (!esVampiro) {
                 myMinions.add(slave);
             }else if (!(slave instanceof Human)) {
@@ -142,8 +142,8 @@ public class Database {
             }else{ //caso limite que vio Alex
                 while (slave instanceof Human){
                     e++;
-                    eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
-                    slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+                    election = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
+                    slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(election));
                     if (e>=10){
                         slave=loader.getMm().getElements().get("MinionMap").get(Integer.toString(2));
                     } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
@@ -154,13 +154,13 @@ public class Database {
                     }
                 }
             }
-            if ((slave instanceof Demon) && (tope < Constants.handicap) && (getTopeDemoniaco()<Constants.handicap)) { //que no se meta en bucle continuo, capo a los demonios
-                if (esJugador) {
-                    tope += 1;
+            if ((slave instanceof Demon) && (max < Constants.handicap) && (getDemonMax()<Constants.handicap)) { //que no se meta en bucle continuo, capo a los demonios
+                if (isPlayer) {
+                    max += 1;
                 }else{
-                    setTopeDemoniaco(getTopeDemoniaco()+1);
+                    setDemonMax(getDemonMax()+1);
                 }
-                ((Demon) slave).setDemonList(randomMinionDemon(tope));
+                ((Demon) slave).setDemonList(randomMinionDemon(max));
             }
 
         }
@@ -290,21 +290,30 @@ public class Database {
         return (challengeManager.getCollection("ChallengeMap").isEmpty());
     }
 
+    public String generateCombatHistoryText(Combat combat, Player player){
+        return "Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + combatHistoryModifyer(combat,player) + Integer.toString(combat.getGoldGained());
+    }
+
+    public String combatHistoryModifyer(Combat combat, Player player){
+        if (combat.getLoser().equals(player.getFighter())){
+            return "";
+        }
+        else if (combat.getWinner().equals(player.getFighter())){
+            return "-";
+        }
+        return null;
+    }
+
     public String[] getCombatHistory(Player player) {
-        ArrayList<String> combattext = new ArrayList<>();
+        ArrayList<String> combatText = new ArrayList<>();
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
-            if (combat.getLoser().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: -" + Integer.toString(combat.getGoldGained()));
-
-            }else if (combat.getWinner().equals(player.getFighter())){
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + Integer.toString(combat.getGoldGained()));
-            }
+            combatText.add(generateCombatHistoryText(combat, player));
         }
-        if (combattext.isEmpty()){
+        if (combatText.isEmpty()){
             return null;
         }
-       String [] data =  combattext.toArray(new String[combattext.size()]);
+       String [] data =  combatText.toArray(new String[combatText.size()]);
         return data;
     }
     public boolean isCombatRegisterEmpty(){
@@ -500,11 +509,11 @@ public class Database {
         updateUsers();
     }
 
-    public void setTopeDemoniaco(int topeDemoniaco) {
-        this.topeDemoniaco = topeDemoniaco;
+    public void setDemonMax(int demonMax) {
+        this.demonMax = demonMax;
     }
 
-    public int getTopeDemoniaco() {
-        return topeDemoniaco;
+    public int getDemonMax() {
+        return demonMax;
     }
 }
