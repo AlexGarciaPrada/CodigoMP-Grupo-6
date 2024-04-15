@@ -85,23 +85,23 @@ public class Loader implements Serializable {
     // ------------------------ WEAPONS
     private void readWeaponFile(String line) {
        String [] parts = line.split(";");
-        itemManager.addElementSubMap("WeaponMap", parts[0], new Weapon(line));
+        itemManager.addElement("WeaponMap", parts[0], new Weapon(line));
     }
 
     // ------------------------ ARMORS
     private void readArmorFile(String line) {
         String [] parts = line.split(";");
-        itemManager.addElementSubMap("ArmorMap", parts[0], new Armor(line));
+        itemManager.addElement("ArmorMap", parts[0], new Armor(line));
     }
 
     private void readStrengthFile(String line) {
         String [] parts = line.split(";");
-        modifierManager.addElementSubMap("StrengthMap", parts[0], new Strength(line));
+        modifierManager.addElement("StrengthMap", parts[0], new Strength(line));
     }
 
     private void readWeaknessFile(String line) {
         String [] parts = line.split(";");
-        modifierManager.addElementSubMap("WeaknessMap", parts[0], new Weakness(line));
+        modifierManager.addElement("WeaknessMap", parts[0], new Weakness(line));
     }
 
     // ------------------------ TFIGHTER

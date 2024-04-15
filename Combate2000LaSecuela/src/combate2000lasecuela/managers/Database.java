@@ -66,12 +66,12 @@ public class Database {
 
     public void erasePlayer(Player player) {
         usermanager.getElements().get("Player").remove(player.getNick());
-        usermanager.saveCollection("User");
+        this.updateUsers();
     }
 
     public void eraseOperator(Operator operator) {
         usermanager.getElements().get("Operator").remove(operator.getNick());
-        usermanager.saveCollection("User");
+        this.updateUsers();
     }
 
     public boolean isNickUsed(String nick) {
