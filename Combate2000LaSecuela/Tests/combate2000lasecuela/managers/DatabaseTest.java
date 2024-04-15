@@ -1,3 +1,5 @@
+package combate2000lasecuela.managers;
+
 import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.Database;
 import org.junit.jupiter.api.BeforeAll;
