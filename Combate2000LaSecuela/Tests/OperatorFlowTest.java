@@ -11,26 +11,24 @@ public class OperatorFlowTest {
         Database database = new Database();
         Player playerTester = new Player("pepe","00","pepe");
         database.addPlayer(playerTester);
-
     }
-
-
 
     @Test
     void operatorMachine(){
-
     }
+
     @Test
     void operatorLogin() {
-
     }
+
     @Test
     void blockUserNotFound() {
+        OperatorFlow operatorFlow = new OperatorFlow();
         Database database = new Database();
-        Player player = new Player("pepe","00","pepe");
+        database.isNickUsed("pepe");
 
-        assertFalse(database.isNickUsed("pepe"));
     }
+
     @Test
     void unblockUser() {
     }

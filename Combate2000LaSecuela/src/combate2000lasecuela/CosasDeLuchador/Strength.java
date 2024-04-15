@@ -4,5 +4,4 @@ public class Strength extends Modifier {
 
     public Strength(String line) {super(line);}
 
-
 }

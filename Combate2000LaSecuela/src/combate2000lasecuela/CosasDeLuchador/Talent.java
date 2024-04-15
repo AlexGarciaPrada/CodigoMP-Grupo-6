@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Talent extends Specialskill implements Serializable {
-    int willDamage;
+    private int willDamage;
     public Talent(){
         this.willDamage=2;
     }

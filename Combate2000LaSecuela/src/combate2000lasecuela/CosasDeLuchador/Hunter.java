@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Hunter extends Fighter implements Serializable {
-    int will;
-    Talent talent;
+    private int will;
+    private Talent talent;
     public Hunter(String name, TFighter type, LinkedList<Minion> myMinions, LinkedList<Armor> myArmor, LinkedList<Weapon> myWeapon) {
         super(name, type, myMinions, myArmor, myWeapon);
         this.will=3;
         this.talent = new Talent();
     }
-
 
     public int SpecialAttack() {
         return (talent.getDamage()+getWill());

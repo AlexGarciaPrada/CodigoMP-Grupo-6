@@ -25,7 +25,7 @@ public class Weapon extends Item implements Serializable {
         return this.id;
     }
     public String handConverter(){
-        if (isOneHand){
+        if (this.isOneHand){
             return Constants.oneHand;
         }
         return Constants.twoHands;
