@@ -24,11 +24,13 @@ public class OperatorFlowTest {
     }
 
     @Test
-    void blockUserNotFound() {
+    void blockUser() {
         OperatorFlow operatorFlow = new OperatorFlow();
         Database database = new Database();
-        database.isNickUsed("pepe");
-
+        Operator operator = new Operator("op","00","op");
+        Player auxPlayer = (Player) database.getUser("pepe");
+        operator.blockPlayer(auxPlayer);
+        assertTrue(auxPlayer.isBlocked());
     }
 
     @Test
