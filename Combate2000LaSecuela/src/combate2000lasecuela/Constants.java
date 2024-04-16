@@ -1,7 +1,8 @@
 package combate2000lasecuela;
 
 public class Constants {
-    public static final int handicap=3;
+    public static final int handicapMinion =2;
+    public static final int handicapItem = 4;
     public static final String minionsFile = "./files/txtfiles/Esbirros.txt";
     public static final String weaponsFile = "./files/txtfiles/Armas.txt";
     public static final String armorsFile = "./files/txtfiles/Armaduras.txt";
@@ -49,6 +50,12 @@ public class Constants {
 
     //Strings del MessageManager
 
+    public static final String youwerechallenged="Has sido desafiado por el usuario ";
+    public static final String betamount="La apuesta es de una cantidad de oro de ";
+    public static final String confirmchallenge="Confirmar desafio: ";
+    public static final String acceptchallenge="1. Aceptar";
+    public static final String rejectchallenge="2. Rechazar";
+
     public static final String editFighterText="Elige el usuario que vas a editar (para volver atras introduce SALIR)";
     public static final String userRegistered2 = " ha sido registrado correctamente";
     public static final String logInText ="Inicio de Sesion";
@@ -72,7 +79,8 @@ public class Constants {
     public static final String[] winner = {"Has ganado el combate"};
     public static final String[] loser = {"Has perdido el combate"};
     public static final String createFighter = "Elige el tipo de personaje que deseas crear: ";
-
+    public static final String oneHand = "Una Mano";
+    public static final String twoHands = "Dos Manos";
     public static final String adviceErasetext="ESTAS A PUNTO DE BORRAR AL USUARIO ";
     public static final String [] editEquipmentMenu={"Elige lo que deseas cambiar del personaje:","1. Armas","2. Armaduras","3. Esbirros"};
     public static final String [] editMenu={"Elige que deseas hacer:","1. Eliminar","2. Añadir"};
@@ -83,6 +91,6 @@ public class Constants {
     public static final String [] elementDeleted = {"El elemento introducido se ha eliminado correctamente"};
     public static final String [] elementAdded = {"El elemento introducido se ha añadido correctamente"};
     public static final String [] wrongNick = {"Debes introducir un nick valido"};
-
-
+    public static final String [] OneElementOnly = {"No puedes eliminar ningun elemento porque debes tener al menos uno equipado"};
+    public static final String [] NoMinions = {"No tienes esbirros"};
 }

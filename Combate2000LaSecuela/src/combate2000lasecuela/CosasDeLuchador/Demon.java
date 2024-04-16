@@ -33,7 +33,7 @@ public class Demon extends Minion implements Serializable {
         }
         for (Minion minion: listaDemoniaca){
             if (minion != null) {
-                demonText.add(minion.getName() + " Tipo: " + minion.getTipo() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+                demonText.add(minion.getName() + " Tipo: " + minion.getType() + " "  + minion.getSpecialSkillName() + ":" + minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
                 if (minion instanceof Demon){
                     String [] littleDemonText = ((Demon) minion).getDemonListText();
                     for (String text: littleDemonText){

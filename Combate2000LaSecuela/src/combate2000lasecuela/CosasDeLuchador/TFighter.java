@@ -5,27 +5,29 @@ import combate2000lasecuela.Saveable;
 
 public class TFighter implements Saveable {
     private String name;
-    private int suerteA;
-    private int suerteW;
-    private int suerteM;
+    private int armorLuck;
+    private int weaponLuck;
+    private int minionLuck;
     public TFighter(String linea){
         String [] valores = linea.split(";");
         this.name=valores[1];
-        this.suerteM = Integer.parseInt(valores[2].trim());
-        this.suerteA = Integer.parseInt(valores[3].trim());
-        this.suerteW = Integer.parseInt(valores[4].trim());
+        this.minionLuck = Integer.parseInt(valores[2].trim());
+        this.armorLuck = Integer.parseInt(valores[3].trim());
+        this.weaponLuck = Integer.parseInt(valores[4].trim());
     }
 
-    public int getSuerteA() {
-        return suerteA;
+    // ------------------------ GETTERS AND SETTERS
+
+    public int getArmorLuck() {
+        return armorLuck;
     }
 
-    public int getSuerteW() {
-        return suerteW;
+    public int getWeaponLuck() {
+        return weaponLuck;
     }
 
-    public int getSuerteM() {
-        return suerteM;
+    public int getMinionLuck() {
+        return minionLuck;
     }
 
     public String getName() {

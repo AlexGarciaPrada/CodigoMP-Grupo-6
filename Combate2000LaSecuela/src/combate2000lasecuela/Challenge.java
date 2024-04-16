@@ -16,7 +16,6 @@ public class Challenge implements Saveable {
         return null;
     }
 
-
     //------------------------ GETTERS & SETTERS
 
     public Player getChallenger() {
@@ -32,7 +31,7 @@ public class Challenge implements Saveable {
     }
 
     public String [] getChallengeData(){
-        String [] data = {"Has sido desafiado por el usuario "+challenger.getName(),"La apuesta es de una cantidad de oro de "+ Integer.toString(getGold()),"Confirmar desafio: ","1. Aceptar","2. Rechazar"};
+        String [] data = {Constants.youwerechallenged+challenger.getName(),Constants.betamount+ Integer.toString(getGold()),Constants.confirmchallenge,Constants.acceptchallenge,Constants.rejectchallenge};
         return data;
     }
  }

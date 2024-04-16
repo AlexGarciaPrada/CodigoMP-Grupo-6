@@ -46,21 +46,6 @@ public class Operator extends User {
         } return added;
     }
 
-    /*
-    public boolean containsMinion(LinkedList<Minion> myMins, Minion minion) {
-        boolean found = false;
-        //LinkedList<Minion> myMin = player.getFighter().getMyMinion();
-        for (Minion minion1 : myMins) {
-            if (minion1.equals(minion)) {
-                found = true;
-            } else if (minion1 instanceof Demon) {
-                LinkedList<Minion> demMins = ((Demon) minion1).getDemonList();
-                return containsMinion(demMins, minion);
-            }
-        } return found;
-    }
-
-     */
 
     public boolean deleteWeapon(Player player, int elementId) {
         boolean deleted = false;
@@ -70,6 +55,7 @@ public class Operator extends User {
             deleted = true;
         } return deleted;
     }
+    
     public boolean deleteArmor(Player player, int elementId) {
         boolean deleted = false;
         LinkedList<Armor> armorList = player.getFighter().getMyArmor();

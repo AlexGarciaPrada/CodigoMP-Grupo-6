@@ -6,7 +6,6 @@ import combate2000lasecuela.managers.Database;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Stack;
 
 import static combate2000lasecuela.Constants.*;
 
@@ -227,14 +226,14 @@ public class PlayerFlow extends Gameflow {
             TFighter type = TFighters.get(opttype-1);
             switch(option){
                 case 1:     //Vampiro
-                    LinkedList<Minion> aux = database.randomMinions(type.getSuerteM(),true, true,0);
-                    database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    LinkedList<Minion> aux = database.randomMinions(type.getMinionLuck(),true, true,0);
+                    database.addFighter(player,new Vampire(name,type,aux,database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
                     break;
                 case 2:     //Licántropo
-                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getSuerteM(), true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Lycanthrope(name,type,database.randomMinions(type.getMinionLuck(), true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
                     break;
                 case 3:     //Cazador
-                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getSuerteM(),true,false,0),database.randomArmor(type.getSuerteA()),database.randomWeapons(type.getSuerteW())));
+                    database.addFighter(player,new Hunter(name,type ,database.randomMinions(type.getMinionLuck(),true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
                     break;
             }
         }

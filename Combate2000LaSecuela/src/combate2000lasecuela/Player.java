@@ -71,7 +71,7 @@ public class Player extends User {
         this.getFighter().getPendingChallenges().deleteChallenge();
     }
 
-
+//-----------GETTERS Y SETTERS
     public int getVictories() {return victories;}
 
     public Fighter getFighter() {return fighter;}

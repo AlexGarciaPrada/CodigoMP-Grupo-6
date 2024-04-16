@@ -13,7 +13,7 @@ public class Database {
     private Loader loader;
     private ChallengeManager challengeManager;
     private CombatRegister combatregister;
-    private int topeDemoniaco;
+    private int demonMax;
 
 
     public Database() {
@@ -21,7 +21,7 @@ public class Database {
         this.loader = new Loader();
         this.challengeManager = new ChallengeManager();
         this.combatregister = new CombatRegister();
-        this.topeDemoniaco=0;
+        this.demonMax =0;
     }
 
     public void addFighter(Player player, Fighter fighter) {
@@ -66,12 +66,12 @@ public class Database {
 
     public void erasePlayer(Player player) {
         usermanager.getElements().get("Player").remove(player.getNick());
-        usermanager.saveCollection("User");
+        this.updateUsers();
     }
 
     public void eraseOperator(Operator operator) {
         usermanager.getElements().get("Operator").remove(operator.getNick());
-        usermanager.saveCollection("User");
+        this.updateUsers();
     }
 
     public boolean isNickUsed(String nick) {
@@ -121,20 +121,20 @@ public class Database {
         updateUsers();
     }
 
-    public LinkedList<Minion> randomMinions(int suerte, boolean esJugador, boolean esVampiro, int tope) {
-        int handicap=Constants.handicap;
-        int eleccion;
+    public LinkedList<Minion> randomMinions(int suerte, boolean isPlayer, boolean esVampiro, int max) {
+        int handicap=Constants.handicapMinion;
+        int election;
         int e=0;
         Random random = new Random();
         LinkedList<Minion> myMinions = new LinkedList<>();
         Minion slave;
-        int numero = random.nextInt(loader.getMm().getCollection("MinionMap").size()) + 1;
+        int numero = random.nextInt(loader.getMinionManager().getCollection("MinionMap").size()) + 1;
         if (numero>handicap){
             numero=(numero%handicap)+1+ suerte;
         }
         for (int i = 0; i <= numero; i++) {
-            eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
-            slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+            election = random.nextInt(loader.getMinionManager().getElements().get("MinionMap").size());
+            slave = loader.getMinionManager().getElements().get("MinionMap").get(Integer.toString(election));
             if (!esVampiro) {
                 myMinions.add(slave);
             }else if (!(slave instanceof Human)) {
@@ -142,10 +142,10 @@ public class Database {
             }else{ //caso limite que vio Alex
                 while (slave instanceof Human){
                     e++;
-                    eleccion = random.nextInt(loader.getMm().getElements().get("MinionMap").size());
-                    slave = loader.getMm().getElements().get("MinionMap").get(Integer.toString(eleccion));
+                    election = random.nextInt(loader.getMinionManager().getElements().get("MinionMap").size());
+                    slave = loader.getMinionManager().getElements().get("MinionMap").get(Integer.toString(election));
                     if (e>=10){
-                        slave=loader.getMm().getElements().get("MinionMap").get(Integer.toString(2));
+                        slave=loader.getMinionManager().getElements().get("MinionMap").get(Integer.toString(2));
                     } //esto mete un ghoul a la fuerza, la posibilidad de que entre aquí es rídicula
                     //y la probabilidad de que entre varias veces ya sería un chiste mal contado
                     if ((slave instanceof Ghoul)){
@@ -154,13 +154,13 @@ public class Database {
                     }
                 }
             }
-            if ((slave instanceof Demon) && (tope < Constants.handicap) && (getTopeDemoniaco()<Constants.handicap)) { //que no se meta en bucle continuo, capo a los demonios
-                if (esJugador) {
-                    tope += 1;
+            if ((slave instanceof Demon) && (max < Constants.handicapMinion) && (getDemonMax()<Constants.handicapMinion)) { //que no se meta en bucle continuo, capo a los demonios
+                if (isPlayer) {
+                    max += 1;
                 }else{
-                    setTopeDemoniaco(getTopeDemoniaco()+1);
+                    setDemonMax(getDemonMax()+1);
                 }
-                ((Demon) slave).setDemonList(randomMinionDemon(tope));
+                ((Demon) slave).setDemonList(randomMinionDemon(max));
             }
 
         }
@@ -176,7 +176,7 @@ public class Database {
     }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
-        int handicap=Constants.handicap;
+        int handicap= handicapItem;
         int eleccion;
         Random random = new Random();
         LinkedList<Weapon> myWeapon = new LinkedList<>();
@@ -186,26 +186,26 @@ public class Database {
             numero=(numero%handicap)+1+ suerte;
         }
         for (int i = 1; i <= numero; i++) {
-            eleccion = random.nextInt(loader.getIm().getElements().get("WeaponMap").size());
-            weapon = (Weapon) loader.getIm().getElements().get("WeaponMap").get(Integer.toString(eleccion));
+            eleccion = random.nextInt(loader.getItemManager().getElements().get("WeaponMap").size());
+            weapon = (Weapon) loader.getItemManager().getElements().get("WeaponMap").get(Integer.toString(eleccion));
             myWeapon.add(weapon);
         }
         return myWeapon;
     }
 
     public LinkedList<Armor> randomArmor(int suerte) {
-        int handicap = Constants.handicap;
+        int handicap = handicapItem;
         Random random = new Random();
         int eleccion;
         Armor armor;
         LinkedList<Armor> myArmor = new LinkedList<>();
-        int numero = random.nextInt(loader.getIm().getCollection("ArmorMap").size()) + 1 ;
+        int numero = random.nextInt(loader.getItemManager().getCollection("ArmorMap").size()) + 1 ;
         if (numero>handicap){
             numero=(numero%handicap)+1+suerte; //si alguno no entiende el +1 que me pregunte
         }
         for (int i = 1; i <= numero; i++) {
-            eleccion = random.nextInt(loader.getIm().getElements().get("ArmorMap").size());
-            armor = (Armor) loader.getIm().getElements().get("ArmorMap").get(Integer.toString(eleccion));
+            eleccion = random.nextInt(loader.getItemManager().getElements().get("ArmorMap").size());
+            armor = (Armor) loader.getItemManager().getElements().get("ArmorMap").get(Integer.toString(eleccion));
             myArmor.add(armor);
         }
         return myArmor;
@@ -216,7 +216,7 @@ public class Database {
         text.add(createFighter);
         int i = 1;
         for (TFighter tfighter : tFightersList) {
-            text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getSuerteM() + " Armaduras: +" + tfighter.getSuerteA() + " Armas: +" + tfighter.getSuerteW());
+            text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getMinionLuck() + " Armaduras: +" + tfighter.getArmorLuck() + " Armas: +" + tfighter.getWeaponLuck());
             i++;
         }
         // Convertir ArrayList a Array de Strings
@@ -225,7 +225,7 @@ public class Database {
 
     public ArrayList<TFighter> managerToListTFighter() {
         ArrayList<TFighter> result = new ArrayList<>();
-        Map<String, TFighter> tFighterManager = loader.getTfm().getCollection("TFighterMap");
+        Map<String, TFighter> tFighterManager = loader.gettFighterManager().getCollection("TFighterMap");
         for (TFighter tFighter : tFighterManager.values()) {
             result.add(tFighter);
         }
@@ -234,7 +234,7 @@ public class Database {
 
     public LinkedList<Strength> getStrengths() {
         LinkedList<Strength> MyStrength = new LinkedList<>();
-        Map<String, Modifier> modifierMap = loader.getMom().getElements().get("StrengthMap");
+        Map<String, Modifier> modifierMap = loader.getModifierManager().getElements().get("StrengthMap");
 
         for (String key : modifierMap.keySet()) {
             Modifier modifier = modifierMap.get(key);
@@ -249,7 +249,7 @@ public class Database {
 
     public LinkedList<Weakness> getWeaknesses() {
         LinkedList<Weakness> MyWeakness = new LinkedList<>();
-        Map<String, Modifier> modifierMap = loader.getMom().getElements().get("WeaknessMap");
+        Map<String, Modifier> modifierMap = loader.getModifierManager().getElements().get("WeaknessMap");
 
         for (String key : modifierMap.keySet()) {
             Modifier modifier = modifierMap.get(key);
@@ -290,21 +290,30 @@ public class Database {
         return (challengeManager.getCollection("ChallengeMap").isEmpty());
     }
 
+    public String generateCombatHistoryText(Combat combat, Player player){
+        return "Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + combatHistoryModifyer(combat,player) + Integer.toString(combat.getGoldGained());
+    }
+
+    public String combatHistoryModifyer(Combat combat, Player player){
+        if (combat.getLoser().equals(player.getFighter())){
+            return "";
+        }
+        else if (combat.getWinner().equals(player.getFighter())){
+            return "-";
+        }
+        return null;
+    }
+
     public String[] getCombatHistory(Player player) {
-        ArrayList<String> combattext = new ArrayList<>();
+        ArrayList<String> combatText = new ArrayList<>();
         for (Map.Entry <String,Combat> entry: combatregister.getCollection("CombatMap").entrySet()) {
             Combat combat =entry.getValue();
-            if (combat.getLoser().equals(player.getFighter())) {
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: -" + Integer.toString(combat.getGoldGained()));
-
-            }else if (combat.getWinner().equals(player.getFighter())){
-                combattext.add("Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + Integer.toString(combat.getGoldGained()));
-            }
+            combatText.add(generateCombatHistoryText(combat, player));
         }
-        if (combattext.isEmpty()){
+        if (combatText.isEmpty()){
             return null;
         }
-       String [] data =  combattext.toArray(new String[combattext.size()]);
+       String [] data =  combatText.toArray(new String[combatText.size()]);
         return data;
     }
     public boolean isCombatRegisterEmpty(){
@@ -344,21 +353,24 @@ public class Database {
     public boolean deleteArmor(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteArmor(player, elementId);
+        updateUsers();
         return done;
     }
 
     public boolean deleteWeapon(Operator operator, Player player, int elementId) {
         boolean done;
         done = operator.deleteWeapon(player, elementId);
+        updateUsers();
         return done;
     }
     public boolean addWeapon(Operator operator, Player player, int newElemId) {
         boolean done = false;
-        Map<String, Item> itemMap = loader.getIm().getElements().get("WeaponMap");
+        Map<String, Item> itemMap = loader.getItemManager().getElements().get("WeaponMap");
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
             if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addWeapon(player, (Weapon) item);
+                updateUsers();
             }
         }
         return done;
@@ -366,11 +378,12 @@ public class Database {
 
     public boolean addArmor(Operator operator, Player player, int newElemId) {
         boolean done = false;
-        Map<String, Item> itemMap = loader.getIm().getElements().get("ArmorMap");
+        Map<String, Item> itemMap = loader.getItemManager().getElements().get("ArmorMap");
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
             if (item.getId().equals(Integer.toString(newElemId))) {
                 done = operator.addArmor(player, (Armor) item);
+                updateUsers();
             }
         }
         return done;
@@ -379,28 +392,30 @@ public class Database {
     public boolean deleteMinion(Operator operator, Player player, int minionId) {
         boolean done;
         done = operator.deleteMinion(player, minionId);
+        updateUsers();
         return done;
     }
     public boolean addMinion(Operator operator, Player player, int newMinionId) {
         boolean done = false;
-        Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
+        Map<String, Minion> minionMap = loader.getMinionManager().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
             if (minion.getId().equals(Integer.toString(newMinionId))) {
                 done = operator.addMinion(player, minion);
+                updateUsers();
             }
         }
         return done;
     }
 
     public void addMinionText (ArrayList miniontext, int i, Minion minion){
-        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getTipo() + " "  +minion.getSpecialSkillName() +":"+ minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
+        miniontext.add(i + ". " + minion.getName() + " Tipo: " + minion.getType() + " "  +minion.getSpecialSkillName() +":"+ minion.getSpecialSkill()+ " Salud: " + minion.getHealth());
     }
 
     public String [] generateMinionText() {
         ArrayList<String> miniontext = new ArrayList<>();
         int i =1;
-        Map<String, Minion> minionMap = loader.getMm().getElements().get("MinionMap");
+        Map<String, Minion> minionMap = loader.getMinionManager().getElements().get("MinionMap");
         for (String key : minionMap.keySet()) {
             Minion minion = minionMap.get(key);
             addMinionText(miniontext,i,minion);
@@ -411,7 +426,7 @@ public class Database {
 
     public String [] generateWeaponText() {
         ArrayList<String> weaponText = new ArrayList<>();
-        Map<String, Item> itemMap = loader.getIm().getElements().get("WeaponMap");
+        Map<String, Item> itemMap = loader.getItemManager().getElements().get("WeaponMap");
         int i = 1;
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
@@ -425,7 +440,7 @@ public class Database {
 
     public String [] generateArmorText() {
         ArrayList<String> armorText = new ArrayList<>();
-        Map<String, Item> itemMap = loader.getIm().getElements().get("ArmorMap");
+        Map<String, Item> itemMap = loader.getItemManager().getElements().get("ArmorMap");
         int i = 1;
         for (String key : itemMap.keySet()) {
             Item item = itemMap.get(key);
@@ -436,19 +451,19 @@ public class Database {
         }
         return armorText.toArray(new String[armorText.size()]);
     }
-
-    public String[] generateEquipmentText() {
-        String [] equipment = new String [generateWeaponText().length+ generateArmorText().length+2];
-        equipment [0] = weaponSeparator;
-        for (int i=0;i<generateWeaponText().length;i++){
-            equipment[i+1]=generateWeaponText()[i];
-        }
-        equipment [generateWeaponText().length+1] = armorSeparator;
-        for(int i =0 ;i< generateArmorText().length;i++){
-            equipment[generateWeaponText().length+2+i]=generateArmorText()[i];
-        }
-        return equipment;
-    }
+//
+//    public String[] generateEquipmentText() {
+//        String [] equipment = new String [generateWeaponText().length+ generateArmorText().length+2];
+//        equipment [0] = weaponSeparator;
+//        for (int i=0;i<generateWeaponText().length;i++){
+//            equipment[i+1]=generateWeaponText()[i];
+//        }
+//        equipment [generateWeaponText().length+1] = armorSeparator;
+//        for(int i =0 ;i< generateArmorText().length;i++){
+//            equipment[generateWeaponText().length+2+i]=generateArmorText()[i];
+//        }
+//        return equipment;
+//    }
     public void equipWeapon1(Player player, Weapon weapon){
         Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
         Fighter fighter = aux.getFighter();
@@ -500,11 +515,11 @@ public class Database {
         updateUsers();
     }
 
-    public void setTopeDemoniaco(int topeDemoniaco) {
-        this.topeDemoniaco = topeDemoniaco;
+    public void setDemonMax(int demonMax) {
+        this.demonMax = demonMax;
     }
 
-    public int getTopeDemoniaco() {
-        return topeDemoniaco;
+    public int getDemonMax() {
+        return demonMax;
     }
 }
