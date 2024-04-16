@@ -45,25 +45,25 @@ public class  OperatorFlow {
         int option = messageManager.showOperatorMenu(operator.getName());
         switch(option){
             case 1: //Editar personaje
-                editfighter=true;
+                setEditfighter(true);
                 break;
             case 2: //Editar equipo,esbirros,modificadores
-                editEquipment = true;
+                setEditEquipment(true);
                 break;
             case 3: //Validar desafios
-                vchallenge=true;
+                setVchallenge(true);
                 break;
             case 4: //Bloquear Usuario
-                block=true;
+                setBlock(true);
                 break;
             case 5: //Desbloquear Usuario
-                unblock=true;
+                setUnblock(true);
                 break;
             case 6: //Cerrar Sesion
-                operatorlogin =false;
+                setOperatorlogin(true);
                 break;
             case 7: //Borrar Usuario
-                eraseoperator =true;
+                setEraseoperator(true);
                 break;
         }
     }
@@ -282,6 +282,61 @@ public class  OperatorFlow {
         }
     }
 
+    // ------------------------ GETTERS & SETTERS
 
+    public static boolean isOperatorlogin() {
+        return operatorlogin;
+    }
 
+    public static void setOperatorlogin(boolean operatorlogin) {
+        OperatorFlow.operatorlogin = operatorlogin;
+    }
+
+    public static boolean isEditfighter() {
+        return editfighter;
+    }
+
+    public static void setEditfighter(boolean editfighter) {
+        OperatorFlow.editfighter = editfighter;
+    }
+
+    public static boolean isEraseoperator() {
+        return eraseoperator;
+    }
+
+    public static void setEraseoperator(boolean eraseoperator) {
+        OperatorFlow.eraseoperator = eraseoperator;
+    }
+
+    public static boolean isBlock() {
+        return block;
+    }
+
+    public static void setBlock(boolean block) {
+        OperatorFlow.block = block;
+    }
+
+    public static boolean isUnblock() {
+        return unblock;
+    }
+
+    public static void setUnblock(boolean unblock) {
+        OperatorFlow.unblock = unblock;
+    }
+
+    public static boolean isVchallenge() {
+        return vchallenge;
+    }
+
+    public static void setVchallenge(boolean vchallenge) {
+        OperatorFlow.vchallenge = vchallenge;
+    }
+
+    public static boolean isEditEquipment() {
+        return editEquipment;
+    }
+
+    public static void setEditEquipment(boolean editEquipment) {
+        OperatorFlow.editEquipment = editEquipment;
+    }
 }

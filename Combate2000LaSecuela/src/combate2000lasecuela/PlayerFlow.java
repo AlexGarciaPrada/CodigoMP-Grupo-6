@@ -276,5 +276,86 @@ public class PlayerFlow extends Gameflow {
         }
     }
 
+    // ---------------------- GETTERS & SETTERS
 
+
+    public static boolean isPlayerlogin() {
+        return playerlogin;
+    }
+
+    public static void setPlayerlogin(boolean playerlogin) {
+        PlayerFlow.playerlogin = playerlogin;
+    }
+
+    public static boolean isEraseplayer() {
+        return eraseplayer;
+    }
+
+    public static void setEraseplayer(boolean eraseplayer) {
+        PlayerFlow.eraseplayer = eraseplayer;
+    }
+
+    public static boolean isChallengemode() {
+        return challengemode;
+    }
+
+    public static void setChallengemode(boolean challengemode) {
+        PlayerFlow.challengemode = challengemode;
+    }
+
+    public static boolean isFighterstate() {
+        return fighterstate;
+    }
+
+    public static void setFighterstate(boolean fighterstate) {
+        PlayerFlow.fighterstate = fighterstate;
+    }
+
+    public static boolean isCreatefighter() {
+        return createfighter;
+    }
+
+    public static void setCreatefighter(boolean createfighter) {
+        PlayerFlow.createfighter = createfighter;
+    }
+
+    public static boolean isChallengeplayer() {
+        return challengeplayer;
+    }
+
+    public static void setChallengeplayer(boolean challengeplayer) {
+        PlayerFlow.challengeplayer = challengeplayer;
+    }
+
+    public static boolean isErasefighter() {
+        return erasefighter;
+    }
+
+    public static void setErasefighter(boolean erasefighter) {
+        PlayerFlow.erasefighter = erasefighter;
+    }
+
+    public static boolean isEquipadmin() {
+        return equipadmin;
+    }
+
+    public static void setEquipadmin(boolean equipadmin) {
+        PlayerFlow.equipadmin = equipadmin;
+    }
+
+    public static boolean isRanking() {
+        return ranking;
+    }
+
+    public static void setRanking(boolean ranking) {
+        PlayerFlow.ranking = ranking;
+    }
+
+    public static boolean isGoldregister() {
+        return goldregister;
+    }
+
+    public static void setGoldregister(boolean goldregister) {
+        PlayerFlow.goldregister = goldregister;
+    }
 }
