@@ -69,43 +69,47 @@ public class  OperatorFlow {
     }
 
     // ------------------------ BLOCK AND UNBLOCK USER
-    public static void blockUser(Operator operator,Database database,MessageManager messageManager) {
-        setBlock(false);
+
+    public static User availableUser(Database database, MessageManager messageManager) {
         String nick = messageManager.showNickToBlock();
-        if (database.isNickUsed(nick)) {
-            User auxuser = database.getUser(nick);
+        User auxuser = database.getUser(nick);
+        if (database.isNickUsed(nick) || auxuser instanceof Player) {
             if (auxuser instanceof Player) {
-                if (!((Player) auxuser).isBlocked()) {
-                    operator.blockPlayer((Player) auxuser);
-                    messageManager.showUserBlocked(auxuser.getNick());
-                }else{
-                    messageManager.showContent(alreadyBlockText);
-                }
-            } else {
-                messageManager.showContent(userNotFoundText);
+                return auxuser;
             }
         } else {
             messageManager.showContent(userNotFoundText);
+            return null;
+        }
+        return null;
+    }
+
+    public static boolean blockedOperations(User auxuser, Operator operator, MessageManager messageManager) {
+        if (!((Player) auxuser).isBlocked()) {
+            operator.blockPlayer((Player) auxuser);
+            messageManager.showUserBlocked(auxuser.getNick());
+            return true;
+        } else {
+            operator.unblockPlayer((Player) auxuser);
+            messageManager.showUserUnblocked(auxuser.getNick());
+            return false;
         }
     }
+
+    public static void blockUser(Operator operator,Database database,MessageManager messageManager) {
+        setBlock(false);
+        if (!(blockedOperations(availableUser(database, messageManager), operator, messageManager))){
+            messageManager.showContent(alreadyBlockText);
+        }
+        else blockedOperations(availableUser(database, messageManager), operator, messageManager);
+    }
+
     public static void unblockUser(Operator operator,Database database,MessageManager messageManager) {
         setUnblock(false);
-        String nick = messageManager.showNickToUnblock();
-        if (database.isNickUsed(nick)) {
-            User auxuser = database.getUser(nick);
-            if (auxuser instanceof Player) {
-                if (((Player) auxuser).isBlocked()) {
-                    operator.unblockPlayer((Player) auxuser);
-                    messageManager.showUserUnblocked(auxuser.getNick());
-                }else{
-                    messageManager.showContent(alreadyUnblockText);
-                }
-            } else {
-                messageManager.showContent(userNotFoundText);
-            }
-        } else {
-            messageManager.showContent(userNotFoundText);
+        if (blockedOperations(availableUser(database, messageManager), operator, messageManager)){
+            messageManager.showContent(alreadyUnblockText);
         }
+        else blockedOperations(availableUser(database, messageManager), operator, messageManager);
     }
 
     private static void eraseOperator(Operator operator,Database database,MessageManager messageManager){
@@ -114,7 +118,7 @@ public class  OperatorFlow {
         if (option == 1){
             messageManager.showContent(userCorrectlyErasedText);
             database.eraseOperator(operator);
-            operatorlogin =false;
+            setOperatorlogin(false);
         }
     }
     private static void validateChallenge (Operator operator,Database database, MessageManager messageManager){
