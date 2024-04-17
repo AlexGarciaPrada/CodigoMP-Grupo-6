@@ -26,14 +26,69 @@ public class OperatorFlowTest {
     void operatorMachine(){
     }
 
+    // OPERATORLOGIN TESTS
+
     @Test
     void operatorLoginEditFighter() {
         String data = "1";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         OperatorFlow operatorFlow = new OperatorFlow();
-        //MessageManager messageManager = new MessageManager();
-        //operatorFlow.set
-        assertEquals(Integer.parseInt(data)==1, operatorFlow.isEditfighter());
+        operatorFlow.setEditfighter(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEditfighter());
+    }
+
+    @Test
+    void operatorLoginEditEquipment() {
+        String data = "2";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setEditEquipment(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEditEquipment());
+    }
+
+    @Test
+    void operatorLoginVChallenge() {
+        String data = "3";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setVchallenge(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isVchallenge());
+    }
+
+    @Test
+    void operatorLoginBlock() {
+        String data = "4";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setBlock(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isBlock());
+    }
+
+    @Test
+    void operatorLoginUnblock() {
+        String data = "5";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setUnblock(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isUnblock());
+    }
+
+    @Test
+    void operatorLogin() {
+        String data = "6";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setOperatorlogin(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isOperatorlogin());
+    }
+
+    @Test
+    void operatorLoginEraseOperator() {
+        String data = "7";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        OperatorFlow operatorFlow = new OperatorFlow();
+        operatorFlow.setEraseoperator(true);
+        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEraseoperator());
     }
 
     @Test
