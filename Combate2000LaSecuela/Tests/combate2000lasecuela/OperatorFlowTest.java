@@ -32,68 +32,60 @@ public class OperatorFlowTest {
     void operatorLoginEditFighter() {
         String data = "1";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setEditfighter(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEditfighter());
+        OperatorFlow.setEditfighter(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isEditfighter());
     }
 
     @Test
     void operatorLoginEditEquipment() {
         String data = "2";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setEditEquipment(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEditEquipment());
+        OperatorFlow.setEditEquipment(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isEditEquipment());
     }
 
     @Test
     void operatorLoginVChallenge() {
         String data = "3";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setVchallenge(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isVchallenge());
+        OperatorFlow.setVchallenge(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isVchallenge());
     }
 
     @Test
     void operatorLoginBlock() {
         String data = "4";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setBlock(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isBlock());
+        OperatorFlow.setBlock(true);
+        assertEquals(Integer.parseInt(data)==1, OperatorFlow.isBlock());
     }
 
     @Test
     void operatorLoginUnblock() {
         String data = "5";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setUnblock(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isUnblock());
+        OperatorFlow.setUnblock(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isUnblock());
     }
 
     @Test
     void operatorLogin() {
         String data = "6";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setOperatorlogin(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isOperatorlogin());
+        OperatorFlow.setOperatorlogin(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isOperatorlogin());
     }
 
     @Test
     void operatorLoginEraseOperator() {
         String data = "7";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
-        OperatorFlow operatorFlow = new OperatorFlow();
-        operatorFlow.setEraseoperator(true);
-        assertEquals(Integer.parseInt(data)==1,operatorFlow.isEraseoperator());
+        OperatorFlow.setEraseoperator(true);
+        assertEquals(Integer.parseInt(data)==1,OperatorFlow.isEraseoperator());
     }
 
     @Test
     void blockUser() {
-        OperatorFlow operatorFlow = new OperatorFlow();
         Database database = new Database();
         Operator operator = new Operator("op","00","op");
         Player auxPlayer = (Player) database.getUser("pepe");
