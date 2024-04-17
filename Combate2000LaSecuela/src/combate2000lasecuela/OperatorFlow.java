@@ -60,7 +60,7 @@ public class  OperatorFlow {
                 setUnblock(true);
                 break;
             case 6: //Cerrar Sesion
-                setOperatorlogin(true);
+                setOperatorlogin(false);
                 break;
             case 7: //Borrar Usuario
                 setEraseoperator(true);

@@ -95,6 +95,19 @@ public class OperatorFlowTest {
 
     @Test
     void unblockUser() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        Player auxPlayer = (Player) database.getUser("pepe");
+        operator.unblockPlayer(auxPlayer);
+        assertFalse(auxPlayer.isBlocked());
+    }
+
+    @Test
+    void eraseOperator() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        database.eraseOperator(operator);
+        assertNull(database.getUser("op"));
     }
 
 
