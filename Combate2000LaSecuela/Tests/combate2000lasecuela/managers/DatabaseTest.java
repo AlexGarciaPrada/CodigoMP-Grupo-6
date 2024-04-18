@@ -2,6 +2,7 @@ package combate2000lasecuela.managers;
 
 import combate2000lasecuela.CosasDeLuchador.Fighter;
 import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
+import combate2000lasecuela.Operator;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.Database;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,10 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
 
-
+    Database database = new Database();
     @Test
     void testAddFighter() {
-        Database database = new Database();
         database.getUsermanager().loadElement("Prueba"); //Esto está hecho para que cargue un archivo que no existe
         Player player = new Player("1","1","1");
         Fighter fighter = new Lycanthrope("prueba",null,null,database.randomArmor(1),database.randomWeapons(1));
@@ -24,8 +24,6 @@ public class DatabaseTest {
 
     @Test
     void testEraseFighter() {
-        Database database = new Database();
-        database.getUsermanager().loadElement("Prueba"); //Esto está hecho para que cargue un archivo que no existe
         Player player = new Player("1","1","1");
         Fighter fighter = new Lycanthrope("prueba",null,null,database.randomArmor(1),database.randomWeapons(1));
         database.addFighter(player,fighter);
@@ -59,30 +57,47 @@ public class DatabaseTest {
     @Test
     void testAddPlayer() {
         Database database = new Database();
-        database.getUsermanager().loadElement("Prueba");
         Player player = new Player("1","1","1");
         database.addPlayer(player);
         assertTrue(database.isAPlayer("1"));
     }
 
     @Test
-    void isAPlayer() {
+    void testIsAPlayer() {
+        Database database = new Database();
+        Player player = new Player("2","2","2");
+        database.addPlayer(player);
+        Operator operator = new Operator("da","bifsebfes","diuediefes");
+        assertTrue((database.isAPlayer(player.getNick()) &&(!(database.isAPlayer(operator.getNick())))));
     }
 
     @Test
-    void addOperator() {
+    void testAddOperator() {
+        Operator operator = new Operator("da","bifsebfes","diuediefes");
+        database.addOperator(operator);
+        assertTrue(database.getUser(operator.getNick()) instanceof Operator);
     }
 
     @Test
-    void erasePlayer() {
+    void testErasePlayer() {
+        Player player = new Player("2","2","2");
+        database.addPlayer(player);
+        String nick = player.getNick();
+        database.erasePlayer(player);
+        assertFalse(database.isAPlayer(nick));
     }
 
     @Test
-    void eraseOperator() {
+    void testEraseOperator() {
+        Operator operator = new Operator("da","bifsebfes","diuediefes");
+        database.addOperator(operator);
+        String nick = operator.getNick();
+        database.eraseOperator(operator);
+        assertNull(database.getUser(nick));
     }
 
     @Test
-    void isNickUsed() {
+    void testIsNickUsed() {
     }
 
     @Test
