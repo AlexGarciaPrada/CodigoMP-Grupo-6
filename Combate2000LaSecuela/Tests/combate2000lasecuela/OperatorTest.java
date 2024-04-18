@@ -1,8 +1,8 @@
 package combate2000lasecuela;
 
 import combate2000lasecuela.CosasDeLuchador.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ public class OperatorTest {
     private static LinkedList<Minion> minions;
     private static Fighter fighter;
 
-    @Before
+    @BeforeEach
     public void setUp() { //para crear la situation ya tu sabe
         //crear operador
         operator = new Operator("op", "pass", "op");
