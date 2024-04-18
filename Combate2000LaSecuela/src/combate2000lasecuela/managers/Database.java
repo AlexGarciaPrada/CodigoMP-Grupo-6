@@ -522,4 +522,20 @@ public class Database {
     public int getDemonMax() {
         return demonMax;
     }
+
+    public UserManager getUsermanager() {
+        return usermanager;
+    }
+
+    public Loader getLoader() {
+        return loader;
+    }
+
+    public ChallengeManager getChallengeManager() {
+        return challengeManager;
+    }
+
+    public CombatRegister getCombatregister() {
+        return combatregister;
+    }
 }
