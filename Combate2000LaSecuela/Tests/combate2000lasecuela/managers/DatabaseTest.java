@@ -1,8 +1,10 @@
 package combate2000lasecuela.managers;
 
+import combate2000lasecuela.Constants;
 import combate2000lasecuela.CosasDeLuchador.Fighter;
 import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
 import combate2000lasecuela.Operator;
+import combate2000lasecuela.Constants;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.Database;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,26 +34,21 @@ public class DatabaseTest {
     }
 
     @Test
-    void updateUsers() {
-        /*Database database = new Database();
-        UserManager userManager = new UserManager();
-        Player player = new Player("1","1","1");
-        Fighter fighter = new Lycanthrope("prueba",null,null,database.randomArmor(1),database.randomWeapons(1));
-        database.addPlayer(player);*/
-
+    void testUpdateUsers() {
 
     }
 
     @Test
-    void updateChallenges() {
+    void testUpdateChallenges() {
+
     }
 
     @Test
-    void updateCombats() {
+    void testUpdateCombats() {
     }
 
     @Test
-    void addPendingChallenge() {
+    void testAddPendingChallenge() {
     }
 
     @Test
@@ -95,185 +92,192 @@ public class DatabaseTest {
         database.eraseOperator(operator);
         assertNull(database.getUser(nick));
     }
-
     @Test
     void testIsNickUsed() {
+        database.addPlayer(new Player("3","3","3"));
+        database.addOperator(new Operator("4","4","4"));
+        assertTrue((database.isNickUsed("3"))&& (database.isNickUsed("4")));
     }
 
     @Test
-    void isPasswordCorrect() {
+    void testIsPasswordCorrect() {
+        database.addPlayer(new Player("3","3","3"));
+        database.addOperator(new Operator("4","4","4"));
+        assertTrue((!(database.isPasswordCorrect("3","5")))&&(database.isPasswordCorrect("4","4")));
+
     }
 
     @Test
-    void getUser() {
+    void testGetUser() {
     }
 
     @Test
-    void getRanking() {
+    void testGetRanking() {
     }
 
     @Test
-    void addVictories() {
+    void testAddVictories() {
     }
 
     @Test
-    void randomMinions() {
+    void testRandomMinions() {
+        
     }
 
     @Test
-    void randomMinionDemon() {
+    void testRandomMinionDemon() {
     }
 
     @Test
-    void getTFighter() {
+    void testGetTFighter() {
     }
 
     @Test
-    void randomWeapons() {
+    void testRandomWeapons() {
     }
 
     @Test
-    void randomArmor() {
+    void testRandomArmor() {
     }
 
     @Test
-    void getTFighterText() {
+    void testGetTFighterText() {
     }
 
     @Test
-    void managerToListTFighter() {
+    void testManagerToListTFighter() {
     }
 
     @Test
-    void getStrengths() {
+    void testGetStrengths() {
     }
 
     @Test
-    void getWeaknesses() {
+    void testGetWeaknesses() {
     }
 
     @Test
-    void getChallenge() {
+    void testGetChallenge() {
     }
 
     @Test
-    void eraseChallenge() {
+    void testEraseChallenge() {
     }
 
     @Test
-    void addChallenge() {
+    void testAddChallenge() {
     }
 
     @Test
-    void isEmptyChallengeManager() {
+    void testIsEmptyChallengeManager() {
     }
 
     @Test
-    void generateCombatHistoryText() {
+    void testGenerateCombatHistoryText() {
     }
 
     @Test
-    void combatHistoryModifyer() {
+    void testCombatHistoryModifyer() {
     }
 
     @Test
-    void getCombatHistory() {
+    void testGetCombatHistory() {
     }
 
     @Test
-    void isCombatRegisterEmpty() {
+    void testIsCombatRegisterEmpty() {
     }
 
     @Test
-    void changeFighterName() {
+    void testChangeFighterName() {
     }
 
     @Test
-    void changeFighterRace() {
+    void testChangeFighterRace() {
     }
 
     @Test
-    void changeFighterType() {
+    void testChangeFighterType() {
     }
 
     @Test
-    void deleteArmor() {
+    void testDeleteArmor() {
     }
 
     @Test
-    void deleteWeapon() {
+    void testDeleteWeapon() {
     }
 
     @Test
-    void addWeapon() {
+    void testAddWeapon() {
     }
 
     @Test
-    void addArmor() {
+    void testAddArmor() {
     }
 
     @Test
-    void deleteMinion() {
+    void testDeleteMinion() {
     }
 
     @Test
-    void addMinion() {
+    void testAddMinion() {
     }
 
     @Test
-    void addMinionText() {
+    void testAddMinionText() {
     }
 
     @Test
-    void generateMinionText() {
+    void testGenerateMinionText() {
     }
 
     @Test
-    void generateWeaponText() {
+    void testGenerateWeaponText() {
     }
 
     @Test
-    void generateArmorText() {
+    void testGenerateArmorText() {
     }
 
     @Test
-    void equipWeapon1() {
+    void testEquipWeapon1() {
     }
 
     @Test
-    void equipWeapon2() {
+    void testEquipWeapon2() {
     }
 
     @Test
-    void equipArmor() {
+    void testEquipArmor() {
     }
 
     @Test
-    void updateGold() {
+    void testUpdateGold() {
     }
 
     @Test
-    void addMail() {
+    void testAddMail() {
     }
 
     @Test
-    void addCombat() {
+    void testAddCombat() {
     }
 
     @Test
-    void eraseMail() {
+    void testEraseMail() {
     }
 
     @Test
-    void reducePendingGold() {
+    void testReducePendingGold() {
     }
 
     @Test
-    void setDemonMax() {
+    void testSetDemonMax() {
     }
 
     @Test
-    void getDemonMax() {
+    void testGetDemonMax() {
     }
 
 }

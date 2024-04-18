@@ -9,7 +9,7 @@ public class Constants {
     public static final String tfighterFile = "./files/txtfiles/TFighter.txt";
     public static final String   strentghFile = "./files/txtfiles/Fortalezas";
     public static final String weaknessFile = "./files/txtfiles/Debilidades";
-    public static final String serRoute="./files/serfiles/";
+    public static  String serRoute="./files/serfiles/";
 
     //Contantes para los Strings [] del Messagemanager
 
