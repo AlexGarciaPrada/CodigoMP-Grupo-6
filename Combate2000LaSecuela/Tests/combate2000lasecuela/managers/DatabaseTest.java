@@ -15,6 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DatabaseTest {
 
     Database database = new Database();
+    Player p1 =  new Player("A","A","A");
+    Player p2 =  new Player("B","B","B");
+    Player p3 =  new Player("C","C","C");
+    Operator o1 = new Operator("1","1","1");
+    Operator o2 = new Operator("2","2","2");
+    Operator o3 = new Operator("3","3","3");
+
+
+
     @Test
     void testAddFighter() {
         database.getUsermanager().loadElement("Prueba"); //Esto está hecho para que cargue un archivo que no existe
@@ -109,6 +118,16 @@ public class DatabaseTest {
 
     @Test
     void testGetUser() {
+
+        database.addPlayer(p1);
+        database.addOperator(o1);
+        database.addPlayer(p2);
+        database.addOperator(o2);
+        assertTrue(database.getUser("A").equals(p1));
+        assertTrue(database.getUser("1").equals(o1));
+        assertTrue(database.getUser("2").equals(o2));
+        assertTrue(database.getUser("B").equals(p2));
+        assertNull(database.getUser("Holaquetal"));
     }
 
     @Test

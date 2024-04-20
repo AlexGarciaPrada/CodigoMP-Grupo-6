@@ -1,8 +1,9 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
