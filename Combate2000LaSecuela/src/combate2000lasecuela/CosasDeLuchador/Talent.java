@@ -12,4 +12,7 @@ public class Talent extends Specialskill implements Serializable {
     public int getDamage() {
         return this.willDamage;
     }
+    public void setWillDamage(int i){
+        this.willDamage=i;
+    }
 }

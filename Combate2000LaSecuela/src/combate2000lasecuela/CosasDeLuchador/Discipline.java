@@ -26,4 +26,7 @@ public class Discipline extends Specialskill implements Serializable {
     public int getDamage() {
         return this.disciplineDamage;
     }
+    public void setDisciplineDamage(int i){
+        this.disciplineDamage=i;
+    }
 }

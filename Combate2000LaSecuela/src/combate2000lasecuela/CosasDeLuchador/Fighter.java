@@ -446,34 +446,4 @@ public abstract class Fighter implements Serializable {
         return "Arma 2: No equipada";
     }
     }
-/*
-    public Combat startFighting (Fighter desafiante, int oroApostado){
-        fightEachPlayer(desafiante,this,oroApostado);
-        fightEachPlayer(this,desafiante,oroApostado);
-        return new Combat(desafiante,this,0,oroApostado);
-    }
 
-    public void fightEachPlayer(Fighter desafiante, Fighter challenged, int oroApostado){
-        int rounds=0;
-        int pA=0;
-        int pD=0;
-        //boolean esEmpate=false;//preparativo para meterselo al combat
-        do {
-            rounds++; //donde recibe el desafiado
-            //terminal.show("Ronda numero" + rounds + "comienza");
-            pA = potencialAtaque(desafiante);
-            pD = potencialDefensa(challenged);
-            if (comprobarDaños(pA,pD)){
-                ajusteHabilidad(pA,pD);
-                // terminal.show(this.name+" ha recibido un golpe");
-                if (this.minionHealth>0){
-                    //  terminal.show(" aunque lo han acabado recibiendo los esbirros");
-                    this.minionHealth-=1;
-                }else {
-                    this.health -= 1; //considerar caso de que se maten a la vez
-                    // terminal.show(this.health+ " vidas restantes");
-                }
-            }
-        }while((this.health>0)||(desafiante.health>0));
-    }
-*/
