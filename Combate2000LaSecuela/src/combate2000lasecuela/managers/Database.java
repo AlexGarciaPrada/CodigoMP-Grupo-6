@@ -61,7 +61,7 @@ public class Database {
 
     public void addOperator(Operator operator) {
         usermanager.addElement("Operator", operator.getNick(), operator);
-        usermanager.saveCollection("User");
+        this.updateUsers();
     }
 
     public void erasePlayer(Player player) {
@@ -538,4 +538,6 @@ public class Database {
     public CombatRegister getCombatregister() {
         return combatregister;
     }
+    //Métodos para los test
+
 }

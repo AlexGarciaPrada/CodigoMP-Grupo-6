@@ -1,49 +1,66 @@
 package combate2000lasecuela.managers;
 
 import combate2000lasecuela.Constants;
-import combate2000lasecuela.CosasDeLuchador.Fighter;
-import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.Operator;
 import combate2000lasecuela.Constants;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.Database;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
-
     Database database = new Database();
     Player p1 =  new Player("A","A","A");
     Player p2 =  new Player("B","B","B");
     Player p3 =  new Player("C","C","C");
-    Operator o1 = new Operator("1","1","1");
-    Operator o2 = new Operator("2","2","2");
-    Operator o3 = new Operator("3","3","3");
+    Operator o1 = new Operator("a","a","a");
+    Operator o2 = new Operator("b","b","b");
+    Operator o3 = new Operator("c","c","c");
+    Fighter f1 = new Lycanthrope("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
+    Fighter f2 = new Vampire("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
+    Fighter f3 = new Hunter("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
+@BeforeEach
+    public void setUp(){
 
+    database.addPlayer(p1);
+    database.addPlayer(p2);
+    database.addPlayer(p3);
+    database.addOperator(o1);
+    database.addOperator(o2);
+    database.addOperator(o3);
+
+    }
 
 
     @Test
     void testAddFighter() {
-        database.getUsermanager().loadElement("Prueba"); //Esto está hecho para que cargue un archivo que no existe
-        Player player = new Player("1","1","1");
-        Fighter fighter = new Lycanthrope("prueba",null,null,database.randomArmor(1),database.randomWeapons(1));
-        database.addFighter(player,fighter);
-        assertTrue(player.getFighter().equals(fighter));
+    database.addFighter(p1,f1);
+    assertTrue(p1.getFighter().equals(f1));
+    assertFalse(p1.getFighter().equals(f2));
+    assertNotNull(p1.getFighter());
+
     }
 
     @Test
     void testEraseFighter() {
-        Player player = new Player("1","1","1");
-        Fighter fighter = new Lycanthrope("prueba",null,null,database.randomArmor(1),database.randomWeapons(1));
-        database.addFighter(player,fighter);
-        database.eraseFighter(player);
-        assertNull(player.getFighter());
+        database.addFighter(p1,f1);
+        assertTrue(p1.getFighter().equals(f1));
+        database.eraseFighter(p1);
+        assertNull(p1.getFighter());
     }
 
     @Test
     void testUpdateUsers() {
+
 
     }
 
@@ -58,39 +75,40 @@ public class DatabaseTest {
 
     @Test
     void testAddPendingChallenge() {
+
     }
 
     @Test
     void testAddPlayer() {
-        Database database = new Database();
-        Player player = new Player("1","1","1");
-        database.addPlayer(player);
-        assertTrue(database.isAPlayer("1"));
+        assertTrue(database.isAPlayer("A"));
+        assertFalse(database.isAPlayer("Un nombre cualquiera"));
+        assertTrue(database.isAPlayer("B"));
+        assertFalse(database.isAPlayer("a"));
     }
 
     @Test
     void testIsAPlayer() {
-        Database database = new Database();
-        Player player = new Player("2","2","2");
-        database.addPlayer(player);
-        Operator operator = new Operator("da","bifsebfes","diuediefes");
-        assertTrue((database.isAPlayer(player.getNick()) &&(!(database.isAPlayer(operator.getNick())))));
+     assertTrue(database.isAPlayer("A"));
+     assertFalse(database.isAPlayer("a"));
+     assertFalse(database.isAPlayer("Un nombre cualquiera"));
     }
 
     @Test
     void testAddOperator() {
-        Operator operator = new Operator("da","bifsebfes","diuediefes");
-        database.addOperator(operator);
-        assertTrue(database.getUser(operator.getNick()) instanceof Operator);
+        Operator o4 = new Operator("d","d","d");
+        database.addOperator(o4);
+        assertTrue(database.getUser("d").equals(o4));
+        assertFalse(database.getUser("a").equals(o4));
     }
 
     @Test
     void testErasePlayer() {
-        Player player = new Player("2","2","2");
-        database.addPlayer(player);
-        String nick = player.getNick();
-        database.erasePlayer(player);
-        assertFalse(database.isAPlayer(nick));
+        assertTrue(database.getUser("A").equals(p1));
+        database.erasePlayer(p1);
+        assertNull(database.getUser("A"));
+        assertFalse(database.isAPlayer("A"));
+        database.addPlayer(p1);
+        assertTrue(database.isAPlayer("A"));
     }
 
     @Test
@@ -118,29 +136,44 @@ public class DatabaseTest {
 
     @Test
     void testGetUser() {
-
-        database.addPlayer(p1);
-        database.addOperator(o1);
-        database.addPlayer(p2);
-        database.addOperator(o2);
         assertTrue(database.getUser("A").equals(p1));
-        assertTrue(database.getUser("1").equals(o1));
-        assertTrue(database.getUser("2").equals(o2));
+        assertTrue(database.getUser("a").equals(o1));
+        assertTrue(database.getUser("b").equals(o2));
         assertTrue(database.getUser("B").equals(p2));
         assertNull(database.getUser("Holaquetal"));
     }
 
     @Test
     void testGetRanking() {
+        assertTrue(database.getRanking().size()==3);
+        assertTrue(database.getRanking().get(0).endsWith("0"));
+        p1.setVictories(10);
+        p2.setVictories(9);
+        p3.setVictories(8);
+        assertTrue(database.getRanking().get(0).endsWith("10"));
+        assertTrue(database.getRanking().get(1).endsWith("9"));
+        assertTrue(database.getRanking().get(2).endsWith("8"));
+        p1.setVictories(0);
+        p2.setVictories(0);
+        p3.setVictories(0);
+
     }
 
     @Test
     void testAddVictories() {
+    assertTrue(p1.getVictories()==0);
+    database.addVictories(p1);
+    assertTrue(p1.getVictories()==1);
+        database.addVictories(p1);
+        database.addVictories(p1);
+        database.addVictories(p1);
+    assertTrue(p1.getVictories()==4);
+
     }
 
     @Test
     void testRandomMinions() {
-        
+
     }
 
     @Test
@@ -277,6 +310,17 @@ public class DatabaseTest {
 
     @Test
     void testAddMail() {
+    String [] email ={"Hola que ase","Hdwajiowda"};
+        String [] email2 ={"1"};
+        String [] email3 ={"2"};
+    database.addFighter(p1,f1);
+    assertTrue(p1.getFighter().isMailboxEmpty());
+    database.addMail(p1,email);
+    assertFalse(p1.getFighter().isMailboxEmpty());
+    assertTrue(p1.getFighter().getMail().equals(email));
+    database.addMail(p1,email2);
+    database.addMail(p1,email3);
+    assertTrue(p1.getFighter().getMail().equals(email));
     }
 
     @Test
@@ -285,10 +329,29 @@ public class DatabaseTest {
 
     @Test
     void testEraseMail() {
+        String [] email ={"Hola que ase","Hdwajiowda"};
+        String [] email2 ={"1"};
+        String [] email3 ={"2"};
+        database.addFighter(p1,f1);
+        assertTrue(p1.getFighter().isMailboxEmpty());
+        database.addMail(p1,email);
+        assertFalse(p1.getFighter().isMailboxEmpty());
+        database.eraseMail(p1);
+        assertTrue(p1.getFighter().isMailboxEmpty());
+        database.addMail(p1,email2);
+        database.addMail(p1,email3);
+        database.eraseMail(p1);
+        assertTrue(p1.getFighter().getMail().equals(email2));
+
     }
 
     @Test
     void testReducePendingGold() {
+        database.addFighter(p1,f1);
+        assertTrue(p1.getFighter().getPendingGold()==100);
+        database.reducePendingGold(20,p1);
+        assertFalse(p1.getFighter().getPendingGold()==100);
+        assertTrue(p1.getFighter().getPendingGold()==80);
     }
 
     @Test
