@@ -38,7 +38,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void fight() {
+    public void fightTest() {
         Player challenger = new Player("chall", "pass", "chall");
         challenger.setFighter(fighter);
         Combat result = player.Fight(challenger, 40);
@@ -46,10 +46,37 @@ public class PlayerTest {
     }
 
     @Test
-    public void deleteFighter() {
+    public void deleteFighterTest() {
         player.deleteFighter();
         assertNull(player.getFighter());
     }
 
+    @Test
+    public void challengePlayerTest() {
+        Player challenged = new Player("chall", "pass", "chall");
+        Challenge challenge = player.challengePlayer(challenged, 40);
+        assertNotNull(challenge);
+    }
+
+
+    @Test
+    public void addPendingChallengeTest() {
+        Player challenger = new Player("chall", "pass", "chall");
+        Challenge challenge = new Challenge(challenger, player, 40);
+        player.addPendingChallenge(challenge);
+        assertNotNull(player.getFighter().getPendingChallenges());
+    }
+
+    @Test
+    public void deletePendingChallengesTest() {
+        //primero metemos un challenge a la cola
+        Player challenger = new Player("chall", "pass", "chall");
+        Challenge challenge = new Challenge(challenger, player, 40);
+        player.addPendingChallenge(challenge);
+
+        //ahora vemos si lo borra
+        player.deletePendingChallenge();
+        assertTrue(player.getFighter().getPendingChallenges().isEmpty());
+    }
 
 }
