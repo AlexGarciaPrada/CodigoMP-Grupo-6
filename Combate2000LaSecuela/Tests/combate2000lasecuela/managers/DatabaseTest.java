@@ -1,15 +1,10 @@
 package combate2000lasecuela.managers;
 
-import combate2000lasecuela.Constants;
-import combate2000lasecuela.CosasDeLuchador.Fighter;
-import combate2000lasecuela.CosasDeLuchador.Lycanthrope;
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.Operator;
-import combate2000lasecuela.Constants;
 import combate2000lasecuela.Player;
-import combate2000lasecuela.managers.Database;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import java.util.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
@@ -22,7 +17,36 @@ public class DatabaseTest {
     Operator o2 = new Operator("2","2","2");
     Operator o3 = new Operator("3","3","3");
 
-
+    @Test
+    void testRandomMinion(){
+        LinkedList<Minion> resultado = database.randomMinions(0,true,false,0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object esclavo = resultado.get(0);
+        assertTrue(esclavo instanceof Minion);
+    }
+    @Test
+    void testRandomArmor(){
+        LinkedList<Armor> resultado = database.randomArmor(0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object armor = resultado.get(0);
+        assertTrue(armor instanceof Armor);
+    }
+    @Test
+    void testRandomWeapon(){
+        LinkedList<Weapon> resultado = database.randomWeapons(0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object weapon = resultado.get(0);
+        assertTrue(weapon instanceof Weapon);
+    }
 
     @Test
     void testAddFighter() {
@@ -118,7 +142,6 @@ public class DatabaseTest {
 
     @Test
     void testGetUser() {
-
         database.addPlayer(p1);
         database.addOperator(o1);
         database.addPlayer(p2);
@@ -139,24 +162,11 @@ public class DatabaseTest {
     }
 
     @Test
-    void testRandomMinions() {
-        
-    }
-
-    @Test
-    void testRandomMinionDemon() {
-    }
-
-    @Test
     void testGetTFighter() {
     }
 
     @Test
     void testRandomWeapons() {
-    }
-
-    @Test
-    void testRandomArmor() {
     }
 
     @Test
