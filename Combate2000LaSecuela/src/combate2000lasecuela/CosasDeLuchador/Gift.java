@@ -20,4 +20,7 @@ public class Gift extends Specialskill implements Serializable {
     public int getRageCost() {
         return this.rageCost;
     }
+    public void setGiftDamage(int i){
+        this.giftDamage=i;
+    }
 }

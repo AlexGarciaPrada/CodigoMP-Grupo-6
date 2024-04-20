@@ -27,7 +27,7 @@ public class Lycanthrope extends Fighter{
 
     @Override
     public void adjustAbility(int pA, int pD) {
-        if ((pA<pD)&&(getRage()<=3)){
+        if ((pA<pD)&&(getRage()<3)){
             setRage(getRage()+1);
         }
     }
