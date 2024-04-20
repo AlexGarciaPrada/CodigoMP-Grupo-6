@@ -1,10 +1,8 @@
 package combate2000lasecuela.managers;
 
-import combate2000lasecuela.Constants;
+import combate2000lasecuela.*;
 import combate2000lasecuela.CosasDeLuchador.*;
-import combate2000lasecuela.Operator;
 import combate2000lasecuela.Constants;
-import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.Database;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +23,7 @@ public class DatabaseTest {
     Operator o1 = new Operator("a","a","a");
     Operator o2 = new Operator("b","b","b");
     Operator o3 = new Operator("c","c","c");
-    Fighter f1 = new Lycanthrope("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
+    Fighter f1 = new Lycanthrope("f1",null,database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
     Fighter f2 = new Vampire("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
     Fighter f3 = new Hunter("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
 @BeforeEach
@@ -270,42 +268,71 @@ public class DatabaseTest {
 
     @Test
     void testDeleteMinion() {
+        database.addFighter(p1,f1);
+        int prevlength = p1.getFighter().getMyMinions().size();
+        database.addMinion(o1,p1,34);
+        assertTrue(prevlength+1 == p1.getFighter().getMyMinions().size());
+        database.deleteMinion(o1,p1,34);
+        assertTrue(prevlength==p1.getFighter().getMyMinions().size());
+        assertFalse( p1.getFighter().getMyMinions().get(prevlength-1).equals(database.getLoader().getMinionManager().getCollection("MinionMap").get("34")));
+
     }
 
     @Test
     void testAddMinion() {
-    }
-
-    @Test
-    void testAddMinionText() {
+    database.addFighter(p1,f1);
+    int prevlength = p1.getFighter().getMyMinions().size();
+    database.addMinion(o1,p1,34);
+    assertTrue(prevlength+1 == p1.getFighter().getMyMinions().size());
+    assertTrue( p1.getFighter().getMyMinions().get(prevlength).equals(database.getLoader().getMinionManager().getCollection("MinionMap").get("34")));
     }
 
     @Test
     void testGenerateMinionText() {
+        assertTrue(database.generateMinionText().length==100);
+
     }
 
     @Test
     void testGenerateWeaponText() {
+        assertTrue(database.generateWeaponText().length==28);
     }
 
     @Test
     void testGenerateArmorText() {
+    assertTrue(database.generateArmorText().length == 28);
     }
 
     @Test
     void testEquipWeapon1() {
+        Weapon weapon = new Weapon("15; ESTOQUE; 2; 1;");
+        database.addFighter(p1,f1);
+        assertNotNull(p1.getFighter().getArma1());
+        database.equipWeapon1(p1,weapon);
+        assertTrue(p1.getFighter().getArma1().equals(weapon));
     }
 
     @Test
     void testEquipWeapon2() {
+    Weapon weapon = new Weapon("15; ESTOQUE; 2; 1;");
+    database.addFighter(p1,f1);
+    assertNull(p1.getFighter().getArma2());
+    database.equipWeapon2(p1,weapon);
+    assertTrue(p1.getFighter().getArma2().equals(weapon));
     }
 
     @Test
     void testEquipArmor() {
+    database.addFighter(p1,f1);
+    Armor armor = new Armor("10; ARMADURA DE COBRE LEGENDARIA; 1; 3;");
+    assertNotNull(p1.getFighter().getArmor());
+    database.equipArmor(p1,armor);
+    assertTrue(p1.getFighter().getArmor().equals(armor));
     }
 
     @Test
     void testUpdateGold() {
+
     }
 
     @Test
@@ -325,6 +352,11 @@ public class DatabaseTest {
 
     @Test
     void testAddCombat() {
+        Combat combat = new Combat(f1,f2,15,34,true);
+        assertTrue(database.getCombatregister().getCollection("CombatMap").isEmpty());
+        database.addCombat(combat);
+        assertFalse(database.getCombatregister().getCollection("CombatMap").isEmpty());
+        assertTrue(database.getCombatregister().getCollection("CombatMap").containsValue(combat));
     }
 
     @Test
