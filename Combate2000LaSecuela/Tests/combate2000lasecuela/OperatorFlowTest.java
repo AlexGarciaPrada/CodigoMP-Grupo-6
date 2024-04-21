@@ -1,11 +1,11 @@
 package combate2000lasecuela;
 
+import combate2000lasecuela.CosasDeLuchador.*;
 import combate2000lasecuela.OperatorFlow;
 import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.*;
-import combate2000lasecuela.managers.UserManager;
-import combate2000lasecuela.screen.MessageManager;
 import org.junit.jupiter.api.*;
+import java.util.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -132,6 +132,27 @@ public class OperatorFlowTest {
         Operator operator = new Operator("op","00","op");
         Player auxPlayer = (Player) database.getUser("pepe");
 
+    }
+
+    @Test
+    public void testEditWeaponDelete() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+
+
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minions = new LinkedList<>();
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        LinkedList<Armor> armor = new LinkedList<>();
+        Weapon weapon1 = new Weapon("1; HACHA ROMA PEQUEÑA; 1; 1;");
+        weapons.add(weapon1);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minions,armor,weapons);
+        database.addFighter(auxPlayer,fighter1);
+
+
+        assertTrue(database.deleteWeapon(operator,auxPlayer,1));
     }
 
 }
