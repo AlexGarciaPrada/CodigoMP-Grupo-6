@@ -20,7 +20,7 @@ public class  OperatorFlow {
     private static boolean editEquipment = false;
 
     public static void operatorMachine(Operator operator,Database database,MessageManager messageManager) {
-        operatorlogin =true;
+        setOperatorlogin(true);
         while (operatorlogin) {
             if (block) {
                 blockUser(operator, database, messageManager);
@@ -45,32 +45,32 @@ public class  OperatorFlow {
         int option = messageManager.showOperatorMenu(operator.getName());
         switch(option){
             case 1: //Editar personaje
-                editfighter=true;
+                setEditfighter(true);
                 break;
             case 2: //Editar equipo,esbirros,modificadores
-                editEquipment = true;
+                setEditEquipment(true);
                 break;
             case 3: //Validar desafios
-                vchallenge=true;
+                setVchallenge(true);
                 break;
             case 4: //Bloquear Usuario
-                block=true;
+                setBlock(true);
                 break;
             case 5: //Desbloquear Usuario
-                unblock=true;
+                setUnblock(true);
                 break;
             case 6: //Cerrar Sesion
-                operatorlogin =false;
+                setOperatorlogin(false);
                 break;
             case 7: //Borrar Usuario
-                eraseoperator =true;
+                setEraseoperator(true);
                 break;
         }
     }
 
     // ------------------------ BLOCK AND UNBLOCK USER
     public static void blockUser(Operator operator,Database database,MessageManager messageManager) {
-        block = false;
+        setBlock(false);
         String nick = messageManager.showNickToBlock();
         if (database.isNickUsed(nick)) {
             User auxuser = database.getUser(nick);
@@ -89,7 +89,7 @@ public class  OperatorFlow {
         }
     }
     public static void unblockUser(Operator operator,Database database,MessageManager messageManager) {
-        unblock = false;
+        setUnblock(false);
         String nick = messageManager.showNickToUnblock();
         if (database.isNickUsed(nick)) {
             User auxuser = database.getUser(nick);
@@ -110,7 +110,7 @@ public class  OperatorFlow {
 
     private static void eraseOperator(Operator operator,Database database,MessageManager messageManager){
         int option = messageManager.showEraseUser(operator.getNick());
-        eraseoperator =false;
+        setEraseoperator(false);
         if (option == 1){
             messageManager.showContent(userCorrectlyErasedText);
             database.eraseOperator(operator);
@@ -119,7 +119,7 @@ public class  OperatorFlow {
     }
     private static void validateChallenge (Operator operator,Database database, MessageManager messageManager){
         if (database.isEmptyChallengeManager()){
-            vchallenge=false;
+            setVchallenge(false);
             messageManager.showContent(notChallengeToValidate);
             return;
         }
@@ -139,10 +139,10 @@ public class  OperatorFlow {
             case 3:
                 break;
         }
-        vchallenge=false;
+        setVchallenge(false);
     }
     private static void editFighter(Database database, MessageManager messageManager){
-        editfighter=false;
+        setEditfighter(false);
         String nick = messageManager.showEditFighterMenu();
         if (nick.equals("SALIR")){
             return;
@@ -179,7 +179,7 @@ public class  OperatorFlow {
     }
 
     private static void editEquipment(Operator operator, Database database, MessageManager messageManager) {
-        editEquipment=false;
+        setEditEquipment(false);
         String nick = messageManager.showEditFighterMenu();
         if (nick.equals("SALIR")){
             return;
@@ -297,6 +297,61 @@ public class  OperatorFlow {
         }
     }
 
+    // ------------------------ GETTERS & SETTERS
 
+    public static boolean isOperatorlogin() {
+        return operatorlogin;
+    }
 
+    public static void setOperatorlogin(boolean operatorlogin) {
+        OperatorFlow.operatorlogin = operatorlogin;
+    }
+
+    public static boolean isEditfighter() {
+        return editfighter;
+    }
+
+    public static void setEditfighter(boolean editfighter) {
+        OperatorFlow.editfighter = editfighter;
+    }
+
+    public static boolean isEraseoperator() {
+        return eraseoperator;
+    }
+
+    public static void setEraseoperator(boolean eraseoperator) {
+        OperatorFlow.eraseoperator = eraseoperator;
+    }
+
+    public static boolean isBlock() {
+        return block;
+    }
+
+    public static void setBlock(boolean block) {
+        OperatorFlow.block = block;
+    }
+
+    public static boolean isUnblock() {
+        return unblock;
+    }
+
+    public static void setUnblock(boolean unblock) {
+        OperatorFlow.unblock = unblock;
+    }
+
+    public static boolean isVchallenge() {
+        return vchallenge;
+    }
+
+    public static void setVchallenge(boolean vchallenge) {
+        OperatorFlow.vchallenge = vchallenge;
+    }
+
+    public static boolean isEditEquipment() {
+        return editEquipment;
+    }
+
+    public static void setEditEquipment(boolean editEquipment) {
+        OperatorFlow.editEquipment = editEquipment;
+    }
 }

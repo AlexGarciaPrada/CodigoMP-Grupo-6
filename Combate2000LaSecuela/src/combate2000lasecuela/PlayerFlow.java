@@ -126,11 +126,11 @@ public class PlayerFlow extends Gameflow {
         player.deletePendingChallenge();
         database.updateUsers();
         if (!(player.hasPendingChallenges())) {
-            challengemode = false;
+            setChallengemode(false);
         }
     }
     private static void adminEquipment(Player player,Database database, MessageManager messageManager){
-        equipadmin =false;
+        setEquipadmin(false);
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
@@ -164,15 +164,15 @@ public class PlayerFlow extends Gameflow {
                     break;
             }
         }
+
     private static void adminArmor(Player player, Database database,MessageManager messageManager){
         int optionarmor = messageManager.showReadableBox(player.getFighter().generateArmorText(),player.getFighter().generateArmorText().length);
         Armor armor = player.getFighter().getMyArmor().get(optionarmor-1);
         database.equipArmor(player,armor);
     }
 
-
     private static void challengePlayer(Player player, Database database, MessageManager messageManager){
-        challengeplayer =false;
+        setChallengeplayer(false);
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
@@ -201,7 +201,7 @@ public class PlayerFlow extends Gameflow {
         }
     }
     private static void fighterState(Player player, MessageManager messageManager){
-        fighterstate =false;
+        setFighterstate(false);
         if (player.getFighter()==null){
             messageManager.showContent(notFighterText);
             return;
@@ -212,11 +212,11 @@ public class PlayerFlow extends Gameflow {
 
     private static void playersRanking(Database database, MessageManager messageManager){
         messageManager.showRanking(database.getRanking());
-        ranking=false;
+        setRanking(false);
     }
     private static void createFighter(Player player, Database database, MessageManager messageManager){
-        createfighter =false;
-        if (player.getFighter()!=null){
+        setCreatefighter(false);
+            if (player.getFighter()!=null){
             messageManager.showContent(alreadyFighterText);
         }else{
             int option = messageManager.showReadableBox(fighterTypesText,3);
@@ -239,7 +239,7 @@ public class PlayerFlow extends Gameflow {
         }
     }
     private static void eraseFighter(Player player, Database database, MessageManager messageManager){
-        erasefighter =false;
+        setErasefighter(false);
         if (player.getFighter() == null){
             messageManager.showContent(notFighterText);
         }else{
@@ -253,16 +253,16 @@ public class PlayerFlow extends Gameflow {
     }
     private static void erasePlayer(Player player,Database database,MessageManager messageManager){
         int option = messageManager.showEraseUser(player.getNick());
-        eraseplayer =false;
+        setEraseplayer(false);
         if (option == 1){
                 messageManager.showContent(userCorrectlyErasedText);
                 database.erasePlayer(player);
-                playerlogin =false;
+                setPlayerlogin(false);
             }
 
     }
     private static void goldRegister(Player player, Database database,MessageManager messageManager){
-        goldregister=false;
+        setGoldregister(false);
         if (database.isCombatRegisterEmpty()){
             messageManager.showContent(noCombatsText);
         }else{
@@ -275,5 +275,86 @@ public class PlayerFlow extends Gameflow {
         }
     }
 
+    // ---------------------- GETTERS & SETTERS
 
+
+    public static boolean isPlayerlogin() {
+        return playerlogin;
+    }
+
+    public static void setPlayerlogin(boolean playerlogin) {
+        PlayerFlow.playerlogin = playerlogin;
+    }
+
+    public static boolean isEraseplayer() {
+        return eraseplayer;
+    }
+
+    public static void setEraseplayer(boolean eraseplayer) {
+        PlayerFlow.eraseplayer = eraseplayer;
+    }
+
+    public static boolean isChallengemode() {
+        return challengemode;
+    }
+
+    public static void setChallengemode(boolean challengemode) {
+        PlayerFlow.challengemode = challengemode;
+    }
+
+    public static boolean isFighterstate() {
+        return fighterstate;
+    }
+
+    public static void setFighterstate(boolean fighterstate) {
+        PlayerFlow.fighterstate = fighterstate;
+    }
+
+    public static boolean isCreatefighter() {
+        return createfighter;
+    }
+
+    public static void setCreatefighter(boolean createfighter) {
+        PlayerFlow.createfighter = createfighter;
+    }
+
+    public static boolean isChallengeplayer() {
+        return challengeplayer;
+    }
+
+    public static void setChallengeplayer(boolean challengeplayer) {
+        PlayerFlow.challengeplayer = challengeplayer;
+    }
+
+    public static boolean isErasefighter() {
+        return erasefighter;
+    }
+
+    public static void setErasefighter(boolean erasefighter) {
+        PlayerFlow.erasefighter = erasefighter;
+    }
+
+    public static boolean isEquipadmin() {
+        return equipadmin;
+    }
+
+    public static void setEquipadmin(boolean equipadmin) {
+        PlayerFlow.equipadmin = equipadmin;
+    }
+
+    public static boolean isRanking() {
+        return ranking;
+    }
+
+    public static void setRanking(boolean ranking) {
+        PlayerFlow.ranking = ranking;
+    }
+
+    public static boolean isGoldregister() {
+        return goldregister;
+    }
+
+    public static void setGoldregister(boolean goldregister) {
+        PlayerFlow.goldregister = goldregister;
+    }
 }
