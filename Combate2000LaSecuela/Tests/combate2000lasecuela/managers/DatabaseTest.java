@@ -24,8 +24,8 @@ public class DatabaseTest {
     Operator o2 = new Operator("b","b","b");
     Operator o3 = new Operator("c","c","c");
     Fighter f1 = new Lycanthrope("f1",null,database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
-    Fighter f2 = new Vampire("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
-    Fighter f3 = new Hunter("f1",null,null,database.randomArmor(1),database.randomWeapons(1));
+    Fighter f2 = new Vampire("f2",null,null,database.randomArmor(1),database.randomWeapons(1));
+    Fighter f3 = new Hunter("f3ç",null,null,database.randomArmor(1),database.randomWeapons(1));
 @BeforeEach
     public void setUp(){
 
@@ -264,6 +264,11 @@ public class DatabaseTest {
 
     @Test
     void testAddArmor() {
+    database.addFighter(p1,f1);
+    int prevlength = p1.getFighter().getMyArmor().size();
+    database.addArmor(o1,p1,17);
+    assertTrue(prevlength+1 == p1.getFighter().getMyArmor().size());
+    assertTrue( p1.getFighter().getMyArmor().get(prevlength).equals(database.getLoader().getItemManager().getCollection("ArmorMap").get("17")));
     }
 
     @Test
