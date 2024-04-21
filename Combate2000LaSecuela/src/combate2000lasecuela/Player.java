@@ -47,6 +47,7 @@ public class Player extends User {
     }
 
     public void deleteFighter() {fighter = null;}
+
     public Challenge challengePlayer(Player challenged, int gold) {
                 return new Challenge(this, challenged, gold);
     }
@@ -63,13 +64,16 @@ public class Player extends User {
         }
 
     }
+
     public void addPendingChallenge(Challenge challenge){
         this.getFighter().getPendingChallenges().addChallenge(challenge);
 
     }
+
     public void deletePendingChallenge(){
         this.getFighter().getPendingChallenges().deleteChallenge();
     }
+
 
 //-----------GETTERS Y SETTERS
     public int getVictories() {return victories;}
