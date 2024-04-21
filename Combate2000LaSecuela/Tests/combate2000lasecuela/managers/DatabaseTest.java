@@ -169,25 +169,36 @@ public class DatabaseTest {
 
     }
 
+ 
     @Test
-    void testRandomMinions() {
-
+    void testRandomMinion(){
+        LinkedList<Minion> resultado = database.randomMinions(0,true,false,0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object esclavo = resultado.get(0);
+        assertTrue(esclavo instanceof Minion);
     }
-
     @Test
-    void testRandomMinionDemon() {
+    void testRandomArmor(){
+        LinkedList<Armor> resultado = database.randomArmor(0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object armor = resultado.get(0);
+        assertTrue(armor instanceof Armor);
     }
-
     @Test
-    void testGetTFighter() {
-    }
-
-    @Test
-    void testRandomWeapons() {
-    }
-
-    @Test
-    void testRandomArmor() {
+    void testRandomWeapon(){
+        LinkedList<Weapon> resultado = database.randomWeapons(0);
+        // es imposible buscar igualdades por motivos más que obvios
+        //para ver que funciona basta con ver que no hay nulos
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        Object weapon = resultado.get(0);
+        assertTrue(weapon instanceof Weapon);
     }
 
     @Test
