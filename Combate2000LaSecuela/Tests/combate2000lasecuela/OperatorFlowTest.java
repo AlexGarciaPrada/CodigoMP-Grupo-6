@@ -24,6 +24,7 @@ public class OperatorFlowTest {
         database.addOperator(operatorTester);
     }
 
+
     @Test
     void testOperatorMachine(){
     }
@@ -138,12 +139,16 @@ public class OperatorFlowTest {
     public void testEditWeaponDelete() {
         Database database = new Database();
         Operator operator = new Operator("op","00","op");
-
-
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minions = new LinkedList<>();
         LinkedList<Weapon> weapons = new LinkedList<>();
         LinkedList<Armor> armor = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armadura = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon arma = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+        minions.add(minion);
+        armor.add(armadura);
+        weapons.add(arma);
         Weapon weapon1 = new Weapon("1; HACHA ROMA PEQUEÑA; 1; 1;");
         weapons.add(weapon1);
 
