@@ -107,7 +107,7 @@ public class Loader implements Serializable {
     // ------------------------ TFIGHTER
     private void readTFighterFile(String line) {
         String [] parts = line.split(";");
-        tFighterManager.addElement("TFighterMap", parts[0], new TFighter(line));
+        tFighterManager.addElement("TFighterMap", parts[0].trim(), new TFighter(line));
     }
 
     public ItemManager getItemManager() {

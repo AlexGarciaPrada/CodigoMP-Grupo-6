@@ -33,21 +33,25 @@ public class Database {
         player.deleteFighter();
         updateUsers();
     }
+    public void addPendingChallenge(Player player,Challenge challenge){
+        player.addPendingChallenge(challenge);
+        updateUsers();
+    }
+    public void deletePendingChallenge(Player player){
+        player.deletePendingChallenge();
+        updateUsers();
+    }
 
-    public void updateUsers() {
+    private void updateUsers() {
         usermanager.saveCollection("User");
     }
 
-    public void updateChallenges() {
+    private void updateChallenges() {
         challengeManager.saveCollection("Challenge");
     }
 
-    public void updateCombats() {
+    private void updateCombats() {
         combatregister.saveCollection("Combat");
-    }
-    public void addPendingChallenge(Player challenged, Challenge challenge) {
-        challenged.addPendingChallenge(challenge);
-        updateUsers();
     }
 
     public void addPlayer(Player player) {

@@ -56,26 +56,16 @@ public class DatabaseTest {
         assertNull(p1.getFighter());
     }
 
-    @Test
-    void testUpdateUsers() {
 
-
-    }
-
-    @Test
-    void testUpdateChallenges() {
-
-    }
-
-    @Test
-    void testUpdateCombats() {
-    }
 
     @Test
     void testAddPendingChallenge() {
 
     }
+    @Test
+    void testDeletePendingChallenge() {
 
+    }
     @Test
     void testAddPlayer() {
         assertTrue(database.isAPlayer("A"));
