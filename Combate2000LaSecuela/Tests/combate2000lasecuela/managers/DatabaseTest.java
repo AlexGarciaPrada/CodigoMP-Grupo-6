@@ -308,52 +308,148 @@ public class DatabaseTest {
 
     @Test
     void testDeleteArmor() {
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
+        int prevlength = p1.getFighter().getMyArmor().size();
+        database.addArmor(o1,p1,12);
+        int length = prevlength+1;
+        assertTrue(length == p1.getFighter().getMyArmor().size());
+        database.deleteArmor(o1,p1,1);
+        assertTrue(prevlength==p1.getFighter().getMyArmor().size());
+
     }
 
     @Test
     void testDeleteWeapon() {
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
+        int prevlength = p1.getFighter().getMyWeapon().size();
+        database.addWeapon(o1,p1,12);
+        int length = prevlength+1;
+        assertTrue(length == p1.getFighter().getMyWeapon().size());
+        database.deleteWeapon(o1,p1,1);
+        assertTrue(prevlength==p1.getFighter().getMyWeapon().size());
     }
 
     @Test
     void testAddWeapon() {
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
+        int prevlength = p1.getFighter().getMyWeapon().size();
+        database.addWeapon(o1,p1,28);
+        assertTrue(prevlength+1 == p1.getFighter().getMyWeapon().size());
+        assertTrue( p1.getFighter().getMyWeapon().get(prevlength).equals(database.getLoader().getItemManager().getCollection("WeaponMap").get("28")));
+
     }
 
     @Test
     void testAddArmor() {
-    database.addFighter(p1,f1);
-    int prevlength = p1.getFighter().getMyArmor().size();
-    database.addArmor(o1,p1,17);
-    assertTrue(prevlength+1 == p1.getFighter().getMyArmor().size());
-    assertTrue( p1.getFighter().getMyArmor().get(prevlength).equals(database.getLoader().getItemManager().getCollection("ArmorMap").get("17")));
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
+        int prevlength = p1.getFighter().getMyArmor().size();
+        database.addArmor(o1,p1,28);
+        assertTrue(prevlength+1 == p1.getFighter().getMyArmor().size());
+        assertTrue( p1.getFighter().getMyArmor().get(prevlength).equals(database.getLoader().getItemManager().getCollection("ArmorMap").get("28")));
     }
 
     @Test
     void testDeleteMinion() {
-        database.addFighter(p1,f1);
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
         int prevlength = p1.getFighter().getMyMinions().size();
         database.addMinion(o1,p1,34);
         int length = prevlength+1;
         assertTrue(length == p1.getFighter().getMyMinions().size());
-        LinkedList<Minion> allList = p1.getFighter().getAllMinionsList(p1.getFighter().getMyMinions());
-        int i = 0;
-        for (Minion minion: allList) {
-            if (minion.getId().equals("34")) {
-                database.deleteMinion(o1,p1,i);
-            }
-            i++;
-        }
+        database.deleteMinion(o1,p1,1);
         assertTrue(prevlength==p1.getFighter().getMyMinions().size());
-        //assertFalse( p1.getFighter().getMyMinions().get(prevlength-1).equals(database.getLoader().getMinionManager().getCollection("MinionMap").get("34")));
-
     }
 
     @Test
     void testAddMinion() {
-    database.addFighter(p1,f1);
-    int prevlength = p1.getFighter().getMyMinions().size();
-    database.addMinion(o1,p1,34);
-    assertTrue(prevlength+1 == p1.getFighter().getMyMinions().size());
-    assertTrue( p1.getFighter().getMyMinions().get(prevlength).equals(database.getLoader().getMinionManager().getCollection("MinionMap").get("34")));
+        //crear armaduras
+        LinkedList<Armor> armors = new LinkedList<>();
+        Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
+        armors.add(armor);
+        //crear armas
+        LinkedList<Weapon> weapons = new LinkedList<>();
+        Weapon weapon = new Weapon("9; HACHA ROMA GIGANTE; 1; 2;");
+        weapons.add(weapon);
+        //crear minions
+        LinkedList<Minion> minions = new LinkedList<>();
+        Ghoul ghoultest = new Ghoul("2; MOROK; GHOUL; 4; 2;");
+        minions.add(ghoultest);
+        //crear fighter
+        Fighter fighter = new Vampire("dracula", null, minions,armors, weapons);
+        database.addFighter(p1,fighter);
+        int prevlength = p1.getFighter().getMyMinions().size();
+        database.addMinion(o1,p1,34);
+        assertTrue(prevlength+1 == p1.getFighter().getMyMinions().size());
+        assertTrue( p1.getFighter().getMyMinions().get(prevlength).equals(database.getLoader().getMinionManager().getCollection("MinionMap").get("34")));
     }
 
     @Test
