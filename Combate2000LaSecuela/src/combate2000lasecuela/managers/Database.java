@@ -208,11 +208,11 @@ public class Database {
         return myArmor;
     }
 
-    public String[] getTFighterText(ArrayList<TFighter> tFightersList) {
+    public String[] getTFighterText() {
         ArrayList<String> text = new ArrayList<>();
         text.add(createFighter);
         int i = 1;
-        for (TFighter tfighter : tFightersList) {
+        for (TFighter tfighter : managerToListTFighter()) {
             text.add(i + ". " + tfighter.getName() + " Esbirros: +" + tfighter.getMinionLuck() + " Armaduras: +" + tfighter.getArmorLuck() + " Armas: +" + tfighter.getWeaponLuck());
             i++;
         }
@@ -220,7 +220,7 @@ public class Database {
         return text.toArray(new String[text.size()]);
     }
 
-    public ArrayList<TFighter> managerToListTFighter() {
+    private ArrayList<TFighter> managerToListTFighter() {
         ArrayList<TFighter> result = new ArrayList<>();
         Map<String, TFighter> tFighterManager = loader.gettFighterManager().getCollection("TFighterMap");
         for (TFighter tFighter : tFighterManager.values()) {

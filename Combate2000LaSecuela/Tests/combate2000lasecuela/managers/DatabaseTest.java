@@ -203,10 +203,10 @@ public class DatabaseTest {
 
     @Test
     void testGetTFighterText() {
-    }
+    String [] text = database.getTFighterText();
+    assertTrue(text.length==12);
+    assertTrue(text[5].equals("5. DESGRACIADO Esbirros: +0 Armaduras: +0 Armas: +0"));
 
-    @Test
-    void testManagerToListTFighter() {
     }
 
     @Test
