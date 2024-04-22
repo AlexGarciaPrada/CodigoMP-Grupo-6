@@ -23,7 +23,7 @@ public class DatabaseTest {
     Operator o1 = new Operator("a","a","a");
     Operator o2 = new Operator("b","b","b");
     Operator o3 = new Operator("c","c","c");
-    Fighter f1 = new Lycanthrope("f1",null,database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
+    Fighter f1 = new Lycanthrope("f1",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("1"),database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
     Fighter f2 = new Vampire("f2",null,null,database.randomArmor(1),database.randomWeapons(1));
     Fighter f3 = new Hunter("f3ç",null,null,database.randomArmor(1),database.randomWeapons(1));
 @BeforeEach
@@ -210,55 +210,110 @@ public class DatabaseTest {
     }
 
     @Test
-    void testGetStrengths() {
+    void testGetChallenge() throws InterruptedException {
+        database.addFighter(p1,f1);
+        database.addFighter(p2,f2);
+        Challenge challenge1 =new Challenge(p1,p2,23);
+        Challenge challenge2 = new Challenge(p1,p2,26);
+        database.addChallenge(challenge1);
+        Thread.sleep(1*1000);
+        assertTrue(database.getChallenge().equals(challenge1));
+        database.addChallenge(challenge2);
+        assertFalse(database.getChallenge().equals(challenge2));
+        database.eraseChallenge();
+        assertTrue(database.getChallenge().equals(challenge2));
     }
 
     @Test
-    void testGetWeaknesses() {
+    void testEraseChallenge() throws InterruptedException {
+        database.addFighter(p1,f1);
+        database.addFighter(p2,f2);
+        database.addChallenge(new Challenge(p1,p2,23));
+        Thread.sleep(1*1000);
+        database.addChallenge(new Challenge(p1,p2,26));
+        Thread.sleep(1*1000);
+        database.addChallenge(new Challenge(p1,p2,25));
+        Thread.sleep(1*1000);
+        database.addChallenge(new Challenge(p1,p2,24));
+        database.eraseChallenge();
+        assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==3);
+        database.eraseChallenge();
+        assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==2);
+        database.eraseChallenge();
+        assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==1);
+        database.eraseChallenge();
+        assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==0);
+
     }
 
     @Test
-    void testGetChallenge() {
-    }
-
-    @Test
-    void testEraseChallenge() {
-    }
-
-    @Test
-    void testAddChallenge() {
+    void testAddChallenge() throws InterruptedException {
+    database.addFighter(p1,f1);
+    database.addFighter(p2,f2);
+    assertTrue(database.isEmptyChallengeManager());
+    database.addChallenge(new Challenge(p1,p2,23));
+        Thread.sleep(1*1000);
+    assertFalse(database.isEmptyChallengeManager());
+        database.addChallenge(new Challenge(p1,p2,26));
+        Thread.sleep(1*1000);
+        database.addChallenge(new Challenge(p1,p2,25));
+        Thread.sleep(1*1000);
+        database.addChallenge(new Challenge(p1,p2,24));
+        ///Como la clave es la fecha hayq ue dar un segundo entre cada challenge
+    assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==4);
     }
 
     @Test
     void testIsEmptyChallengeManager() {
+    database.addFighter(p1,f1);
+    database.addFighter(p2,f2);
+    assertTrue(database.isEmptyChallengeManager());
+    database.addChallenge(new Challenge(p1,p2,23));
+    assertFalse(database.isEmptyChallengeManager());
     }
 
-    @Test
-    void testGenerateCombatHistoryText() {
-    }
-
-    @Test
-    void testCombatHistoryModifyer() {
-    }
 
     @Test
     void testGetCombatHistory() {
+    database.addFighter(p1,f1);
+    assertNull(database.getCombatHistory(p1));
+    database.addFighter(p2,f2);
+    database.addCombat(p1.Fight(p2,0));
+    assertNotNull(database.getCombatHistory(p1));
     }
 
-    @Test
-    void testIsCombatRegisterEmpty() {
-    }
+
 
     @Test
     void testChangeFighterName() {
+    database.addFighter(p1,f1);
+    assertTrue(p1.getFighter().getName().equals("f1"));
+    database.changeFighterName(p1,"Alex");
+    assertTrue(p1.getFighter().getName().equals("Alex"));
+
     }
 
     @Test
     void testChangeFighterRace() {
+    database.addFighter(p1,f1);
+    assertTrue(p1.getFighter() instanceof Lycanthrope);
+    database.changeFighterRace(p1,1);
+    assertTrue(p1.getFighter() instanceof Vampire);
+    database.changeFighterRace(p1,3);
+    assertTrue(p1.getFighter() instanceof Hunter);
+    database.changeFighterRace(p1,2);
+    assertTrue(p1.getFighter() instanceof Lycanthrope);
+
     }
 
     @Test
     void testChangeFighterType() {
+    database.addFighter(p1,f1);
+    assertTrue(f1.getType().equals(database.getLoader().gettFighterManager().getCollection("TFighterMap").get("1")));
+    database.changeFighterType(p1,database.getLoader().gettFighterManager().getCollection("TFighterMap").get("2"));
+    assertTrue(f1.getType().equals(database.getLoader().gettFighterManager().getCollection("TFighterMap").get("2")));
+    database.changeFighterType(p1,database.getLoader().gettFighterManager().getCollection("TFighterMap").get("3"));
+    assertTrue(f1.getType().equals(database.getLoader().gettFighterManager().getCollection("TFighterMap").get("3")));
     }
 
     @Test

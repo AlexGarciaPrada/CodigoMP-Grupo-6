@@ -171,9 +171,6 @@ public class Database {
             return randomMinions(0, false, false,tope);
     }
 
-    public TFighter getTFighter() {
-        return null;
-    }
 
     public LinkedList<Weapon> randomWeapons(int suerte) {
         int handicap= handicapItem;
@@ -232,35 +229,6 @@ public class Database {
         return result;
     }
 
-    public LinkedList<Strength> getStrengths() {
-        LinkedList<Strength> MyStrength = new LinkedList<>();
-        Map<String, Modifier> modifierMap = loader.getModifierManager().getElements().get("StrengthMap");
-
-        for (String key : modifierMap.keySet()) {
-            Modifier modifier = modifierMap.get(key);
-
-            if (modifier instanceof Strength) {
-                Strength strength = (Strength) modifier;
-                MyStrength.add(strength);
-            }
-        }
-        return MyStrength;
-    }
-
-    public LinkedList<Weakness> getWeaknesses() {
-        LinkedList<Weakness> MyWeakness = new LinkedList<>();
-        Map<String, Modifier> modifierMap = loader.getModifierManager().getElements().get("WeaknessMap");
-
-        for (String key : modifierMap.keySet()) {
-            Modifier modifier = modifierMap.get(key);
-
-            if (modifier instanceof Weakness) {
-                Weakness weakness = (Weakness) modifier;
-                MyWeakness.add(weakness);
-            }
-        }
-        return MyWeakness;
-    }
 
     //He tenido que hacer una pseudocola, es decir, una pepsi.
     public Challenge getChallenge() {
@@ -290,11 +258,11 @@ public class Database {
         return (challengeManager.getCollection("ChallengeMap").isEmpty());
     }
 
-    public String generateCombatHistoryText(Combat combat, Player player){
+    private String generateCombatHistoryText(Combat combat, Player player){
         return "Fecha de combate: " + combat.getDate()+ " Resultado de combate: " + Arrays.toString(combat.getResult())+ " Oro ganado/perdido: " + combatHistoryModifyer(combat,player) + Integer.toString(combat.getGoldGained());
     }
 
-    public String combatHistoryModifyer(Combat combat, Player player){
+    private String combatHistoryModifyer(Combat combat, Player player){
         if (combat.getLoser().equals(player.getFighter())){
             return "";
         }
@@ -326,21 +294,21 @@ public class Database {
         updateUsers();
     }
     public void changeFighterRace(Player player, int option){
-        Player aux = (Player) usermanager.getCollection("Player").get(player.getNick());
-        Fighter fighter = aux.getFighter();
+        Fighter fighter = player.getFighter();
+        Fighter fighter2=null;
         switch (option){
             case 1:
-                fighter = new Vampire(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter2 = new Vampire(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
             case 2:
-                fighter = new Lycanthrope(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter2 = new Lycanthrope(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
             case 3:
-                fighter = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter2 = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
         }
         fighter.setGold(player.getFighter().getGold());
-        player.setFighter(fighter);
+        player.setFighter(fighter2);
         updateUsers();
     }
     public void changeFighterType(Player player, TFighter type){
