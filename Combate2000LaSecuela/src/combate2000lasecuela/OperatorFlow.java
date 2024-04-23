@@ -164,9 +164,8 @@ public class  OperatorFlow {
                          database.changeFighterRace(player,race);
                         break;
                     case 3: //Tipo
-                        ArrayList<TFighter> TFighters = database.managerToListTFighter();
-                        int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length-1);
-                        TFighter type = TFighters.get(opttype-1);
+                        int opttype =messageManager.showReadableBox(database.getTFighterText(),database.getTFighterText().length-1);
+                        TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(opttype-1);
                         database.changeFighterType(player,type);
                         break;
                     case 4: //Salir

@@ -285,7 +285,7 @@ public abstract class Fighter implements Serializable {
     public void equipDefaultArmor(){
         int i=0;
         Armor aux = null;
-        while ((aux==null)&&(i<=myArmor.toArray().length)) {
+        while ((aux==null)&&(i<myArmor.toArray().length)) {
             aux = myArmor.get(i);
             i++;
         }
@@ -300,7 +300,7 @@ public abstract class Fighter implements Serializable {
     public void equipDefaultWeapon(){
         int i=0;
         Weapon aux = null;
-        while ((aux==null)&&(i<=myWeapon.toArray().length)) {
+        while ((aux==null)&&(i<myWeapon.toArray().length)) {
             aux = myWeapon.get(i);
             i++;
         }

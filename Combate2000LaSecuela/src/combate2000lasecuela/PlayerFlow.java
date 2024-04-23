@@ -123,8 +123,7 @@ public class PlayerFlow extends Gameflow {
             challenge.getChallenger().rejectingChallenge(-gold);
             player.rejectingChallenge(gold);
         }
-        player.deletePendingChallenge();
-        database.updateUsers();
+        database.deletePendingChallenge(player);
         if (!(player.hasPendingChallenges())) {
             setChallengemode(false);
         }
@@ -221,9 +220,8 @@ public class PlayerFlow extends Gameflow {
         }else{
             int option = messageManager.showReadableBox(fighterTypesText,3);
             String name =messageManager.showReadString(nameText);
-            ArrayList<TFighter> TFighters = database.managerToListTFighter();
-            int opttype =messageManager.showReadableBox(database.getTFighterText(TFighters),database.getTFighterText(TFighters).length-1);
-            TFighter type = TFighters.get(opttype-1);
+            int opttype =messageManager.showReadableBox(database.getTFighterText(),database.getTFighterText().length-1);
+            TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(Integer.toString(opttype));
             switch(option){
                 case 1:     //Vampiro
                     LinkedList<Minion> aux = database.randomMinions(type.getMinionLuck(),true, true,0);
