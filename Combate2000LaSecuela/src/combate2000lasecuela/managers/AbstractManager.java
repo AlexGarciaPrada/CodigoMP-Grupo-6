@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static combate2000lasecuela.Constants.serRoute;
+import static combate2000lasecuela.Constants.serRouteTests;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
     protected Map<String,Map<String,T>> elements;
+    private Enviroment enviroment;
 
     public AbstractManager() {};
 
@@ -41,7 +43,8 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
         }
     }
     public void saveCollection(String className){
-        String filePath = String.format(serRoute+"%s.ser", className);
+        String changingRoute  = Enviroment.getTesting() ? serRouteTests : serRoute;
+        String filePath = String.format(changingRoute + "%s.ser", className);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(elements);        // Serializa el HashMap llamado 'users'
         } catch (IOException e) {
@@ -51,7 +54,8 @@ public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (cha
 
     public void loadElement(String fileName) {
         try {
-            String route = String.format(serRoute+"%s.ser", fileName);
+            String changingRoute  = Enviroment.getTesting() ? serRouteTests : serRoute;
+            String route = String.format(changingRoute+"%s.ser", fileName);
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(route));
             HashMap element = (HashMap) ois.readObject();
             ois.close();
