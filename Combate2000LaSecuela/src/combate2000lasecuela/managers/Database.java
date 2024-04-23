@@ -299,20 +299,21 @@ public class Database {
     }
     public void changeFighterRace(Player player, int option){
         Fighter fighter = player.getFighter();
-        Fighter fighter2=null;
         switch (option){
             case 1:
-                fighter2 = new Vampire(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter = new Vampire(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
             case 2:
-                fighter2 = new Lycanthrope(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter = new Lycanthrope(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
                 break;
             case 3:
-                fighter2 = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                fighter = new Hunter(fighter.getName(), fighter.getType(),fighter.getMyMinions(),fighter.getMyArmor(),fighter.getMyWeapon());
+                break;
+            default:
                 break;
         }
         fighter.setGold(player.getFighter().getGold());
-        player.setFighter(fighter2);
+        player.setFighter(fighter);
         updateUsers();
     }
     public void changeFighterType(Player player, TFighter type){

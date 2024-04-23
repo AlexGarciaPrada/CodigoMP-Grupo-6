@@ -158,4 +158,198 @@ public class OperatorFlowTest {
         assertTrue(database.deleteWeapon(operator,auxPlayer,1));
     }
 
+    @Test
+    public void testEditWeaponAdd() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+        operator.addWeapon(auxPlayer,weapon);
+
+        assertTrue(database.addWeapon(operator,auxPlayer,1));
+    }
+
+    @Test
+    void testEditArmorDelete() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+
+        assertTrue(database.deleteArmor(operator,auxPlayer,1));
+    }
+
+    @Test
+    void testEditArmorAdd() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+        operator.addArmor(auxPlayer,armor);
+
+        assertTrue(database.addArmor(operator,auxPlayer,1));
+    }
+
+    @Test
+    void testEditMinionDelete() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+
+        assertTrue(database.deleteMinion(operator,auxPlayer,1));
+    }
+
+    @Test
+    void testEditMinionAdd() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+        operator.addMinion(auxPlayer,minion);
+
+        assertTrue(database.addMinion(operator,auxPlayer,1));
+    }
+
+    @Test
+    void testEditFighterName() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+
+        database.changeFighterName(auxPlayer,"nombreCambiado");
+
+        assertEquals(fighter1.getName(),"nombreCambiado");
+    }
+
+    @Test
+    void testEditFighterRace() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+
+        database.changeFighterRace(auxPlayer,1);
+
+        assertTrue(fighter1 instanceof Lycanthrope);
+    }
+
+    @Test
+    void testEditFighterType() {
+        Database database = new Database();
+        Operator operator = new Operator("op","00","op");
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Player auxPlayer = (Player) database.getUser("pepe");
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayer,fighter1);
+        TFighter typeTest = new TFighter("9;PREDEFINIDO;1;1;1");
+
+        database.changeFighterType(auxPlayer,typeTest);
+
+        assertEquals(fighter1.getType(), typeTest);
+
+    }
 }
