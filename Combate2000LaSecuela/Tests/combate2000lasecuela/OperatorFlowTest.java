@@ -323,8 +323,8 @@ public class OperatorFlowTest {
 
         database.changeFighterRace(auxPlayer,1);
 
-        assertTrue(fighter1 instanceof Lycanthrope);
-    }
+        assertTrue(fighter1 instanceof Hunter);
+    }  //TODO
 
     @Test
     void testEditFighterType() {

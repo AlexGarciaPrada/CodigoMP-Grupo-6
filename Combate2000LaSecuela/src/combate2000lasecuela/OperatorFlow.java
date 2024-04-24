@@ -141,6 +141,8 @@ public class  OperatorFlow {
         }
         setVchallenge(false);
     }
+
+    // ------------------------ EDIT FIGHTER CHARACTERISTICS
     private static void editFighter(Database database, MessageManager messageManager){
         setEditfighter(false);
         String nick = messageManager.showEditFighterMenu();
