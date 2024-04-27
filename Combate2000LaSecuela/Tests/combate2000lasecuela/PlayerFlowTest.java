@@ -20,7 +20,6 @@ class PlayerFlowTest {
         Operator operatorTester = new Operator("op", "00", "op");
         database.addOperator(operatorTester);
     }
-
     @Test
     void testPlayerLoginCreateFighter() {
         String data = "1";     // data is the input that the user will give
@@ -28,7 +27,6 @@ class PlayerFlowTest {
         PlayerFlow.setCreatefighter(true);
         assertEquals(Integer.parseInt(data) == 1, PlayerFlow.isCreatefighter());
     }
-
     @Test
     void testEraseFighter() {
         String data = "2";
@@ -36,7 +34,6 @@ class PlayerFlowTest {
         PlayerFlow.setErasefighter(true);
         assertEquals(Integer.parseInt(data) == 2, PlayerFlow.isErasefighter());
     }
-
     @Test
     void testEquipAdmin() {
         String data = "3";
@@ -44,15 +41,13 @@ class PlayerFlowTest {
         PlayerFlow.setEquipadmin(true);
         assertEquals(Integer.parseInt(data) == 3, PlayerFlow.isEquipadmin());
     }
-
     @Test
-    void testChallengePlayer() {
+    void testChallengePlayerLogin() {
         String data = "4";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setChallengeplayer(true);
         assertEquals(Integer.parseInt(data) == 4, PlayerFlow.isChallengeplayer());
     }
-
     @Test
     void testGoldRegister() {
         String data = "5";
@@ -60,7 +55,6 @@ class PlayerFlowTest {
         PlayerFlow.setGoldregister(true);
         assertEquals(Integer.parseInt(data) == 5, PlayerFlow.isGoldregister());
     }
-
     @Test
     void testRanking() {
         String data = "6";
@@ -68,7 +62,6 @@ class PlayerFlowTest {
         PlayerFlow.setRanking(true);
         assertEquals(Integer.parseInt(data) == 6, PlayerFlow.isRanking());
     }
-
     @Test
     void testFighterState() {
         String data = "7";
@@ -76,7 +69,6 @@ class PlayerFlowTest {
         PlayerFlow.setFighterstate(true);
         assertEquals(Integer.parseInt(data) == 7, PlayerFlow.isFighterstate());
     }
-
     @Test
     void testLogin() {
         String data = "8";
@@ -84,7 +76,6 @@ class PlayerFlowTest {
         PlayerFlow.setPlayerlogin(false);
         assertEquals(Integer.parseInt(data) == 8, PlayerFlow.isPlayerlogin());
     }
-
     @Test
     void testErasePlayer() {
         String data = "9";
@@ -92,8 +83,6 @@ class PlayerFlowTest {
         PlayerFlow.setEraseplayer(true);
         assertEquals(Integer.parseInt(data) == 9, PlayerFlow.isEraseplayer());
     }
-
-
     @Test
     void testChallengeModeIfAccepted() {
         Player player = new Player("pepe", "00", "pepe");
@@ -125,7 +114,6 @@ class PlayerFlowTest {
         assertEquals(110, combat.getWinner().getGold());
         assertEquals(90, combat.getLoser().getGold());
     }
-
     @Test
     void testChallengeModeIfRejected() {
         Player player = new Player("pepe", "00", "pepe");
@@ -149,5 +137,30 @@ class PlayerFlowTest {
         player2.rejectingChallenge(10);
 
         assertEquals(challenge.getChallenger().getFighter().getGold(), 99);
+    }
+    @Test
+    void testChallengePlayer() {
+        Player player = new Player("pepe", "00", "pepe");
+        Player player2 = new Player("juan", "00", "juan");
+        Database database = new Database();
+        database.addPlayer(player);
+        database.addPlayer(player2);
+
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+
+        Fighter fighter1 = new Hunter("fighter1", type,minionList,armorList,weaponList);
+        Player challenged = (Player) database.getUser(player2.getName());
+
+        player.setFighter(fighter1);
+        database.reducePendingGold(10,player);
+        Challenge challenge = player.challengePlayer(challenged,10);
+        database.addChallenge(challenge);
+
+        assertEquals(challenge.getChallenger(), player);
+        assertEquals(challenge.getChallenged(), challenged);
+        assertEquals(challenge.getGold(), 10);
     }
 }

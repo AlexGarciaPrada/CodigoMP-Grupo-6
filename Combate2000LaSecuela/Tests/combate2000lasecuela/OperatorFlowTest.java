@@ -111,7 +111,6 @@ public class OperatorFlowTest {
         assertNull(database.getUser("op"));
     }
 
-
     @Test
     void testValidateChallenge() {
         Database database = new Database();
