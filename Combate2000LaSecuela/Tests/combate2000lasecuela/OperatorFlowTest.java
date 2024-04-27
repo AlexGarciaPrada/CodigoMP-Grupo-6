@@ -1,8 +1,6 @@
 package combate2000lasecuela;
 
 import combate2000lasecuela.CosasDeLuchador.*;
-import combate2000lasecuela.OperatorFlow;
-import combate2000lasecuela.Player;
 import combate2000lasecuela.managers.*;
 import org.junit.jupiter.api.*;
 import java.util.*;

@@ -15,7 +15,7 @@ public class Combat implements Saveable {
     private final String [] result;
     private boolean desafiadoEsGanador;
 
-    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained,boolean desafiadoEsGanador) {
+    public Combat(Fighter challenger, Fighter challenged, int rounds, int goldGained, boolean desafiadoEsGanador) {
         this.challenger = challenger;
         this.challenged = challenged;
         this.rounds = rounds;
@@ -45,6 +45,10 @@ public class Combat implements Saveable {
 
     }
 
+    public int getRounds() {
+        return rounds;
+    }
+
     public Date getDate() {return date;}
 
     public int getGoldGained() {return goldGained;}
@@ -68,7 +72,6 @@ public class Combat implements Saveable {
     public String [] getResult() {
         return result;
     }
-
     @Override
     public String getId() {
         return null;

@@ -99,7 +99,7 @@ public class PlayerFlow extends Gameflow {
         String [] challengeData= challenge.getChallengeData();
         int option = messageManager.showReadableBox(challengeData,2);
         if (option ==1){ //Desafio aceptado
-            Combat combat = player.Fight(challenge.getChallenger(),gold);  //TODO
+            Combat combat = player.Fight(challenge.getChallenger(),gold);
             messageManager.showContent(player.getFighter().publishText());
             messageManager.showContent(combat.result());
             //Para que lo reciba el otro jugador
