@@ -46,8 +46,10 @@ public class HunterTest {
         // Hacer un ajuste con pA < pD
         hunter.adjustAbility(2, 5);
         assertEquals(2, hunter.getWill());
+        hunter.setWill(3);
         // Hacer un ajuste con pA >= pD
         hunter.adjustAbility(5, 2);
-        assertEquals(2, hunter.getWill());
+        assertEquals(3, hunter.getWill());
+        hunter.setWill(3);
     }
 }
