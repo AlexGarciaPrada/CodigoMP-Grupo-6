@@ -33,10 +33,7 @@ public class Database {
         player.deleteFighter();
         updateUsers();
     }
-    public void addPendingChallenge(Player player,Challenge challenge){
-        player.addPendingChallenge(challenge);
-        updateUsers();
-    }
+
     public void deletePendingChallenge(Player player){
         player.deletePendingChallenge();
         updateUsers();

@@ -26,7 +26,18 @@ public class DatabaseTest {
     Fighter f1 = new Lycanthrope("f1",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("1"),database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
     Fighter f2 = new Vampire("f2",null,null,database.randomArmor(1),database.randomWeapons(1));
     Fighter f3 = new Hunter("f3ç",null,null,database.randomArmor(1),database.randomWeapons(1));
-@BeforeEach
+    @BeforeAll
+    static void testSetUpSerialized() {
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
+        Database database = new Database();
+        Player playerTester = new Player("pepe","00","pepe");
+        database.addPlayer(playerTester);
+        Operator operatorTester = new Operator("op","00","op");
+        database.addOperator(operatorTester);
+    }
+
+    @BeforeEach
     public void setUp(){
 
     database.addPlayer(p1);
@@ -57,13 +68,26 @@ public class DatabaseTest {
     }
 
 
-
-    @Test
-    void testAddPendingChallenge() {
-
-    }
     @Test
     void testDeletePendingChallenge() {
+        Challenge challenge = new Challenge(p1,p2,34);
+        database.addFighter(p1,f1);
+        p1.addPendingChallenge(challenge);
+        assertTrue(p1.hasPendingChallenges());
+        database.deletePendingChallenge(p1);
+        assertFalse(p1.hasPendingChallenges());
+        p1.addPendingChallenge(challenge);
+        p1.addPendingChallenge(challenge);
+        p1.addPendingChallenge(challenge);
+        p1.addPendingChallenge(challenge);
+        database.deletePendingChallenge(p1);
+        assertTrue(p1.hasPendingChallenges());
+        database.deletePendingChallenge(p1);
+        database.deletePendingChallenge(p1);
+        database.deletePendingChallenge(p1);
+        assertFalse(p1.hasPendingChallenges());
+
+
 
     }
     @Test
