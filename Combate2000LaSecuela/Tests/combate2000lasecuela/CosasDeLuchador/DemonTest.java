@@ -1,10 +1,16 @@
 package combate2000lasecuela.CosasDeLuchador;
+import combate2000lasecuela.managers.Enviroment;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.LinkedList;
 
 public class DemonTest {
-
+    @BeforeAll
+    static void setUp() {
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
+    }
     @Test
     public void testGetDemonListText_NoMinions() {
         String linea = "9; ASMODEO; DEMONIO; Pacto de Sombra; 1;";
