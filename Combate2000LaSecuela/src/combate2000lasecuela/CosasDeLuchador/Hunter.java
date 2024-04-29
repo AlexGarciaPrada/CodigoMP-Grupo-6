@@ -18,10 +18,8 @@ public class Hunter extends Fighter implements Serializable {
 
     @Override
     public void adjustAbility(int pA, int pD) {
-        if (pA<pD){
-            if (getWill()>0) {
-                setWill(getWill() - 1);
-            }
+        if ((pA<pD)&&(getWill()>0)){
+            setWill(getWill()-1);
         }
     }
 

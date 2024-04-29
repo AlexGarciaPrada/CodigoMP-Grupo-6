@@ -1,8 +1,6 @@
 package combate2000lasecuela.CosasDeLuchador;
 
 import combate2000lasecuela.Combat;
-import combate2000lasecuela.managers.Enviroment;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,11 +14,6 @@ Weapon weapon1 = new Weapon("4; HACHA ROMA PEQUEÑA; 1; 1;");
 Weapon weapon2= new Weapon("14; ESTOQUE; 2; 1;");
 Armor armadura = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
 TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
-    @BeforeAll
-    static void setUp() {
-        Enviroment enviroment = new Enviroment();
-        enviroment.setTesting(true);
-    }
     @Test
     public void testStartFighting() {
         // Creamos dos panas

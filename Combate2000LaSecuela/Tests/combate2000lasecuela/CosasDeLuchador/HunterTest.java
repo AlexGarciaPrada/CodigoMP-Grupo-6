@@ -1,7 +1,5 @@
 package combate2000lasecuela.CosasDeLuchador;
 
-import combate2000lasecuela.managers.Enviroment;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,11 +11,6 @@ public class HunterTest {
     Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
     Armor armadura = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
     Weapon arma = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
-    @BeforeAll
-    static void setUp() {
-        Enviroment enviroment = new Enviroment();
-        enviroment.setTesting(true);
-    }
     @Test
     public void testSpecialAttack() {
         LinkedList<Minion> minions = new LinkedList<>();
@@ -46,10 +39,8 @@ public class HunterTest {
         // Hacer un ajuste con pA < pD
         hunter.adjustAbility(2, 5);
         assertEquals(2, hunter.getWill());
-        hunter.setWill(3);
         // Hacer un ajuste con pA >= pD
         hunter.adjustAbility(5, 2);
-        assertEquals(3, hunter.getWill());
-        hunter.setWill(3);
+        assertEquals(2, hunter.getWill());
     }
 }

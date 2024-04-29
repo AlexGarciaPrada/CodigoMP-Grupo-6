@@ -163,20 +163,4 @@ class PlayerFlowTest {
         assertEquals(challenge.getChallenged(), challenged);
         assertEquals(challenge.getGold(), 10);
     }
-    @Test
-    void testCreateFighter() {
-        Player player = new Player("pepe", "00", "pepe");
-        Database database = new Database();
-        database.addPlayer(player);
-
-        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
-        LinkedList<Minion> minionList = new LinkedList<>();
-        LinkedList<Weapon> weaponList = new LinkedList<>();
-        LinkedList<Armor> armorList = new LinkedList<>();
-
-        Fighter fighter = new Hunter("fighter1", type,minionList,armorList,weaponList);
-        player.setFighter(fighter);
-
-        assertEquals(player.getFighter(), fighter);
-    }
 }

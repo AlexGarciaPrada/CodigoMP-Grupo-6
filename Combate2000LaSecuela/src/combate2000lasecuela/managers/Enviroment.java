@@ -11,7 +11,7 @@ public class Enviroment {
         return testing;
     }
 
-    public static void setTesting(boolean testing) {
+    public void setTesting(boolean testing) {
         Enviroment.testing = testing;
     }
 }

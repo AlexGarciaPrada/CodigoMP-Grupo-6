@@ -13,7 +13,8 @@ public class OperatorFlowTest {
 
     @BeforeAll
     static void testSetUpSerialized() {
-        Enviroment.setTesting(true);
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
         Database database = new Database();
         Player playerTester = new Player("pepe","00","pepe");
         database.addPlayer(playerTester);
@@ -300,6 +301,7 @@ public class OperatorFlowTest {
     @Test
     void testEditFighterRace() {
         Database database = new Database();
+        Operator operator = new Operator("op","00","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -312,7 +314,7 @@ public class OperatorFlowTest {
         armorList.add(armor);
         weaponList.add(weapon);
 
-        Player auxPlayer = new Player("pepe","00","pepe");
+        Player auxPlayer = (Player) database.getUser("pepe");
         Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
         database.addFighter(auxPlayer,fighter1);
 

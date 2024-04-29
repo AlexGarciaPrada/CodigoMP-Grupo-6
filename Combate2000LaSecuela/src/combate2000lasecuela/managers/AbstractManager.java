@@ -13,6 +13,7 @@ import static combate2000lasecuela.Constants.serRouteTests;
 
 public class AbstractManager <T extends Saveable>{  // T es el tipo de dato (challenges, users...)
     protected Map<String,Map<String,T>> elements;
+    private Enviroment enviroment;
 
     public AbstractManager() {};
 
