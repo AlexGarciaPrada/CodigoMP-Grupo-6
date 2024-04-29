@@ -2,13 +2,19 @@ package combate2000lasecuela.CosasDeLuchador;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import combate2000lasecuela.managers.Enviroment;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GiftTest {
 
-    @Test
+    @BeforeAll
+    static void setUp() {
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
+    } @Test
     public void testGetDamage_DefaultValue() {
         Gift gift = new Gift();
         assertEquals(2, gift.getDamage());

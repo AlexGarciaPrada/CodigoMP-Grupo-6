@@ -1,9 +1,15 @@
 package combate2000lasecuela.CosasDeLuchador;
 
+import combate2000lasecuela.managers.Enviroment;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import combate2000lasecuela.CosasDeLuchador.Weapon;
 public class WeaponTest {
+    @BeforeAll
+    static void setUp() {
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
+    }
     @Test
     void weaponTest() {
     }
