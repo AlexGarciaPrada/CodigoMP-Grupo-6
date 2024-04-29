@@ -24,28 +24,21 @@ public class DatabaseTest {
     Operator o2 = new Operator("b","b","b");
     Operator o3 = new Operator("c","c","c");
     Fighter f1 = new Lycanthrope("f1",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("1"),database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
-    Fighter f2 = new Vampire("f2",null,null,database.randomArmor(1),database.randomWeapons(1));
-    Fighter f3 = new Hunter("f3ç",null,null,database.randomArmor(1),database.randomWeapons(1));
-    @BeforeAll
-    static void testSetUpSerialized() {
-        Enviroment enviroment = new Enviroment();
-        enviroment.setTesting(true);
-        Database database = new Database();
-        Player playerTester = new Player("pepe","00","pepe");
-        database.addPlayer(playerTester);
-        Operator operatorTester = new Operator("op","00","op");
-        database.addOperator(operatorTester);
-    }
+    Fighter f2 = new Vampire("f2",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("2"),database.randomMinions(1,true,true,3),database.randomArmor(1),database.randomWeapons(1));
+
+
 
     @BeforeEach
     public void setUp(){
-
+        Enviroment enviroment = new Enviroment();
+        enviroment.setTesting(true);
     database.addPlayer(p1);
     database.addPlayer(p2);
     database.addPlayer(p3);
     database.addOperator(o1);
     database.addOperator(o2);
     database.addOperator(o3);
+
 
     }
 
@@ -55,7 +48,11 @@ public class DatabaseTest {
     database.addFighter(p1,f1);
     assertTrue(p1.getFighter().equals(f1));
     assertFalse(p1.getFighter().equals(f2));
-    assertNotNull(p1.getFighter());
+    database.addFighter(p1,f2);
+    assertFalse(p1.getFighter().equals(f2));
+    database.eraseFighter(p1);
+    database.addFighter(p1,f2);
+    assertTrue(p1.getFighter().equals(f2));
 
     }
 
@@ -65,6 +62,8 @@ public class DatabaseTest {
         assertTrue(p1.getFighter().equals(f1));
         database.eraseFighter(p1);
         assertNull(p1.getFighter());
+        database.eraseFighter(p2);
+        assertNull(p2.getFighter());
     }
 
 
