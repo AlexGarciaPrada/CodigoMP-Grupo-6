@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
     Database database = new Database();
-    Player p1 =  new Player("A","A","A");
-    Player p2 =  new Player("B","B","B");
-    Player p3 =  new Player("C","C","C");
-    Operator o1 = new Operator("a","a","a");
-    Operator o2 = new Operator("b","b","b");
-    Operator o3 = new Operator("c","c","c");
+    Player p1 =  new Player("A","passwordA","A");
+    Player p2 =  new Player("B","passwordB","B");
+    Player p3 =  new Player("C","passwordC","C");
+    Operator o1 = new Operator("a","passworda","a");
+    Operator o2 = new Operator("b","passwordb","b");
+    Operator o3 = new Operator("c","passwordc","c");
     Fighter f1 = new Lycanthrope("f1",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("1"),database.randomMinions(1,true,false,3),database.randomArmor(1),database.randomWeapons(1));
     Fighter f2 = new Vampire("f2",database.getLoader().gettFighterManager().getCollection("TFighterMap").get("2"),database.randomMinions(1,true,true,3),database.randomArmor(1),database.randomWeapons(1));
 
@@ -104,7 +104,7 @@ public class DatabaseTest {
 
     @Test
     void testAddOperator() {
-        Operator o4 = new Operator("d","d","d");
+        Operator o4 = new Operator("d","password123","d");
         database.addOperator(o4);
         assertTrue(database.getUser("d").equals(o4));
         assertFalse(database.getUser("a").equals(o4));
@@ -137,8 +137,8 @@ public class DatabaseTest {
 
     @Test
     void testIsPasswordCorrect() {
-        assertTrue((database.isPasswordCorrect("A","A"))&&(database.isPasswordCorrect("a","a")));
-        assertFalse(database.isPasswordCorrect("A","b"));
+        assertTrue((database.isPasswordCorrect("A","passwordA"))&&(database.isPasswordCorrect("a","passworda")));
+        assertFalse(database.isPasswordCorrect("A","passwordb"));
 
     }
 

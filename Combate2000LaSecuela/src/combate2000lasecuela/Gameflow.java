@@ -126,7 +126,7 @@ public class Gameflow  {
                 String password = messageManager.showReadString(passwordText);
                 if (password.equals("SALIR")){
                     return;
-                }else{
+                }else if (password.length() >= 8 && password.length() <= 12){
                     String confirmpassword =messageManager.showReadString(confirmPasswordText);
                         if (confirmpassword.equals("SALIR")){
                             return;
@@ -142,6 +142,8 @@ public class Gameflow  {
                             messageManager.showContent(notCoincidencePasswordText);
                             }
                         }
+                } else {
+                    messageManager.showContent(notValidPasswordText);
                 }
             }
     }

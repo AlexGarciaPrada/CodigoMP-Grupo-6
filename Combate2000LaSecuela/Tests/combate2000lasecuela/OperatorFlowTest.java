@@ -16,9 +16,9 @@ public class OperatorFlowTest {
         Enviroment enviroment = new Enviroment();
         enviroment.setTesting(true);
         Database database = new Database();
-        Player playerTester = new Player("pepe","00","pepe");
+        Player playerTester = new Player("pepe","password123","pepe");
         database.addPlayer(playerTester);
-        Operator operatorTester = new Operator("op","00","op");
+        Operator operatorTester = new Operator("op","password123","op");
         database.addOperator(operatorTester);
     }
 
@@ -88,7 +88,7 @@ public class OperatorFlowTest {
     @Test
     void testBlockUser() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         Player auxPlayer = (Player) database.getUser("pepe");
         operator.blockPlayer(auxPlayer);
         assertTrue(auxPlayer.isBlocked());
@@ -97,7 +97,7 @@ public class OperatorFlowTest {
     @Test
     void testUnblockUser() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         Player auxPlayer = (Player) database.getUser("pepe");
         operator.unblockPlayer(auxPlayer);
         assertFalse(auxPlayer.isBlocked());
@@ -106,7 +106,7 @@ public class OperatorFlowTest {
     @Test
     void testEraseOperator() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         database.eraseOperator(operator);
         assertNull(database.getUser("op"));
     }
@@ -114,7 +114,7 @@ public class OperatorFlowTest {
     @Test
     void testValidateChallenge() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         Player auxPlayerChallenged = (Player) database.getUser("juan");
         Challenge challenge = new Challenge((Player) database.getUser("pepe"),auxPlayerChallenged,100);
         database.getChallenge();
@@ -127,7 +127,7 @@ public class OperatorFlowTest {
     @Test
     void testNotValidateChallenge() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         Player auxPlayer = (Player) database.getUser("pepe");
 
     }
@@ -135,7 +135,7 @@ public class OperatorFlowTest {
     @Test
     public void testEditWeaponDelete() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -158,7 +158,7 @@ public class OperatorFlowTest {
     @Test
     public void testEditWeaponAdd() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -182,7 +182,7 @@ public class OperatorFlowTest {
     @Test
     void testEditArmorDelete() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -205,7 +205,7 @@ public class OperatorFlowTest {
     @Test
     void testEditArmorAdd() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -229,7 +229,7 @@ public class OperatorFlowTest {
     @Test
     void testEditMinionDelete() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -252,7 +252,7 @@ public class OperatorFlowTest {
     @Test
     void testEditMinionAdd() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -276,7 +276,7 @@ public class OperatorFlowTest {
     @Test
     void testEditFighterName() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -301,7 +301,7 @@ public class OperatorFlowTest {
     @Test
     void testEditFighterRace() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -326,7 +326,7 @@ public class OperatorFlowTest {
     @Test
     void testEditFighterType() {
         Database database = new Database();
-        Operator operator = new Operator("op","00","op");
+        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();

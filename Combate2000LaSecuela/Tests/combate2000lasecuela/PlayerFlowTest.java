@@ -15,9 +15,9 @@ class PlayerFlowTest {
         Enviroment enviroment = new Enviroment();
         enviroment.setTesting(true);
         Database database = new Database();
-        Player playerTester = new Player("pepe", "00", "pepe");
+        Player playerTester = new Player("pepe", "password123", "pepe");
         database.addPlayer(playerTester);
-        Operator operatorTester = new Operator("op", "00", "op");
+        Operator operatorTester = new Operator("op", "password123", "op");
         database.addOperator(operatorTester);
     }
     @Test
@@ -85,8 +85,8 @@ class PlayerFlowTest {
     }
     @Test
     void testChallengeModeIfAccepted() {
-        Player player = new Player("pepe", "00", "pepe");
-        Player player2 = new Player("juan", "00", "juan");
+        Player player = new Player("pepe", "password123", "pepe");
+        Player player2 = new Player("juan", "password123", "juan");
 
         Database database = new Database();
 
@@ -116,8 +116,8 @@ class PlayerFlowTest {
     }
     @Test
     void testChallengeModeIfRejected() {
-        Player player = new Player("pepe", "00", "pepe");
-        Player player2 = new Player("juan", "00", "juan");
+        Player player = new Player("pepe", "password123", "pepe");
+        Player player2 = new Player("juan", "password123", "juan");
 
         Database database = new Database();
 
@@ -140,8 +140,8 @@ class PlayerFlowTest {
     }
     @Test
     void testChallengePlayer() {
-        Player player = new Player("pepe", "00", "pepe");
-        Player player2 = new Player("juan", "00", "juan");
+        Player player = new Player("pepe", "password123", "pepe");
+        Player player2 = new Player("juan", "password123", "juan");
         Database database = new Database();
         database.addPlayer(player);
         database.addPlayer(player2);
@@ -165,7 +165,7 @@ class PlayerFlowTest {
     }
     @Test
     void testCreateFighter() {
-        Player player = new Player("pepe", "00", "pepe");
+        Player player = new Player("pepe", "password123", "pepe");
         Database database = new Database();
         database.addPlayer(player);
 
@@ -179,7 +179,7 @@ class PlayerFlowTest {
     }
     @Test
     void testEraseFighter() {
-        Player player = new Player("pepe", "00", "pepe");
+        Player player = new Player("pepe", "password123", "pepe");
         Database database = new Database();
         database.addPlayer(player);
 

@@ -20,6 +20,7 @@ public class Constants {
     public static final String[] nickUsedText = {"El Nick escogido esta en uso por otro usuario"};
     public static final String[] userNotFoundText = {"El nick introducido no está registrado en el sistema"};
     public static final String[] wrongPasswordText = {"Password Incorrecta"};
+    public static final String[] notValidPasswordText = {"La contraseña debe ser de entre 8 y 12 caracteres"};
     public static final String[] notCoincidencePasswordText = {"Las password no coinciden", "Vuelve a intentarlo"};
     public static final String [] userCorrectlyErasedText={"El usuario ha sido correctamente borrado"};
     public static final String [] questionErasetext={"Confirma que quieres borrar a este usuario","NO es una operacion reversible","1. Confirmar","2. Salir"};

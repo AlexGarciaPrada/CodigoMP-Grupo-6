@@ -16,8 +16,8 @@ public class PendingChallengesTest {
         //creamos la cola
         pc = new PendingChallenges();
         //creamos un desafio
-        Player challenger = new Player("pepa", "pass", "pepa");
-        Player challenged = new Player("chall", "pass", "chall");
+        Player challenger = new Player("pepa", "password123", "pepa");
+        Player challenged = new Player("chall", "password123", "chall");
         challenge = new Challenge(challenger, challenged, 40);
     }
 
@@ -30,8 +30,8 @@ public class PendingChallengesTest {
     @Test
     public void getFirstChallengeTest() {
         pc.addChallenge(challenge);
-        Player challenger = new Player("1", "1", "1");
-        Player challenged = new Player("2", "2", "2");
+        Player challenger = new Player("1", "password123", "1");
+        Player challenged = new Player("2", "password123", "2");
         Challenge challenge2 = new Challenge(challenger, challenged, 40);
         pc.addChallenge(challenge2);
         pc.getFirstChallenge();

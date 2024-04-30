@@ -15,9 +15,9 @@ class GameflowTest {
         Enviroment enviroment = new Enviroment();
         enviroment.setTesting(true);
         Database database = new Database();
-        Player playerTester = new Player("pepe", "00", "pepe");
+        Player playerTester = new Player("pepe", "password123", "pepe");
         database.addPlayer(playerTester);
-        Operator operatorTester = new Operator("op", "00", "op");
+        Operator operatorTester = new Operator("op", "password123", "op");
         database.addOperator(operatorTester);
     }
 
@@ -25,7 +25,7 @@ class GameflowTest {
     void testRegister(){
         Database database = new Database();
         UserManager userManager = new UserManager();
-        database.addPlayer(new Player("test","00","test"));
+        database.addPlayer(new Player("test","password123","test"));
         assertTrue(userManager.inMap("Player","test"));
     }
 

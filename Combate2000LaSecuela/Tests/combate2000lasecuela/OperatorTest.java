@@ -18,9 +18,9 @@ public class OperatorTest {
     @BeforeEach
     public void setUp() { //para crear la situation ya tu sabe
         //crear operador
-        operator = new Operator("op", "pass", "op");
+        operator = new Operator("op", "password123", "op");
         //crear player
-        player = new Player("pepa", "pass", "pepa");
+        player = new Player("pepa", "password123", "pepa");
         //crear armaduras
         armors = new LinkedList<>();
         Armor armor = new Armor("8; ARMADURA DE COBRE ÉPICA; 1; 2;");
@@ -39,44 +39,64 @@ public class OperatorTest {
         player.setFighter(fighter);
 
     }
+
     @Test
-    public void addMinion() {
+    public void operatorConstructorTest() {
+        Operator op = new Operator("op", "password123", "op");
+        assertEquals(op.getName(), "op");
+        assertEquals(op.getPassword(), "password123");
+        assertEquals(op.getNick(), "op");
+    }
+
+    @Test
+    public void addMinionTest() {
         Minion min = new Demon("3; LILITH; DEMONIO; Pacto de Sangre; 2;");
         operator.addMinion(player, min);
         assertEquals(2, player.getFighter().getMyMinions().size());
     }
 
     @Test
-    public void deleteMinion() {
+    public void deleteMinionTest() {
         operator.deleteMinion(player, 1);
         assertEquals(0, player.getFighter().getMyMinions().size());
     }
 
     @Test
-    public void addArmor() {
+    public void addArmorTest() {
         Armor arm = new Armor("14; ARMADURA DE HIERRO COMÚN; 2; 0;");
         operator.addArmor(player, arm);
         assertEquals(2, player.getFighter().getMyArmor().size());
     }
 
     @Test
-    public void deleteArmor() {
+    public void deleteArmorTest() {
         operator.deleteArmor(player, 1);
         assertEquals(0, player.getFighter().getMyArmor().size());
     }
 
     @Test
-    public void addWeapon() {
+    public void addWeaponTest() {
         Weapon weap = new Weapon("14; ESTOQUE; 2; 1;");
         operator.addWeapon(player, weap);
         assertEquals(2, player.getFighter().getMyWeapon().size());
     }
 
     @Test
-    public void deleteWeapon() {
+    public void deleteWeaponTest() {
         operator.deleteWeapon(player, 1);
         assertEquals(0, player.getFighter().getMyWeapon().size());
     }
 
+    @Test
+    public void blockPlayerTest() {
+        operator.blockPlayer(player);
+        assertTrue(player.isBlocked());
+    }
+
+    @Test
+    public void unblockPlayerTest() {
+        operator.unblockPlayer(player);
+        assertFalse(player.isBlocked());
+    }
 
 }
