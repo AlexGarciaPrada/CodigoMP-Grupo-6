@@ -485,7 +485,7 @@ public class Database {
         updateUsers();
     }
 
-    public void setDemonMax(int demonMax) {
+    private void setDemonMax(int demonMax) {
         this.demonMax = demonMax;
     }
 

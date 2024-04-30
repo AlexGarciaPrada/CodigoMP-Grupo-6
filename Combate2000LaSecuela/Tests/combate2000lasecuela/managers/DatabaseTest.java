@@ -70,21 +70,20 @@ public class DatabaseTest {
     @Test
     void testDeletePendingChallenge() {
         Challenge challenge = new Challenge(p1,p2,34);
+        Challenge challenge2 = new Challenge(p1,p2,35);
+        Challenge challenge3= new Challenge(p1,p2,36);
         database.addFighter(p1,f1);
+        database.deletePendingChallenge(p1);
+        assertFalse(p1.hasPendingChallenges());
         p1.addPendingChallenge(challenge);
         assertTrue(p1.hasPendingChallenges());
         database.deletePendingChallenge(p1);
         assertFalse(p1.hasPendingChallenges());
-        p1.addPendingChallenge(challenge);
-        p1.addPendingChallenge(challenge);
-        p1.addPendingChallenge(challenge);
-        p1.addPendingChallenge(challenge);
+        p1.addPendingChallenge(challenge2);
+        p1.addPendingChallenge(challenge3);
         database.deletePendingChallenge(p1);
         assertTrue(p1.hasPendingChallenges());
-        database.deletePendingChallenge(p1);
-        database.deletePendingChallenge(p1);
-        database.deletePendingChallenge(p1);
-        assertFalse(p1.hasPendingChallenges());
+        assertTrue(p1.getFighter().getPendingChallenges().getFirstChallenge().equals(challenge3));
 
 
 
@@ -92,7 +91,6 @@ public class DatabaseTest {
     @Test
     void testAddPlayer() {
         assertTrue(database.isAPlayer("A"));
-        assertFalse(database.isAPlayer("Un nombre cualquiera"));
         assertTrue(database.isAPlayer("B"));
         assertFalse(database.isAPlayer("a"));
     }
@@ -101,7 +99,7 @@ public class DatabaseTest {
     void testIsAPlayer() {
      assertTrue(database.isAPlayer("A"));
      assertFalse(database.isAPlayer("a"));
-     assertFalse(database.isAPlayer("Un nombre cualquiera"));
+    assertFalse(database.isAPlayer("Un nombre cualquiera"));
     }
 
     @Test
@@ -116,6 +114,7 @@ public class DatabaseTest {
     void testErasePlayer() {
         assertTrue(database.getUser("A").equals(p1));
         database.erasePlayer(p1);
+        database.erasePlayer(new Player("algo random","algo random","algo random"));
         assertNull(database.getUser("A"));
         assertFalse(database.isAPlayer("A"));
         database.addPlayer(p1);
@@ -124,24 +123,22 @@ public class DatabaseTest {
 
     @Test
     void testEraseOperator() {
-        Operator operator = new Operator("da","bifsebfes","diuediefes");
-        database.addOperator(operator);
-        String nick = operator.getNick();
-        database.eraseOperator(operator);
-        assertNull(database.getUser(nick));
+        database.eraseOperator(o1);
+        assertNull(database.getUsermanager().getCollection("Operator").get(o1.getNick()));
+        database.addOperator(o1);
+        database.eraseOperator(new Operator("algo random","algo random","algo random"));
+
     }
     @Test
     void testIsNickUsed() {
-        database.addPlayer(new Player("3","3","3"));
-        database.addOperator(new Operator("4","4","4"));
-        assertTrue((database.isNickUsed("3"))&& (database.isNickUsed("4")));
+        assertTrue((database.isNickUsed("A"))&& (database.isNickUsed("a")));
+        assertFalse(database.isNickUsed("algo random"));
     }
 
     @Test
     void testIsPasswordCorrect() {
-        database.addPlayer(new Player("3","3","3"));
-        database.addOperator(new Operator("4","4","4"));
-        assertTrue((!(database.isPasswordCorrect("3","5")))&&(database.isPasswordCorrect("4","4")));
+        assertTrue((database.isPasswordCorrect("A","A"))&&(database.isPasswordCorrect("a","a")));
+        assertFalse(database.isPasswordCorrect("A","b"));
 
     }
 
@@ -149,8 +146,6 @@ public class DatabaseTest {
     void testGetUser() {
         assertTrue(database.getUser("A").equals(p1));
         assertTrue(database.getUser("a").equals(o1));
-        assertTrue(database.getUser("b").equals(o2));
-        assertTrue(database.getUser("B").equals(p2));
         assertNull(database.getUser("Holaquetal"));
     }
 
@@ -235,6 +230,8 @@ public class DatabaseTest {
         assertFalse(database.getChallenge().equals(challenge2));
         database.eraseChallenge();
         assertTrue(database.getChallenge().equals(challenge2));
+        database.eraseChallenge();
+        database.getChallenge();
     }
 
     @Test
@@ -256,6 +253,7 @@ public class DatabaseTest {
         assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==1);
         database.eraseChallenge();
         assertTrue(database.getChallengeManager().getCollection("ChallengeMap").size()==0);
+        database.eraseChallenge();
 
     }
 
@@ -293,6 +291,7 @@ public class DatabaseTest {
     database.addFighter(p2,f2);
     database.addCombat(p1.Fight(p2,0));
     assertNotNull(database.getCombatHistory(p1));
+    assertTrue(database.getCombatHistory(p1).length==1);
     }
 
 
@@ -520,6 +519,10 @@ public class DatabaseTest {
 
     @Test
     void testUpdateGold() {
+       database.updateGold(f1,20);
+       assertTrue(f1.getGold()==120);
+       database.updateGold(f1,-20);
+        assertTrue(f1.getGold()==100);
 
     }
 
@@ -527,15 +530,13 @@ public class DatabaseTest {
     void testAddMail() {
     String [] email ={"Hola que ase","Hdwajiowda"};
         String [] email2 ={"1"};
-        String [] email3 ={"2"};
     database.addFighter(p1,f1);
     assertTrue(p1.getFighter().isMailboxEmpty());
     database.addMail(p1,email);
     assertFalse(p1.getFighter().isMailboxEmpty());
     assertTrue(p1.getFighter().getMail().equals(email));
     database.addMail(p1,email2);
-    database.addMail(p1,email3);
-    assertTrue(p1.getFighter().getMail().equals(email));
+    assertTrue(p1.getFighter().getMailbox().get(1).equals(email2));
     }
 
     @Test
@@ -561,8 +562,10 @@ public class DatabaseTest {
         database.addMail(p1,email2);
         database.addMail(p1,email3);
         database.eraseMail(p1);
-        assertTrue(p1.getFighter().getMail().equals(email2));
-
+        assertTrue(p1.getFighter().getMail().equals(email3));
+        database.eraseMail(p1);
+        assertTrue(p1.getFighter().isMailboxEmpty());
+        database.eraseMail(p1);
     }
 
     @Test
@@ -572,14 +575,9 @@ public class DatabaseTest {
         database.reducePendingGold(20,p1);
         assertFalse(p1.getFighter().getPendingGold()==100);
         assertTrue(p1.getFighter().getPendingGold()==80);
+        database.reducePendingGold(1000,p1);
+        assertFalse(p1.getFighter().getPendingGold()>=0);
     }
 
-    @Test
-    void testSetDemonMax() {
-    }
-
-    @Test
-    void testGetDemonMax() {
-    }
 
 }

@@ -408,6 +408,9 @@ public abstract class Fighter implements Serializable {
        return text;
     }
     public void eraseMail(){
+        if (this.isMailboxEmpty()){
+            return;
+        }
         mailbox.removeFirst();
     }
     public boolean isMailboxEmpty(){
@@ -445,5 +448,9 @@ public abstract class Fighter implements Serializable {
         }
         return "Arma 2: No equipada";
     }
+
+    public ArrayList<String[]> getMailbox() {
+        return mailbox;
     }
+}
 
