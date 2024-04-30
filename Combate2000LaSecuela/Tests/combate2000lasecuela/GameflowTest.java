@@ -21,12 +21,12 @@ class GameflowTest {
         database.addOperator(operatorTester);
     }
 
-//    @Test
-//    void testRegister(){
-//        Database database = new Database();
-//        UserManager userManager = new UserManager();
-//        database.addPlayer(new Player("test","00","test"));
-//        assertTrue(userManager.inMap("Player","test"));
-//    }
+    @Test
+    void testRegister(){
+        Database database = new Database();
+        UserManager userManager = new UserManager();
+        database.addPlayer(new Player("test","00","test"));
+        assertTrue(userManager.inMap("Player","test"));
+    }
 
 }
