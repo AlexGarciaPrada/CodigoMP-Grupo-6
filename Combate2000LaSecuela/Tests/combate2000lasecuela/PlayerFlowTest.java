@@ -28,14 +28,14 @@ class PlayerFlowTest {
         assertEquals(Integer.parseInt(data) == 1, PlayerFlow.isCreatefighter());
     }
     @Test
-    void testEraseFighter() {
+    void testEraseFighterLogin() {
         String data = "2";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setErasefighter(true);
         assertEquals(Integer.parseInt(data) == 2, PlayerFlow.isErasefighter());
     }
     @Test
-    void testEquipAdmin() {
+    void testEquipAdminLogin() {
         String data = "3";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setEquipadmin(true);
@@ -49,21 +49,21 @@ class PlayerFlowTest {
         assertEquals(Integer.parseInt(data) == 4, PlayerFlow.isChallengeplayer());
     }
     @Test
-    void testGoldRegister() {
+    void testGoldRegisterLogin() {
         String data = "5";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setGoldregister(true);
         assertEquals(Integer.parseInt(data) == 5, PlayerFlow.isGoldregister());
     }
     @Test
-    void testRanking() {
+    void testRankingLogin() {
         String data = "6";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setRanking(true);
         assertEquals(Integer.parseInt(data) == 6, PlayerFlow.isRanking());
     }
     @Test
-    void testFighterState() {
+    void testFighterStateLogin() {
         String data = "7";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setFighterstate(true);
@@ -77,7 +77,7 @@ class PlayerFlowTest {
         assertEquals(Integer.parseInt(data) == 8, PlayerFlow.isPlayerlogin());
     }
     @Test
-    void testErasePlayer() {
+    void testErasePlayerLogin() {
         String data = "9";
         System.setIn(new ByteArrayInputStream(data.getBytes()));
         PlayerFlow.setEraseplayer(true);
@@ -162,5 +162,32 @@ class PlayerFlowTest {
         assertEquals(challenge.getChallenger(), player);
         assertEquals(challenge.getChallenged(), challenged);
         assertEquals(challenge.getGold(), 10);
+    }
+    @Test
+    void testCreateFighter() {
+        Player player = new Player("pepe", "00", "pepe");
+        Database database = new Database();
+        database.addPlayer(player);
+
+        TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(Integer.toString(4));
+        database.addFighter(player,new Lycanthrope("hola",type,database.randomMinions(type.getMinionLuck(), true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
+
+        assertEquals(player.getFighter().getName(), "hola");
+        assertEquals(player.getFighter().getType().getName(), "DESGRACIADO");
+        assertEquals(player.getFighter().getClass(), Lycanthrope.class);
+        assertEquals(player.getFighter().getGold(), 100);
+    }
+    @Test
+    void testEraseFighter() {
+        Player player = new Player("pepe", "00", "pepe");
+        Database database = new Database();
+        database.addPlayer(player);
+
+        TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(Integer.toString(4));
+        database.addFighter(player,new Lycanthrope("hola",type,database.randomMinions(type.getMinionLuck(), true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
+
+        database.eraseFighter(player);
+
+        assertNull(player.getFighter());
     }
 }
