@@ -66,8 +66,7 @@ public class Loader implements Serializable {
     }
 
     // ------------------------ MINIONS
-    private void readMinionFile(String line) {
-
+    protected void readMinionFile(String line) {
        String [] parts = line.split(";");
        switch(parts[2].trim()){
            case "HUMANO":
@@ -83,29 +82,29 @@ public class Loader implements Serializable {
     }
 
     // ------------------------ WEAPONS
-    private void readWeaponFile(String line) {
+    protected void readWeaponFile(String line) {
        String [] parts = line.split(";");
         itemManager.addElement("WeaponMap", parts[0], new Weapon(line));
     }
 
     // ------------------------ ARMORS
-    private void readArmorFile(String line) {
+    protected void readArmorFile(String line) {
         String [] parts = line.split(";");
         itemManager.addElement("ArmorMap", parts[0], new Armor(line));
     }
 
-    private void readStrengthFile(String line) {
+    protected void readStrengthFile(String line) {
         String [] parts = line.split(";");
         modifierManager.addElement("StrengthMap", parts[0], new Strength(line));
     }
 
-    private void readWeaknessFile(String line) {
+    protected void readWeaknessFile(String line) {
         String [] parts = line.split(";");
         modifierManager.addElement("WeaknessMap", parts[0], new Weakness(line));
     }
 
     // ------------------------ TFIGHTER
-    private void readTFighterFile(String line) {
+    protected void readTFighterFile(String line) {
         String [] parts = line.split(";");
         tFighterManager.addElement("TFighterMap", parts[0].trim(), new TFighter(line));
     }
