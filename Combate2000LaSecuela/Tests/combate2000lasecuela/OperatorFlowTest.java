@@ -21,14 +21,6 @@ public class OperatorFlowTest {
         Operator operatorTester = new Operator("op","password123","op");
         database.addOperator(operatorTester);
     }
-
-
-    @Test
-    void testOperatorMachine(){
-    }
-
-    // OPERATORLOGIN TESTS
-
     @Test
     void testOperatorLoginEditFighter() {
         String data = "1";     // data is the input that the user will give
@@ -114,22 +106,53 @@ public class OperatorFlowTest {
     @Test
     void testValidateChallenge() {
         Database database = new Database();
-        Operator operator = new Operator("op","password123","op");
-        Player auxPlayerChallenged = (Player) database.getUser("juan");
+        Player auxPlayerChallenged = (Player) database.getUser("pepe");
         Challenge challenge = new Challenge((Player) database.getUser("pepe"),auxPlayerChallenged,100);
-        database.getChallenge();
-        database.getChallenge().getChallenged().addPendingChallenge(challenge);
+
+        //adding a non null fighter
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayerChallenged,fighter1);
+
+        database.addChallenge(challenge);
+        challenge.getChallenged().addPendingChallenge(challenge);
         database.eraseChallenge();
-        ChallengeManager challengeManager = new ChallengeManager();
-        //assertEquals(challengeManager.
+        assertEquals(auxPlayerChallenged.getFighter().getPendingChallenges().getFirstChallenge(),challenge);
     }
 
     @Test
     void testNotValidateChallenge() {
         Database database = new Database();
-        Operator operator = new Operator("op","password123","op");
-        Player auxPlayer = (Player) database.getUser("pepe");
+        Player auxPlayerChallenged = (Player) database.getUser("pepe");
+        Challenge challenge = new Challenge((Player) database.getUser("pepe"),auxPlayerChallenged,100);
 
+        //adding a non null fighter
+        TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
+        LinkedList<Minion> minionList = new LinkedList<>();
+        LinkedList<Weapon> weaponList = new LinkedList<>();
+        LinkedList<Armor> armorList = new LinkedList<>();
+        Minion minion= new Ghoul("5; NEFARIUS; GHOUL; 3; 1;");
+        Armor armor = new Armor("6; ARMADURA DE COBRE RARA; 1; 1;");
+        Weapon weapon = new Weapon("6; HACHA ROMA PEQUEÑA; 1; 1;");
+        minionList.add(minion);
+        armorList.add(armor);
+        weaponList.add(weapon);
+
+        Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
+        database.addFighter(auxPlayerChallenged,fighter1);
+
+        database.eraseChallenge();
+        assertNull(auxPlayerChallenged.getFighter().getPendingChallenges().getFirstChallenge());
     }
 
     @Test
@@ -152,7 +175,8 @@ public class OperatorFlowTest {
         Fighter fighter1 = new Hunter("prueba", type,minionList,armorList,weaponList);
         database.addFighter(auxPlayer,fighter1);
 
-        assertTrue(database.deleteWeapon(operator,auxPlayer,1));
+        database.deleteWeapon(operator,auxPlayer,1) ;
+        assertTrue(fighter1.getMyWeapon().isEmpty());
     }
 
     @Test
@@ -176,7 +200,7 @@ public class OperatorFlowTest {
         database.addFighter(auxPlayer,fighter1);
         operator.addWeapon(auxPlayer,weapon);
 
-        assertTrue(database.addWeapon(operator,auxPlayer,1));
+        assertTrue(fighter1.hasActiveEquipment());
     }
 
     @Test
@@ -301,7 +325,6 @@ public class OperatorFlowTest {
     @Test
     void testEditFighterRace() {
         Database database = new Database();
-        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();
@@ -321,12 +344,11 @@ public class OperatorFlowTest {
         database.changeFighterRace(auxPlayer,1);
 
         assertTrue(fighter1 instanceof Hunter);
-    }  //TODO
+    }
 
     @Test
     void testEditFighterType() {
         Database database = new Database();
-        Operator operator = new Operator("op","password123","op");
         TFighter type = new TFighter("4;DESGRACIADO;0;0;0");
         LinkedList<Minion> minionList = new LinkedList<>();
         LinkedList<Weapon> weaponList = new LinkedList<>();

@@ -108,7 +108,6 @@ class PlayerFlowTest {
         database.updateGold(fighter1, -10);
         database.updateGold(fighter2, 10);
 
-        // Verificar los resultados esperados
         assertEquals(combat.getWinner(), fighter2);
         assertEquals(combat.getLoser(), fighter1);
         assertEquals(110, combat.getWinner().getGold());
@@ -165,9 +164,8 @@ class PlayerFlowTest {
     }
     @Test
     void testCreateFighter() {
-        Player player = new Player("pepe", "password123", "pepe");
         Database database = new Database();
-        database.addPlayer(player);
+        Player player = (Player) database.getUser("pepe");
 
         TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(Integer.toString(4));
         database.addFighter(player,new Lycanthrope("hola",type,database.randomMinions(type.getMinionLuck(), true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));
@@ -179,9 +177,8 @@ class PlayerFlowTest {
     }
     @Test
     void testEraseFighter() {
-        Player player = new Player("pepe", "password123", "pepe");
         Database database = new Database();
-        database.addPlayer(player);
+        Player player = (Player) database.getUser("pepe");
 
         TFighter type = database.getLoader().gettFighterManager().getCollection("TFighterMap").get(Integer.toString(4));
         database.addFighter(player,new Lycanthrope("hola",type,database.randomMinions(type.getMinionLuck(), true,false,0),database.randomArmor(type.getArmorLuck()),database.randomWeapons(type.getWeaponLuck())));

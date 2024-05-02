@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoaderTest {
     @BeforeAll
     static void setUp() {
-        Loader loader = new Loader();
         Enviroment enviroment = new Enviroment();
         enviroment.setTesting(true);
     }
@@ -36,51 +35,50 @@ class LoaderTest {
         Loader loader = new Loader();
 
         loader.readMinionFile("5; NEFARIUS; GHOUL; 3; 1;");
-        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("5").getName(), " NEFARIUS");
+        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("5").getClass().getSimpleName(), "Ghoul");
     }
     @Test
     void testReadMinionFileHuman() {
         Loader loader = new Loader();
 
         loader.readMinionFile("2; PEPE; HUMANO; ALTA; 3;");
-        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("2").getName(), " PEPE");
+        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("2").getClass().getSimpleName(), "Human");
     }
     @Test
     void testReadMinionFileDemon() {
         Loader loader = new Loader();
 
         loader.readMinionFile("3; LILITH; DEMONIO; Pacto de Sangre; 2;");
-        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("3").getName(), " LILITH");
+        assertEquals(loader.getMinionManager().getElements().get("MinionMap").get("3").getClass().getSimpleName(), "Demon");
     }
     @Test
     void testReadArmorFile() {
         Loader loader = new Loader();
 
         loader.readWeaponFile("5; ARMADURA DE COBRE RARA; 1; 1;");
-        assertEquals(loader.getItemManager().getElements().get("WeaponMap").get("5").getName(), "ARMADURA DE COBRE RARA");
+        assertEquals(loader.getItemManager().getElements().get("ArmorMap").get("5").getClass().getSimpleName(), "Armor");
     }
     @Test
     void testReadWeaponFile() {
         Loader loader = new Loader();
 
         loader.readWeaponFile("1; HACHA ROMA PEQUEÑA; 1; 1;");
-        assertEquals(loader.getItemManager().getElements().get("WeaponMap").get("1").getName(), "HACHA ROMA PEQUEÑA");
+        assertEquals(loader.getItemManager().getElements().get("WeaponMap").get("1").getClass().getSimpleName(), "Weapon");
     }
     @Test
     void testReadStrengthFile() {
         Loader loader = new Loader();
 
         loader.readStrengthFile("4;SENTIDOS AGUDIZADOS;4;");
-        Strength strength = (Strength) loader.getModifierManager().getCollection("StrengthMap").get("4");
-        assertNotNull(strength);
+        assertEquals(loader.getModifierManager().getElements().get("StrengthMap").get("4").getClass().getSimpleName(), "Strength");
+
     }
     @Test
     void testReadWeaknessFile() {
         Loader loader = new Loader();
 
         loader.readStrengthFile("9;CRUCES DE PLATA;4;");
-        Strength strength = (Strength) loader.getModifierManager().getCollection("StrengthMap").get("9");
-        assertNotNull(strength);
+        assertEquals(loader.getModifierManager().getElements().get("WeaknessMap").get("9").getClass().getSimpleName(), "Weakness");
     }
     @Test
     void testLoad() {
